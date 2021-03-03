@@ -9,18 +9,19 @@ package modelo;
  *
  * @author selen
  */
-public class RH_Turnos {
+public class RH_Turno {
+
     private Integer idTurno;
     private String nombre;
-    private Integer   horaInicio;
-    private Integer  horaFin;
-    private  String dias;
-    
+    private Integer horaInicio;
+    private Integer horaFin;
+    private String dias;
+
     public Integer getIdTurno() {
         return idTurno;
     }
 
-    public void setIdTurno (Integer idTurno) {
+    public void setIdTurno(Integer idTurno) {
         this.idTurno = idTurno;
     }
 
@@ -36,25 +37,23 @@ public class RH_Turnos {
         return horaInicio;
     }
 
-    public void setHoraInicio( Integer  horaInicio) {
+    public void setHoraInicio(Integer horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public Integer  getHoraFin() {
+    public Integer getHoraFin() {
         return horaFin;
     }
 
     public void setHoraFin(Integer horaFin) {
-        this.horaFin =  horaFin ;
+        this.horaFin = horaFin;
     }
-    
-    public  String getDias (){
+
+    public String getDias() {
         return dias;
     }
-    public  void setDias (String dias){
-        this.dias= dias;
+
+    public void setDias(String dias) {
+        this.dias = dias;
     }
 }
- 
-    
-    

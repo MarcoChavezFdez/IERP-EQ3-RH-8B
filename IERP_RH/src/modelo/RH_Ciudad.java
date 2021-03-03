@@ -2,7 +2,6 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- * Modelo de Estados
  */
 package modelo;
 
@@ -10,11 +9,22 @@ package modelo;
  *
  * @author Marco Chavez
  */
-public class RH_Estados {
+public class RH_Ciudad {
     private Integer idCiudad;
     private String nombre;
     private Integer idEstado;
-    private char estatus;
+    private String estatus;
+
+    public RH_Ciudad(Integer idCiudad, String nombre, Integer idEstado, String estatus) {
+        this.idCiudad = idCiudad;
+        this.nombre = nombre;
+        this.idEstado = idEstado;
+        this.estatus = estatus;
+    }
+
+    public RH_Ciudad() {
+    }
+    
 
     public Integer getIdCiudad() {
         return idCiudad;
@@ -40,13 +50,12 @@ public class RH_Estados {
         this.idEstado = idEstado;
     }
 
-    public char getEstatus() {
+    public String getEstatus() {
         return estatus;
     }
 
-    public void setEstatus(char estatus) {
+    public void setEstatus(String estatus) {
         this.estatus = estatus;
     }
-    
     
 }
