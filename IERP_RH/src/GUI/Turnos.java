@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import conexion.conexionBD;
+import conexion.ConexionBD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -303,7 +303,7 @@ public class Turnos extends javax.swing.JFrame {
                 dias="Domingo";
             }
            try{
-                Connection con = conexionBD.GetConexion();
+                Connection con = ConexionBD.GetConexion();
                 PreparedStatement ps =con.prepareStatement("INSERT INTO Turnos(idTurno,nombre,horaInicio,horaFin,dias) VALUES (?,?,?,?,?)");
                 ps.setInt(1, idTurno);
                 ps.setString(2, nombre);
