@@ -4,7 +4,7 @@ package modelo;
  *
  * @author Carlos Esparza
  */
-public class Deducciones {
+public class RH_Deducciones {
     private Integer idDeduccion;
     private String nombre;
     private String descripcion;
