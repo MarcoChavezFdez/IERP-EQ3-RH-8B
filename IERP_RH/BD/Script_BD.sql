@@ -111,3 +111,11 @@ USE [master]
 GO
 ALTER DATABASE [AgroZam] SET  READ_WRITE 
 GO
+  CREATE TABLE  Turnos (
+  [idTurno] [int] Primary key  NOT NULL,
+  [nombre] [varchar] (20),
+  [horaInicio] [time],
+  [horaFin][time],
+  [dias][varchar](30),
+  );
+  
