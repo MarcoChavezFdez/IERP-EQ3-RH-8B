@@ -32,9 +32,9 @@ public class login extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txfUsuario1 = new javax.swing.JTextField();
+        txfUsuario = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txPPassw1 = new javax.swing.JPasswordField();
+        txPPassw = new javax.swing.JPasswordField();
         btn_IniciarSesion1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -52,27 +52,27 @@ public class login extends javax.swing.JFrame {
         jLabel3.setText("Usuario");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, 20));
 
-        txfUsuario1.setBackground(new java.awt.Color(153, 255, 255));
-        txfUsuario1.setText("Admin");
-        txfUsuario1.addActionListener(new java.awt.event.ActionListener() {
+        txfUsuario.setBackground(new java.awt.Color(153, 255, 255));
+        txfUsuario.setText("Admin");
+        txfUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfUsuario1ActionPerformed(evt);
+                txfUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(txfUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 112, 20));
+        jPanel1.add(txfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 112, 20));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Password");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, 20));
 
-        txPPassw1.setBackground(new java.awt.Color(153, 255, 255));
-        txPPassw1.addActionListener(new java.awt.event.ActionListener() {
+        txPPassw.setBackground(new java.awt.Color(153, 255, 255));
+        txPPassw.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txPPassw1ActionPerformed(evt);
+                txPPasswActionPerformed(evt);
             }
         });
-        jPanel1.add(txPPassw1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 112, 20));
+        jPanel1.add(txPPassw, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 112, 20));
 
         btn_IniciarSesion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/inicio.png"))); // NOI18N
         btn_IniciarSesion1.setBorderPainted(false);
@@ -100,16 +100,29 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_IniciarSesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IniciarSesion1ActionPerformed
-        // TODO add your handling code here:
+        if (txfUsuario.getText().isEmpty() || txPPassw.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Debes informar el usuario y password");
+        } else {
+            ConexionBD conexion = new ConexionBD(txfUsuario.getText(), txPPassw.getText());
+            if (conexion.getConexion() != null) {
+                PrincipalFrame pf = new PrincipalFrame(conexion);
+                this.dispose();
+                pf.setVisible(true);
+                pf.pack();
+            } else {
+                JOptionPane.showMessageDialog(null, "Credenciales invalidas");
+            }
+
+        }
     }//GEN-LAST:event_btn_IniciarSesion1ActionPerformed
 
-    private void txPPassw1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txPPassw1ActionPerformed
+    private void txPPasswActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txPPasswActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txPPassw1ActionPerformed
+    }//GEN-LAST:event_txPPasswActionPerformed
 
-    private void txfUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfUsuario1ActionPerformed
+    private void txfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txfUsuario1ActionPerformed
+    }//GEN-LAST:event_txfUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,16 +138,28 @@ public class login extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+                
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(login.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(login.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(login.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(login.class
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -154,7 +179,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField txPPassw1;
-    private javax.swing.JTextField txfUsuario1;
+    private javax.swing.JPasswordField txPPassw;
+    private javax.swing.JTextField txfUsuario;
     // End of variables declaration//GEN-END:variables
 }
