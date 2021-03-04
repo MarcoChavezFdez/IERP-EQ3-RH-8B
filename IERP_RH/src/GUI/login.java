@@ -30,103 +30,86 @@ public class login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txfUsuario = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txfUsuario1 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txPPassw1 = new javax.swing.JPasswordField();
+        btn_IniciarSesion1 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txPPassw = new javax.swing.JPasswordField();
-        btn_IniciarSesion = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Usuario");
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txfUsuario.setText("Admin");
-        txfUsuario.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Usuario");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, 20));
+
+        txfUsuario1.setBackground(new java.awt.Color(153, 255, 255));
+        txfUsuario1.setText("Admin");
+        txfUsuario1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfUsuarioActionPerformed(evt);
+                txfUsuario1ActionPerformed(evt);
             }
         });
+        jPanel1.add(txfUsuario1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 112, 20));
 
-        jLabel2.setText("Password");
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Password");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, 20));
 
-        txPPassw.addActionListener(new java.awt.event.ActionListener() {
+        txPPassw1.setBackground(new java.awt.Color(153, 255, 255));
+        txPPassw1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txPPasswActionPerformed(evt);
+                txPPassw1ActionPerformed(evt);
             }
         });
+        jPanel1.add(txPPassw1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 112, 20));
 
-        btn_IniciarSesion.setText("Iniciar Sesion");
-        btn_IniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+        btn_IniciarSesion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/inicio.png"))); // NOI18N
+        btn_IniciarSesion1.setBorderPainted(false);
+        btn_IniciarSesion1.setContentAreaFilled(false);
+        btn_IniciarSesion1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_IniciarSesionActionPerformed(evt);
+                btn_IniciarSesion1ActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_IniciarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 150, 80));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(250, 250, 250)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(91, 91, 91)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txPPassw)
-                            .addComponent(txfUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(332, 332, 332)
-                        .addComponent(btn_IniciarSesion)))
-                .addContainerGap(324, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(209, 209, 209)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txfUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txPPassw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(59, 59, 59)
-                .addComponent(btn_IniciarSesion)
-                .addContainerGap(117, Short.MAX_VALUE))
-        );
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, -1, -1));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/log.png"))); // NOI18N
+        jLabel2.setText("jLabel2");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/fondo1.png"))); // NOI18N
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, -40, 600, 510));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 440));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfUsuarioActionPerformed
+    private void btn_IniciarSesion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IniciarSesion1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txfUsuarioActionPerformed
+    }//GEN-LAST:event_btn_IniciarSesion1ActionPerformed
 
-    private void txPPasswActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txPPasswActionPerformed
+    private void txPPassw1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txPPassw1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txPPasswActionPerformed
+    }//GEN-LAST:event_txPPassw1ActionPerformed
 
-    private void btn_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IniciarSesionActionPerformed
-                if(txfUsuario.getText().isEmpty() || txPPassw.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debes informar el usuario y password");
-        }
-        else{
-            ConexionBD conexion=new ConexionBD(txfUsuario.getText(), txPPassw.getText());
-            if(conexion.getConexion()!=null){
-                PrincipalFrame pf=new PrincipalFrame(conexion);
-                this.dispose();
-                pf.setVisible(true);
-                pf.pack();
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Credenciales invalidas");
-            }
-            
-        }
-    }//GEN-LAST:event_btn_IniciarSesionActionPerformed
+    private void txfUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfUsuario1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfUsuario1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,10 +147,14 @@ public class login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_IniciarSesion;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btn_IniciarSesion1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPasswordField txPPassw;
-    private javax.swing.JTextField txfUsuario;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPasswordField txPPassw1;
+    private javax.swing.JTextField txfUsuario1;
     // End of variables declaration//GEN-END:variables
 }
