@@ -120,7 +120,7 @@ public class DeduccionesDAO {
 
     public boolean actualizarDeduccion(RH_Deduccion deduccion) {
         String sql = "update RH.Deduccion set nombre=?, descripcion=?, porcentaje=? "
-                + " where id=?";
+                + " where idDeduccion=?";
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
@@ -137,7 +137,7 @@ public class DeduccionesDAO {
         }
         return ban;
     }
-
+/*
     public boolean eliminacionLogicaDeduccion(RH_Deduccion p) {
         String sql = "update RH.Deduccion set porcentaje=? "
                 + " where idDeduccion=?";
@@ -154,7 +154,7 @@ public class DeduccionesDAO {
             JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
         }
         return ban;
-    }
+    }*/
 
     public ConexionBD getConexion() {
         return conexion;
