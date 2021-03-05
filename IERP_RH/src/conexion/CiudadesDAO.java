@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.RH_Ciudades;
 
-public class EstadoDAO {
+public class CiudadesDAO {
 
     private ConexionBD conexion;
 
