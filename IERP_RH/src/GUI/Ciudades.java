@@ -14,10 +14,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Ciudades;
 
-/**
- *
- * @author ISC_8B
- */
 public class Ciudades extends javax.swing.JFrame {
 
     /**
