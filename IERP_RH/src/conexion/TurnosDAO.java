@@ -18,8 +18,8 @@ import modelo.RH_Turno;
  * @author selen
  */
 public class TurnosDAO {
+
     private ConexionBD conexion;
-   
 
     public TurnosDAO(ConexionBD conexion) {
         this.conexion = conexion;
@@ -41,15 +41,18 @@ public class TurnosDAO {
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
-        
+
+            
+        }
         return ban;
     }
+    
 
     public ArrayList<RH_Turno> consultaTurnos() {
         String sql = "from RH.Turnos"
                 + "select * "
                 + " ORDER BY idTurno ASC";
-       ArrayList<RH_Turno> lista = new ArrayList<>();
+        ArrayList<RH_Turno> lista = new ArrayList<>();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -60,7 +63,7 @@ public class TurnosDAO {
                 e.setHoraInicio(rs.getInt("fechaInicio"));
                 e.setHoraFin(rs.getInt("fechaFin"));
                 e.setDias(rs.getString(null));
-                lista.add(( e));
+                lista.add((e));
             }
             rs.close();
             st.close();
@@ -80,7 +83,7 @@ public class TurnosDAO {
             st.setString(1, p.getNombre());
             st.setInt(2, p.getHoraInicio());
             st.setInt(3, p.getHoraFin());
-            st.setString(4,null);
+            st.setString(4, null);
             st.execute();
             st.close();
             ban = true;
@@ -98,7 +101,7 @@ public class TurnosDAO {
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
             st.setInt(2, p.getIdTurno());
-            st.setString(1,"I");
+            st.setString(1, "I");
             st.execute();
             st.close();
             ban = true;
@@ -117,8 +120,4 @@ public class TurnosDAO {
         this.conexion = conexion;
     }
 
-    
-
-
 }
-
