@@ -11,30 +11,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.RH_Estado;
+import modelo.RH_Deduccion;
 
 /**
  *
- * @author Marco Chavez
+ * @author CarlosEsparza
  */
-public class EstadoDAO {
+public class DeduccionesDAO {
 
     private ConexionBD conexion;
 
-    public EstadoDAO(ConexionBD conexion) {
+    public DeduccionesDAO(ConexionBD conexion) {
         this.conexion = conexion;
 
     }
 
-    public boolean insertarEstado(RH_Estado estado) {
-        String sql = "insert into RH.Estados values(?,?,?)";
+    public boolean insertarEstado(RH_Deduccion estado) {
+        String sql = "insert into RH.Deduccion values(?,?,?)";
         boolean ban = false;
         try {
 
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
             st.setString(1, estado.getNombre());
-            st.setString(2, estado.getSiglas());
-            st.setString(3, estado.getEstatus());
+            st.setString(2, estado.getDescripcion());
+            st.setFloat(3, estado.getPorcentaje());
             st.execute();
 
             ban = true;
@@ -45,20 +45,20 @@ public class EstadoDAO {
         return ban;
     }
 
-    public ArrayList<RH_Estado> consultaEstados() {
+    public ArrayList<RH_Deduccion> consultaDeducciones() {
         String sql = "select * "
-                + "from RH.Estados"
-                + " ORDER BY idEstado ASC";
-        ArrayList<RH_Estado> lista = new ArrayList<>();
+                + "from RH.Deduccion"
+                + " ORDER BY idDeduccion ASC";
+        ArrayList<RH_Deduccion> lista = new ArrayList<>();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                RH_Estado e = new RH_Estado();
-                e.setIdEstado(rs.getInt("idEstado"));
+                RH_Deduccion e = new RH_Deduccion();
+                e.setIdDeduccion(rs.getInt("idDeduccion"));
                 e.setNombre(rs.getString("nombre"));
-                e.setSiglas(rs.getString("siglas"));
-                e.setEstatus(rs.getString("estatus"));
+                e.setDescripcion(rs.getString("descripcion"));
+                e.setPorcentaje(rs.getFloat("porcentaje"));
                 lista.add(e);
             }
             rs.close();
@@ -69,20 +69,20 @@ public class EstadoDAO {
         return lista;
     }
 
-    public ArrayList<RH_Estado> consultaEstadoNombre(String nombre) {
+    public ArrayList<RH_Deduccion> consultaDeduccionesNombre(String nombre) {
         String sql = "select * "
-                + "from RH.Estados "
+                + "from RH.Deduccion "
                 + "where Nombre like CONCAT( '%','" + nombre + "','%')";
-        ArrayList<RH_Estado> lista = new ArrayList<>();
+        ArrayList<RH_Deduccion> lista = new ArrayList<>();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                RH_Estado e = new RH_Estado();
-                e.setIdEstado(rs.getInt("idEstado"));
+                RH_Deduccion e = new RH_Deduccion();
+                e.setIdDeduccion(rs.getInt("idDeduccion"));
                 e.setNombre(rs.getString("nombre"));
-                e.setSiglas(rs.getString("siglas"));
-                e.setEstatus(rs.getString("estatus"));
+                e.setDescripcion(rs.getString("descripcion"));
+                e.setPorcentaje(rs.getFloat("porcentaje"));
                 lista.add(e);
             }
             rs.close();
@@ -93,21 +93,21 @@ public class EstadoDAO {
         return lista;
     }
 
-    public ArrayList<RH_Estado> consultaEstadoId(Integer idEstado) {
+    public ArrayList<RH_Deduccion> consultaDeduccionId(Integer idDeduccion) {
         String sql = "select * "
-                + "from RH.Estados "
-                + "where idEstado=? ";
-        ArrayList<RH_Estado> lista = new ArrayList<>();
+                + "from RH.Deduccion "
+                + "where idDeduccion=? ";
+        ArrayList<RH_Deduccion> lista = new ArrayList<>();
         try {
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
-            st.setInt(1, idEstado);
+            st.setInt(1, idDeduccion);
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                RH_Estado e = new RH_Estado();
-                e.setIdEstado(rs.getInt("idEstado"));
+                RH_Deduccion e = new RH_Deduccion();
+                e.setIdDeduccion(rs.getInt("idDeduccion"));
                 e.setNombre(rs.getString("nombre"));
-                e.setSiglas(rs.getString("siglas"));
-                e.setEstatus(rs.getString("estatus"));
+                e.setDescripcion(rs.getString("descripcion"));
+                e.setPorcentaje(rs.getFloat("porcentaje"));
                 lista.add(e);
             }
             rs.close();
@@ -118,16 +118,16 @@ public class EstadoDAO {
         return lista;
     }
 
-    public boolean actualizarEstado(RH_Estado estado) {
-        String sql = "update RH.Estados set nombre=?, siglas=?, estatus=? "
-                + " where idEstado=?";
+    public boolean actualizarDeduccion(RH_Deduccion deduccion) {
+        String sql = "update RH.Deduccion set nombre=?, descripcion=?, porcentaje=? "
+                + " where id=?";
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
-            st.setInt(4, estado.getIdEstado());
-            st.setString(1, estado.getNombre());
-            st.setString(2, estado.getSiglas());
-            st.setString(3, estado.getEstatus());
+            st.setInt(4, deduccion.getIdDeduccion());
+            st.setString(1, deduccion.getNombre());
+            st.setString(2, deduccion.getDescripcion());
+            st.setFloat(3, deduccion.getPorcentaje());
             st.execute();
             st.close();
             ban = true;
@@ -138,13 +138,13 @@ public class EstadoDAO {
         return ban;
     }
 
-    public boolean eliminacionLogicaEstado(RH_Estado p) {
-        String sql = "update RH.Estados set estatus=? "
-                + " where idEstado=?";
+    public boolean eliminacionLogicaDeduccion(RH_Deduccion p) {
+        String sql = "update RH.Deduccion set porcentaje=? "
+                + " where idDeduccion=?";
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
-            st.setInt(2, p.getIdEstado());
+            st.setInt(2, p.getIdDeduccion());
             st.setString(1, "I");
             st.execute();
             st.close();
