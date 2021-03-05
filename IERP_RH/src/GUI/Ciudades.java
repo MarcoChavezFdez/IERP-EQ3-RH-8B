@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import modelo.RH_Ciudades;
+import modelo.RH_Ciudad;
 
 public class Ciudades extends javax.swing.JFrame {
 
@@ -149,7 +149,7 @@ public class Ciudades extends javax.swing.JFrame {
                                 .addComponent(lblIdEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(24, 24, 24)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txfIdEstado, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                    .addComponent(txfIdEstado)
                     .addComponent(txfNombre)
                     .addComponent(jcbIdCiudad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(22, 22, 22)
@@ -377,7 +377,7 @@ public class Ciudades extends javax.swing.JFrame {
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         DefaultTableModel modelo = new DefaultTableModel();
-        RH_Ciudades o = new RH_Ciudades();
+        RH_Ciudad o = new RH_Ciudad();
         switch(cmbOpciones.getSelectedIndex())
         {
             case 1:
@@ -505,7 +505,7 @@ public class Ciudades extends javax.swing.JFrame {
     //Hasta aquí Comprueba que los datos introducidos no sean nulos
 }
     
-    public boolean insertar(RH_Ciudades o) 
+    public boolean insertar(RH_Ciudad o) 
     {
         String sql = "INSERT INTO Estados (idCiudad, idEstado, nombre,  estatus) VALUES(?,?,?,?);";
         try 
@@ -624,7 +624,7 @@ public class Ciudades extends javax.swing.JFrame {
         
     }
     
-    public boolean update(RH_Ciudades o)
+    public boolean update(RH_Ciudad o)
     {
         String sql = "UPDATE Ciudades SET  idEstado = ?, nombre = ?,  estatus = ? Where idCiudad = ?";
         try 

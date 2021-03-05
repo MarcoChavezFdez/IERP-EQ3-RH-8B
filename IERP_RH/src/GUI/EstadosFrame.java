@@ -21,8 +21,9 @@ public class EstadosFrame extends javax.swing.JFrame {
      * Creates new form EstadosFrame
      */
     ConexionBD conexion;
+
     public EstadosFrame(ConexionBD conexion) {
-        this.conexion=conexion;
+        this.conexion = conexion;
         initComponents();
         EstadoDAO estados = new EstadoDAO(this.conexion);
         ArrayList<RH_Estado> lista = estados.consultaEstados();
@@ -40,9 +41,11 @@ public class EstadosFrame extends javax.swing.JFrame {
 
         btn_Add = new javax.swing.JButton();
         btn_Modificar = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Datos = new javax.swing.JTable();
+        btn_Atras = new javax.swing.JButton();
+        txf_Busqueda = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -68,45 +71,99 @@ public class EstadosFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbl_Datos);
 
-        jTabbedPane1.addTab("Consultar Estados", jScrollPane1);
+        btn_Atras.setText("Atras");
+        btn_Atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AtrasActionPerformed(evt);
+            }
+        });
+
+        txf_Busqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txf_BusquedaActionPerformed(evt);
+            }
+        });
+        txf_Busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txf_BusquedaKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setText("Busqueda por nombre");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_Add)
-                    .addComponent(btn_Modificar))
-                .addContainerGap(93, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txf_Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_Atras)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btn_Modificar)
+                            .addComponent(btn_Add))))
+                .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
+                        .addGap(116, 116, 116)
                         .addComponent(btn_Add)
-                        .addGap(33, 33, 33)
-                        .addComponent(btn_Modificar))
+                        .addGap(30, 30, 30)
+                        .addComponent(btn_Modificar)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(62, Short.MAX_VALUE))
+                        .addGap(22, 22, 22)
+                        .addComponent(btn_Atras)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txf_Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-        // TODO add your handling code here:
+        AddEstadoFrame addEstado = new AddEstadoFrame(this.conexion);
+        this.dispose();
+        addEstado.setVisible(true);
+        this.pack();
+
     }//GEN-LAST:event_btn_AddActionPerformed
 
-        private void llenarTabla(ArrayList<RH_Estado> lista) {
-        String[] encabezado = {"IdEstado","Nombre","Siglas","Estatus"};
+    private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
+        PrincipalFrame pf = new PrincipalFrame(this.conexion);
+        this.dispose();
+        pf.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_AtrasActionPerformed
+
+    private void txf_BusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_BusquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txf_BusquedaActionPerformed
+
+    private void txf_BusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_BusquedaKeyReleased
+        EstadoDAO estados = new EstadoDAO(this.conexion);
+        ArrayList<RH_Estado> lista = estados.consultaEstadoNombre(txf_Busqueda.getText());
+        llenarTabla(lista);
+    }//GEN-LAST:event_txf_BusquedaKeyReleased
+
+    private void llenarTabla(ArrayList<RH_Estado> lista) {
+        String[] encabezado = {"IdEstado", "Nombre", "Siglas", "Estatus"};
         Object[][] datos = new Object[lista.size()][4];
         int ren = 0;
         for (RH_Estado s : lista) {
@@ -126,16 +183,18 @@ public class EstadosFrame extends javax.swing.JFrame {
 
         tbl_Datos.setModel(m);
     }
+
     /**
      * @param args the command line arguments
      */
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Add;
+    private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Modificar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tbl_Datos;
+    private javax.swing.JTextField txf_Busqueda;
     // End of variables declaration//GEN-END:variables
 }
