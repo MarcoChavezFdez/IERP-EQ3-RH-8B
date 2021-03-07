@@ -6,25 +6,37 @@
 package GUI;
 
 import conexion.ConexionBD;
+import conexion.TurnosDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.RH_Turno;
 
 /**
  *
  * @author selen
  */
 public class Turnos extends javax.swing.JFrame {
-
+          ConexionBD conexion;
+         
     /**
      * Creates new form Turnos
      */
     public Turnos() {
+        this.conexion = conexion;
         initComponents();
+        TurnosDAO estados = new TurnosDAO(this.conexion);
+        ArrayList<RH_Turno> lista = estados.consultaTurnos();
+      cargarTabla(lista);
+        
+        
+        
+        
     }
 
     /**
@@ -102,6 +114,11 @@ public class Turnos extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        tblTurnos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTurnosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblTurnos);
@@ -214,16 +231,31 @@ public class Turnos extends javax.swing.JFrame {
         btnmodificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/Modify.png"))); // NOI18N
         btnmodificar.setBorderPainted(false);
         btnmodificar.setContentAreaFilled(false);
+        btnmodificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnmodificarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnmodificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 420, 90, -1));
 
         btneliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/Trash.png"))); // NOI18N
         btneliminar.setBorderPainted(false);
         btneliminar.setContentAreaFilled(false);
+        btneliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btneliminarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btneliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 320, 90, -1));
 
         btnlimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/Clean.png"))); // NOI18N
         btnlimpiar.setBorderPainted(false);
         btnlimpiar.setContentAreaFilled(false);
+        btnlimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnlimpiarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 420, 90, -1));
 
         rbDomingo.setBackground(new java.awt.Color(0, 0, 0));
@@ -285,6 +317,9 @@ public class Turnos extends javax.swing.JFrame {
             ps.setString(5,dias);
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Registro Guardado");
+            limpiar();
+            ArrayList<RH_Turno> lista = null;
+              cargarTabla(lista); 
 
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, e.toString());
@@ -310,46 +345,158 @@ public class Turnos extends javax.swing.JFrame {
        etiqueta.setText("Guardar");
     }//GEN-LAST:event_btnguardarMouseEntered
 
-    private void cargarTabla(){
-        DefaultTableModel modeloTabla = (DefaultTableModel) tblTurnos.getModel();
-        modeloTabla.setRowCount(0);
+    private void tblTurnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTurnosMouseClicked
+       
+         
+    }//GEN-LAST:event_tblTurnosMouseClicked
+
+    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
+         int idTurno = Integer .parseInt(txtidTurno.getText());
+        String nombre = txtnombre.getText();
+        int horaInicio = Integer .parseInt(txthoraInicio.getText());
+        int horaFin = Integer .parseInt(txthoraFin.getText());
+        String dias = null;
+        if (rbLunes.isSelected()== true){
+            dias = "Lunes";
+
+        }if (rbMartes.isSelected()== true){
+            dias="Martes";
+        }
+        if (rbMiercoles.isSelected()== true){
+            dias="Miercoles";
+        }
+        if (rbJueves.isSelected()== true){
+            dias="Jueves";
+        }
+        if (rbViernes.isSelected()== true){
+            dias="Viernes";
+        }
+        if (rbSabado.isSelected()== true){
+            dias="Sabado";
+        }
+        if (rbDomingo.isSelected()== true){
+            dias="Domingo";
+        }
+        try{
+            Connection con = ConexionBD.GetConexion();
+            PreparedStatement ps =con.prepareStatement("UPDATE FROM Turnos SET idTurno=?,nombre=?,horaInicio0?,horaFin=?,dias=?) WHERE idTurno=?");
+            ps.setInt(1, idTurno);
+            ps.setString(2, nombre);
+            ps.setInt(3, horaInicio);
+            ps.setInt(4,horaFin);
+            ps.setString(5,dias);
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro modificado");
+            limpiar();
+            ArrayList<RH_Turno> lista = null;
+              cargarTabla(lista); 
+
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.toString());
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Turnos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnmodificarActionPerformed
+
+    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
+          int idTurno = Integer .parseInt(txtidTurno.getText());
         
+       
+        try{
+            Connection con = ConexionBD.GetConexion();
+            PreparedStatement ps =con.prepareStatement("DELETE FROM Turnos SET idTurno=?) WHERE idTurno=?");
+            ps.setInt(1, idTurno);
+           
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Registro eliminado");
+            limpiar();
+            ArrayList<RH_Turno> lista = null;
+              cargarTabla(lista); 
+
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.toString());
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Turnos.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btneliminarActionPerformed
+
+    private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
+       limpiar();
+    }//GEN-LAST:event_btnlimpiarActionPerformed
+
+    private void cargarTabla(ArrayList<RH_Turno> lista){
+        
+        String[] encabezado = {"IdTurno", "nombre", "horaInicio", "horaFin", "dias"};
+        Object[][] datos = new Object[lista.size()][5];
+        int ren = 0;
+        for (RH_Turno s : lista) {
+            datos[ren][0] = s.getIdTurno();
+            datos[ren][1] = s.getNombre();
+            datos[ren][2] = s.getHoraInicio();
+            datos[ren][3] = s.getHoraInicio();
+            datos[ren][4]= s.getDias();
+            ren++;
+        }
+        
+      DefaultTableModel modeloTabla = new DefaultTableModel(datos, encabezado){
+               @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Disallow the editing of any cell
+            }
+
+      };
+                tblTurnos.getModel();
+      
+      
+        
+}
+    private void limpiar(){
+        txtidTurno.setText("");
+        txtidTurno.setText("");
+        txtidTurno.setText("");
+        txtidTurno.setText("");
+        txtidTurno.setText("");
+      
+       
+
         
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Turnos().setVisible(true);
-            }
-        });
-}
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Turnos().setVisible(true);
+//            }
+//        });
+//}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btneliminar;
