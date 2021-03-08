@@ -31,50 +31,38 @@ public class login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         txfUsuario = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
         txPPassw = new javax.swing.JPasswordField();
         btn_IniciarSesion1 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Usuario");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, 20));
-
-        txfUsuario.setBackground(new java.awt.Color(153, 255, 255));
+        txfUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         txfUsuario.setText("Admin");
         txfUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfUsuarioActionPerformed(evt);
             }
         });
-        jPanel1.add(txfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 112, 20));
+        jPanel1.add(txfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 260, 50));
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Password");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, 20));
-
-        txPPassw.setBackground(new java.awt.Color(153, 255, 255));
+        txPPassw.setToolTipText("");
         txPPassw.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txPPasswActionPerformed(evt);
             }
         });
-        jPanel1.add(txPPassw, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 112, 20));
+        jPanel1.add(txPPassw, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, 260, 50));
 
-        btn_IniciarSesion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/inicio.png"))); // NOI18N
+        btn_IniciarSesion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Login/Login.png"))); // NOI18N
         btn_IniciarSesion1.setBorderPainted(false);
         btn_IniciarSesion1.setContentAreaFilled(false);
         btn_IniciarSesion1.addActionListener(new java.awt.event.ActionListener() {
@@ -82,19 +70,19 @@ public class login extends javax.swing.JFrame {
                 btn_IniciarSesion1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_IniciarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 150, 80));
+        jPanel1.add(btn_IniciarSesion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 350, 320, 80));
 
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/log.png"))); // NOI18N
-        jLabel2.setText("jLabel2");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Login/Bienvenido.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 270, 80));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/material/fondo1.png"))); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(-40, -40, 600, 510));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Login/Cuadro.png"))); // NOI18N
+        jLabel1.setToolTipText("");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 440));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -173,11 +161,9 @@ public class login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_IniciarSesion1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField txPPassw;
     private javax.swing.JTextField txfUsuario;
