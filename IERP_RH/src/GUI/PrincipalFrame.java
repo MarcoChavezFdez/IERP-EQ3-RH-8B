@@ -6,6 +6,11 @@
 package GUI;
 
 import conexion.ConexionBD;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  *
@@ -17,9 +22,29 @@ public class PrincipalFrame extends javax.swing.JFrame {
      * Creates new form PrincipalFrame
      */
     ConexionBD conexion;
+
     public PrincipalFrame(ConexionBD conexion) {
-        this.conexion=conexion;
+        this.conexion = conexion;
         initComponents();
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        lbl_fecha.setText(dateFormat.format(date));
+        DateTimeFormatter formateador = DateTimeFormatter.ofPattern("HH:mm:ss");
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        Thread.sleep(500);
+                        etiquetaReloj.setText(formateador.format(LocalDateTime.now()));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        Thread hilo = new Thread(runnable);
+        hilo.start();
     }
 
     /**
@@ -38,6 +63,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         btn_Turnos = new javax.swing.JButton();
         bnt_Estados = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        etiquetaReloj = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lbl_fecha = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -91,36 +120,48 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel1.setText("Menú Principal");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, -1, -1));
 
+        etiquetaReloj.setText("hh:mm:ss");
+        jPanel1.add(etiquetaReloj, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 470, -1, -1));
+
+        jLabel2.setText("Hora:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, -1, -1));
+
+        jLabel3.setText("Fecha:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, -1, -1));
+
+        lbl_fecha.setText("dd/mm/aaaa");
+        jPanel1.add(lbl_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 850, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void bnt_EstadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_EstadosActionPerformed
-       EstadosFrame estados = new EstadosFrame(this.conexion);
-       this.dispose();
-       estados.setVisible(true);
-       estados.pack();
-       
+        EstadosFrame estados = new EstadosFrame(this.conexion);
+        this.dispose();
+        estados.setVisible(true);
+        estados.pack();
+
     }//GEN-LAST:event_bnt_EstadosActionPerformed
 
     private void btn_CiudadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CiudadesActionPerformed
-       CiudadesFrame ciudades = new CiudadesFrame(this.conexion);
-       this.dispose();
-       ciudades.setVisible(true);
-       this.pack();
+        CiudadesFrame ciudades = new CiudadesFrame(this.conexion);
+        this.dispose();
+        ciudades.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_CiudadesActionPerformed
 
     private void btn_TurnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TurnosActionPerformed
         // TODO add your handling code here:
-        TurnoP turno = new TurnoP (this.conexion);
+        TurnoP turno = new TurnoP(this.conexion);
         this.dispose();
         turno.setVisible(true);
         turno.pack();
     }//GEN-LAST:event_btn_TurnosActionPerformed
 
     private void btn_DeduccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeduccionesActionPerformed
-         DeduccionesFrame deduccion = new DeduccionesFrame(this.conexion);
+        DeduccionesFrame deduccion = new DeduccionesFrame(this.conexion);
         this.dispose();
         deduccion.setVisible(true);
         deduccion.pack();
@@ -130,14 +171,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
      * @param args the command line arguments
      */
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bnt_Estados;
     private javax.swing.JButton btn_Ciudades;
     private javax.swing.JButton btn_Deducciones;
     private javax.swing.JButton btn_Turnos;
+    private javax.swing.JLabel etiquetaReloj;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_fecha;
     // End of variables declaration//GEN-END:variables
 }
