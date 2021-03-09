@@ -113,10 +113,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void btn_TurnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TurnosActionPerformed
         // TODO add your handling code here:
-        CiudadesFrame ciudades = new CiudadesFrame(this.conexion);
+        TurnoP turno = new TurnoP (this.conexion);
         this.dispose();
-        ciudades.setVisible(true);
-        ciudades.pack();
+        turno.setVisible(true);
+        turno.pack();
     }//GEN-LAST:event_btn_TurnosActionPerformed
 
     private void btn_DeduccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeduccionesActionPerformed

@@ -22,21 +22,55 @@ import modelo.RH_Turno;
  * @author selen
  */
 public class Turnos extends javax.swing.JFrame {
-          ConexionBD conexion;
-         
+
+    ConexionBD conexion;
+    RH_Turno turno;
+    Boolean bandera;
+
     /**
      * Creates new form Turnos
      */
-    public Turnos() {
+    public Turnos(ConexionBD conexion) {
         this.conexion = conexion;
         initComponents();
-        TurnosDAO estados = new TurnosDAO(this.conexion);
-        ArrayList<RH_Turno> lista = estados.consultaTurnos();
-      cargarTabla(lista);
-        
-        
-        
-        
+//        TurnosDAO estados = new TurnosDAO(this.conexion);
+//        ArrayList<RH_Turno> lista = estados.consultaTurnos();
+//      cargarTabla(lista);
+
+    }
+
+    Turnos(ConexionBD conexion, RH_Turno turno) {
+        this.turno = turno;
+        this.conexion = conexion;
+
+        btnguardar.setText("Modificar Turno");
+        btnguardar.setEnabled(true);
+        txtnombre.setText(this.turno.getNombre());
+           
+        String dias = null;
+        if (rbLunes.isSelected() == true) {
+            dias = "Lunes";
+
+        }
+        if (rbMartes.isSelected() == true) {
+            dias = "Martes";
+        }
+        if (rbMiercoles.isSelected() == true) {
+            dias = "Miercoles";
+        }
+        if (rbJueves.isSelected() == true) {
+            dias = "Jueves";
+        }
+        if (rbViernes.isSelected() == true) {
+            dias = "Viernes";
+        }
+        if (rbSabado.isSelected() == true) {
+            dias = "Sabado";
+        }
+        if (rbDomingo.isSelected() == true) {
+            dias = "Domingo";
+        }
+        this.bandera = true;
     }
 
     /**
@@ -51,8 +85,6 @@ public class Turnos extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblTurnos = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         txtidTurno = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -69,9 +101,6 @@ public class Turnos extends javax.swing.JFrame {
         rbViernes = new javax.swing.JRadioButton();
         rbSabado = new javax.swing.JRadioButton();
         btnguardar = new javax.swing.JButton();
-        btnmodificar = new javax.swing.JButton();
-        btneliminar = new javax.swing.JButton();
-        btnlimpiar = new javax.swing.JButton();
         rbDomingo = new javax.swing.JRadioButton();
         btnRegresar = new javax.swing.JButton();
 
@@ -92,62 +121,33 @@ public class Turnos extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/Turnos.png"))); // NOI18N
         jLabel1.setToolTipText("");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 270, 110));
-
-        tblTurnos.setBackground(new java.awt.Color(153, 255, 153));
-        tblTurnos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "Nombre", "Fecha Inicio", "Fecha Fin", "Dias"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        tblTurnos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblTurnosMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tblTurnos);
-
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 520, 360));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 270, 110));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel2.setText("ID:");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 31, 22));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 31, 22));
 
         txtidTurno.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel2.add(txtidTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 64, -1));
+        jPanel2.add(txtidTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 64, -1));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 80, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 80, -1));
 
         txtnombre.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel2.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 300, 140, -1));
+        jPanel2.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 80, -1));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setText("Fecha Inicio:");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel5.setText("Fecha Fin:");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setText("Días:");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, -1, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, -1, -1));
 
         txthoraInicio.setBackground(new java.awt.Color(153, 255, 153));
         txthoraInicio.addActionListener(new java.awt.event.ActionListener() {
@@ -155,10 +155,10 @@ public class Turnos extends javax.swing.JFrame {
                 txthoraInicioActionPerformed(evt);
             }
         });
-        jPanel2.add(txthoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 94, -1));
+        jPanel2.add(txthoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 94, -1));
 
         txthoraFin.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel2.add(txthoraFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 400, 97, -1));
+        jPanel2.add(txthoraFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, 97, -1));
 
         rbLunes.setBackground(new java.awt.Color(241, 151, 89));
         rbLunes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -213,37 +213,7 @@ public class Turnos extends javax.swing.JFrame {
                 btnguardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 90, 170, 80));
-
-        btnmodificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btn_Modificar.png"))); // NOI18N
-        btnmodificar.setBorderPainted(false);
-        btnmodificar.setContentAreaFilled(false);
-        btnmodificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnmodificarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnmodificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, 170, -1));
-
-        btneliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btn_Eliminar.png"))); // NOI18N
-        btneliminar.setBorderPainted(false);
-        btneliminar.setContentAreaFilled(false);
-        btneliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btneliminarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btneliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 90, 170, -1));
-
-        btnlimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnLimpiar.png"))); // NOI18N
-        btnlimpiar.setBorderPainted(false);
-        btnlimpiar.setContentAreaFilled(false);
-        btnlimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnlimpiarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 180, -1));
+        jPanel2.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 270, 160, 80));
 
         rbDomingo.setBackground(new java.awt.Color(241, 151, 89));
         rbDomingo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -253,59 +223,90 @@ public class Turnos extends javax.swing.JFrame {
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnAtras.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
         btnRegresar.setContentAreaFilled(false);
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, -1, -1));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 880, 550));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 880, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-        int idTurno = Integer .parseInt(txtidTurno.getText());
-        String nombre = txtnombre.getText();
-        int horaInicio = Integer .parseInt(txthoraInicio.getText());
-        int horaFin = Integer .parseInt(txthoraFin.getText());
+        RH_Turno eturno = new RH_Turno();
+//int idTurno = Integer .parseInt(txtidTurno.getText());
+//        String nombre = txtnombre.getText();
+//        int horaInicio = Integer .parseInt(txthoraInicio.getText());
+//        int horaFin = Integer .parseInt(txthoraFin.getText());
+//        String dias = null;
+        eturno.setNombre(txtnombre.getText().toUpperCase());
+        eturno.setHoraInicio(Integer.parseInt(txthoraInicio.getText().toUpperCase()));
+        eturno.setHoraFin(Integer.parseInt(txthoraFin.getText().toUpperCase()));
         String dias = null;
-        if (rbLunes.isSelected()== true){
-            dias = "Lunes";
+        if (rbLunes.isSelected() == true) {
+            eturno.setDias("Lunes");
 
-        }if (rbMartes.isSelected()== true){
-            dias="Martes";
         }
-        if (rbMiercoles.isSelected()== true){
-            dias="Miercoles";
+        if (rbMartes.isSelected() == true) {
+            eturno.setDias("Marte");
         }
-        if (rbJueves.isSelected()== true){
-            dias="Jueves";
+        if (rbMiercoles.isSelected() == true) {
+            eturno.setDias("Miercoles");
         }
-        if (rbViernes.isSelected()== true){
-            dias="Viernes";
+        if (rbJueves.isSelected() == true) {
+            eturno.setDias("Jueves");
         }
-        if (rbSabado.isSelected()== true){
-            dias="Sabado";
+        if (rbViernes.isSelected() == true) {
+            eturno.setDias("Viernes");
         }
-        if (rbDomingo.isSelected()== true){
-            dias="Domingo";
+        if (rbSabado.isSelected() == true) {
+            eturno.setDias("Sabado");
         }
-        try{
-            Connection con = ConexionBD.GetConexion();
-            PreparedStatement ps =con.prepareStatement("INSERT INTO Turnos(idTurno,nombre,horaInicio,horaFin,dias) VALUES (?,?,?,?,?)");
-            ps.setInt(1, idTurno);
-            ps.setString(2, nombre);
-            ps.setInt(3, horaInicio);
-            ps.setInt(4,horaFin);
-            ps.setString(5,dias);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro Guardado");
-            limpiar();
-            ArrayList<RH_Turno> lista = null;
-              cargarTabla(lista); 
+        if (rbDomingo.isSelected() == true) {
+            eturno.setDias("Domindo");
+        }
+        TurnosDAO turnoDAO = new TurnosDAO(this.conexion);
+        try {
+//            Connection con = ConexionBD.GetConexion();
+//            PreparedStatement ps =con.prepareStatement("INSERT INTO Turnos(idTurno,nombre,horaInicio,horaFin,dias) VALUES (?,?,?,?,?)");
+//            ps.setInt(1, idTurno);
+//            ps.setString(2, nombre);
+//            ps.setInt(3, horaInicio);
+//            ps.setInt(4,horaFin);
+//            ps.setString(5,dias);
+//            ps.executeUpdate();
+//            JOptionPane.showMessageDialog(null, "Registro Guardado");
+//            limpiar();
+//            ArrayList<RH_Turno> lista = null;
+//              cargarTabla(lista); 
+            if (bandera) {
+                eturno.setIdTurno(this.turno.getIdTurno());
 
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
+                if (turnoDAO.actualizarTurno(eturno)) {
+                    JOptionPane.showMessageDialog(null, "Estado Modificado con exito");
+                    TurnoP turnos = new TurnoP(this.conexion);
+                    this.dispose();
+                    turnos.setVisible(true);
+                    this.pack();
+                }
+            } else {
+                if (turnoDAO.insertarTurno(eturno)) {
+                    JOptionPane.showMessageDialog(null, "Estado Añadido con exito");
+                    TurnoP turnos = new TurnoP(this.conexion);
+                    this.dispose();
+                    turnos.setVisible(true);
+                    this.pack();
+                }
+            }
 
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Turnos.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+
+//        } catch (ClassNotFoundException ex) {
+//            Logger.getLogger(Turnos.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnguardarActionPerformed
 
@@ -322,127 +323,51 @@ public class Turnos extends javax.swing.JFrame {
     }//GEN-LAST:event_rbViernesActionPerformed
 
     private void btnguardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnguardarMouseEntered
-       etiqueta.setText("Guardar");
+
     }//GEN-LAST:event_btnguardarMouseEntered
 
-    private void tblTurnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTurnosMouseClicked
-       
-         
-    }//GEN-LAST:event_tblTurnosMouseClicked
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        EstadosFrame estados = new EstadosFrame(this.conexion);
+        this.dispose();
+        estados.setVisible(true);
+        estados.pack();
 
-    private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
-         int idTurno = Integer .parseInt(txtidTurno.getText());
-        String nombre = txtnombre.getText();
-        int horaInicio = Integer .parseInt(txthoraInicio.getText());
-        int horaFin = Integer .parseInt(txthoraFin.getText());
-        String dias = null;
-        if (rbLunes.isSelected()== true){
-            dias = "Lunes";
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
-        }if (rbMartes.isSelected()== true){
-            dias="Martes";
-        }
-        if (rbMiercoles.isSelected()== true){
-            dias="Miercoles";
-        }
-        if (rbJueves.isSelected()== true){
-            dias="Jueves";
-        }
-        if (rbViernes.isSelected()== true){
-            dias="Viernes";
-        }
-        if (rbSabado.isSelected()== true){
-            dias="Sabado";
-        }
-        if (rbDomingo.isSelected()== true){
-            dias="Domingo";
-        }
-        try{
-            Connection con = ConexionBD.GetConexion();
-            PreparedStatement ps =con.prepareStatement("UPDATE FROM Turnos SET idTurno=?,nombre=?,horaInicio0?,horaFin=?,dias=?) WHERE idTurno=?");
-            ps.setInt(1, idTurno);
-            ps.setString(2, nombre);
-            ps.setInt(3, horaInicio);
-            ps.setInt(4,horaFin);
-            ps.setString(5,dias);
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro modificado");
-            limpiar();
-            ArrayList<RH_Turno> lista = null;
-              cargarTabla(lista); 
-
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
-
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Turnos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnmodificarActionPerformed
-
-    private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
-          int idTurno = Integer .parseInt(txtidTurno.getText());
-        
-       
-        try{
-            Connection con = ConexionBD.GetConexion();
-            PreparedStatement ps =con.prepareStatement("DELETE FROM Turnos SET idTurno=?) WHERE idTurno=?");
-            ps.setInt(1, idTurno);
-           
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Registro eliminado");
-            limpiar();
-            ArrayList<RH_Turno> lista = null;
-              cargarTabla(lista); 
-
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, e.toString());
-
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Turnos.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btneliminarActionPerformed
-
-    private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
-       limpiar();
-    }//GEN-LAST:event_btnlimpiarActionPerformed
-
-    private void cargarTabla(ArrayList<RH_Turno> lista){
-        
-        String[] encabezado = {"IdTurno", "nombre", "horaInicio", "horaFin", "dias"};
-        Object[][] datos = new Object[lista.size()][5];
-        int ren = 0;
-        for (RH_Turno s : lista) {
-            datos[ren][0] = s.getIdTurno();
-            datos[ren][1] = s.getNombre();
-            datos[ren][2] = s.getHoraInicio();
-            datos[ren][3] = s.getHoraInicio();
-            datos[ren][4]= s.getDias();
-            ren++;
-        }
-        
-      DefaultTableModel modeloTabla = new DefaultTableModel(datos, encabezado){
-               @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) {
-                return false; //Disallow the editing of any cell
-            }
-
-      };
-                tblTurnos.getModel();
-      
-      
-        
-}
-    private void limpiar(){
-        txtidTurno.setText("");
-        txtidTurno.setText("");
-        txtidTurno.setText("");
-        txtidTurno.setText("");
-        txtidTurno.setText("");
-      
-       
-
-        
-    }
+//    private void cargarTabla(ArrayList<RH_Turno> lista){
+//        
+//        String[] encabezado = {"IdTurno", "nombre", "horaInicio", "horaFin", "dias"};
+//        Object[][] datos = new Object[lista.size()][5];
+//        int ren = 0;
+//        for (RH_Turno s : lista) {
+//            datos[ren][0] = s.getIdTurno();
+//            datos[ren][1] = s.getNombre();
+//            datos[ren][2] = s.getHoraInicio();
+//            datos[ren][3] = s.getHoraInicio();
+//            datos[ren][4]= s.getDias();
+//            ren++;
+//        }
+//        
+//      DefaultTableModel modeloTabla = new DefaultTableModel(datos, encabezado){
+//               @Override
+//            public boolean isCellEditable(int rowIndex, int colIndex) {
+//                return false; //Disallow the editing of any cell
+//            }
+//
+//      };
+//                tblTurnos.getModel();
+//      
+//      
+//        
+//}
+//    private void limpiar() {
+//        txtidTurno.setText("");
+//        txtidTurno.setText("");
+//        txtidTurno.setText("");
+//        txtidTurno.setText("");
+//        txtidTurno.setText("");
+//
+//    }
 //    /**
 //     * @param args the command line arguments
 //     */
@@ -480,10 +405,7 @@ public class Turnos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JButton btneliminar;
     private javax.swing.JButton btnguardar;
-    private javax.swing.JButton btnlimpiar;
-    private javax.swing.JButton btnmodificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -492,7 +414,6 @@ public class Turnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rbDomingo;
     private javax.swing.JRadioButton rbJueves;
     private javax.swing.JRadioButton rbLunes;
@@ -500,10 +421,11 @@ public class Turnos extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbMiercoles;
     private javax.swing.JRadioButton rbSabado;
     private javax.swing.JRadioButton rbViernes;
-    private javax.swing.JTable tblTurnos;
     private javax.swing.JTextField txthoraFin;
     private javax.swing.JTextField txthoraInicio;
     private javax.swing.JTextField txtidTurno;
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
-}
+
+    
+
