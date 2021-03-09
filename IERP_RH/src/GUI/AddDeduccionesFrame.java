@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package GUI;
+import conexion.ConexionBD;
+import conexion.DeduccionesDAO;
+import javax.swing.JOptionPane;
+import modelo.RH_Deduccion;
 
 /**
  *
@@ -14,10 +18,26 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
     /**
      * Creates new form AddDeduccionesFrame
      */
-    public AddDeduccionesFrame() {
+    ConexionBD conexion;
+    RH_Deduccion deduccion;
+    Boolean bandera;
+    
+    public AddDeduccionesFrame(ConexionBD conexion){
         initComponents();
+        this.conexion = conexion;
+        this.bandera = false;      
     }
-
+    public AddDeduccionesFrame(ConexionBD conexion, RH_Deduccion deduccion) {
+        initComponents();
+        this.deduccion = deduccion;
+        this.conexion = conexion;
+        txNombre.setText(this.deduccion.getNombre());
+        TxDescripcion.setText(this.deduccion.getDescripcion());
+        String h;
+        h =String.valueOf(jTextField1.getText());
+        jTextField1.setText(h);
+        this.bandera = true;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,11 +53,11 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txNombre = new javax.swing.JTextField();
+        TxDescripcion = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Nueva Deducción");
@@ -64,9 +84,14 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
 
         jLabel5.setText("Porcentaje");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 140, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 140, -1));
+
+        txNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txNombreActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 140, -1));
+        getContentPane().add(TxDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
 
         jLabel6.setText("Mensaje de Error");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
@@ -79,54 +104,58 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, -1));
+        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 160, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        DeduccionesFrame deduccion  = new DeduccionesFrame(this.conexion);
+        this.dispose();
+        deduccion.setVisible(true);
+        deduccion.pack();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        RH_Deduccion nDeduccion = new RH_Deduccion();
+        nDeduccion.setNombre(txNombre.getText().toUpperCase());
+        nDeduccion.setDescripcion(TxDescripcion.getText().toUpperCase());
+        DeduccionesDAO deduccionesDAO = new DeduccionesDAO(this.conexion);
+        try {
+            if (bandera) {
+                nDeduccion.setIdDeduccion(this.deduccion.getIdDeduccion());
+                if (deduccionesDAO.actualizarDeduccion(nDeduccion)) {
+                    JOptionPane.showMessageDialog(null, "Deduccion Modificada con exito");
+                    DeduccionesFrame deduccion = new DeduccionesFrame(this.conexion);
+                    this.dispose();
+                    deduccion.setVisible(true);
+                    this.pack();
+                }
+            } else {
+                if (deduccionesDAO.insertarDeduccion(nDeduccion)) {
+                    JOptionPane.showMessageDialog(null, "Deduccion Añadida con exito");
+                    DeduccionesFrame deduccion = new DeduccionesFrame(this.conexion);
+                    this.dispose();
+                    deduccion.setVisible(true);
+                    this.pack();
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        } // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txNombreActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddDeduccionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddDeduccionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddDeduccionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddDeduccionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddDeduccionesFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField TxDescripcion;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -136,7 +165,6 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txNombre;
     // End of variables declaration//GEN-END:variables
 }
