@@ -163,7 +163,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public void verificarCampos() {
-        if ("".equals(txNombre.getText()) || "".equals(TxDescripcion.getText())) {
+        if ("".equals(txNombre.getText()) || "".equals(TxDescripcion.getText())|| "".equals(jTextField1.getText())) {
             jButton2.setEnabled(false);
             jLabel6.setText("Debe llenar los campos");
         } else {
