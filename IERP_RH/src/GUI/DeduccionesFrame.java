@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Deduccion;
+
 /**
  *
  * @author Carlos Esparza
@@ -20,9 +21,10 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     /**
      * Creates new form DeduccionesFrame
      */
-        ConexionBD conexion;
-    public DeduccionesFrame(ConexionBD conexion){
-     this.conexion = conexion;
+    ConexionBD conexion;
+
+    public DeduccionesFrame(ConexionBD conexion) {
+        this.conexion = conexion;
         initComponents();
         DeduccionesDAO deduccion = new DeduccionesDAO(this.conexion);
         ArrayList<RH_Deduccion> lista = deduccion.consultaDeducciones();
@@ -146,7 +148,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
-     PrincipalFrame pf = new PrincipalFrame(this.conexion);
+        PrincipalFrame pf = new PrincipalFrame(this.conexion);
         this.dispose();
         pf.setVisible(true);
         this.pack();
@@ -157,7 +159,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txf_BusquedaActionPerformed
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-    AddDeduccionesFrame addDeduccion = new AddDeduccionesFrame(this.conexion);
+        AddDeduccionesFrame addDeduccion = new AddDeduccionesFrame(this.conexion);
         this.dispose();
         addDeduccion.setVisible(true);
         this.pack();
@@ -170,13 +172,13 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txf_BusquedaKeyReleased
 
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
-         Integer idDeduccion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        Integer idDeduccion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
         int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Deduccion con idDeduccion " + idDeduccion, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
-         DeduccionesDAO DAO = new DeduccionesDAO(this.conexion);
-               RH_Deduccion deduccion = new RH_Deduccion();
+        DeduccionesDAO DAO = new DeduccionesDAO(this.conexion);
+        RH_Deduccion deduccion = new RH_Deduccion();
         if (reply == JOptionPane.YES_OPTION) {
-               /*
-         deduccion = DAO.eliminacionLogicaDeduccion(deduccion);*/
+
+            DAO.eliminacionDeduccion(idDeduccion);
         }
     }//GEN-LAST:event_btn_EliminarActionPerformed
 
@@ -193,9 +195,10 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
         btn_Modificar.setEnabled(true);
         btn_Eliminar.setEnabled(true);
+
     }//GEN-LAST:event_tbl_DatosMousePressed
 
-        private void llenarTabla(ArrayList<RH_Deduccion> lista) {
+    private void llenarTabla(ArrayList<RH_Deduccion> lista) {
         String[] encabezado = {"IdDeduccion", "Nombre", "Descripcion", "Porcentaje"};
         Object[][] datos = new Object[lista.size()][4];
         int ren = 0;

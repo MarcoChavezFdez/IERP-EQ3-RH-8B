@@ -6,10 +6,12 @@
 package GUI;
 
 import conexion.ConexionBD;
+import conexion.DeduccionesDAO;
 import conexion.EstadoDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.RH_Deduccion;
 import modelo.RH_Estado;
 
 /**
@@ -150,6 +152,11 @@ public class EstadosFrame extends javax.swing.JFrame {
         btn_Eliminar.setBorderPainted(false);
         btn_Eliminar.setContentAreaFilled(false);
         btn_Eliminar.setEnabled(false);
+        btn_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EliminarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 190, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 690, 550));
@@ -219,7 +226,17 @@ public class EstadosFrame extends javax.swing.JFrame {
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
         btn_Modificar.setEnabled(true);
         btn_Deshabilitar.setEnabled(true);
+        btn_Eliminar.setEnabled(true);
     }//GEN-LAST:event_tbl_DatosMousePressed
+
+    private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
+        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR el estado con idEstado " + idEstado, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        EstadoDAO DAO = new EstadoDAO(this.conexion);
+        if (reply == JOptionPane.YES_OPTION) {
+            DAO.eliminacionEstado(idEstado);
+        }
+    }//GEN-LAST:event_btn_EliminarActionPerformed
 
     private void llenarTabla(ArrayList<RH_Estado> lista) {
         String[] encabezado = {"IdEstado", "Nombre", "Siglas", "Estatus"};

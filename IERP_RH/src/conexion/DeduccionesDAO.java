@@ -97,18 +97,18 @@ public class DeduccionesDAO {
         String sql = ("select * "
                 + "from RH.Deducciones "
                 + "where idDeduccion=" + idDeduccion);
-        RH_Deduccion deduccion  = new RH_Deduccion();
+        RH_Deduccion deduccion = new RH_Deduccion();
         try {
-           // PreparedStatement st = conexion.getConexion().prepareStatement(sql);
+            // PreparedStatement st = conexion.getConexion().prepareStatement(sql);
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-      
+
                 deduccion.setIdDeduccion(rs.getInt("idDeduccion"));
                 deduccion.setNombre(rs.getString("nombre"));
                 deduccion.setDescripcion(rs.getString("descripcion"));
                 deduccion.setPorcentaje(rs.getFloat("porcentaje"));
-               
+
             }
             rs.close();
             st.close();
@@ -138,19 +138,20 @@ public class DeduccionesDAO {
         return ban;
     }
 
-    public RH_Deduccion eliminacionLogicaDeduccion(Integer  p) {
-        String sql= "delete from RH.Deducciones"
-                + "where idDeduccion="+p;
-    RH_Deduccion deduccion = new RH_Deduccion();
- /*
-             Statement st = conexion.getConexion().createStatement();
-            ResultSet rs = st.executeQuery(sql);
-      
-      */
-         return deduccion;
-           
-     
-       
+    public boolean eliminacionDeduccion(Integer p) {
+        String sql = "delete from RH.Deducciones "
+                + "where idDeduccion=" + p;
+        boolean ban = false;
+        try {
+            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
+            st.execute();
+            st.close();
+            ban = true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error elimando:" + e.getMessage());
+        }
+        return ban;
     }
 
     public ConexionBD getConexion() {

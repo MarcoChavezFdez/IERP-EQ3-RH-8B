@@ -154,6 +154,21 @@ public class EstadoDAO {
         }
         return ban;
     }
+    public boolean eliminacionEstado(Integer p) {
+        String sql = "delete from RH.Estados "
+                + "where idEstado=" + p;
+        boolean ban = false;
+        try {
+            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
+            st.execute();
+            st.close();
+            ban = true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error elimando:" + e.getMessage());
+        }
+        return ban;
+    }
 
     public ConexionBD getConexion() {
         return conexion;
