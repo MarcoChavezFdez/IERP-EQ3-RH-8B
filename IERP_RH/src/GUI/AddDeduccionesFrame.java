@@ -34,7 +34,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         txNombre.setText(this.deduccion.getNombre());
         TxDescripcion.setText(this.deduccion.getDescripcion());
         String h;
-        h =String.valueOf(jTextField1.getText());
+        h =String.valueOf(this.deduccion.getPorcentaje());
         jTextField1.setText(h);
         this.bandera = true;
     }
