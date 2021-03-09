@@ -46,8 +46,7 @@ public class Turnos extends javax.swing.JFrame {
         btnguardar.setText("Modificar Turno");
         btnguardar.setEnabled(true);
         txtnombre.setText(this.turno.getNombre());
-       Integer.parseInt(txthoraInicio.setText(this.turno.getHoraInicio()));
-         Integer.parseInt(txthoraFin.setText(this.turno.getHoraFin()));     
+           
         String dias = null;
         if (rbLunes.isSelected() == true) {
             dias = "Lunes";

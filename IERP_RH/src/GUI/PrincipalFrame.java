@@ -113,7 +113,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void btn_TurnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TurnosActionPerformed
         // TODO add your handling code here:
-        Turnos turno = new Turnos (this.conexion);
+        TurnoP turno = new TurnoP (this.conexion);
         this.dispose();
         turno.setVisible(true);
         turno.pack();
