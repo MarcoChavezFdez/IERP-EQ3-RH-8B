@@ -27,7 +27,7 @@ public class DeduccionesDAO {
     }
 
     public boolean insertarDeduccion(RH_Deduccion deduccion) {
-        String sql = "insert into RH.Deduccion values(?,?,?)";
+        String sql = "insert into RH.Deducciones values(?,?,?)";
         boolean ban = false;
         try {
 
@@ -47,7 +47,7 @@ public class DeduccionesDAO {
 
     public ArrayList<RH_Deduccion> consultaDeducciones() {
         String sql = "select * "
-                + "from RH.Deduccion"
+                + "from RH.Deducciones"
                 + " ORDER BY idDeduccion ASC";
         ArrayList<RH_Deduccion> lista = new ArrayList<>();
         try {
@@ -71,7 +71,7 @@ public class DeduccionesDAO {
 
     public ArrayList<RH_Deduccion> consultaDeduccionesNombre(String nombre) {
         String sql = "select * "
-                + "from RH.Deduccion "
+                + "from RH.Deducciones "
                 + "where Nombre like CONCAT( '%','" + nombre + "','%')";
         ArrayList<RH_Deduccion> lista = new ArrayList<>();
         try {
@@ -95,8 +95,8 @@ public class DeduccionesDAO {
 
     public RH_Deduccion consultaDeduccionId(Integer idDeduccion) {
         String sql = ("select * "
-                + "from RH.Deduccion "
-                + "where idDeduccion=? " + idDeduccion);
+                + "from RH.Deducciones "
+                + "where idDeduccion=" + idDeduccion);
         RH_Deduccion deduccion  = new RH_Deduccion();
         try {
            // PreparedStatement st = conexion.getConexion().prepareStatement(sql);
@@ -119,7 +119,7 @@ public class DeduccionesDAO {
     }
 
     public boolean actualizarDeduccion(RH_Deduccion deduccion) {
-        String sql = "update RH.Deduccion set nombre=?, descripcion=?, porcentaje=? "
+        String sql = "update RH.Deducciones set nombre=?, descripcion=?, porcentaje=? "
                 + " where idDeduccion=?";
         boolean ban = false;
         try {
@@ -137,24 +137,21 @@ public class DeduccionesDAO {
         }
         return ban;
     }
-/*
-    public boolean eliminacionLogicaDeduccion(RH_Deduccion p) {
-        String sql = "update RH.Deduccion set porcentaje=? "
-                + " where idDeduccion=?";
-        boolean ban = false;
-        try {
-            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
-            st.setInt(2, p.getIdDeduccion());
-            st.setString(1, "I");
-            st.execute();
-            st.close();
-            ban = true;
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
-        }
-        return ban;
-    }*/
+    public RH_Deduccion eliminacionLogicaDeduccion(Integer  p) {
+        String sql= "delete from RH.Deducciones"
+                + "where idDeduccion="+p;
+    RH_Deduccion deduccion = new RH_Deduccion();
+ /*
+             Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+      
+      */
+         return deduccion;
+           
+     
+       
+    }
 
     public ConexionBD getConexion() {
         return conexion;

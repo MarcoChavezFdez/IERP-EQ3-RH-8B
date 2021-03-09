@@ -47,15 +47,16 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel4 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txNombre = new javax.swing.JTextField();
         TxDescripcion = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
 
@@ -63,6 +64,10 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         setTitle("Nueva Deducción");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("Atras");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -70,31 +75,38 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
         jLabel1.setText("Nueva Deducción");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, -1, -1));
 
         jLabel2.setText("Nombre");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
 
         jLabel3.setText("Descripcion ");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, -1));
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, -1));
 
         jLabel5.setText("Porcentaje");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
 
         txNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txNombreActionPerformed(evt);
             }
         });
-        getContentPane().add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 140, -1));
-        getContentPane().add(TxDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
+        txNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txNombreKeyReleased(evt);
+            }
+        });
+        jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 140, -1));
 
-        jLabel6.setText("Mensaje de Error");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
+        TxDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxDescripcionKeyReleased(evt);
+            }
+        });
+        jPanel1.add(TxDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
 
         jButton2.setText("Añadir Deducción");
         jButton2.setEnabled(false);
@@ -103,8 +115,10 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 160, -1));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, -1));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 160, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 480));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -120,6 +134,8 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         RH_Deduccion nDeduccion = new RH_Deduccion();
         nDeduccion.setNombre(txNombre.getText().toUpperCase());
         nDeduccion.setDescripcion(TxDescripcion.getText().toUpperCase());
+        
+        nDeduccion.setPorcentaje(Float.parseFloat(jTextField1.getText()));
         DeduccionesDAO deduccionesDAO = new DeduccionesDAO(this.conexion);
         try {
             if (bandera) {
@@ -146,9 +162,27 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         } // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    public void verificarCampos() {
+        if ("".equals(txNombre.getText()) || "".equals(TxDescripcion.getText())) {
+            jButton2.setEnabled(false);
+            jLabel6.setText("Debe llenar los campos");
+        } else {
+            jButton2.setEnabled(true);
+            jLabel6.setText("");
+        }
+
+    }
     private void txNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txNombreActionPerformed
+
+    private void txNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txNombreKeyReleased
+    verificarCampos();
+    }//GEN-LAST:event_txNombreKeyReleased
+
+    private void TxDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxDescripcionKeyReleased
+    verificarCampos();        // TODO add your handling code here:
+    }//GEN-LAST:event_TxDescripcionKeyReleased
 
     /**
      * @param args the command line arguments
@@ -164,6 +198,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txNombre;
     // End of variables declaration//GEN-END:variables

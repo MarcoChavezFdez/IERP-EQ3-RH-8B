@@ -31,67 +31,67 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btn_Turnos = new javax.swing.JButton();
-        bnt_Estados = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanel1 = new javax.swing.JPanel();
         btn_Ciudades = new javax.swing.JButton();
         btn_Deducciones = new javax.swing.JButton();
+        btn_Turnos = new javax.swing.JButton();
+        bnt_Estados = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_Turnos.setText("Turnos");
-        btn_Turnos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_TurnosActionPerformed(evt);
-            }
-        });
+        jPanel1.setBackground(new java.awt.Color(241, 151, 89));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bnt_Estados.setText("Estados");
-        bnt_Estados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bnt_EstadosActionPerformed(evt);
-            }
-        });
-
-        btn_Ciudades.setText("Ciudades");
+        btn_Ciudades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ciudades.png"))); // NOI18N
+        btn_Ciudades.setBorderPainted(false);
+        btn_Ciudades.setContentAreaFilled(false);
         btn_Ciudades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_CiudadesActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_Ciudades, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, -1, -1));
 
-        btn_Deducciones.setText("Deducciones");
+        btn_Deducciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Dedu.png"))); // NOI18N
+        btn_Deducciones.setBorderPainted(false);
+        btn_Deducciones.setContentAreaFilled(false);
         btn_Deducciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_DeduccionesActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_Deducciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 270, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(132, 132, 132)
-                .addComponent(btn_Turnos)
-                .addGap(73, 73, 73)
-                .addComponent(btn_Ciudades)
-                .addGap(54, 54, 54)
-                .addComponent(bnt_Estados)
-                .addGap(59, 59, 59)
-                .addComponent(btn_Deducciones)
-                .addContainerGap(223, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(172, 172, 172)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Turnos)
-                    .addComponent(bnt_Estados)
-                    .addComponent(btn_Ciudades)
-                    .addComponent(btn_Deducciones))
-                .addContainerGap(286, Short.MAX_VALUE))
-        );
+        btn_Turnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Tur.png"))); // NOI18N
+        btn_Turnos.setBorderPainted(false);
+        btn_Turnos.setContentAreaFilled(false);
+        btn_Turnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_TurnosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Turnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
+
+        bnt_Estados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Estados.png"))); // NOI18N
+        bnt_Estados.setBorderPainted(false);
+        bnt_Estados.setContentAreaFilled(false);
+        bnt_Estados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_EstadosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bnt_Estados, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 370, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 51, 0));
+        jLabel1.setText("Menú Principal");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 850, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -120,7 +120,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_TurnosActionPerformed
 
     private void btn_DeduccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeduccionesActionPerformed
-        // TODO add your handling code here:
+         DeduccionesFrame deduccion = new DeduccionesFrame(this.conexion);
+        this.dispose();
+        deduccion.setVisible(true);
+        deduccion.pack();
     }//GEN-LAST:event_btn_DeduccionesActionPerformed
 
     /**
@@ -133,5 +136,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Ciudades;
     private javax.swing.JButton btn_Deducciones;
     private javax.swing.JButton btn_Turnos;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

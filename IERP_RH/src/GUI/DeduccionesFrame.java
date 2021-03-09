@@ -38,6 +38,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         btn_Atras = new javax.swing.JButton();
         txf_Busqueda = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -46,19 +47,25 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Datos = new javax.swing.JTable();
         btn_Deshabilitar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Deducciones");
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_Atras.setText("Atras");
+        jPanel1.setBackground(new java.awt.Color(241, 151, 89));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
+        btn_Atras.setBorderPainted(false);
+        btn_Atras.setContentAreaFilled(false);
         btn_Atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AtrasActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         txf_Busqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,27 +77,32 @@ public class DeduccionesFrame extends javax.swing.JFrame {
                 txf_BusquedaKeyReleased(evt);
             }
         });
-        getContentPane().add(txf_Busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 205, -1));
+        jPanel1.add(txf_Busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 140, 205, -1));
 
         jLabel1.setText("Busqueda por nombre");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, -1, -1));
 
-        btn_Add.setText("Añadir");
+        btn_Add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
+        btn_Add.setBorderPainted(false);
+        btn_Add.setContentAreaFilled(false);
         btn_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AddActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, -1, -1));
+        jPanel1.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 180, -1));
 
-        btn_Modificar.setText("Modificar");
+        btn_Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Modificar.png"))); // NOI18N
+        btn_Modificar.setBorderPainted(false);
+        btn_Modificar.setContentAreaFilled(false);
         btn_Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ModificarActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, -1, -1));
+        jPanel1.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 180, -1));
 
+        tbl_Datos.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -109,15 +121,24 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_Datos);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 380, 360));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 380, 360));
 
-        btn_Deshabilitar.setText("Deshabilitar");
+        btn_Deshabilitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
+        btn_Deshabilitar.setToolTipText("");
+        btn_Deshabilitar.setBorderPainted(false);
+        btn_Deshabilitar.setContentAreaFilled(false);
         btn_Deshabilitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_DeshabilitarActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_Deshabilitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, -1, -1));
+        jPanel1.add(btn_Deshabilitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 170, -1));
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabel2.setText("Deducciones");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, 40));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -148,12 +169,12 @@ public class DeduccionesFrame extends javax.swing.JFrame {
 
     private void btn_DeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeshabilitarActionPerformed
          Integer idDeduccion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea cambiar el estatus del Deduccion con idDeduccion " + idDeduccion, "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Deduccion con idDeduccion " + idDeduccion, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+         DeduccionesDAO DAO = new DeduccionesDAO(this.conexion);
+               RH_Deduccion deduccion = new RH_Deduccion();
         if (reply == JOptionPane.YES_OPTION) {
-            RH_Deduccion deduccion = new RH_Deduccion();
-            DeduccionesDAO DAO = new DeduccionesDAO(this.conexion);
-            deduccion = DAO.consultaDeduccionId(idDeduccion);
- 
+               /*
+         deduccion = DAO.eliminacionLogicaDeduccion(deduccion);*/
         }
     }//GEN-LAST:event_btn_DeshabilitarActionPerformed
 
@@ -204,6 +225,8 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Deshabilitar;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tbl_Datos;
     private javax.swing.JTextField txf_Busqueda;
