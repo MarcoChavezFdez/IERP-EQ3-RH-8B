@@ -50,6 +50,7 @@ public class EstadosFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btn_Deshabilitar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btn_Eliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estado");
@@ -144,6 +145,12 @@ public class EstadosFrame extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel2.setText("Estado");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, -1, -1));
+
+        btn_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
+        btn_Eliminar.setBorderPainted(false);
+        btn_Eliminar.setContentAreaFilled(false);
+        btn_Eliminar.setEnabled(false);
+        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 190, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 690, 550));
 
@@ -244,6 +251,7 @@ public class EstadosFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Add;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Deshabilitar;
+    private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

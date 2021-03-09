@@ -46,7 +46,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         btn_Modificar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Datos = new javax.swing.JTable();
-        btn_Deshabilitar = new javax.swing.JButton();
+        btn_Eliminar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,6 +95,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         btn_Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Modificar.png"))); // NOI18N
         btn_Modificar.setBorderPainted(false);
         btn_Modificar.setContentAreaFilled(false);
+        btn_Modificar.setEnabled(false);
         btn_Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ModificarActionPerformed(evt);
@@ -123,16 +124,17 @@ public class DeduccionesFrame extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 380, 360));
 
-        btn_Deshabilitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
-        btn_Deshabilitar.setToolTipText("");
-        btn_Deshabilitar.setBorderPainted(false);
-        btn_Deshabilitar.setContentAreaFilled(false);
-        btn_Deshabilitar.addActionListener(new java.awt.event.ActionListener() {
+        btn_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
+        btn_Eliminar.setToolTipText("");
+        btn_Eliminar.setBorderPainted(false);
+        btn_Eliminar.setContentAreaFilled(false);
+        btn_Eliminar.setEnabled(false);
+        btn_Eliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_DeshabilitarActionPerformed(evt);
+                btn_EliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Deshabilitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 170, -1));
+        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 410, 170, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel2.setText("Deducciones");
@@ -167,7 +169,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         llenarTabla(lista);
     }//GEN-LAST:event_txf_BusquedaKeyReleased
 
-    private void btn_DeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeshabilitarActionPerformed
+    private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
          Integer idDeduccion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
         int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Deduccion con idDeduccion " + idDeduccion, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
          DeduccionesDAO DAO = new DeduccionesDAO(this.conexion);
@@ -176,7 +178,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
                /*
          deduccion = DAO.eliminacionLogicaDeduccion(deduccion);*/
         }
-    }//GEN-LAST:event_btn_DeshabilitarActionPerformed
+    }//GEN-LAST:event_btn_EliminarActionPerformed
 
     private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
         Integer idDeduccion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
@@ -190,7 +192,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
 
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
         btn_Modificar.setEnabled(true);
-        btn_Deshabilitar.setEnabled(true);
+        btn_Eliminar.setEnabled(true);
     }//GEN-LAST:event_tbl_DatosMousePressed
 
         private void llenarTabla(ArrayList<RH_Deduccion> lista) {
@@ -222,7 +224,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Add;
     private javax.swing.JButton btn_Atras;
-    private javax.swing.JButton btn_Deshabilitar;
+    private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

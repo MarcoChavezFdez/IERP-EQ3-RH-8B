@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.RH_Ciudades;
+//import modelo.RH_Ciudades;
 
 public class CiudadesDAO {
 
@@ -15,7 +15,7 @@ public class CiudadesDAO {
     public CiudadesDAO(ConexionBD conexion) {
         this.conexion = conexion;
 
-    }
+    }/*
   
   public void consultaTodo(JTable tbl) 
     {
@@ -89,7 +89,7 @@ public class CiudadesDAO {
                 return false;
         }     
     }
-  
+  */
    public ConexionBD getConexion() {
         return conexion;
     }
