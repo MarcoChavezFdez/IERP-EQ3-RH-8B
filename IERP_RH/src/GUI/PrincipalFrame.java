@@ -31,13 +31,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        btn_Turnos = new javax.swing.JButton();
         bnt_Estados = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btn_Ciudades = new javax.swing.JButton();
+        btn_Deducciones = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Turnos");
+        btn_Turnos.setText("Turnos");
+        btn_Turnos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_TurnosActionPerformed(evt);
+            }
+        });
 
         bnt_Estados.setText("Estados");
         bnt_Estados.addActionListener(new java.awt.event.ActionListener() {
@@ -46,10 +52,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Ciudades");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_Ciudades.setText("Ciudades");
+        btn_Ciudades.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_CiudadesActionPerformed(evt);
+            }
+        });
+
+        btn_Deducciones.setText("Deducciones");
+        btn_Deducciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_DeduccionesActionPerformed(evt);
             }
         });
 
@@ -59,21 +72,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(132, 132, 132)
-                .addComponent(jButton1)
-                .addGap(62, 62, 62)
-                .addComponent(jButton3)
-                .addGap(65, 65, 65)
+                .addComponent(btn_Turnos)
+                .addGap(73, 73, 73)
+                .addComponent(btn_Ciudades)
+                .addGap(54, 54, 54)
                 .addComponent(bnt_Estados)
-                .addContainerGap(385, Short.MAX_VALUE))
+                .addGap(59, 59, 59)
+                .addComponent(btn_Deducciones)
+                .addContainerGap(223, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(172, 172, 172)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btn_Turnos)
                     .addComponent(bnt_Estados)
-                    .addComponent(jButton3))
+                    .addComponent(btn_Ciudades)
+                    .addComponent(btn_Deducciones))
                 .addContainerGap(286, Short.MAX_VALUE))
         );
 
@@ -88,9 +104,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
        
     }//GEN-LAST:event_bnt_EstadosActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btn_CiudadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CiudadesActionPerformed
+       CiudadesFrame ciudades = new CiudadesFrame(this.conexion);
+       this.dispose();
+       ciudades.setVisible(true);
+       this.pack();
+    }//GEN-LAST:event_btn_CiudadesActionPerformed
+
+    private void btn_TurnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TurnosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        CiudadesFrame ciudades = new CiudadesFrame(this.conexion);
+        this.dispose();
+        ciudades.setVisible(true);
+        ciudades.pack();
+    }//GEN-LAST:event_btn_TurnosActionPerformed
+
+    private void btn_DeduccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeduccionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_DeduccionesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -99,7 +130,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bnt_Estados;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btn_Ciudades;
+    private javax.swing.JButton btn_Deducciones;
+    private javax.swing.JButton btn_Turnos;
     // End of variables declaration//GEN-END:variables
 }
