@@ -5,17 +5,28 @@
  */
 package GUI;
 
+import conexion.ConexionBD;
+import conexion.DeduccionesDAO;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.RH_Deduccion;
 /**
  *
- * @author Carlos EsparzadeAnda
+ * @author Carlos Esparza
  */
 public class DeduccionesFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form DeduccionesFrame
      */
-    public DeduccionesFrame() {
+        ConexionBD conexion;
+    public DeduccionesFrame(ConexionBD conexion){
+     this.conexion = conexion;
         initComponents();
+        DeduccionesDAO deduccion = new DeduccionesDAO(this.conexion);
+        ArrayList<RH_Deduccion> lista = deduccion.consultaDeducciones();
+        llenarTabla(lista);
     }
 
     /**
@@ -28,12 +39,13 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         btn_Atras = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txf_Busqueda = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        btn_Añadir = new javax.swing.JButton();
+        btn_Add = new javax.swing.JButton();
         btn_Modificar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_Datos = new javax.swing.JTable();
+        btn_Deshabilitar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Deducciones");
@@ -48,28 +60,38 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         });
         getContentPane().add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txf_Busqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txf_BusquedaActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 205, -1));
+        txf_Busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txf_BusquedaKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txf_Busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 205, -1));
 
         jLabel1.setText("Busqueda por nombre");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
 
-        btn_Añadir.setText("Añadir");
-        btn_Añadir.addActionListener(new java.awt.event.ActionListener() {
+        btn_Add.setText("Añadir");
+        btn_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_AñadirActionPerformed(evt);
+                btn_AddActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_Añadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, -1, -1));
+        getContentPane().add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, -1, -1));
 
         btn_Modificar.setText("Modificar");
+        btn_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ModificarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -80,67 +102,110 @@ public class DeduccionesFrame extends javax.swing.JFrame {
                 "IdDeducciones", "Nombre", "Descripcion", "Porcentaje"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbl_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbl_DatosMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_Datos);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 380, 360));
+
+        btn_Deshabilitar.setText("Deshabilitar");
+        btn_Deshabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_DeshabilitarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_Deshabilitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
-        // TODO add your handling code here:
+     PrincipalFrame pf = new PrincipalFrame(this.conexion);
+        this.dispose();
+        pf.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_AtrasActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txf_BusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_BusquedaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txf_BusquedaActionPerformed
 
-    private void btn_AñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AñadirActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_AñadirActionPerformed
+    private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
+    AddDeduccionesFrame addDeduccion = new AddDeduccionesFrame(this.conexion);
+        this.dispose();
+        addDeduccion.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_AddActionPerformed
 
+    private void txf_BusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_BusquedaKeyReleased
+        DeduccionesDAO deduccion = new DeduccionesDAO(this.conexion);
+        ArrayList<RH_Deduccion> lista = deduccion.consultaDeduccionesNombre(txf_Busqueda.getText());
+        llenarTabla(lista);
+    }//GEN-LAST:event_txf_BusquedaKeyReleased
+
+    private void btn_DeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeshabilitarActionPerformed
+         Integer idDeduccion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea cambiar el estatus del Deduccion con idDeduccion " + idDeduccion, "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            RH_Deduccion deduccion = new RH_Deduccion();
+            DeduccionesDAO DAO = new DeduccionesDAO(this.conexion);
+            deduccion = DAO.consultaDeduccionId(idDeduccion);
+ 
+        }
+    }//GEN-LAST:event_btn_DeshabilitarActionPerformed
+
+    private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
+        Integer idDeduccion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        DeduccionesDAO DAO = new DeduccionesDAO(this.conexion);
+        RH_Deduccion deduccion = new RH_Deduccion();
+        deduccion = DAO.consultaDeduccionId(idDeduccion);
+        AddDeduccionesFrame modificarDeduccion = new AddDeduccionesFrame(this.conexion, deduccion);
+        this.setVisible(false);
+        modificarDeduccion.setVisible(true);
+    }//GEN-LAST:event_btn_ModificarActionPerformed
+
+    private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
+        btn_Modificar.setEnabled(true);
+        btn_Deshabilitar.setEnabled(true);
+    }//GEN-LAST:event_tbl_DatosMousePressed
+
+        private void llenarTabla(ArrayList<RH_Deduccion> lista) {
+        String[] encabezado = {"IdDeduccion", "Nombre", "Descripcion", "Porcentaje"};
+        Object[][] datos = new Object[lista.size()][4];
+        int ren = 0;
+        for (RH_Deduccion s : lista) {
+            datos[ren][0] = s.getIdDeduccion();
+            datos[ren][1] = s.getNombre();
+            datos[ren][2] = s.getDescripcion();
+            datos[ren][3] = s.getPorcentaje();
+            ren++;
+        }
+        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Disallow the editing of any cell
+            }
+
+        };
+
+        tbl_Datos.setModel(m);
+    }
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DeduccionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DeduccionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DeduccionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DeduccionesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DeduccionesFrame().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Add;
     private javax.swing.JButton btn_Atras;
-    private javax.swing.JButton btn_Añadir;
+    private javax.swing.JButton btn_Deshabilitar;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tbl_Datos;
+    private javax.swing.JTextField txf_Busqueda;
     // End of variables declaration//GEN-END:variables
 }

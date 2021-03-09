@@ -26,15 +26,15 @@ public class DeduccionesDAO {
 
     }
 
-    public boolean insertarEstado(RH_Deduccion estado) {
+    public boolean insertarDeduccion(RH_Deduccion deduccion) {
         String sql = "insert into RH.Deduccion values(?,?,?)";
         boolean ban = false;
         try {
 
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
-            st.setString(1, estado.getNombre());
-            st.setString(2, estado.getDescripcion());
-            st.setFloat(3, estado.getPorcentaje());
+            st.setString(1, deduccion.getNombre());
+            st.setString(2, deduccion.getDescripcion());
+            st.setFloat(3, deduccion.getPorcentaje());
             st.execute();
 
             ban = true;
@@ -93,29 +93,29 @@ public class DeduccionesDAO {
         return lista;
     }
 
-    public ArrayList<RH_Deduccion> consultaDeduccionId(Integer idDeduccion) {
-        String sql = "select * "
+    public RH_Deduccion consultaDeduccionId(Integer idDeduccion) {
+        String sql = ("select * "
                 + "from RH.Deduccion "
-                + "where idDeduccion=? ";
-        ArrayList<RH_Deduccion> lista = new ArrayList<>();
+                + "where idDeduccion=? " + idDeduccion);
+        RH_Deduccion deduccion  = new RH_Deduccion();
         try {
-            PreparedStatement st = conexion.getConexion().prepareStatement(sql);
-            st.setInt(1, idDeduccion);
+           // PreparedStatement st = conexion.getConexion().prepareStatement(sql);
+            Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                RH_Deduccion e = new RH_Deduccion();
-                e.setIdDeduccion(rs.getInt("idDeduccion"));
-                e.setNombre(rs.getString("nombre"));
-                e.setDescripcion(rs.getString("descripcion"));
-                e.setPorcentaje(rs.getFloat("porcentaje"));
-                lista.add(e);
+      
+                deduccion.setIdDeduccion(rs.getInt("idDeduccion"));
+                deduccion.setNombre(rs.getString("nombre"));
+                deduccion.setDescripcion(rs.getString("descripcion"));
+                deduccion.setPorcentaje(rs.getFloat("porcentaje"));
+               
             }
             rs.close();
             st.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
         }
-        return lista;
+        return deduccion;
     }
 
     public boolean actualizarDeduccion(RH_Deduccion deduccion) {
