@@ -14,10 +14,10 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Ciudad;
 
-public class Ciudades extends javax.swing.JFrame {
+public class CiudadesFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form Ciudades
+     * Creates new form CiudadesFrame
      */
     ConexionBD conexion;
     private ResultSet rs;
@@ -25,7 +25,7 @@ public class Ciudades extends javax.swing.JFrame {
     private PreparedStatement ps;
     private ResultSetMetaData mtd ;
     DefaultTableModel dtm;
-    public Ciudades (ConexionBD cn){
+    public CiudadesFrame (ConexionBD cn){
         initComponents();
         conexion = cn;
     }
@@ -663,20 +663,20 @@ public class Ciudades extends javax.swing.JFrame {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Ciudades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(CiudadesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Ciudades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(CiudadesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Ciudades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(CiudadesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Ciudades.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(CiudadesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        </editor-fold>
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new Ciudades().setVisible(true);
+//                new CiudadesFrame().setVisible(true);
 //            }
 //        });
 //    }
