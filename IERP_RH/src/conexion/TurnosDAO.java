@@ -33,8 +33,9 @@ public class TurnosDAO {
             try (PreparedStatement st = conexion.getConexion().prepareStatement(sql)) {
                 st.setInt(1, turno.getIdTurno());
                 st.setString(2, turno.getNombre());
-                st.setInt(3, turno.getHoraInicio);
-                st.setString(4, null);
+                st.setInt(3, turno.getHoraInicio());
+                st.setInt(4,turno.getHoraFin());
+                st.setString(5, null);
                 st.execute();
             }
             ban = true;
@@ -99,8 +100,8 @@ public class TurnosDAO {
 
     public ArrayList<RH_Turno> consultaTurnoId(Integer idTurno) {
         String sql = "select * "
-                + "from RH.Estados "
-                + "where idEstado=? ";
+                + "from RH.Turnos "
+                + "where idTurno=? ";
         ArrayList<RH_Turno> lista = new ArrayList<>();
         try {
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
@@ -145,13 +146,12 @@ public class TurnosDAO {
     }
 
     public boolean eliminacionLogicaTurno(RH_Turno p) {
-        String sql = "update RH.Turnos set estatus=? "
+        String sql = "update RH.Turnos set idTurno=? "
                 + " where idTurno=?";
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
             st.setInt(1, p.getIdTurno());
-            st.setString(1, "I");
             st.execute();
             st.close();
             ban = true;

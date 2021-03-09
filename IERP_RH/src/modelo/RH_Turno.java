@@ -10,13 +10,13 @@ package modelo;
  * @author selen
  */
 public class RH_Turno {
-
   private Integer idTurno;
-    private String nombre;
+  private String nombre;    
+    private String dias;
+    private int getHoraInicio;;
     private Integer horaInicio;
     private Integer horaFin;
-    private String dias;
-    public int getHoraInicio;
+
       public RH_Turno() {
     }
 
@@ -70,6 +70,6 @@ public class RH_Turno {
     public void setDias(String dias) {
         this.dias = dias;
     }
-
-   
+  
 }
+       
