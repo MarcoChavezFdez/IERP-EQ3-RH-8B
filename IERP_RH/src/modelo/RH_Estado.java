@@ -30,6 +30,9 @@ public class RH_Estado {
     public RH_Estado() {
     }
 
+
+    
+
     public RH_Estado(Integer idEstado, String nombre, String siglas, String estatus) {
         this.idEstado = idEstado;
         this.nombre = nombre;
@@ -37,7 +40,6 @@ public class RH_Estado {
         this.estatus = estatus;
     }
 
-    
     public Integer getIdEstado() {
         return idEstado;
     }
@@ -69,7 +71,5 @@ public class RH_Estado {
     public void setEstatus(String estatus) {
         this.estatus = estatus;
     }
-
-
 
 }

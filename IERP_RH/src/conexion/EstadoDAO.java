@@ -47,7 +47,7 @@ public class EstadoDAO {
 
     public ArrayList<RH_Estado> consultaEstados() {
         String sql = "select * "
-                + "from RH.Estados"
+                + " from RH.Estados "
                 + " ORDER BY idEstado ASC";
         ArrayList<RH_Estado> lista = new ArrayList<>();
         try {
@@ -93,29 +93,28 @@ public class EstadoDAO {
         return lista;
     }
 
-    public ArrayList<RH_Estado> consultaEstadoId(Integer idEstado) {
-        String sql = "select * "
-                + "from RH.Estados "
-                + "where idEstado=? ";
-        ArrayList<RH_Estado> lista = new ArrayList<>();
+    public RH_Estado consultaEstadoId(int idEstado) {
+        String sql = (" select * "
+                + " from RH.Estados "
+                + " where idEstado=" + idEstado);
+        RH_Estado estado = new RH_Estado();
         try {
-            PreparedStatement st = conexion.getConexion().prepareStatement(sql);
-            st.setInt(1, idEstado);
+           // PreparedStatement st = con.prepareStatement(sql);
+              Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
+
             while (rs.next()) {
-                RH_Estado e = new RH_Estado();
-                e.setIdEstado(rs.getInt("idEstado"));
-                e.setNombre(rs.getString("nombre"));
-                e.setSiglas(rs.getString("siglas"));
-                e.setEstatus(rs.getString("estatus"));
-                lista.add(e);
+                estado.setIdEstado(rs.getInt("idEstado"));
+                estado.setNombre(rs.getString("nombre"));
+                estado.setSiglas(rs.getString("siglas"));
+                estado.setEstatus(rs.getString("estatus"));
             }
             rs.close();
             st.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
         }
-        return lista;
+        return estado;
     }
 
     public boolean actualizarEstado(RH_Estado estado) {

@@ -8,6 +8,7 @@ package GUI;
 import conexion.ConexionBD;
 import conexion.EstadoDAO;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Estado;
 
@@ -46,6 +47,7 @@ public class EstadosFrame extends javax.swing.JFrame {
         btn_Atras = new javax.swing.JButton();
         txf_Busqueda = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        btn_Deshabilitar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,6 +59,12 @@ public class EstadosFrame extends javax.swing.JFrame {
         });
 
         btn_Modificar.setText("Modificar");
+        btn_Modificar.setEnabled(false);
+        btn_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ModificarActionPerformed(evt);
+            }
+        });
 
         tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -69,6 +77,14 @@ public class EstadosFrame extends javax.swing.JFrame {
                 "idEstado", "Nombre", "Siglas", "Estatus"
             }
         ));
+        tbl_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_DatosMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbl_DatosMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_Datos);
 
         btn_Atras.setText("Atras");
@@ -91,6 +107,14 @@ public class EstadosFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Busqueda por nombre");
 
+        btn_Deshabilitar.setText("Deshabilitar");
+        btn_Deshabilitar.setEnabled(false);
+        btn_Deshabilitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_DeshabilitarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,8 +133,9 @@ public class EstadosFrame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_Modificar)
-                            .addComponent(btn_Add))))
-                .addContainerGap(86, Short.MAX_VALUE))
+                            .addComponent(btn_Add)
+                            .addComponent(btn_Deshabilitar))))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,6 +146,8 @@ public class EstadosFrame extends javax.swing.JFrame {
                         .addComponent(btn_Add)
                         .addGap(30, 30, 30)
                         .addComponent(btn_Modificar)
+                        .addGap(33, 33, 33)
+                        .addComponent(btn_Deshabilitar)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
@@ -162,6 +189,45 @@ public class EstadosFrame extends javax.swing.JFrame {
         llenarTabla(lista);
     }//GEN-LAST:event_txf_BusquedaKeyReleased
 
+    private void btn_DeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeshabilitarActionPerformed
+        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea cambiar el estatus del Estado con idEstado " + idEstado, "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            RH_Estado estado = new RH_Estado();
+            EstadoDAO DAO = new EstadoDAO(this.conexion);
+            estado = DAO.consultaEstadoId(idEstado);
+            if (DAO.eliminacionLogicaEstado(estado)) {
+                JOptionPane.showMessageDialog(null, "Cambio de Estatus con Exito");
+                EstadoDAO estados = new EstadoDAO(this.conexion);
+                ArrayList<RH_Estado> lista = estados.consultaEstados();
+                llenarTabla(lista);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+            }
+
+        }
+    }//GEN-LAST:event_btn_DeshabilitarActionPerformed
+
+    private void tbl_DatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMouseClicked
+
+    }//GEN-LAST:event_tbl_DatosMouseClicked
+
+    private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
+        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        EstadoDAO DAO = new EstadoDAO(this.conexion);
+        RH_Estado estado = new RH_Estado();
+        estado = DAO.consultaEstadoId(idEstado);
+        AddEstadoFrame modificarEstado = new AddEstadoFrame(this.conexion, estado);
+        this.setVisible(false);
+        modificarEstado.setVisible(true);
+    }//GEN-LAST:event_btn_ModificarActionPerformed
+
+    private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
+        btn_Modificar.setEnabled(true);
+        btn_Deshabilitar.setEnabled(true);
+    }//GEN-LAST:event_tbl_DatosMousePressed
+
     private void llenarTabla(ArrayList<RH_Estado> lista) {
         String[] encabezado = {"IdEstado", "Nombre", "Siglas", "Estatus"};
         Object[][] datos = new Object[lista.size()][4];
@@ -191,6 +257,7 @@ public class EstadosFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Add;
     private javax.swing.JButton btn_Atras;
+    private javax.swing.JButton btn_Deshabilitar;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

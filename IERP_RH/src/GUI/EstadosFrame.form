@@ -40,10 +40,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btn_Modificar" min="-2" max="-2" attributes="0"/>
                           <Component id="btn_Add" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn_Deshabilitar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="86" max="32767" attributes="0"/>
+              <EmptySpace pref="72" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -56,6 +57,8 @@
                       <Component id="btn_Add" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="btn_Modificar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="btn_Deshabilitar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -87,7 +90,11 @@
     <Component class="javax.swing.JButton" name="btn_Modificar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Modificar"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_ModificarActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -134,6 +141,10 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_DatosMouseClicked"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_DatosMousePressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -155,6 +166,15 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Busqueda por nombre"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btn_Deshabilitar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Deshabilitar"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_DeshabilitarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

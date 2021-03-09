@@ -18,7 +18,7 @@ public class ConexionBD {
     private final String user;
     private final String pass;
 
-    private String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=master;integratedSecurity=false";
+    private String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=ERP;integratedSecurity=false";
     private Connection conexion;
 
     public ConexionBD(String user, String pass) {

@@ -37,6 +37,15 @@ public class AddEstadoFrame extends javax.swing.JFrame {
         this.conexion = conexion;
         lbl_Titulo.setText("Modificar Estado");
         btn_Realizar.setText("Modificar Estado");
+        btn_Realizar.setEnabled(true);
+        txf_Nombre.setText(this.estado.getNombre());
+        txf_Siglas.setText(this.estado.getSiglas());
+        if("A".equals(this.estado.getEstatus())){
+            cmb_Estatus.setSelectedIndex(0);
+        }
+        else{
+            cmb_Estatus.setSelectedIndex(1);
+        }
         this.bandera = true;
     }
 
@@ -104,8 +113,6 @@ public class AddEstadoFrame extends javax.swing.JFrame {
             }
         });
 
-        lbl_Mensaje.setText("Mensaje de error");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -154,7 +161,7 @@ public class AddEstadoFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_Estatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(lbl_Mensaje)
                 .addGap(18, 18, 18)
                 .addComponent(btn_Realizar)
@@ -180,8 +187,9 @@ public class AddEstadoFrame extends javax.swing.JFrame {
         EstadoDAO estadoDAO = new EstadoDAO(this.conexion);
         try {
             if (bandera) {
-                if (estadoDAO.actualizarEstado(this.estado)) {
-                    JOptionPane.showMessageDialog(null, "Estado Añadido con exito");
+                nEstado.setIdEstado(this.estado.getIdEstado());
+                if (estadoDAO.actualizarEstado(nEstado)) {
+                    JOptionPane.showMessageDialog(null, "Estado Modificado con exito");
                     EstadosFrame estados = new EstadosFrame(this.conexion);
                     this.dispose();
                     estados.setVisible(true);
@@ -214,8 +222,10 @@ public class AddEstadoFrame extends javax.swing.JFrame {
     public void verificarCampos() {
         if ("".equals(txf_Nombre.getText()) || "".equals(txf_Siglas.getText())) {
             btn_Realizar.setEnabled(false);
+            lbl_Mensaje.setText("Debe llenar los campos");
         } else {
             btn_Realizar.setEnabled(true);
+            lbl_Mensaje.setText("");
         }
 
     }

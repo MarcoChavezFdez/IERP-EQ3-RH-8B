@@ -80,7 +80,7 @@
                   <Component id="cmb_Estatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <EmptySpace pref="54" max="32767" attributes="0"/>
               <Component id="lbl_Mensaje" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btn_Realizar" min="-2" max="-2" attributes="0"/>
@@ -152,9 +152,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lbl_Mensaje">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Mensaje de error"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
