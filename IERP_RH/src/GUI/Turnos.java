@@ -46,7 +46,7 @@ public class Turnos extends javax.swing.JFrame {
         btnguardar.setText("Modificar Turno");
         btnguardar.setEnabled(true);
         txtnombre.setText(this.turno.getNombre());
-           
+
         String dias = null;
         if (rbLunes.isSelected() == true) {
             dias = "Lunes";
@@ -269,8 +269,7 @@ public class Turnos extends javax.swing.JFrame {
             eturno.setDias("Domindo");
         }
         TurnosDAO turnoDAO = new TurnosDAO(this.conexion);
-        try {
-//            Connection con = ConexionBD.GetConexion();
+        //            Connection con = ConexionBD.GetConexion();
 //            PreparedStatement ps =con.prepareStatement("INSERT INTO Turnos(idTurno,nombre,horaInicio,horaFin,dias) VALUES (?,?,?,?,?)");
 //            ps.setInt(1, idTurno);
 //            ps.setString(2, nombre);
@@ -281,32 +280,25 @@ public class Turnos extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(null, "Registro Guardado");
 //            limpiar();
 //            ArrayList<RH_Turno> lista = null;
-//              cargarTabla(lista); 
-            if (bandera) {
-                eturno.setIdTurno(this.turno.getIdTurno());
+//              cargarTabla(lista);
+        if (bandera) {
+            eturno.setIdTurno(this.turno.getIdTurno());
 
-                if (turnoDAO.actualizarTurno(eturno)) {
-                    JOptionPane.showMessageDialog(null, "Estado Modificado con exito");
-                    TurnoP turnos = new TurnoP(this.conexion);
-                    this.dispose();
-                    turnos.setVisible(true);
-                    this.pack();
-                }
-            } else {
-                if (turnoDAO.insertarTurno(eturno)) {
-                    JOptionPane.showMessageDialog(null, "Estado Añadido con exito");
-                    TurnoP turnos = new TurnoP(this.conexion);
-                    this.dispose();
-                    turnos.setVisible(true);
-                    this.pack();
-                }
+            if (turnoDAO.actualizarTurno(eturno)) {
+                JOptionPane.showMessageDialog(null, "Estado Modificado con exito");
+                TurnoP turnos = new TurnoP(this.conexion);
+                this.dispose();
+                turnos.setVisible(true);
+                this.pack();
             }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
-
-//        } catch (ClassNotFoundException ex) {
-//            Logger.getLogger(Turnos.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            if (turnoDAO.insertarTurno(eturno)) {
+                JOptionPane.showMessageDialog(null, "Estado Añadido con exito");
+                TurnoP turnos = new TurnoP(this.conexion);
+                this.dispose();
+                turnos.setVisible(true);
+                this.pack();
+            }
         }
     }//GEN-LAST:event_btnguardarActionPerformed
 
@@ -334,8 +326,8 @@ public class Turnos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-//    private void cargarTabla(ArrayList<RH_Turno> lista){
-//        
+//    private void cargarTabla(ArrayList<RH_Turno> lista) {
+//
 //        String[] encabezado = {"IdTurno", "nombre", "horaInicio", "horaFin", "dias"};
 //        Object[][] datos = new Object[lista.size()][5];
 //        int ren = 0;
@@ -344,22 +336,21 @@ public class Turnos extends javax.swing.JFrame {
 //            datos[ren][1] = s.getNombre();
 //            datos[ren][2] = s.getHoraInicio();
 //            datos[ren][3] = s.getHoraInicio();
-//            datos[ren][4]= s.getDias();
+//            datos[ren][4] = s.getDias();
 //            ren++;
 //        }
-//        
-//      DefaultTableModel modeloTabla = new DefaultTableModel(datos, encabezado){
-//               @Override
+//
+//        DefaultTableModel modeloTabla = new DefaultTableModel(datos, encabezado) {
+//            @Override
 //            public boolean isCellEditable(int rowIndex, int colIndex) {
 //                return false; //Disallow the editing of any cell
 //            }
 //
-//      };
-//                tblTurnos.getModel();
-//      
-//      
-//        
-//}
+//        };
+//        tblTurnos.getModel();
+//
+//    }
+//
 //    private void limpiar() {
 //        txtidTurno.setText("");
 //        txtidTurno.setText("");
@@ -371,37 +362,7 @@ public class Turnos extends javax.swing.JFrame {
 //    /**
 //     * @param args the command line arguments
 //     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(Turnos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new Turnos().setVisible(true);
-//            }
-//        });
-//}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
@@ -426,6 +387,6 @@ public class Turnos extends javax.swing.JFrame {
     private javax.swing.JTextField txtidTurno;
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
-
+}
     
 

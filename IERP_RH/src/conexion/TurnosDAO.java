@@ -27,31 +27,26 @@ public class TurnosDAO {
     }
 
     public boolean insertarTurno(RH_Turno turno) {
-        String sql = "insert into RH.Estados values(?,?,?,?,?)";
+        String sql = "insert into RH.Turnos values(?,?,?,?)";
         boolean ban = false;
         try {
             try (PreparedStatement st = conexion.getConexion().prepareStatement(sql)) {
-                st.setInt(1, turno.getIdTurno());
-                st.setString(2, turno.getNombre());
-                st.setInt(3, turno.getHoraInicio());
-                st.setInt(4,turno.getHoraFin());
-                st.setString(5, null);
+                st.setString(1, turno.getNombre());
+                st.setTime(2, turno.getHoraInicio());
+                st.setTime(3, turno.getHoraFin());
+                st.setString(4, turno.getDias());
                 st.execute();
             }
             ban = true;
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
-
-            
+            JOptionPane.showMessageDialog(null, "Error al insertar en la tabla RH.Turnos: " + e.getMessage());
         }
         return ban;
     }
-    
 
     public ArrayList<RH_Turno> consultaTurnos() {
-        String sql = "from RH.Turnos"
-                + "select * "
+        String sql = "select * from RH.Turnos "
                 + " ORDER BY idTurno ASC";
         ArrayList<RH_Turno> lista = new ArrayList<>();
         try {
@@ -61,19 +56,20 @@ public class TurnosDAO {
                 RH_Turno e = new RH_Turno();
                 e.setIdTurno(rs.getInt("idTurno"));
                 e.setNombre(rs.getString("nombre"));
-                e.setHoraInicio(rs.getInt("horaInicio"));
-                e.setHoraFin(rs.getInt("horaFin"));
-                e.setDias(rs.getString(null));
+                e.setHoraInicio(rs.getTime("horaInicio"));
+                e.setHoraFin(rs.getTime("horaFin"));
+                e.setDias(rs.getString("dias"));
                 lista.add((e));
             }
             rs.close();
             st.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al realizar la consulta general:" + e.getMessage());
         }
         return lista;
     }
- public ArrayList<RH_Turno> consultaTurnoNombre(String nombre) {
+
+    public ArrayList<RH_Turno> consultaTurnoNombre(String nombre) {
         String sql = "select * "
                 + "from RH.Turnos "
                 + "where Nombre like CONCAT( '%','" + nombre + "','%')";
@@ -85,15 +81,15 @@ public class TurnosDAO {
                 RH_Turno e = new RH_Turno();
                 e.setIdTurno(rs.getInt("idTurno"));
                 e.setNombre(rs.getString("nombre"));
-                e.setHoraInicio(rs.getInt("horaInicio"));
-                e.setHoraFin(rs.getInt("horaFin"));
-                e.setDias(rs.getString(null));
+                e.setHoraInicio(rs.getTime("horaInicio"));
+                e.setHoraFin(rs.getTime("horaFin"));
+                e.setDias(rs.getString("dias"));
                 lista.add(e);
             }
             rs.close();
             st.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al realizar la consulta por nombre :" + e.getMessage());
         }
         return lista;
     }
@@ -111,9 +107,9 @@ public class TurnosDAO {
                 RH_Turno e = new RH_Turno();
                 e.setIdTurno(rs.getInt("idTurno"));
                 e.setNombre(rs.getString("nombre"));
-                e.setHoraInicio(rs.getInt("horaInicio"));
-                e.setHoraFin(rs.getInt("horaFin"));
-                e.setDias(rs.getString(null));
+                e.setHoraInicio(rs.getTime("horaInicio"));
+                e.setHoraFin(rs.getTime("horaFin"));
+                e.setDias(rs.getString("dias"));
                 lista.add(e);
             }
             rs.close();
@@ -125,16 +121,16 @@ public class TurnosDAO {
     }
 
     public boolean actualizarTurno(RH_Turno p) {
-        String sql = "update RH.Turnos set idTurno =?, nombre=?, horaInicio=? ,horaFin=?,dias=?"
+        String sql = "update RH.Turnos set nombre=?, horaInicio=? ,horaFin=?,dias=?"
                 + " where idTurno=?";
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
             st.setInt(4, p.getIdTurno());
             st.setString(1, p.getNombre());
-            st.setInt(2, p.getHoraInicio());
-            st.setInt(3, p.getHoraFin());
-            st.setString(4, null);
+            st.setTime(2, p.getHoraInicio());
+            st.setTime(3, p.getHoraFin());
+            st.setString(4,p.getDias());
             st.execute();
             st.close();
             ban = true;
@@ -145,6 +141,7 @@ public class TurnosDAO {
         return ban;
     }
 
+    //Pendiente de agregar el estatus?
     public boolean eliminacionLogicaTurno(RH_Turno p) {
         String sql = "update RH.Turnos set idTurno=? "
                 + " where idTurno=?";
@@ -161,7 +158,6 @@ public class TurnosDAO {
         }
         return ban;
     }
-    
 
     public ConexionBD getConexion() {
         return conexion;
