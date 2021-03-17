@@ -242,10 +242,10 @@ public class Turnos extends javax.swing.JFrame {
 //        int horaInicio = Integer .parseInt(txthoraInicio.getText());
 //        int horaFin = Integer .parseInt(txthoraFin.getText());
 //        String dias = null;
-        eturno.setNombre(txtnombre.getText().toUpperCase());
-        eturno.setHoraInicio(Integer.parseInt(txthoraInicio.getText().toUpperCase()));
-        eturno.setHoraFin(Integer.parseInt(txthoraFin.getText().toUpperCase()));
-        String dias = null;
+//        eturno.setNombre(txtnombre.getText().toUpperCase());
+//        eturno.setHoraInicio(Integer.parseInt(txthoraInicio.getText().toUpperCase()));
+//        eturno.setHoraFin(Integer.parseInt(txthoraFin.getText().toUpperCase()));
+//        String dias = null;
         if (rbLunes.isSelected() == true) {
             eturno.setDias("Lunes");
 
