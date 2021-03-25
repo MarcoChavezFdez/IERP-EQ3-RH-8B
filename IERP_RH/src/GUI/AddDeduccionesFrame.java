@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import conexion.ConexionBD;
 import conexion.DeduccionesDAO;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import modelo.RH_Deduccion;
 
@@ -21,25 +23,27 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
     ConexionBD conexion;
     RH_Deduccion deduccion;
     Boolean bandera;
-    
-    public AddDeduccionesFrame(ConexionBD conexion){
+
+    public AddDeduccionesFrame(ConexionBD conexion) {
         initComponents();
         this.conexion = conexion;
-        this.bandera = false;      
+        this.bandera = false;
     }
+
     public AddDeduccionesFrame(ConexionBD conexion, RH_Deduccion deduccion) {
         initComponents();
         jLabel1.setText("Modificar Deduccion");
-        jButton2.setText("Modificar");
+        btn_Add.setText("Modificar");
         this.deduccion = deduccion;
         this.conexion = conexion;
         txNombre.setText(this.deduccion.getNombre());
         TxDescripcion.setText(this.deduccion.getDescripcion());
         String h;
-        h =String.valueOf(this.deduccion.getPorcentaje());
-        jTextField1.setText(h);
+        h = String.valueOf(this.deduccion.getPorcentaje());
+        TxPorcentaje.setText(h);
         this.bandera = true;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,8 +63,10 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txNombre = new javax.swing.JTextField();
         TxDescripcion = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        btn_Add = new javax.swing.JButton();
+        TxPorcentaje = new javax.swing.JTextField();
+        lbl_MensajePorcentaje = new javax.swing.JLabel();
+        lbl_Mensaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Nueva Deducción");
@@ -110,15 +116,29 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         });
         jPanel1.add(TxDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
 
-        jButton2.setText("Añadir Deducción");
-        jButton2.setEnabled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_Add.setText("Añadir Deducción");
+        btn_Add.setEnabled(false);
+        btn_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_AddActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, -1));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 160, -1));
+        jPanel1.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, -1));
+
+        TxPorcentaje.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                TxPorcentajeKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                TxPorcentajeKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                TxPorcentajeKeyTyped(evt);
+            }
+        });
+        jPanel1.add(TxPorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 160, -1));
+        jPanel1.add(lbl_MensajePorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 150, 20));
+        jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 80, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 480));
 
@@ -126,18 +146,18 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DeduccionesFrame deduccion  = new DeduccionesFrame(this.conexion);
+        DeduccionesFrame deduccion = new DeduccionesFrame(this.conexion);
         this.dispose();
         deduccion.setVisible(true);
         deduccion.pack();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
         RH_Deduccion nDeduccion = new RH_Deduccion();
         nDeduccion.setNombre(txNombre.getText().toUpperCase());
         nDeduccion.setDescripcion(TxDescripcion.getText().toUpperCase());
-        
-        nDeduccion.setPorcentaje(Float.parseFloat(jTextField1.getText()));
+
+        nDeduccion.setPorcentaje(Float.parseFloat(TxPorcentaje.getText()));
         DeduccionesDAO deduccionesDAO = new DeduccionesDAO(this.conexion);
         try {
             if (bandera) {
@@ -159,17 +179,17 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
         } // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_AddActionPerformed
 
     public void verificarCampos() {
-        if ("".equals(txNombre.getText()) || "".equals(TxDescripcion.getText())|| "".equals(jTextField1.getText())) {
-            jButton2.setEnabled(false);
+        if ("".equals(txNombre.getText()) || "".equals(TxDescripcion.getText()) || "".equals(TxPorcentaje.getText())) {
+            btn_Add.setEnabled(false);
             jLabel6.setText("Debe llenar los campos");
         } else {
-            jButton2.setEnabled(true);
+            btn_Add.setEnabled(true);
             jLabel6.setText("");
         }
 
@@ -179,12 +199,39 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txNombreActionPerformed
 
     private void txNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txNombreKeyReleased
-    verificarCampos();
+        verificarCampos();
     }//GEN-LAST:event_txNombreKeyReleased
 
     private void TxDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxDescripcionKeyReleased
-    verificarCampos();        // TODO add your handling code here:
+        verificarCampos();        // TODO add your handling code here:
     }//GEN-LAST:event_TxDescripcionKeyReleased
+
+    private void TxPorcentajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyReleased
+        try {
+            if (!(Float.parseFloat(TxPorcentaje.getText()) < 100.0f && Float.parseFloat(TxPorcentaje.getText()) > 0)) {
+                lbl_MensajePorcentaje.setText("Rango no valido");
+                TxPorcentaje.setText("0");
+                btn_Add.setEnabled(false);
+            } else {
+                lbl_MensajePorcentaje.setText("");
+                btn_Add.setEnabled(true);
+                verificarCampos();
+            }
+        } catch (NumberFormatException e) {
+            lbl_MensajePorcentaje.setText("Rango no valido");
+            TxPorcentaje.setText("");
+            btn_Add.setEnabled(false);
+        }
+
+    }//GEN-LAST:event_TxPorcentajeKeyReleased
+
+    private void TxPorcentajeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyPressed
+
+    }//GEN-LAST:event_TxPorcentajeKeyPressed
+
+    private void TxPorcentajeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyTyped
+
+    }//GEN-LAST:event_TxPorcentajeKeyTyped
 
     /**
      * @param args the command line arguments
@@ -192,8 +239,9 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TxDescripcion;
+    private javax.swing.JTextField TxPorcentaje;
+    private javax.swing.JButton btn_Add;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -201,7 +249,8 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbl_Mensaje;
+    private javax.swing.JLabel lbl_MensajePorcentaje;
     private javax.swing.JTextField txNombre;
     // End of variables declaration//GEN-END:variables
 }
