@@ -75,27 +75,31 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
 
+        jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Atras");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, -1, -1));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Nueva Deducción");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, -1, -1));
 
         jLabel2.setText("Nombre");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, -1, -1));
 
         jLabel3.setText("Descripcion ");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, -1, -1));
 
         jLabel5.setText("Porcentaje");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, -1));
 
         txNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,23 +111,25 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
                 txNombreKeyReleased(evt);
             }
         });
-        jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 140, -1));
+        jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 140, -1));
 
         TxDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TxDescripcionKeyReleased(evt);
             }
         });
-        jPanel1.add(TxDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 170, 140, -1));
+        jPanel1.add(TxDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 140, -1));
 
-        btn_Add.setText("Añadir Deducción");
+        btn_Add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
+        btn_Add.setBorderPainted(false);
+        btn_Add.setContentAreaFilled(false);
         btn_Add.setEnabled(false);
         btn_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AddActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, -1));
+        jPanel1.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, -1, -1));
 
         TxPorcentaje.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -136,11 +142,11 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
                 TxPorcentajeKeyTyped(evt);
             }
         });
-        jPanel1.add(TxPorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 160, -1));
-        jPanel1.add(lbl_MensajePorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 150, 20));
-        jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 80, 20));
+        jPanel1.add(TxPorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 160, -1));
+        jPanel1.add(lbl_MensajePorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, 150, 20));
+        jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 80, 20));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 480));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
