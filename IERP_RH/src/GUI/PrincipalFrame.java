@@ -6,11 +6,13 @@
 package GUI;
 
 import conexion.ConexionBD;
+import conexion.EstadoDAO;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -70,6 +72,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         lbl_fecha = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lbl_User = new javax.swing.JLabel();
+        btn_CerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -140,6 +143,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, -1, -1));
         jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, -1, -1));
 
+        btn_CerrarSesion.setText("Cerrar Sesion");
+        btn_CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CerrarSesionActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_CerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 30, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 850, 500));
 
         pack();
@@ -175,12 +186,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
         deduccion.pack();
     }//GEN-LAST:event_btn_DeduccionesActionPerformed
 
+    private void btn_CerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CerrarSesionActionPerformed
+        int reply = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea Cerrar Sesión?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            login ventanaLogin = new login();
+            this.dispose();
+            ventanaLogin.setVisible(true);
+            ventanaLogin.pack();
+            JOptionPane.showMessageDialog(null, "Sesión Finalizada");
+        }
+    }//GEN-LAST:event_btn_CerrarSesionActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bnt_Estados;
+    private javax.swing.JButton btn_CerrarSesion;
     private javax.swing.JButton btn_Ciudades;
     private javax.swing.JButton btn_Deducciones;
     private javax.swing.JButton btn_Turnos;
