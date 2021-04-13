@@ -30,6 +30,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         lbl_fecha.setText(dateFormat.format(date));
         DateTimeFormatter formateador = DateTimeFormatter.ofPattern("HH:mm:ss");
+        lbl_User.setText(this.conexion.getName());
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -67,6 +68,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lbl_fecha = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_User = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -94,7 +97,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 btn_DeduccionesActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Deducciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 270, -1, -1));
+        jPanel1.add(btn_Deducciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, -1, -1));
 
         btn_Turnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Tur.png"))); // NOI18N
         btn_Turnos.setBorderPainted(false);
@@ -132,6 +135,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         lbl_fecha.setText("dd/mm/aaaa");
         jPanel1.add(lbl_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, -1, -1));
+
+        jLabel4.setText("Hola de nuevo:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, -1, -1));
+        jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 850, 500));
 
@@ -181,8 +188,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_User;
     private javax.swing.JLabel lbl_fecha;
     // End of variables declaration//GEN-END:variables
 }

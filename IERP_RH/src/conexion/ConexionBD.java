@@ -7,7 +7,12 @@ package conexion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import modelo.RH_Estado;
 
 /**
  *
@@ -56,6 +61,25 @@ public class ConexionBD {
             System.out.println(e.toString());
             return null;
         }
+    }
+
+    public String getName() {
+        String sql = "SELECT login_name "
+                + "FROM sys.dm_exec_sessions "
+                + "where client_interface_name='Microsoft JDBC Driver 9.2' ";
+        String name = "";
+        try {
+            Statement st = this.conexion.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                name = rs.getString("login_name");
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return name;
     }
 
 }
