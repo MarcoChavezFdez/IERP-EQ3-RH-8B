@@ -18,6 +18,16 @@ public class RH_Turno {
     private String dias;
     private java.sql.Time horaInicio;
     private java.sql.Time horaFin;
+    private String estatus;
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
+    
 
     public RH_Turno() {
     }
