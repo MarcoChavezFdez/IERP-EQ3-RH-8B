@@ -93,7 +93,7 @@ public class AddEstadoFrame extends javax.swing.JFrame {
         jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 260, 110));
 
         lbl_Titulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbl_Titulo.setText("Agregar un Nuevo Estado");
+        lbl_Titulo.setText("Realizar Operación");
         jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
 
         jLabel2.setText("Nombre");

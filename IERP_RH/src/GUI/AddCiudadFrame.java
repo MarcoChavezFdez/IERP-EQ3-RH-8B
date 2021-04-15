@@ -74,6 +74,7 @@ public class AddCiudadFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         lbl_Operacion = new javax.swing.JLabel();
         btn_Atras = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -85,16 +86,25 @@ public class AddCiudadFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lbl_Operacion.setText("Añadir Ciudad");
+        jPanel1.setBackground(new java.awt.Color(241, 151, 89));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_Atras.setText("Atras");
+        lbl_Operacion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lbl_Operacion.setText("Realizar Operación");
+        jPanel1.add(lbl_Operacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, -1, -1));
+
+        btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
+        btn_Atras.setBorderPainted(false);
+        btn_Atras.setContentAreaFilled(false);
         btn_Atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AtrasActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, -1, -1));
 
         jLabel2.setText("Nombre");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, -1, -1));
 
         txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,8 +116,10 @@ public class AddCiudadFrame extends javax.swing.JFrame {
                 txf_NombreKeyReleased(evt);
             }
         });
+        jPanel1.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 158, -1));
 
         jLabel3.setText("Estado");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, -1, -1));
 
         cmb_Estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un Estado" }));
         cmb_Estado.setToolTipText("");
@@ -121,67 +133,34 @@ public class AddCiudadFrame extends javax.swing.JFrame {
                 cmb_EstadoPropertyChange(evt);
             }
         });
+        jPanel1.add(cmb_Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 158, -1));
 
-        btn_AddCiudad.setText("Añadir Ciudad");
+        btn_AddCiudad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
+        btn_AddCiudad.setToolTipText("");
+        btn_AddCiudad.setBorderPainted(false);
+        btn_AddCiudad.setContentAreaFilled(false);
         btn_AddCiudad.setEnabled(false);
         btn_AddCiudad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AddCiudadActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_AddCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, -1, -1));
+        jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 151, 21));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_Atras))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(49, 49, 49)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txf_Nombre)
-                            .addComponent(cmb_Estado, 0, 158, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(lbl_Operacion)))
-                .addContainerGap(67, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lbl_Mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(133, 133, 133))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btn_AddCiudad)
-                        .addGap(160, 160, 160))))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_Atras)
-                .addGap(20, 20, 20)
-                .addComponent(lbl_Operacion)
-                .addGap(69, 69, 69)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txf_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(cmb_Estado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addComponent(lbl_Mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_AddCiudad)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -285,6 +264,7 @@ public class AddCiudadFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmb_Estado;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_Mensaje;
     private javax.swing.JLabel lbl_Operacion;
     private javax.swing.JTextField txf_Nombre;
