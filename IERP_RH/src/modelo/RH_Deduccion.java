@@ -9,6 +9,15 @@ public class RH_Deduccion {
     private String nombre;
     private String descripcion;
     private float porcentaje;
+    private String estatus;
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public void setEstatus(String estatus) {
+        this.estatus = estatus;
+    }
 
     public Integer getIdDeduccion() {
         return idDeduccion;
