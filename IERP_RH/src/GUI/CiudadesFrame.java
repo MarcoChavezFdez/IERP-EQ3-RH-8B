@@ -1,34 +1,26 @@
 package GUI;
 
+import conexion.CiudadDAO;
 import conexion.ConexionBD;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
+import conexion.EstadoDAO;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Ciudad;
+import modelo.RH_Estado;
 
 public class CiudadesFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CiudadesFrame
-     */
     ConexionBD conexion;
-    private ResultSet rs;
-    private Connection cn;
-    private PreparedStatement ps;
-    private ResultSetMetaData mtd ;
-    DefaultTableModel dtm;
-    public CiudadesFrame (ConexionBD cn){
+
+    public CiudadesFrame(ConexionBD cn) {
         initComponents();
         conexion = cn;
+        CiudadDAO ciudades = new CiudadDAO(this.conexion);
+        ArrayList<RH_Ciudad> lista = ciudades.consultaCiudadesVista();
+        llenarTabla(lista);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,194 +32,81 @@ public class CiudadesFrame extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblDatos = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        lblIdEstado = new javax.swing.JLabel();
-        lblEstatus = new javax.swing.JLabel();
-        txfIdEstado = new javax.swing.JTextField();
-        lblIdCiudad = new javax.swing.JLabel();
-        lblNombre = new javax.swing.JLabel();
-        txfNombre = new javax.swing.JTextField();
-        jrbIdEstado = new javax.swing.JRadioButton();
-        jrbCiudad = new javax.swing.JRadioButton();
-        jrbNombre = new javax.swing.JRadioButton();
-        jrbEstatus = new javax.swing.JRadioButton();
-        jcbEstatus = new javax.swing.JComboBox<>();
-        jcbIdCiudad = new javax.swing.JComboBox<>();
-        jPanel3 = new javax.swing.JPanel();
-        cmbOpciones = new javax.swing.JComboBox<>();
-        btnConfirmar = new javax.swing.JButton();
+        tbl_Datos = new javax.swing.JTable();
+        btn_Add = new javax.swing.JButton();
+        btn_Atras = new javax.swing.JButton();
+        btn_Modificar = new javax.swing.JButton();
+        btn_Eliminar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        txf_Ciudad = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        tblDatos.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id Estado", "Nombre Estado", "Siglas", "Estatus"
+                "IdCiudad", "Nombre", "Estado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblDatos.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tblDatosMousePressed(evt);
+                tbl_DatosMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tblDatos);
+        jScrollPane1.setViewportView(tbl_Datos);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
-
-        lblIdEstado.setText("IdEstado:");
-
-        lblEstatus.setText("Estatus:");
-
-        txfIdEstado.setEditable(false);
-        txfIdEstado.setEnabled(false);
-
-        lblIdCiudad.setText("IdCiudad");
-
-        lblNombre.setText("Nombre:");
-
-        txfNombre.setEditable(false);
-        txfNombre.setEnabled(false);
-
-        jrbIdEstado.setEnabled(false);
-        jrbIdEstado.addActionListener(new java.awt.event.ActionListener() {
+        btn_Add.setText("Añadir ");
+        btn_Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbIdEstadoActionPerformed(evt);
+                btn_AddActionPerformed(evt);
             }
         });
 
-        jrbCiudad.setEnabled(false);
-        jrbCiudad.addActionListener(new java.awt.event.ActionListener() {
+        btn_Atras.setText("Atras");
+        btn_Atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbCiudadActionPerformed(evt);
+                btn_AtrasActionPerformed(evt);
             }
         });
 
-        jrbNombre.setEnabled(false);
-
-        jrbEstatus.setEnabled(false);
-
-        jcbEstatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Activo", "Inactivo" }));
-
-        jcbIdCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona un valor" }));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jrbNombre)
-                        .addGap(76, 76, 76))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jrbCiudad)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblIdCiudad))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(lblNombre))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jrbIdEstado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblIdEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(24, 24, 24)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txfIdEstado)
-                    .addComponent(txfNombre)
-                    .addComponent(jcbIdCiudad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(22, 22, 22)
-                .addComponent(jrbEstatus)
-                .addGap(6, 6, 6)
-                .addComponent(lblEstatus)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jcbEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(124, 124, 124))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jrbEstatus)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jcbEstatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(3, 3, 3)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jrbNombre)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblNombre)
-                                    .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jrbCiudad)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblIdCiudad)
-                                .addComponent(jcbIdCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jrbIdEstado)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblIdEstado)
-                        .addComponent(txfIdEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Operaciones"));
-
-        cmbOpciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elige Una Opción", "Agregar", "Consulta Personalizada", "Consultar Todo", "Eliminar", "Actualizar", "Cerrar Conexion" }));
-        cmbOpciones.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbOpcionesItemStateChanged(evt);
-            }
-        });
-
-        btnConfirmar.setText("Confirmar");
-        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+        btn_Modificar.setText("Modificar");
+        btn_Modificar.setEnabled(false);
+        btn_Modificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmarActionPerformed(evt);
+                btn_ModificarActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbOpciones, 0, 183, Short.MAX_VALUE)
-                    .addComponent(btnConfirmar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cmbOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(btnConfirmar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        btn_Eliminar.setText("Eliminar");
+        btn_Eliminar.setEnabled(false);
+        btn_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EliminarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Ciudades");
+
+        jLabel2.setText("Buscar por nombre");
+
+        txf_Ciudad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txf_CiudadKeyReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -235,22 +114,44 @@ public class CiudadesFrame extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(30, Short.MAX_VALUE))))
+                        .addGap(20, 20, 20)
+                        .addComponent(btn_Atras)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(296, 296, 296)
+                        .addComponent(btn_Add))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_Modificar))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(txf_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_Eliminar)))
+                .addGap(25, 25, 25))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Atras)
+                    .addComponent(btn_Add)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addComponent(btn_Modificar)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Eliminar)
+                    .addComponent(jLabel2)
+                    .addComponent(txf_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -271,435 +172,95 @@ public class CiudadesFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tblDatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosMousePressed
+    private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
+        btn_Modificar.setEnabled(true);
+        btn_Eliminar.setEnabled(true);
+    }//GEN-LAST:event_tbl_DatosMousePressed
 
-    }//GEN-LAST:event_tblDatosMousePressed
+    private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
+        PrincipalFrame pf = new PrincipalFrame(this.conexion);
+        this.dispose();
+        pf.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_AtrasActionPerformed
 
-    private void jrbCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCiudadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrbCiudadActionPerformed
+    private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
+        AddCiudadFrame addCiudad = new AddCiudadFrame(this.conexion);
+        this.dispose();
+        addCiudad.setVisible(true);
+        this.pack();
 
-    private void cmbOpcionesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbOpcionesItemStateChanged
-        switch(cmbOpciones.getSelectedIndex())
-        {
-            case 0:
-            txfIdEstado.setEnabled(false);
-            txfNombre.setEnabled(false);
-            jcbIdCiudad.setEnabled(false);
-            jcbEstatus.setEnabled(false);
+    }//GEN-LAST:event_btn_AddActionPerformed
 
-            jrbIdEstado.setEnabled(false);
-            jrbCiudad.setEnabled(false);
-            jrbNombre.setEnabled(false);
-            jrbEstatus.setEnabled(false);
+    private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
+        Integer idCiudad = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la ciudad '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            RH_Ciudad ciudad = new RH_Ciudad();
+            CiudadDAO DAO = new CiudadDAO(this.conexion);
+            ciudad = DAO.consultarCiudadId(idCiudad);
+            if (DAO.eliminacionLogicaCiudad(ciudad)) {
+                JOptionPane.showMessageDialog(null, "Estado Eliminado");
+                CiudadDAO ciudades = new CiudadDAO(this.conexion);
+                ArrayList<RH_Ciudad> lista = ciudades.consultaCiudadesVista();
+                llenarTabla(lista);
 
-            break;
-            case 1:
-            txfIdEstado.setEnabled(true);
-            txfNombre.setEnabled(true);
-            jcbIdCiudad.setEnabled(true);
-            jcbEstatus.setEnabled(true);
-            
-            txfIdEstado.setEditable(true);
-            txfNombre.setEditable(true);
-            jcbIdCiudad.setEditable(true);
-            jcbEstatus.setEditable(true);
-            
-            jrbIdEstado.setEnabled(false);
-            jrbCiudad.setEnabled(false);
-            jrbNombre.setEnabled(false);
-            jrbEstatus.setEnabled(false);
-            break;
-            case 2:
-            txfIdEstado.setEnabled(true);
-            txfIdEstado.setEditable(true);
-            txfNombre.setEnabled(false);
-            jcbIdCiudad.setEnabled(false);
-            jcbEstatus.setEnabled(false);
-            
-            jrbIdEstado.setEnabled(true);
-            jrbCiudad.setEnabled(true);
-            jrbNombre.setEnabled(true);
-            jrbEstatus.setEnabled(true);
-            break;
-            case 3:
-            txfIdEstado.setEnabled(false);
-            txfNombre.setEnabled(false);
-            jcbIdCiudad.setEnabled(false);
-            jcbEstatus.setEnabled(false);
-            
-            txfIdEstado.setEditable(false);
-            txfNombre.setEditable(false);
-            jcbIdCiudad.setEditable(false);
-            jcbEstatus.setEditable(false);
-            
-            jrbIdEstado.setEnabled(false);
-            jrbCiudad.setEnabled(false);
-            jrbNombre.setEnabled(false);
-            jrbEstatus.setEnabled(false);
-            break;
-            case 4:
-            txfIdEstado.setEnabled(true);
-            txfIdEstado.setEditable(true);
-            txfNombre.setEnabled(false);
-            jcbIdCiudad.setEnabled(false);
-            jcbEstatus.setEnabled(false);
-            
-            txfNombre.setEditable(false);
-            jcbIdCiudad.setEditable(false);
-            jcbEstatus.setEditable(false);
-            
-            
-            jrbIdEstado.setEnabled(false);
-            jrbCiudad.setEnabled(false);
-            jrbNombre.setEnabled(false);
-            jrbEstatus.setEnabled(false);
-            
-            break;
-            case 5:
-            txfIdEstado.setEnabled(true);
-            txfNombre.setEnabled(true);
-            jcbIdCiudad.setEnabled(true);
-            jcbEstatus.setEnabled(true);
-            
-            txfIdEstado.setEditable(true);
-            txfNombre.setEditable(true);
-            jcbIdCiudad.setEditable(true);
-            jcbEstatus.setEditable(true);
-            
-            jrbIdEstado.setEnabled(false);
-            jrbCiudad.setEnabled(false);
-            jrbNombre.setEnabled(false);
-            jrbEstatus.setEnabled(false);
-            break;
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+            }
+
         }
-    }//GEN-LAST:event_cmbOpcionesItemStateChanged
+    }//GEN-LAST:event_btn_EliminarActionPerformed
 
-    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        DefaultTableModel modelo = new DefaultTableModel();
-        RH_Ciudad o = new RH_Ciudad();
-        switch(cmbOpciones.getSelectedIndex())
-        {
-            case 1:
-            if(comprobarDatos()==true)
-            {
-                o.setIdEstado(Integer.parseInt(txfIdEstado.getText()));
-                o.setNombre(txfNombre.getText());
-                o.setEstatus((jcbEstatus.getSelectedItem().toString()));
-                o.setIdCiudad(Integer.parseInt(jcbIdCiudad.getSelectedItem().toString()));
-                
-                if (this.insertar(o) == true)
-                {
-                    txfIdEstado.setText("");
-                    txfNombre.setText("");
-                    jcbEstatus.setSelectedIndex(0);
-                }
-                else
-                JOptionPane.showMessageDialog(null, "Formato Algunos de los datos es incorrecto");
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Hay Campos Vacios");
-            }
+    private void txf_CiudadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_CiudadKeyReleased
+        CiudadDAO ciudades = new CiudadDAO(this.conexion);
+        ArrayList<RH_Ciudad> lista = ciudades.consultarCiudadesNombre(txf_Ciudad.getText());
+        llenarTabla(lista);
+    }//GEN-LAST:event_txf_CiudadKeyReleased
 
-            break;
-
-            case 2:
-            if(!(jcbIdCiudad.getSelectedIndex()==0))
-            {
-                String sql = "";
-                if (jrbIdEstado.isSelected()) {
-                    modelo.addColumn("idEstado");
-                    sql += "idEstado";
-                }
-                if (jrbEstatus.isSelected() && sql == "") {
-                    modelo.addColumn("Estatus");
-                    sql += "estatus";
-                } else if (jrbEstatus.isSelected()) {
-                    modelo.addColumn("Estatus");
-                    sql += ",estatus";
-                }
-
-                if (jrbCiudad.isSelected() && sql == "") {
-                    modelo.addColumn("Ciudad");
-                    sql += "idCiudad";
-                } else if (jrbCiudad.isSelected()) {
-                    modelo.addColumn("Ciudad");
-                    sql += ",idCiudad";
-                }
-                if (jrbNombre.isSelected() && sql == "") {
-                    modelo.addColumn("Nombre");
-                    sql += "nombre";
-                } else if (jrbNombre.isSelected()) {
-                    modelo.addColumn("Nombre");
-                    sql += ",nombre";
-                }
-                
-
-                tblDatos.removeAll();
-                tblDatos.setModel(modelo);
-                this.consultaPersonalizada(Integer.parseInt(txfIdEstado.getText()), sql, this.tblDatos);
-            }
-            else
-            JOptionPane.showMessageDialog(rootPane, "idCiudad No Seleccionado");
-            break;
-            case 3:
-            tblDatos.removeAll();
-            modelo.addColumn("idEstado");
-            modelo.addColumn("Nombre");
-            modelo.addColumn("idCiudad");
-            modelo.addColumn("Estatus");
-            tblDatos.setModel(modelo);
-            this.consultaTodo(this.tblDatos);
-            break;
-            case 4:
-            this.eliminarDatos(Integer.parseInt(txfIdEstado.getText()));
-            break;
-            case 5:
-            if(comprobarDatos()==true)
-            {
-                o.setIdEstado(Integer.parseInt(txfIdEstado.getText()));
-                o.setNombre(txfNombre.getText());
-                o.setEstatus((jcbEstatus.getSelectedItem().toString()));
-                o.setIdCiudad(Integer.parseInt(jcbIdCiudad.getSelectedItem().toString()));
-                
-                if (this.update(o) == true)
-                {
-                    txfIdEstado.setText("");
-                    txfNombre.setText("");
-                    jcbIdCiudad.setSelectedIndex(0);
-                }
-                else
-                JOptionPane.showMessageDialog(null, "Hay Campos con Datos Erroneos ");
-
-            }
-            else
-            JOptionPane.showMessageDialog(null, "Hay Campos Vacios");
-
-            break;
-            case 6:
-            JOptionPane.showMessageDialog(null, "Se cerró la conexión a la base de datos");
-            this.dispose();
-
-            break;
+    private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
+        Integer idCiudad = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        CiudadDAO DAO = new CiudadDAO(this.conexion);
+        RH_Ciudad ciudad = new RH_Ciudad();
+        ciudad = DAO.consultarCiudadId(idCiudad);
+        ciudad.setNombreEstado(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 2).toString());
+        AddCiudadFrame modificarCiudad = new AddCiudadFrame(this.conexion, ciudad);
+        this.dispose();
+        modificarCiudad.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_ModificarActionPerformed
+    private void llenarTabla(ArrayList<RH_Ciudad> lista) {
+        String[] encabezado = {"IdCiudad", "Nombre Ciudad", "Estado"};
+        Object[][] datos = new Object[lista.size()][4];
+        int ren = 0;
+        for (RH_Ciudad s : lista) {
+            datos[ren][0] = s.getIdCiudad();
+            datos[ren][1] = s.getNombre();
+            datos[ren][2] = s.getNombreEstado();
+            ren++;
         }
-
-    }//GEN-LAST:event_btnConfirmarActionPerformed
-
-    private void jrbIdEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbIdEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jrbIdEstadoActionPerformed
-
-    public boolean comprobarDatos(){
-        if(this.cmbOpciones.getSelectedIndex()!=1)
-        {
-            if(txfIdEstado.getText().isEmpty())
-                return false;
-        }
-        if(txfNombre.getText().isEmpty())
-            return false;
-        if(jcbIdCiudad.getSelectedIndex()==0)
-            return false;
-        
-        return true;
-    //Hasta aquí Comprueba que los datos introducidos no sean nulos
-}
-    
-    public boolean insertar(RH_Ciudad o) 
-    {
-        String sql = "INSERT INTO Estados (idCiudad, idEstado, nombre,  estatus) VALUES(?,?,?,?);";
-        try 
-        {
-            ps = cn.prepareStatement(sql);
-            
-            ps.setInt(1, o.getIdCiudad());
-            ps.setInt(2, o.getIdEstado());
-            ps.setString(3, o.getNombre());
-            ps.setString(4, o.getEstatus());
-            int resultado = ps.executeUpdate();
-            if(resultado>0)
-            {
-                 JOptionPane.showMessageDialog(null, "La Inserción Se Realizó Correctamente");
-                 ps.close();
-                 return true;
+        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Disallow the editing of any cell
             }
-            else
-            {
-                 JOptionPane.showMessageDialog(null, "La Inserción no se realizó");
-                 ps.close();
-                 return true;
-            }
-               
-            
-        } 
-        catch (SQLException e) 
-        {
-            System.out.println("Error al realizar la inserción: " + e.getMessage());
-            return false;
-        }
+
+        };
+
+        tbl_Datos.setModel(m);
     }
-    
-    
-    public void consultaPersonalizada(int idCiudad,String Cadena,JTable tbl) 
-    {
-        String sql = "SELECT "+Cadena+" FROM Cidades Where idCiudad = ?";
-        try 
-        {
-            ps = cn.prepareStatement(sql);
-            ps.setInt(1, idCiudad);
-            rs = ps.executeQuery();
-            mtd = rs.getMetaData();
-            ArrayList<Object[]> datos = new ArrayList<>();
-            while(rs.next())
-            {
-                Object[] fila = new Object[mtd.getColumnCount()];
-                for (int i = 0; i < fila.length; i++) {
-                    fila[i] = rs.getObject(i+1);
-                }
-                datos.add(fila);
-            }
-            dtm = (DefaultTableModel)tbl.getModel();
-            for (int i = 0; i < datos.size(); i++) {
-                dtm.addRow(datos.get(i));
-                
-            }
-            ps.close();
-        } 
-        catch (SQLException e ) 
-        {
-            JOptionPane.showMessageDialog(null,"Error al realizar la consulta: " + e.getMessage());
-            
-        }
-        
-    }
-    
-    
-    public void consultaTodo(JTable tbl) 
-    {
-        String sql = "SELECT * FROM Ciudades;";
-        try 
-        {
-            ps = cn.prepareStatement(sql);
-            rs = ps.executeQuery();
-            mtd = rs.getMetaData();
-            ArrayList<Object[]> datos = new ArrayList<>();
-            while(rs.next())
-            {
-                Object[] fila = new Object[mtd.getColumnCount()];
-                for (int i = 0; i < fila.length; i++) {
-                    fila[i] = rs.getObject(i+1);
-                }
-                datos.add(fila);
-            }
-            dtm = (DefaultTableModel)tbl.getModel();
-            for (int i = 0; i < datos.size(); i++) 
-            {
-                dtm.addRow(datos.get(i));                
-            }
-            ps.close();
-        }
-        catch (SQLException e ) 
-        {
-            JOptionPane.showMessageDialog(null,"Error al realizar la consulta: " + e.getMessage());
-            
-        }
-    }
-    
-    
-    public void eliminarDatos(int idCiudad)
-    {
-        String sql = "delete from Ciudades Where idCiudad = ?";
-        try 
-        {
-            ps = cn.prepareStatement(sql);
-            ps.setInt(1, idCiudad);
-            ps.executeUpdate();
-            ps.close();
-            JOptionPane.showMessageDialog(null, "Se Ejecutó Exitosamente El Delete Del Producto Con Clave: "+idCiudad);
-        } 
-        catch (SQLException ex) 
-        {
-            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
-    
-    public boolean update(RH_Ciudad o)
-    {
-        String sql = "UPDATE Ciudades SET  idEstado = ?, nombre = ?,  estatus = ? Where idCiudad = ?";
-        try 
-        {
-            ps = cn.prepareStatement(sql);
-            ps.setInt(1, o.getIdEstado());
-            ps.setString(2, o.getNombre());
-            ps.setString(3, o.getEstatus());
-            ps.setInt(4, o.getIdCiudad());
-            
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Se Actualizó Exitosamente El Producto con clave: "+o.getIdCiudad());
-            ps.close();
-            return true;
-        }
-        catch (SQLException ex) 
-        {
-                JOptionPane.showMessageDialog(null, "No Se Actualizaron los datos por: "+ex.getMessage() );
-                return false;
-        }     
-    }
-    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        <editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(CiudadesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(CiudadesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(CiudadesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(CiudadesFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        </editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new CiudadesFrame().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnConfirmar;
-    private javax.swing.JComboBox<String> cmbOpciones;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btn_Add;
+    private javax.swing.JButton btn_Atras;
+    private javax.swing.JButton btn_Eliminar;
+    private javax.swing.JButton btn_Modificar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JComboBox<String> jcbEstatus;
-    private javax.swing.JComboBox<String> jcbIdCiudad;
-    private javax.swing.JRadioButton jrbCiudad;
-    private javax.swing.JRadioButton jrbEstatus;
-    private javax.swing.JRadioButton jrbIdEstado;
-    private javax.swing.JRadioButton jrbNombre;
-    private javax.swing.JLabel lblEstatus;
-    private javax.swing.JLabel lblIdCiudad;
-    private javax.swing.JLabel lblIdEstado;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JTable tblDatos;
-    private javax.swing.JTextField txfIdEstado;
-    private javax.swing.JTextField txfNombre;
+    private javax.swing.JTable tbl_Datos;
+    private javax.swing.JTextField txf_Ciudad;
     // End of variables declaration//GEN-END:variables
 }
