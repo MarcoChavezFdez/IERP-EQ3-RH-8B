@@ -57,8 +57,6 @@ public class AddCiudadFrame extends javax.swing.JFrame {
             cmb_Estado.addItem(s.getNombre());
             if (s.getNombre() == null ? nCiudad.getNombreEstado() == null : s.getNombre().equals(nCiudad.getNombreEstado())) {
                 cmb_Estado.setSelectedIndex(cont);
-                System.out.println("aqui ta");
-                System.out.println(cont);
             } else {
                 cont++;
                 System.out.println("No esta ");
@@ -243,7 +241,7 @@ public class AddCiudadFrame extends javax.swing.JFrame {
             nCiudad.setIdEstado(estado.getIdEstado());
             try {
                 CiudadDAO modificarCiudad = new CiudadDAO(this.conexion);
-                if (modificarCiudad.insertarCiudad(nCiudad)) {
+                if (modificarCiudad.actualizarCiudad(nCiudad)) {
                     JOptionPane.showMessageDialog(null, "Ciudad Modificada con exito");
                     CiudadesFrame ciudades = new CiudadesFrame(this.conexion);
                     this.dispose();
