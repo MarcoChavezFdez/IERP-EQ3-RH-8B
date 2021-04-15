@@ -7,6 +7,7 @@ package GUI;
 
 import conexion.ConexionBD;
 import conexion.EstadoDAO;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import modelo.RH_Estado;
 
@@ -40,12 +41,6 @@ public class AddEstadoFrame extends javax.swing.JFrame {
         btn_Realizar.setEnabled(true);
         txf_Nombre.setText(this.estado.getNombre());
         txf_Siglas.setText(this.estado.getSiglas());
-        if("A".equals(this.estado.getEstatus())){
-            cmb_Estatus.setSelectedIndex(0);
-        }
-        else{
-            cmb_Estatus.setSelectedIndex(1);
-        }
         this.bandera = true;
     }
 
@@ -59,8 +54,6 @@ public class AddEstadoFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        cmb_Estatus = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
         btn_Realizar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         lbl_Titulo = new javax.swing.JLabel();
@@ -77,12 +70,6 @@ public class AddEstadoFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        cmb_Estatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ACTIVO", "INACTIVO" }));
-        jPanel1.add(cmb_Estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 320, -1, -1));
-
-        jLabel4.setText("Estatus");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 320, -1, -1));
 
         btn_Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
         btn_Realizar.setBorderPainted(false);
@@ -148,11 +135,7 @@ public class AddEstadoFrame extends javax.swing.JFrame {
         RH_Estado nEstado = new RH_Estado();
         nEstado.setNombre(txf_Nombre.getText().toUpperCase());
         nEstado.setSiglas(txf_Siglas.getText().toUpperCase());
-        if (cmb_Estatus.getSelectedIndex() == 0) {
-            nEstado.setEstatus("A");
-        } else {
-            nEstado.setEstatus("I");
-        }
+        nEstado.setEstatus("A");
         EstadoDAO estadoDAO = new EstadoDAO(this.conexion);
         try {
             if (bandera) {
@@ -174,7 +157,7 @@ public class AddEstadoFrame extends javax.swing.JFrame {
                 }
             }
 
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
         }
 
@@ -211,11 +194,9 @@ public class AddEstadoFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Realizar;
-    private javax.swing.JComboBox<String> cmb_Estatus;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_Mensaje;
     private javax.swing.JLabel lbl_Titulo;
