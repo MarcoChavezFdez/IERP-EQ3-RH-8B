@@ -46,9 +46,8 @@ public class EstadoDAO {
     }
 
     public ArrayList<RH_Estado> consultaEstados() {
-        String sql = "select * "
-                + " from RH.Estados "
-                + " ORDER BY idEstado ASC";
+        String sql = "select * from vEstados ";
+
         ArrayList<RH_Estado> lista = new ArrayList<>();
         try {
             Statement st = conexion.getConexion().createStatement();
@@ -58,7 +57,6 @@ public class EstadoDAO {
                 e.setIdEstado(rs.getInt("idEstado"));
                 e.setNombre(rs.getString("nombre"));
                 e.setSiglas(rs.getString("siglas"));
-                e.setEstatus(rs.getString("estatus"));
                 lista.add(e);
             }
             rs.close();
@@ -69,7 +67,7 @@ public class EstadoDAO {
         return lista;
     }
 
-    public ArrayList<RH_Estado> consultaEstadoNombre(String nombre) {
+    public ArrayList<RH_Estado> consultaEstadosNombre(String nombre) {
         String sql = "select * "
                 + "from RH.Estados "
                 + "where Nombre like CONCAT( '%','" + nombre + "','%')";
@@ -93,14 +91,37 @@ public class EstadoDAO {
         return lista;
     }
 
+    public RH_Estado consultaEstadoNombre(String nombre) {
+        String sql = "select * "
+                + "from RH.Estados "
+                + "where Nombre like CONCAT( '%','" + nombre + "','%')";
+        RH_Estado estado = new RH_Estado();
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                estado.setIdEstado(rs.getInt("idEstado"));
+                estado.setNombre(rs.getString("nombre"));
+                estado.setSiglas(rs.getString("siglas"));
+                estado.setEstatus(rs.getString("estatus"));
+
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return estado;
+
+    }
+
     public RH_Estado consultaEstadoId(int idEstado) {
         String sql = (" select * "
                 + " from RH.Estados "
                 + " where idEstado=" + idEstado);
         RH_Estado estado = new RH_Estado();
         try {
-           // PreparedStatement st = con.prepareStatement(sql);
-              Statement st = conexion.getConexion().createStatement();
+            Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
 
             while (rs.next()) {
@@ -154,6 +175,7 @@ public class EstadoDAO {
         }
         return ban;
     }
+
     public boolean eliminacionEstado(Integer p) {
         String sql = "delete from RH.Estados "
                 + "where idEstado=" + p;
