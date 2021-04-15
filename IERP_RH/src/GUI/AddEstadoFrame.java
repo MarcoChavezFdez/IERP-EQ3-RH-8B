@@ -71,7 +71,7 @@ public class AddEstadoFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
+        btn_Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
         btn_Realizar.setBorderPainted(false);
         btn_Realizar.setContentAreaFilled(false);
         btn_Realizar.setEnabled(false);

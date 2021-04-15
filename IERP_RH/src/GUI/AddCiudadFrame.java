@@ -135,7 +135,7 @@ public class AddCiudadFrame extends javax.swing.JFrame {
         });
         jPanel1.add(cmb_Estado, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 158, -1));
 
-        btn_AddCiudad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
+        btn_AddCiudad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
         btn_AddCiudad.setToolTipText("");
         btn_AddCiudad.setBorderPainted(false);
         btn_AddCiudad.setContentAreaFilled(false);
@@ -145,8 +145,8 @@ public class AddCiudadFrame extends javax.swing.JFrame {
                 btn_AddCiudadActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_AddCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 300, -1, -1));
-        jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, 151, 21));
+        jPanel1.add(btn_AddCiudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, -1, -1));
+        jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 151, 21));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

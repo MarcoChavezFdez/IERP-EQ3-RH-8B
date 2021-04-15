@@ -120,7 +120,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         });
         jPanel1.add(TxDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 140, -1));
 
-        btn_Add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
+        btn_Add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
         btn_Add.setBorderPainted(false);
         btn_Add.setContentAreaFilled(false);
         btn_Add.setEnabled(false);
