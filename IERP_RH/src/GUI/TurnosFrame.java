@@ -6,11 +6,13 @@
 package GUI;
 
 import conexion.ConexionBD;
+import conexion.EstadoDAO;
 
 import conexion.TurnosDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.RH_Estado;
 import modelo.RH_Turno;
 
 /**
@@ -44,7 +46,7 @@ public class TurnosFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbdatos = new javax.swing.JTable();
+        tbl_Datos = new javax.swing.JTable();
         btnbuscar = new javax.swing.JButton();
         btninsertar = new javax.swing.JButton();
         btnmodificar = new javax.swing.JButton();
@@ -65,7 +67,7 @@ public class TurnosFrame extends javax.swing.JFrame {
             }
         });
 
-        tbdatos.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -76,12 +78,12 @@ public class TurnosFrame extends javax.swing.JFrame {
                 "IdTurno", "nombre", "horaInicio", "horaFin", "dias"
             }
         ));
-        tbdatos.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                tbdatosMousePressed(evt);
+                tbl_DatosMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tbdatos);
+        jScrollPane1.setViewportView(tbl_Datos);
 
         btnbuscar.setText("Buscar");
 
@@ -93,13 +95,15 @@ public class TurnosFrame extends javax.swing.JFrame {
         });
 
         btnmodificar.setText("Modificar");
+        btnmodificar.setEnabled(false);
         btnmodificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnmodificarActionPerformed(evt);
             }
         });
 
-        btneliminar.setText("Deshabilitar");
+        btneliminar.setText("Eliminar");
+        btneliminar.setEnabled(false);
         btneliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btneliminarActionPerformed(evt);
@@ -114,7 +118,7 @@ public class TurnosFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 915, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnmodificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -158,7 +162,7 @@ public class TurnosFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
-        Integer idTurno = Integer.parseInt(tbdatos.getValueAt(tbdatos.getSelectedRow(), 0).toString());
+        Integer idTurno = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
         TurnosDAO DAO = new TurnosDAO(this.conexion);
         RH_Turno t = new RH_Turno();
 //        t = DAO.consultaTurnoId(idTurno);
@@ -183,35 +187,35 @@ public class TurnosFrame extends javax.swing.JFrame {
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
         TurnosDAO turno = new TurnosDAO(this.conexion);
-        ArrayList<RH_Turno> lista = turno.consultaTurnoId(Integer.parseInt(txtBusqueda.getText()));
-        llenarTabla(lista);
+////        ArrayList<RH_Turno> lista = turno.consultaTurnoId(Integer.parseInt(txtBusqueda.getText()));
+//        llenarTabla(lista);
     }//GEN-LAST:event_txtBusquedaKeyReleased
 
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
-//        Integer idTurno = Integer.parseInt(tbdatos.getValueAt(tbdatos.getSelectedRow(), 0).toString());
-//    
-//        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea cambiar el turno coon lel idTurno " + idTurno, "Confirmar Cambio de turno", JOptionPane.YES_NO_OPTION);
-//        if (reply == JOptionPane.YES_OPTION) {
-//            RH_Turno turno = new RH_Turno();
-//            TurnosDAO t= new TurnosDAO(this.conexion);
-//            turno = t.consultaTurnoId(idTurno);
-//            if (t.eliminacionLogicaTurno(turno)) {
-//                JOptionPane.showMessageDialog(null, "Cambio el turno con Exito");
-//                TurnosDAO Turno = new TurnosDAO (this.conexion);
-//                ArrayList<RH_Turno> lista = Turno.consultaTurnosVista();
-//                llenarTabla(lista);
-//
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-//            }
-//
-//        }
+        Integer idTurno = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Estado '" + nombre+"'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            RH_Turno turno = new RH_Turno();
+            TurnosDAO DAO = new TurnosDAO(this.conexion);
+            turno = DAO.consultaTurnoId(idTurno);
+            if (DAO.eliminacionLogicaTurno(turno)) {
+                JOptionPane.showMessageDialog(null, "Turno Eliminado");
+                TurnosDAO turnos = new TurnosDAO(this.conexion);
+                ArrayList<RH_Turno> lista = turnos.consultaTurnosVista();
+                llenarTabla(lista);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+            }
+
+        }
     }//GEN-LAST:event_btneliminarActionPerformed
 
-    private void tbdatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbdatosMousePressed
+    private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
         btnmodificar.setEnabled(true);
         btneliminar.setEnabled(true);
-    }//GEN-LAST:event_tbdatosMousePressed
+    }//GEN-LAST:event_tbl_DatosMousePressed
     private void llenarTabla(ArrayList<RH_Turno> lista) {
         String[] encabezado = {"IdTurno", "Nombre", "Hora Inicio", "HoraFin", "Dias"};
         Object[][] datos = new Object[lista.size()][5];
@@ -232,7 +236,7 @@ public class TurnosFrame extends javax.swing.JFrame {
 
         };
 
-        tbdatos.setModel(m);
+        tbl_Datos.setModel(m);
     }
 
     /**
@@ -277,7 +281,7 @@ public class TurnosFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnmodificar;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbdatos;
+    private javax.swing.JTable tbl_Datos;
     private javax.swing.JTextField txtBusqueda;
     // End of variables declaration//GEN-END:variables
 }

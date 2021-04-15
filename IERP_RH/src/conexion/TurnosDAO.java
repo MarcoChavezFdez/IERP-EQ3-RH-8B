@@ -95,7 +95,7 @@ public class TurnosDAO {
         return lista;
     }
 
-    public ArrayList<RH_Turno> consultaTurnoId(Integer idTurno) {
+    public RH_Turno consultaTurnoId(Integer idTurno) {
         String sql = "select * "
                 + "from RH.Turnos "
                 + "where idTurno=? ";
@@ -111,14 +111,14 @@ public class TurnosDAO {
                 e.setHoraInicio(rs.getTime("horaInicio"));
                 e.setHoraFin(rs.getTime("horaFin"));
                 e.setDias(rs.getString("dias"));
-                lista.add(e);
+                return e;
             }
             rs.close();
             st.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
         }
-        return lista;
+        return null;
     }
 
     public boolean actualizarTurno(RH_Turno p) {
