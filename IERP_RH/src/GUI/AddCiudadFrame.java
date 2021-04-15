@@ -44,8 +44,8 @@ public class AddCiudadFrame extends javax.swing.JFrame {
     public AddCiudadFrame(ConexionBD conexion, RH_Ciudad ciudad) {
         initComponents();
         this.conexion = conexion;
-        lbl_Operacion.setText("Modificar Ciudad");
-        btn_AddCiudad.setText("Modificar Ciudad");
+        lbl_Operacion.setText("Realizar Operación");
+        btn_AddCiudad.setText("");
         txf_Nombre.setText(ciudad.getNombre());
         isNewCiudad = false;
         EstadoDAO estadosDAO = new EstadoDAO(this.conexion);
