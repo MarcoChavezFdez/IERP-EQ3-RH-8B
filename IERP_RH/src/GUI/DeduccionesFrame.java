@@ -175,8 +175,8 @@ public class DeduccionesFrame extends javax.swing.JFrame {
 
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
         Integer idDeduccion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString();
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Deduccion " + nombre, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Deduccion '" + nombre+"' ?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
         DeduccionesDAO DAO = new DeduccionesDAO(this.conexion);
         RH_Deduccion deduccion = new RH_Deduccion();
         if (reply == JOptionPane.YES_OPTION) {
