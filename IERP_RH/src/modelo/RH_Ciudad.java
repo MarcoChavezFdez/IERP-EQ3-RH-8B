@@ -13,6 +13,7 @@ public class RH_Ciudad {
     private Integer idCiudad;
     private String nombre;
     private Integer idEstado;
+    private String nombreEstado;
     private String estatus;
 
     public RH_Ciudad(Integer idCiudad, String nombre, Integer idEstado, String estatus) {
@@ -20,6 +21,14 @@ public class RH_Ciudad {
         this.nombre = nombre;
         this.idEstado = idEstado;
         this.estatus = estatus;
+    }
+
+    public String getNombreEstado() {
+        return nombreEstado;
+    }
+
+    public void setNombreEstado(String nombreEstado) {
+        this.nombreEstado = nombreEstado;
     }
 
     public RH_Ciudad() {
