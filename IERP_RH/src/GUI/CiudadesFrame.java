@@ -201,7 +201,7 @@ public class CiudadesFrame extends javax.swing.JFrame {
             CiudadDAO DAO = new CiudadDAO(this.conexion);
             ciudad = DAO.consultarCiudadId(idCiudad);
             if (DAO.eliminacionLogicaCiudad(ciudad)) {
-                JOptionPane.showMessageDialog(null, "Estado Eliminado");
+                JOptionPane.showMessageDialog(null, "Ciudad Eliminada");
                 CiudadDAO ciudades = new CiudadDAO(this.conexion);
                 ArrayList<RH_Ciudad> lista = ciudades.consultaCiudadesVista();
                 llenarTabla(lista);
