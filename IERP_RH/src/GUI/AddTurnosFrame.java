@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -48,9 +49,9 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         this.turno = turno;
         this.conexion = conexion;
 
-        btnguardar.setText("Modificar Turno");
-        btnguardar.setEnabled(true);
-        txtnombre.setText(this.turno.getNombre());
+        btn_Operacion.setText("Modificar Turno");
+        btn_Operacion.setEnabled(true);
+        txf_Nombre.setText(this.turno.getNombre());
 
         String dias = null;
         if (rbLunes.isSelected() == true) {
@@ -91,7 +92,7 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtnombre = new javax.swing.JTextField();
+        txf_Nombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -101,7 +102,7 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         rbJueves = new javax.swing.JRadioButton();
         rbViernes = new javax.swing.JRadioButton();
         rbSabado = new javax.swing.JRadioButton();
-        btnguardar = new javax.swing.JButton();
+        btn_Operacion = new javax.swing.JButton();
         rbDomingo = new javax.swing.JRadioButton();
         btnRegresar = new javax.swing.JButton();
         tmp_HoraInicio = new com.github.lgooddatepicker.components.TimePicker();
@@ -130,8 +131,13 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         jLabel3.setText("Nombre:");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 80, -1));
 
-        txtnombre.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel2.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 80, -1));
+        txf_Nombre.setBackground(new java.awt.Color(153, 255, 153));
+        txf_Nombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txf_NombreKeyReleased(evt);
+            }
+        });
+        jPanel2.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 80, -1));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel4.setText("Hora Inicio;");
@@ -145,14 +151,14 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         jLabel6.setText("Días:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
+        rbLunes.setText("Lunes");
         rbLunes.setBackground(new java.awt.Color(241, 151, 89));
         rbLunes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        rbLunes.setText("Lunes");
         jPanel2.add(rbLunes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
+        rbMartes.setText("Martes");
         rbMartes.setBackground(new java.awt.Color(241, 151, 89));
         rbMartes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        rbMartes.setText("Martes");
         jPanel2.add(rbMartes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         rbMiercoles.setBackground(new java.awt.Color(241, 151, 89));
@@ -185,20 +191,20 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         rbSabado.setText("Sabado");
         jPanel2.add(rbSabado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, -1));
 
-        btnguardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnGuardar.png"))); // NOI18N
-        btnguardar.setBorderPainted(false);
-        btnguardar.setContentAreaFilled(false);
-        btnguardar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_Operacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnGuardar.png"))); // NOI18N
+        btn_Operacion.setBorderPainted(false);
+        btn_Operacion.setContentAreaFilled(false);
+        btn_Operacion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnguardarMouseEntered(evt);
+                btn_OperacionMouseEntered(evt);
             }
         });
-        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+        btn_Operacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnguardarActionPerformed(evt);
+                btn_OperacionActionPerformed(evt);
             }
         });
-        jPanel2.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 160, 80));
+        jPanel2.add(btn_Operacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 160, 80));
 
         rbDomingo.setBackground(new java.awt.Color(241, 151, 89));
         rbDomingo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -222,16 +228,45 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+    private void btn_OperacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OperacionActionPerformed
         RH_Turno nTurno = new RH_Turno();
+        nTurno.setNombre(txf_Nombre.getText().toUpperCase());
         nTurno.setHoraInicio(Time.valueOf(tmp_HoraInicio.getTime()));
         nTurno.setHoraFin(Time.valueOf(tmp_HoraFin.getTime()));
         nTurno.setEstatus("A");
-        nTurno.setDias("Lunes");
+        String dias[] = new String[7];
+        if (rbLunes.isSelected()) {
+            dias[0] = "LUNES";
+        }
+        if (rbMartes.isSelected()) {
+            dias[1] = "MARTES";
+        }
+        if (rbMiercoles.isSelected()) {
+            dias[2] = "MIÉRCOLES";
+        }
+        if (rbJueves.isSelected()) {
+            dias[3] = "JUEVES";
+        }
+        if (rbViernes.isSelected()) {
+            dias[4] = "VIERNES";
+        }
+        if (rbSabado.isSelected()) {
+            dias[5] = "SÁBADO";
+        }
+        if (rbDomingo.isSelected()) {
+            dias[5] = "DOMINGO";
+        }
+        String diasT = "";
+        for (int i = 0; i < 7; i++) {
+            if (dias[i]!=null) {
+                diasT += dias[i]+" ";
+            }
+        }
+        nTurno.setDias(diasT);
         TurnosDAO dao = new TurnosDAO(this.conexion);
         try {
             if (isNew) {
-                if (dao.insertarTurno(turno)) {
+                if (dao.insertarTurno(nTurno)) {
                     JOptionPane.showMessageDialog(null, "Turno añadido con exito");
                     TurnosFrame turnosFrame = new TurnosFrame(this.conexion);
                     this.dispose();
@@ -248,7 +283,7 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         }
 
 
-    }//GEN-LAST:event_btnguardarActionPerformed
+    }//GEN-LAST:event_btn_OperacionActionPerformed
 
     private void rbJuevesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbJuevesActionPerformed
         // TODO add your handling code here:
@@ -258,9 +293,9 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbViernesActionPerformed
 
-    private void btnguardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnguardarMouseEntered
+    private void btn_OperacionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_OperacionMouseEntered
 
-    }//GEN-LAST:event_btnguardarMouseEntered
+    }//GEN-LAST:event_btn_OperacionMouseEntered
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         EstadosFrame estados = new EstadosFrame(this.conexion);
@@ -269,6 +304,12 @@ public class AddTurnosFrame extends javax.swing.JFrame {
         estados.pack();
 
     }//GEN-LAST:event_btnRegresarActionPerformed
+    public void verificaCampos(){
+
+    }
+    private void txf_NombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_NombreKeyReleased
+        verificaCampos();
+    }//GEN-LAST:event_txf_NombreKeyReleased
 
     /**
      * @param args the command line arguments
@@ -276,7 +317,7 @@ public class AddTurnosFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JButton btnguardar;
+    private javax.swing.JButton btn_Operacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -293,6 +334,6 @@ public class AddTurnosFrame extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbViernes;
     private com.github.lgooddatepicker.components.TimePicker tmp_HoraFin;
     private com.github.lgooddatepicker.components.TimePicker tmp_HoraInicio;
-    private javax.swing.JTextField txtnombre;
+    private javax.swing.JTextField txf_Nombre;
     // End of variables declaration//GEN-END:variables
 }

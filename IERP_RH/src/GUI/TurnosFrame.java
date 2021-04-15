@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import conexion.ConexionBD;
 
 import conexion.TurnosDAO;
@@ -17,11 +18,13 @@ import modelo.RH_Turno;
  * @author selen
  */
 public class TurnosFrame extends javax.swing.JFrame {
-ConexionBD conexion;
+
+    ConexionBD conexion;
+
     /**
      * Creates new form TurnoP
      */
-   public TurnosFrame(ConexionBD conexion) {
+    public TurnosFrame(ConexionBD conexion) {
         this.conexion = conexion;
         initComponents();
         TurnosDAO turno = new TurnosDAO(this.conexion);
@@ -110,22 +113,25 @@ ConexionBD conexion;
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 915, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnmodificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btninsertar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btneliminar)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnbuscar)))
-                .addContainerGap(123, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(jButton1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(52, 52, 52)
+                                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnbuscar)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,12 +142,10 @@ ConexionBD conexion;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnbuscar))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
                         .addComponent(btninsertar)
                         .addGap(29, 29, 29)
                         .addComponent(btnmodificar)
@@ -154,7 +158,7 @@ ConexionBD conexion;
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
-         Integer idTurno = Integer.parseInt(tbdatos.getValueAt(tbdatos.getSelectedRow(), 0).toString());
+        Integer idTurno = Integer.parseInt(tbdatos.getValueAt(tbdatos.getSelectedRow(), 0).toString());
         TurnosDAO DAO = new TurnosDAO(this.conexion);
         RH_Turno t = new RH_Turno();
 //        t = DAO.consultaTurnoId(idTurno);
@@ -164,7 +168,7 @@ ConexionBD conexion;
     }//GEN-LAST:event_btnmodificarActionPerformed
 
     private void btninsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninsertarActionPerformed
-         AddTurnosFrame Turnos = new AddTurnosFrame(this.conexion);
+        AddTurnosFrame Turnos = new AddTurnosFrame(this.conexion);
         this.dispose();
         Turnos.setVisible(true);
         this.pack();
@@ -178,7 +182,7 @@ ConexionBD conexion;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
-         TurnosDAO turno= new TurnosDAO(this.conexion);
+        TurnosDAO turno = new TurnosDAO(this.conexion);
         ArrayList<RH_Turno> lista = turno.consultaTurnoId(Integer.parseInt(txtBusqueda.getText()));
         llenarTabla(lista);
     }//GEN-LAST:event_txtBusquedaKeyReleased
@@ -208,8 +212,8 @@ ConexionBD conexion;
         btnmodificar.setEnabled(true);
         btneliminar.setEnabled(true);
     }//GEN-LAST:event_tbdatosMousePressed
-private void llenarTabla(ArrayList<RH_Turno> lista) {
-        String[] encabezado = {"IdTurno", "nombre","horaInicio", "horaFin","dias"};
+    private void llenarTabla(ArrayList<RH_Turno> lista) {
+        String[] encabezado = {"IdTurno", "Nombre", "Hora Inicio", "HoraFin", "Dias"};
         Object[][] datos = new Object[lista.size()][5];
         int ren = 0;
         for (RH_Turno s : lista) {
@@ -217,8 +221,7 @@ private void llenarTabla(ArrayList<RH_Turno> lista) {
             datos[ren][1] = s.getNombre();
             datos[ren][2] = s.getHoraInicio();
             datos[ren][3] = s.getHoraFin();
-             datos[ren][3] = s.getDias();
-            
+            datos[ren][4] = s.getDias();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
