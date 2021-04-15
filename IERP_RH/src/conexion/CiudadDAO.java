@@ -151,25 +151,24 @@ public class CiudadDAO {
 //        return estado;
 //    }
 //
-//    public boolean actualizarEstado(RH_Estado estado) {
-//        String sql = "update RH.Estados set nombre=?, siglas=?, estatus=? "
-//                + " where idEstado=?";
-//        boolean ban = false;
-//        try {
-//            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
-//            st.setInt(4, estado.getIdEstado());
-//            st.setString(1, estado.getNombre());
-//            st.setString(2, estado.getSiglas());
-//            st.setString(3, estado.getEstatus());
-//            st.execute();
-//            st.close();
-//            ban = true;
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
-//        }
-//        return ban;
-//    }
+    public boolean actualizarCiudad(RH_Ciudad ciudad) {
+        String sql = "update RH.Ciudades set nombre=?, idEstado=? "
+                + " where idCiudad=?";
+        boolean ban = false;
+        try {
+            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
+            st.setInt(3, ciudad.getIdCiudad());
+            st.setString(1, ciudad.getNombre());
+            st.setInt(2, ciudad.getIdEstado());
+            st.execute();
+            st.close();
+            ban = true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
+        }
+        return ban;
+    }
 //
 
     public boolean eliminacionLogicaCiudad(RH_Ciudad c) {
