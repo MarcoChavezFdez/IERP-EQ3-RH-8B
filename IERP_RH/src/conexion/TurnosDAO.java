@@ -27,7 +27,7 @@ public class TurnosDAO {
     }
 
     public boolean insertarTurno(RH_Turno turno) {
-        String sql = "insert into RH.Turnos values(?,?,?,?)";
+        String sql = "insert into RH.Turnos values(?,?,?,?,?)";
         boolean ban = false;
         try {
             try (PreparedStatement st = conexion.getConexion().prepareStatement(sql)) {
@@ -35,6 +35,7 @@ public class TurnosDAO {
                 st.setTime(2, turno.getHoraInicio());
                 st.setTime(3, turno.getHoraFin());
                 st.setString(4, turno.getDias());
+                st.setString(5, "A");
                 st.execute();
             }
             ban = true;
@@ -130,7 +131,7 @@ public class TurnosDAO {
             st.setString(1, p.getNombre());
             st.setTime(2, p.getHoraInicio());
             st.setTime(3, p.getHoraFin());
-            st.setString(4,p.getDias());
+            st.setString(4, p.getDias());
             st.execute();
             st.close();
             ban = true;

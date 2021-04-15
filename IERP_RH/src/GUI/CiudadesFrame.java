@@ -30,7 +30,6 @@ public class CiudadesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        evaluatorByte1 = new org.jdesktop.core.animation.timing.evaluators.EvaluatorByte();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         btn_Add = new javax.swing.JButton();
@@ -236,7 +235,6 @@ public class CiudadesFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
-    private org.jdesktop.core.animation.timing.evaluators.EvaluatorByte evaluatorByte1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

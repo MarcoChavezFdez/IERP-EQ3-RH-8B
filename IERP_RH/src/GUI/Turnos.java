@@ -10,6 +10,8 @@ import conexion.TurnosDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -85,15 +87,11 @@ public class Turnos extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtidTurno = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtnombre = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txthoraInicio = new javax.swing.JTextField();
-        txthoraFin = new javax.swing.JTextField();
         rbLunes = new javax.swing.JRadioButton();
         rbMartes = new javax.swing.JRadioButton();
         rbMiercoles = new javax.swing.JRadioButton();
@@ -103,6 +101,8 @@ public class Turnos extends javax.swing.JFrame {
         btnguardar = new javax.swing.JButton();
         rbDomingo = new javax.swing.JRadioButton();
         btnRegresar = new javax.swing.JButton();
+        tmp_HoraInicio = new com.github.lgooddatepicker.components.TimePicker();
+        tmp_HoraFin = new com.github.lgooddatepicker.components.TimePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Turnos");
@@ -123,57 +123,39 @@ public class Turnos extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 270, 110));
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel2.setText("ID:");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 31, 22));
-
-        txtidTurno.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel2.add(txtidTurno, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 64, -1));
-
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel3.setText("Nombre:");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 80, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 80, -1));
 
         txtnombre.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel2.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 80, -1));
+        jPanel2.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 80, -1));
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel4.setText("Fecha Inicio:");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, -1, -1));
+        jLabel4.setText("Hora Inicio;");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jLabel5.setText("Fecha Fin:");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
+        jLabel5.setText("Hora Fin");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel6.setText("Días:");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 180, -1, -1));
-
-        txthoraInicio.setBackground(new java.awt.Color(153, 255, 153));
-        txthoraInicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txthoraInicioActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txthoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, 94, -1));
-
-        txthoraFin.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel2.add(txthoraFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 370, 97, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
         rbLunes.setBackground(new java.awt.Color(241, 151, 89));
         rbLunes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         rbLunes.setText("Lunes");
-        jPanel2.add(rbLunes, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 230, -1, -1));
+        jPanel2.add(rbLunes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, -1, -1));
 
         rbMartes.setBackground(new java.awt.Color(241, 151, 89));
         rbMartes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         rbMartes.setText("Martes");
-        jPanel2.add(rbMartes, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, -1, -1));
+        jPanel2.add(rbMartes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         rbMiercoles.setBackground(new java.awt.Color(241, 151, 89));
         rbMiercoles.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         rbMiercoles.setText("Miercoles");
-        jPanel2.add(rbMiercoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 310, -1, -1));
+        jPanel2.add(rbMiercoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
 
         rbJueves.setBackground(new java.awt.Color(241, 151, 89));
         rbJueves.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -183,7 +165,7 @@ public class Turnos extends javax.swing.JFrame {
                 rbJuevesActionPerformed(evt);
             }
         });
-        jPanel2.add(rbJueves, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 350, -1, -1));
+        jPanel2.add(rbJueves, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
 
         rbViernes.setBackground(new java.awt.Color(241, 151, 89));
         rbViernes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -193,12 +175,12 @@ public class Turnos extends javax.swing.JFrame {
                 rbViernesActionPerformed(evt);
             }
         });
-        jPanel2.add(rbViernes, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, -1, -1));
+        jPanel2.add(rbViernes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
 
         rbSabado.setBackground(new java.awt.Color(241, 151, 89));
         rbSabado.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         rbSabado.setText("Sabado");
-        jPanel2.add(rbSabado, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, -1, -1));
+        jPanel2.add(rbSabado, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, -1));
 
         btnguardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnGuardar.png"))); // NOI18N
         btnguardar.setBorderPainted(false);
@@ -213,12 +195,12 @@ public class Turnos extends javax.swing.JFrame {
                 btnguardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 270, 160, 80));
+        jPanel2.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 160, 80));
 
         rbDomingo.setBackground(new java.awt.Color(241, 151, 89));
         rbDomingo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         rbDomingo.setText("Domingo");
-        jPanel2.add(rbDomingo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, -1, -1));
+        jPanel2.add(rbDomingo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, -1, -1));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnAtras.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
@@ -229,6 +211,8 @@ public class Turnos extends javax.swing.JFrame {
             }
         });
         jPanel2.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, -1, -1));
+        jPanel2.add(tmp_HoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 210, -1, -1));
+        jPanel2.add(tmp_HoraFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 880, 550));
 
@@ -236,79 +220,18 @@ public class Turnos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-        RH_Turno eturno = new RH_Turno();
-//int idTurno = Integer .parseInt(txtidTurno.getText());
-//        String nombre = txtnombre.getText();
-//        int horaInicio = Integer .parseInt(txthoraInicio.getText());
-//        int horaFin = Integer .parseInt(txthoraFin.getText());
-//        String dias = null;
-//        eturno.setNombre(txtnombre.getText().toUpperCase());
-//        eturno.setHoraInicio(Integer.parseInt(txthoraInicio.getText().toUpperCase()));
-//        eturno.setHoraFin(Integer.parseInt(txthoraFin.getText().toUpperCase()));
-//        String dias = null;
-        if (rbLunes.isSelected() == true) {
-            eturno.setDias("Lunes");
+        RH_Turno nTurno = new RH_Turno();
+        nTurno.setHoraInicio(Time.valueOf(tmp_HoraInicio.getTime()));
+        nTurno.setHoraFin(Time.valueOf(tmp_HoraFin.getTime()));
+        nTurno.setEstatus("A");
+        nTurno.setDias("Lunes");
+        
 
-        }
-        if (rbMartes.isSelected() == true) {
-            eturno.setDias("Marte");
-        }
-        if (rbMiercoles.isSelected() == true) {
-            eturno.setDias("Miercoles");
-        }
-        if (rbJueves.isSelected() == true) {
-            eturno.setDias("Jueves");
-        }
-        if (rbViernes.isSelected() == true) {
-            eturno.setDias("Viernes");
-        }
-        if (rbSabado.isSelected() == true) {
-            eturno.setDias("Sabado");
-        }
-        if (rbDomingo.isSelected() == true) {
-            eturno.setDias("Domindo");
-        }
-        TurnosDAO turnoDAO = new TurnosDAO(this.conexion);
-        //            Connection con = ConexionBD.GetConexion();
-//            PreparedStatement ps =con.prepareStatement("INSERT INTO Turnos(idTurno,nombre,horaInicio,horaFin,dias) VALUES (?,?,?,?,?)");
-//            ps.setInt(1, idTurno);
-//            ps.setString(2, nombre);
-//            ps.setInt(3, horaInicio);
-//            ps.setInt(4,horaFin);
-//            ps.setString(5,dias);
-//            ps.executeUpdate();
-//            JOptionPane.showMessageDialog(null, "Registro Guardado");
-//            limpiar();
-//            ArrayList<RH_Turno> lista = null;
-//              cargarTabla(lista);
-        if (bandera) {
-            eturno.setIdTurno(this.turno.getIdTurno());
-
-            if (turnoDAO.actualizarTurno(eturno)) {
-                JOptionPane.showMessageDialog(null, "Estado Modificado con exito");
-                TurnoP turnos = new TurnoP(this.conexion);
-                this.dispose();
-                turnos.setVisible(true);
-                this.pack();
-            }
-        } else {
-            if (turnoDAO.insertarTurno(eturno)) {
-                JOptionPane.showMessageDialog(null, "Estado Añadido con exito");
-                TurnoP turnos = new TurnoP(this.conexion);
-                this.dispose();
-                turnos.setVisible(true);
-                this.pack();
-            }
-        }
     }//GEN-LAST:event_btnguardarActionPerformed
 
     private void rbJuevesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbJuevesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbJuevesActionPerformed
-
-    private void txthoraInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txthoraInicioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txthoraInicioActionPerformed
 
     private void rbViernesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbViernesActionPerformed
         // TODO add your handling code here:
@@ -368,7 +291,6 @@ public class Turnos extends javax.swing.JFrame {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnguardar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -382,9 +304,8 @@ public class Turnos extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbMiercoles;
     private javax.swing.JRadioButton rbSabado;
     private javax.swing.JRadioButton rbViernes;
-    private javax.swing.JTextField txthoraFin;
-    private javax.swing.JTextField txthoraInicio;
-    private javax.swing.JTextField txtidTurno;
+    private com.github.lgooddatepicker.components.TimePicker tmp_HoraFin;
+    private com.github.lgooddatepicker.components.TimePicker tmp_HoraInicio;
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
 }

@@ -59,7 +59,6 @@ public class AddCiudadFrame extends javax.swing.JFrame {
                 cmb_Estado.setSelectedIndex(cont);
             } else {
                 cont++;
-                System.out.println("No esta ");
             }
         }
 
