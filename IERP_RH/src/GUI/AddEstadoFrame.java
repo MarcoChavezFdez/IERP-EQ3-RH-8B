@@ -27,8 +27,8 @@ public class AddEstadoFrame extends javax.swing.JFrame {
     public AddEstadoFrame(ConexionBD conexion) {
         initComponents();
         this.conexion = conexion;
-        lbl_Titulo.setText("Agregar Estado");
-        btn_Realizar.setText("Añadir Estado");
+        lbl_Titulo.setText("Realizar Operación");
+        btn_Realizar.setText("");
         this.bandera = false;
     }
 
@@ -36,8 +36,8 @@ public class AddEstadoFrame extends javax.swing.JFrame {
         initComponents();
         this.estado = estado;
         this.conexion = conexion;
-        lbl_Titulo.setText("Modificar Estado");
-        btn_Realizar.setText("Modificar Estado");
+        lbl_Titulo.setText("Realizar Operación");
+        btn_Realizar.setText("");
         btn_Realizar.setEnabled(true);
         txf_Nombre.setText(this.estado.getNombre());
         txf_Siglas.setText(this.estado.getSiglas());

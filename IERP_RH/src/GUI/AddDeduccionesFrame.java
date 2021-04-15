@@ -32,8 +32,8 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
 
     public AddDeduccionesFrame(ConexionBD conexion, RH_Deduccion deduccion) {
         initComponents();
-        jLabel1.setText("Modificar Deduccion");
-        btn_Add.setText("Modificar");
+        jLabel1.setText("Realizar Operación");
+        btn_Add.setText("");
         this.deduccion = deduccion;
         this.conexion = conexion;
         txNombre.setText(this.deduccion.getNombre());
