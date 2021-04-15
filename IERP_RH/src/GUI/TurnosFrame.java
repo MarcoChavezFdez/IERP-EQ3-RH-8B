@@ -16,16 +16,16 @@ import modelo.RH_Turno;
  *
  * @author selen
  */
-public class TurnoP extends javax.swing.JFrame {
+public class TurnosFrame extends javax.swing.JFrame {
 ConexionBD conexion;
     /**
      * Creates new form TurnoP
      */
-   public TurnoP(ConexionBD conexion) {
+   public TurnosFrame(ConexionBD conexion) {
         this.conexion = conexion;
         initComponents();
         TurnosDAO turno = new TurnosDAO(this.conexion);
-        ArrayList<RH_Turno> lista = turno.consultaTurnos();
+        ArrayList<RH_Turno> lista = turno.consultaTurnosVista();
         llenarTabla(lista);
     }
 //
@@ -158,13 +158,13 @@ ConexionBD conexion;
         TurnosDAO DAO = new TurnosDAO(this.conexion);
         RH_Turno t = new RH_Turno();
 //        t = DAO.consultaTurnoId(idTurno);
-        Turnos modificarEstado = new Turnos(this.conexion, t);
+        AddTurnosFrame modificarEstado = new AddTurnosFrame(this.conexion, t);
         this.setVisible(false);
         modificarEstado.setVisible(true);
     }//GEN-LAST:event_btnmodificarActionPerformed
 
     private void btninsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btninsertarActionPerformed
-         Turnos Turnos = new Turnos(this.conexion);
+         AddTurnosFrame Turnos = new AddTurnosFrame(this.conexion);
         this.dispose();
         Turnos.setVisible(true);
         this.pack();
@@ -194,7 +194,7 @@ ConexionBD conexion;
 //            if (t.eliminacionLogicaTurno(turno)) {
 //                JOptionPane.showMessageDialog(null, "Cambio el turno con Exito");
 //                TurnosDAO Turno = new TurnosDAO (this.conexion);
-//                ArrayList<RH_Turno> lista = Turno.consultaTurnos();
+//                ArrayList<RH_Turno> lista = Turno.consultaTurnosVista();
 //                llenarTabla(lista);
 //
 //            } else {
@@ -249,20 +249,20 @@ private void llenarTabla(ArrayList<RH_Turno> lista) {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(TurnoP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(TurnosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(TurnoP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(TurnosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(TurnoP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(TurnosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(TurnoP.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(TurnosFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new TurnoP().setVisible(true);
+//                new TurnosFrame().setVisible(true);
 //            }
 //        });
 //    }

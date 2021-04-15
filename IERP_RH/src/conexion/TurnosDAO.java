@@ -46,8 +46,8 @@ public class TurnosDAO {
         return ban;
     }
 
-    public ArrayList<RH_Turno> consultaTurnos() {
-        String sql = "select * from RH.Turnos "
+    public ArrayList<RH_Turno> consultaTurnosVista() {
+        String sql = "select * from vTurnos "
                 + " ORDER BY idTurno ASC";
         ArrayList<RH_Turno> lista = new ArrayList<>();
         try {

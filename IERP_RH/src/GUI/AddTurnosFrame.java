@@ -7,6 +7,7 @@ package GUI;
 
 import conexion.ConexionBD;
 import conexion.TurnosDAO;
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,25 +24,27 @@ import modelo.RH_Turno;
  *
  * @author selen
  */
-public class Turnos extends javax.swing.JFrame {
+public class AddTurnosFrame extends javax.swing.JFrame {
 
     ConexionBD conexion;
     RH_Turno turno;
-    Boolean bandera;
+    Boolean isNew;
 
     /**
      * Creates new form Turnos
+     *
+     * @param conexion
      */
-    public Turnos(ConexionBD conexion) {
+    public AddTurnosFrame(ConexionBD conexion) {
         this.conexion = conexion;
         initComponents();
-//        TurnosDAO estados = new TurnosDAO(this.conexion);
-//        ArrayList<RH_Turno> lista = estados.consultaTurnos();
-//      cargarTabla(lista);
+        TurnosDAO tunos = new TurnosDAO(this.conexion);
+        ArrayList<RH_Turno> lista = tunos.consultaTurnosVista();
+        this.isNew = true;
 
     }
 
-    Turnos(ConexionBD conexion, RH_Turno turno) {
+    AddTurnosFrame(ConexionBD conexion, RH_Turno turno) {
         this.turno = turno;
         this.conexion = conexion;
 
@@ -72,7 +75,7 @@ public class Turnos extends javax.swing.JFrame {
         if (rbDomingo.isSelected() == true) {
             dias = "Domingo";
         }
-        this.bandera = true;
+        this.isNew = true;
     }
 
     /**
@@ -225,7 +228,25 @@ public class Turnos extends javax.swing.JFrame {
         nTurno.setHoraFin(Time.valueOf(tmp_HoraFin.getTime()));
         nTurno.setEstatus("A");
         nTurno.setDias("Lunes");
-        
+        TurnosDAO dao = new TurnosDAO(this.conexion);
+        try {
+            if (isNew) {
+                if (dao.insertarTurno(turno)) {
+                    JOptionPane.showMessageDialog(null, "Turno añadido con exito");
+                    TurnosFrame turnosFrame = new TurnosFrame(this.conexion);
+                    this.dispose();
+                    turnosFrame.setVisible(true);
+                    this.pack();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un error al intentar crear el turno");
+                }
+            } else {
+
+            }
+        } catch (HeadlessException e) {
+
+        }
+
 
     }//GEN-LAST:event_btnguardarActionPerformed
 
@@ -249,43 +270,9 @@ public class Turnos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnRegresarActionPerformed
 
-//    private void cargarTabla(ArrayList<RH_Turno> lista) {
-//
-//        String[] encabezado = {"IdTurno", "nombre", "horaInicio", "horaFin", "dias"};
-//        Object[][] datos = new Object[lista.size()][5];
-//        int ren = 0;
-//        for (RH_Turno s : lista) {
-//            datos[ren][0] = s.getIdTurno();
-//            datos[ren][1] = s.getNombre();
-//            datos[ren][2] = s.getHoraInicio();
-//            datos[ren][3] = s.getHoraInicio();
-//            datos[ren][4] = s.getDias();
-//            ren++;
-//        }
-//
-//        DefaultTableModel modeloTabla = new DefaultTableModel(datos, encabezado) {
-//            @Override
-//            public boolean isCellEditable(int rowIndex, int colIndex) {
-//                return false; //Disallow the editing of any cell
-//            }
-//
-//        };
-//        tblTurnos.getModel();
-//
-//    }
-//
-//    private void limpiar() {
-//        txtidTurno.setText("");
-//        txtidTurno.setText("");
-//        txtidTurno.setText("");
-//        txtidTurno.setText("");
-//        txtidTurno.setText("");
-//
-//    }
-//    /**
-//     * @param args the command line arguments
-//     */
-
+    /**
+     * @param args the command line arguments
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegresar;
@@ -309,5 +296,3 @@ public class Turnos extends javax.swing.JFrame {
     private javax.swing.JTextField txtnombre;
     // End of variables declaration//GEN-END:variables
 }
-    
-
