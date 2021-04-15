@@ -5,11 +5,13 @@
  */
 package GUI;
 
+import conexion.CiudadDAO;
 import conexion.ConexionBD;
 import conexion.DeduccionesDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.RH_Ciudad;
 import modelo.RH_Deduccion;
 
 /**
@@ -173,12 +175,20 @@ public class DeduccionesFrame extends javax.swing.JFrame {
 
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
         Integer idDeduccion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Deduccion con idDeduccion " + idDeduccion, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Deduccion '" + nombre+"' ?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
         DeduccionesDAO DAO = new DeduccionesDAO(this.conexion);
         RH_Deduccion deduccion = new RH_Deduccion();
         if (reply == JOptionPane.YES_OPTION) {
+            if (DAO.eliminacionLogicaDeduccion(idDeduccion)) {
+                JOptionPane.showMessageDialog(null, "Deduccion Eliminada");
+                DeduccionesDAO deducciones = new DeduccionesDAO(this.conexion);
+                ArrayList<RH_Deduccion> lista = deducciones.consultaDeducciones();
+                llenarTabla(lista);
 
-            DAO.eliminacionDeduccion(idDeduccion);
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+            }
         }
     }//GEN-LAST:event_btn_EliminarActionPerformed
 
