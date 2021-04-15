@@ -6,12 +6,10 @@
 package GUI;
 
 import conexion.ConexionBD;
-import conexion.DeduccionesDAO;
 import conexion.EstadoDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.RH_Deduccion;
 import modelo.RH_Estado;
 
 /**
@@ -50,7 +48,6 @@ public class EstadosFrame extends javax.swing.JFrame {
         btn_Atras = new javax.swing.JButton();
         txf_Busqueda = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        btn_Deshabilitar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btn_Eliminar = new javax.swing.JButton();
 
@@ -131,18 +128,7 @@ public class EstadosFrame extends javax.swing.JFrame {
         jPanel1.add(txf_Busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 254, -1));
 
         jLabel1.setText("Busqueda por nombre");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, -1, -1));
-
-        btn_Deshabilitar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Des.png"))); // NOI18N
-        btn_Deshabilitar.setBorderPainted(false);
-        btn_Deshabilitar.setContentAreaFilled(false);
-        btn_Deshabilitar.setEnabled(false);
-        btn_Deshabilitar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_DeshabilitarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_Deshabilitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel2.setText("Estado");
@@ -157,7 +143,7 @@ public class EstadosFrame extends javax.swing.JFrame {
                 btn_EliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 190, -1));
+        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 190, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 690, 550));
 
@@ -185,29 +171,9 @@ public class EstadosFrame extends javax.swing.JFrame {
 
     private void txf_BusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_BusquedaKeyReleased
         EstadoDAO estados = new EstadoDAO(this.conexion);
-        ArrayList<RH_Estado> lista = estados.consultaEstadoNombre(txf_Busqueda.getText());
+        ArrayList<RH_Estado> lista = estados.consultaEstadosNombre(txf_Busqueda.getText());
         llenarTabla(lista);
     }//GEN-LAST:event_txf_BusquedaKeyReleased
-
-    private void btn_DeshabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DeshabilitarActionPerformed
-        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea cambiar el estatus del Estado con idEstado " + idEstado, "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            RH_Estado estado = new RH_Estado();
-            EstadoDAO DAO = new EstadoDAO(this.conexion);
-            estado = DAO.consultaEstadoId(idEstado);
-            if (DAO.eliminacionLogicaEstado(estado)) {
-                JOptionPane.showMessageDialog(null, "Cambio de Estatus con Exito");
-                EstadoDAO estados = new EstadoDAO(this.conexion);
-                ArrayList<RH_Estado> lista = estados.consultaEstados();
-                llenarTabla(lista);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-            }
-
-        }
-    }//GEN-LAST:event_btn_DeshabilitarActionPerformed
 
     private void tbl_DatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMouseClicked
 
@@ -225,28 +191,38 @@ public class EstadosFrame extends javax.swing.JFrame {
 
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
         btn_Modificar.setEnabled(true);
-        btn_Deshabilitar.setEnabled(true);
         btn_Eliminar.setEnabled(true);
     }//GEN-LAST:event_tbl_DatosMousePressed
 
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
         Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR el estado con idEstado " + idEstado, "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
-        EstadoDAO DAO = new EstadoDAO(this.conexion);
+        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Estado '" + nombre+"'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            DAO.eliminacionEstado(idEstado);
+            RH_Estado estado = new RH_Estado();
+            EstadoDAO DAO = new EstadoDAO(this.conexion);
+            estado = DAO.consultaEstadoId(idEstado);
+            if (DAO.eliminacionLogicaEstado(estado)) {
+                JOptionPane.showMessageDialog(null, "Estado Eliminado");
+                EstadoDAO estados = new EstadoDAO(this.conexion);
+                ArrayList<RH_Estado> lista = estados.consultaEstados();
+                llenarTabla(lista);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+            }
+
         }
     }//GEN-LAST:event_btn_EliminarActionPerformed
 
     private void llenarTabla(ArrayList<RH_Estado> lista) {
-        String[] encabezado = {"IdEstado", "Nombre", "Siglas", "Estatus"};
-        Object[][] datos = new Object[lista.size()][4];
+        String[] encabezado = {"IdEstado", "Nombre", "Siglas"};
+        Object[][] datos = new Object[lista.size()][3];
         int ren = 0;
         for (RH_Estado s : lista) {
             datos[ren][0] = s.getIdEstado();
             datos[ren][1] = s.getNombre();
             datos[ren][2] = s.getSiglas();
-            datos[ren][3] = s.getEstatus();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
@@ -267,7 +243,6 @@ public class EstadosFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Add;
     private javax.swing.JButton btn_Atras;
-    private javax.swing.JButton btn_Deshabilitar;
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JLabel jLabel1;
