@@ -45,8 +45,9 @@ public class EstadoDAO {
         return ban;
     }
 
-    public ArrayList<RH_Estado> consultaEstados() {
-        String sql = "select * from vEstados ";
+    public ArrayList<RH_Estado> consultaEstadosVista() {
+        String sql = "select * from vEstados "
+                + "order by idEstado ";
 
         ArrayList<RH_Estado> lista = new ArrayList<>();
         try {
@@ -67,7 +68,95 @@ public class EstadoDAO {
         return lista;
     }
 
-    public ArrayList<RH_Estado> consultaEstadosNombre(String nombre) {
+    public ArrayList<RH_Estado> consultaEstadosVistaPaginada(Integer pagina) {
+        String sql = "select * from vEstados "
+                + "order by idEstado "
+                + "offset " + (pagina - 1) * 3 + " rows "
+                + "fetch next 3 rows only ";
+
+        ArrayList<RH_Estado> lista = new ArrayList<>();
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                RH_Estado e = new RH_Estado();
+                e.setIdEstado(rs.getInt("idEstado"));
+                e.setNombre(rs.getString("nombre"));
+                e.setSiglas(rs.getString("siglas"));
+                lista.add(e);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return lista;
+    }
+
+    public Integer consultaPaginas() {
+        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as Estados FROM vEstados)/CAST(" + 3 + " AS float)))as paginasMaximas";
+        Integer r = null;
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                RH_Estado e = new RH_Estado();
+                r = rs.getInt("paginasMaximas");
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return r;
+    }
+
+    public Integer consultaPaginasNombre(String nombre) {
+        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as Estados FROM vEstados where Nombre like CONCAT( '%','" + nombre + "','%'))/CAST(" + 3 + " AS float)))as paginasMaximas";
+        Integer r = null;
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                RH_Estado e = new RH_Estado();
+                r = rs.getInt("paginasMaximas");
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return r;
+    }
+
+    public ArrayList<RH_Estado> consultaEstadosNombreVistaPaginada(String nombre, Integer pagina) {
+        String sql = "select * "
+                + "from vEstados "
+                + "where nombre like CONCAT( '%','" + nombre + "','%') "
+                + "order by idEstado "
+                + "offset " + (pagina - 1) * 3 + " rows "
+                + "fetch next 3 rows only ";
+
+        ArrayList<RH_Estado> lista = new ArrayList<>();
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                RH_Estado e = new RH_Estado();
+                e.setIdEstado(rs.getInt("idEstado"));
+                e.setNombre(rs.getString("nombre"));
+                e.setSiglas(rs.getString("siglas"));
+                lista.add(e);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return lista;
+    }
+
+    public ArrayList<RH_Estado> consultaEstadosNombreVista(String nombre) {
         String sql = "select * "
                 + "from RH.Estados "
                 + "where Nombre like CONCAT( '%','" + nombre + "','%')";

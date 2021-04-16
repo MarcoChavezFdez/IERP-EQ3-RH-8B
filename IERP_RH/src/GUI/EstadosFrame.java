@@ -22,12 +22,18 @@ public class EstadosFrame extends javax.swing.JFrame {
      * Creates new form EstadosFrame
      */
     ConexionBD conexion;
+    int paginaActual;
+    int paginaMaxima;
+    boolean banderaBusqueda = false;
 
     public EstadosFrame(ConexionBD conexion) {
         this.conexion = conexion;
+        this.paginaActual = 1;
         initComponents();
         EstadoDAO estados = new EstadoDAO(this.conexion);
-        ArrayList<RH_Estado> lista = estados.consultaEstados();
+        this.paginaMaxima = estados.consultaPaginas();
+        lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
+        ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
         llenarTabla(lista);
     }
 
@@ -50,6 +56,12 @@ public class EstadosFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_Eliminar = new javax.swing.JButton();
+        btn_Siguiente = new javax.swing.JButton();
+        btn_Anterior = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lbl_PaginaActual = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_PaginaMaxima = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estado");
@@ -145,7 +157,36 @@ public class EstadosFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 190, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 690, 550));
+        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SiguienteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 530, -1, -1));
+
+        btn_Anterior.setText("Anterior");
+        btn_Anterior.setEnabled(false);
+        btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AnteriorActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 530, -1, -1));
+
+        jLabel3.setText("Página");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 540, -1, -1));
+
+        lbl_PaginaActual.setText("1");
+        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, -1, -1));
+
+        jLabel4.setText("de");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, -1, -1));
+
+        lbl_PaginaMaxima.setText("1");
+        jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 760, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -170,9 +211,41 @@ public class EstadosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txf_BusquedaActionPerformed
 
     private void txf_BusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_BusquedaKeyReleased
-        EstadoDAO estados = new EstadoDAO(this.conexion);
-        ArrayList<RH_Estado> lista = estados.consultaEstadosNombre(txf_Busqueda.getText());
-        llenarTabla(lista);
+        if ("".equals(txf_Busqueda.getText())) {
+            this.banderaBusqueda = false;
+            this.btn_Anterior.setEnabled(false);
+            this.btn_Siguiente.setEnabled(true);
+            EstadoDAO estados = new EstadoDAO(this.conexion);
+            this.paginaActual = 1;
+            ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(this.paginaActual);
+            this.paginaMaxima = estados.consultaPaginas();
+            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
+            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+            llenarTabla(lista);
+        } else {
+            this.banderaBusqueda = true;
+            EstadoDAO estados = new EstadoDAO(this.conexion);
+            this.paginaActual = 1;
+            ArrayList<RH_Estado> lista = estados.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), this.paginaActual);
+            this.paginaMaxima = estados.consultaPaginasNombre(txf_Busqueda.getText());
+            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
+            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+            if (paginaMaxima == 0) {
+                lbl_PaginaActual.setText("0");
+                btn_Siguiente.setEnabled(false);
+                btn_Anterior.setEnabled(false);
+            } else {
+                btn_Anterior.setEnabled(false);
+                if (paginaMaxima > 1) {
+                    btn_Siguiente.setEnabled(true);
+                } else {
+                    btn_Siguiente.setEnabled(false);
+                }
+
+            }
+            llenarTabla(lista);
+        }
+
     }//GEN-LAST:event_txf_BusquedaKeyReleased
 
     private void tbl_DatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMouseClicked
@@ -197,7 +270,7 @@ public class EstadosFrame extends javax.swing.JFrame {
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
         Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
         String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Estado '" + nombre+"'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Estado '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             RH_Estado estado = new RH_Estado();
             EstadoDAO DAO = new EstadoDAO(this.conexion);
@@ -205,7 +278,7 @@ public class EstadosFrame extends javax.swing.JFrame {
             if (DAO.eliminacionLogicaEstado(estado)) {
                 JOptionPane.showMessageDialog(null, "Estado Eliminado");
                 EstadoDAO estados = new EstadoDAO(this.conexion);
-                ArrayList<RH_Estado> lista = estados.consultaEstados();
+                ArrayList<RH_Estado> lista = estados.consultaEstadosVista();
                 llenarTabla(lista);
 
             } else {
@@ -214,6 +287,50 @@ public class EstadosFrame extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btn_EliminarActionPerformed
+
+    private void btn_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SiguienteActionPerformed
+        if ((paginaActual + 1) <= paginaMaxima) {
+            btn_Anterior.setEnabled(true);
+            paginaActual++;
+            if (paginaActual == paginaMaxima) {
+                this.btn_Siguiente.setEnabled(false);
+            } else {
+                this.btn_Siguiente.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            EstadoDAO DAO = new EstadoDAO(this.conexion);
+            ArrayList<RH_Estado> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+            } else {
+                lista = DAO.consultaEstadosVistaPaginada(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_SiguienteActionPerformed
+
+    private void btn_AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnteriorActionPerformed
+        if ((paginaActual - 1) >= 1) {
+            btn_Siguiente.setEnabled(true);
+            paginaActual--;
+            if (paginaActual == 1) {
+                this.btn_Anterior.setEnabled(false);
+            } else {
+                this.btn_Anterior.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            EstadoDAO DAO = new EstadoDAO(this.conexion);
+            ArrayList<RH_Estado> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+            } else {
+                lista = DAO.consultaEstadosVistaPaginada(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_AnteriorActionPerformed
 
     private void llenarTabla(ArrayList<RH_Estado> lista) {
         String[] encabezado = {"IdEstado", "Nombre", "Siglas"};
@@ -242,13 +359,19 @@ public class EstadosFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Add;
+    private javax.swing.JButton btn_Anterior;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
+    private javax.swing.JButton btn_Siguiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_PaginaActual;
+    private javax.swing.JLabel lbl_PaginaMaxima;
     private javax.swing.JTable tbl_Datos;
     private javax.swing.JTextField txf_Busqueda;
     // End of variables declaration//GEN-END:variables
