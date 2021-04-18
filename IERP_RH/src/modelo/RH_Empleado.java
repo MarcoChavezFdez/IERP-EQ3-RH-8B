@@ -40,6 +40,13 @@ public class RH_Empleado {
     private String especialidad;
     private String email;
     private String password;
+    private String tipo;
+    private String estatus;
+    private Integer idDepartamento;
+    private Integer idPuesto;
+    private Integer idCiudad;
+    private Integer idSucursal;
+    private Integer idTurno;
 
     public String getPassword() {
         return password;
@@ -48,13 +55,7 @@ public class RH_Empleado {
     public void setPassword(String password) {
         this.password = password;
     }
-    private String tipo;
-    private String estatus;
-    private Integer idDepartamento;
-    private Integer idPuesto;
-    private Integer idCiudad;
-    private Integer idSucursal;
-    private Integer idTurno;
+
 
     public RH_Empleado() {
     }
@@ -274,5 +275,6 @@ public class RH_Empleado {
     public void setIdTurno(Integer idTurno) {
         this.idTurno = idTurno;
     }
+
 
 }
