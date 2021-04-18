@@ -33,7 +33,7 @@ public class AddCiudadFrame extends javax.swing.JFrame {
         isNewCiudad = true;
         EstadoDAO estadosDAO = new EstadoDAO(this.conexion);
         ArrayList<RH_Estado> estados = new ArrayList<>();
-        estados = estadosDAO.consultaEstados();
+        estados = estadosDAO.consultaEstadosVista();
         for (RH_Estado s : estados) {
             cmb_Estado.addItem(s.getNombre());
 
@@ -50,7 +50,7 @@ public class AddCiudadFrame extends javax.swing.JFrame {
         isNewCiudad = false;
         EstadoDAO estadosDAO = new EstadoDAO(this.conexion);
         ArrayList<RH_Estado> estados = new ArrayList<>();
-        estados = estadosDAO.consultaEstados();
+        estados = estadosDAO.consultaEstadosVista();
         nCiudad = ciudad;
         int cont = 1;
         for (RH_Estado s : estados) {
