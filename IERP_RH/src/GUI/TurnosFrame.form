@@ -30,9 +30,9 @@
                       <Component id="jScrollPane1" pref="929" max="32767" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnmodificar" alignment="1" max="32767" attributes="0"/>
+                          <Component id="btn_Modificar" alignment="1" max="32767" attributes="0"/>
                           <Component id="btninsertar" alignment="1" max="32767" attributes="0"/>
-                          <Component id="btneliminar" min="-2" max="-2" attributes="0"/>
+                          <Component id="btn_Eliminar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -71,9 +71,9 @@
                   <Group type="102" attributes="0">
                       <Component id="btninsertar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                      <Component id="btnmodificar" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_Modificar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="btneliminar" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_Eliminar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -133,22 +133,22 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btninsertarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnmodificar">
+    <Component class="javax.swing.JButton" name="btn_Modificar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Modificar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnmodificarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_ModificarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btneliminar">
+    <Component class="javax.swing.JButton" name="btn_Eliminar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btneliminarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_EliminarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

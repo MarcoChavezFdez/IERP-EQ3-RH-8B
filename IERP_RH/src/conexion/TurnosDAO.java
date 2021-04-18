@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelo.RH_Ciudad;
 import modelo.RH_Turno;
 
 /**
@@ -95,28 +96,27 @@ public class TurnosDAO {
         return lista;
     }
 
-    public RH_Turno consultaTurnoId(Integer idTurno) {
+    public RH_Turno consultarTurnoId(Integer idTurno) {
         String sql = "select * "
                 + "from RH.Turnos "
-                + "where idTurno=? ";
-        ArrayList<RH_Turno> lista = new ArrayList<>();
+                + "where idTurno=?";
         try {
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
             st.setInt(1, idTurno);
-            ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
-                RH_Turno e = new RH_Turno();
-                e.setIdTurno(rs.getInt("idTurno"));
-                e.setNombre(rs.getString("nombre"));
-                e.setHoraInicio(rs.getTime("horaInicio"));
-                e.setHoraFin(rs.getTime("horaFin"));
-                e.setDias(rs.getString("dias"));
-                return e;
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                RH_Turno turno = new RH_Turno();
+                turno.setIdTurno(rs.getInt("idTurno"));
+                turno.setNombre(rs.getString("nombre"));
+                turno.setHoraInicio(rs.getTime("horaInicio"));
+                turno.setHoraFin(rs.getTime("horaFin"));
+                turno.setDias(rs.getString("dias"));
+                rs.close();
+                st.close();
+                return turno;
             }
-            rs.close();
-            st.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+            System.out.println("Error:" + e.getMessage());
         }
         return null;
     }
@@ -127,7 +127,7 @@ public class TurnosDAO {
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
-            st.setInt(4, p.getIdTurno());
+            st.setInt(5, p.getIdTurno());
             st.setString(1, p.getNombre());
             st.setTime(2, p.getHoraInicio());
             st.setTime(3, p.getHoraFin());
@@ -144,12 +144,13 @@ public class TurnosDAO {
 
     //Pendiente de agregar el estatus?
     public boolean eliminacionLogicaTurno(RH_Turno p) {
-        String sql = "update RH.Turnos set idTurno=? "
+        String sql = "update RH.Turnos set estatus=? "
                 + " where idTurno=?";
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
-            st.setInt(1, p.getIdTurno());
+            st.setString(1, "I");
+            st.setInt(2, p.getIdTurno());
             st.execute();
             st.close();
             ban = true;
