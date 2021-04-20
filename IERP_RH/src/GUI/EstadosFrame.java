@@ -275,7 +275,7 @@ public class EstadosFrame extends javax.swing.JFrame {
             RH_Estado estado = new RH_Estado();
             EstadoDAO DAO = new EstadoDAO(this.conexion);
             estado = DAO.consultaEstadoId(idEstado);
-            if (DAO.eliminacionLogicaEstado(estado)) {
+            if (DAO.eliminacionLogica(estado)) {
                 JOptionPane.showMessageDialog(null, "Estado Eliminado");
                 EstadoDAO estados = new EstadoDAO(this.conexion);
                 ArrayList<RH_Estado> lista = estados.consultaEstadosVista();
