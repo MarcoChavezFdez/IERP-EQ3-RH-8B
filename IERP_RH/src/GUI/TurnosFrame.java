@@ -205,6 +205,7 @@ public class TurnosFrame extends javax.swing.JFrame {
                 TurnosDAO turnos = new TurnosDAO(this.conexion);
                 ArrayList<RH_Turno> lista = turnos.consultaTurnosVista();
                 btn_Eliminar.setEnabled(false);
+                btn_Modificar.setEnabled(false);
                 llenarTabla(lista);
 
             } else {
