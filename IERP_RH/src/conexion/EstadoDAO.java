@@ -247,7 +247,7 @@ public class EstadoDAO {
         return ban;
     }
 
-    public boolean eliminacionLogicaEstado(RH_Estado p) {
+    public boolean eliminacionLogica(RH_Estado p) {
         String sql = "update RH.Estados set estatus=? "
                 + " where idEstado=?";
         boolean ban = false;
