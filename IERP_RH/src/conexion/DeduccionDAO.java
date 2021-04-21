@@ -17,11 +17,11 @@ import modelo.RH_Deduccion;
  *
  * @author CarlosEsparza
  */
-public class DeduccionesDAO {
+public class DeduccionDAO {
 
     private ConexionBD conexion;
 
-    public DeduccionesDAO(ConexionBD conexion) {
+    public DeduccionDAO(ConexionBD conexion) {
         this.conexion = conexion;
 
     }

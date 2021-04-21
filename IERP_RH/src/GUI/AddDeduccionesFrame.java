@@ -6,7 +6,7 @@
 package GUI;
 
 import conexion.ConexionBD;
-import conexion.DeduccionesDAO;
+import conexion.DeduccionDAO;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import modelo.RH_Deduccion;
@@ -164,7 +164,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         nDeduccion.setDescripcion(TxDescripcion.getText().toUpperCase());
 
         nDeduccion.setPorcentaje(Float.parseFloat(TxPorcentaje.getText()));
-        DeduccionesDAO deduccionesDAO = new DeduccionesDAO(this.conexion);
+        DeduccionDAO deduccionesDAO = new DeduccionDAO(this.conexion);
         try {
             if (bandera) {
                 nDeduccion.setIdDeduccion(this.deduccion.getIdDeduccion());
