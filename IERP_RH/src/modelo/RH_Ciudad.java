@@ -10,30 +10,22 @@ package modelo;
  * @author Marco Chavez
  */
 public class RH_Ciudad {
+
     private Integer idCiudad;
     private String nombre;
-    private Integer idEstado;
-    private String nombreEstado;
+    private RH_Estado estado;
     private String estatus;
 
-    public RH_Ciudad(Integer idCiudad, String nombre, Integer idEstado, String estatus) {
-        this.idCiudad = idCiudad;
-        this.nombre = nombre;
-        this.idEstado = idEstado;
-        this.estatus = estatus;
+    public RH_Estado getEstado() {
+        return estado;
     }
 
-    public String getNombreEstado() {
-        return nombreEstado;
-    }
-
-    public void setNombreEstado(String nombreEstado) {
-        this.nombreEstado = nombreEstado;
+    public void setEstado(RH_Estado estado) {
+        this.estado = estado;
     }
 
     public RH_Ciudad() {
     }
-    
 
     public Integer getIdCiudad() {
         return idCiudad;
@@ -51,14 +43,6 @@ public class RH_Ciudad {
         this.nombre = nombre;
     }
 
-    public Integer getIdEstado() {
-        return idEstado;
-    }
-
-    public void setIdEstado(Integer idEstado) {
-        this.idEstado = idEstado;
-    }
-
     public String getEstatus() {
         return estatus;
     }
@@ -66,5 +50,5 @@ public class RH_Ciudad {
     public void setEstatus(String estatus) {
         this.estatus = estatus;
     }
-    
+
 }

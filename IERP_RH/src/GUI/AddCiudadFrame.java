@@ -55,7 +55,7 @@ public class AddCiudadFrame extends javax.swing.JFrame {
         int cont = 1;
         for (RH_Estado s : estados) {
             cmb_Estado.addItem(s.getNombre());
-            if (s.getNombre() == null ? nCiudad.getNombreEstado() == null : s.getNombre().equals(nCiudad.getNombreEstado())) {
+            if (s.getNombre() == null ? nCiudad.getEstado().getNombre() == null : s.getNombre().equals(nCiudad.getEstado().getNombre())) {
                 cmb_Estado.setSelectedIndex(cont);
             } else {
                 cont++;
@@ -195,7 +195,8 @@ public class AddCiudadFrame extends javax.swing.JFrame {
             RH_Estado estado = new RH_Estado();
             estado = estadoDAO.consultaEstadoNombre(cmb_Estado.getItemAt(cmb_Estado.getSelectedIndex()));
             nCiudad.setNombre(txf_Nombre.getText().toUpperCase());
-            nCiudad.setIdEstado(estado.getIdEstado());
+            nCiudad.setEstado(new RH_Estado(estado.getIdEstado(), this.conexion));
+
             nCiudad.setEstatus("A");
             try {
                 CiudadDAO altaCiudad = new CiudadDAO(this.conexion);
@@ -216,7 +217,7 @@ public class AddCiudadFrame extends javax.swing.JFrame {
             RH_Estado estado = new RH_Estado();
             estado = estadoDAO.consultaEstadoNombre(cmb_Estado.getItemAt(cmb_Estado.getSelectedIndex()));
             nCiudad.setNombre(txf_Nombre.getText().toUpperCase());
-            nCiudad.setIdEstado(estado.getIdEstado());
+            nCiudad.setEstado(new RH_Estado(estado.getIdEstado(), this.conexion));
             try {
                 CiudadDAO modificarCiudad = new CiudadDAO(this.conexion);
                 if (modificarCiudad.actualizarCiudad(nCiudad)) {

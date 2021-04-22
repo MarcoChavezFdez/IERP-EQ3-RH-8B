@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.RH_Ciudad;
+import modelo.RH_Estado;
 //import modelo.RH_Ciudades;
 
 public class CiudadDAO {
@@ -24,7 +25,7 @@ public class CiudadDAO {
         try {
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
             st.setString(1, ciudad.getNombre());
-            st.setInt(2, ciudad.getIdEstado());
+            st.setInt(2, ciudad.getEstado().getIdEstado());
             st.setString(3, "A");
             st.execute();
             ban = true;
@@ -44,8 +45,7 @@ public class CiudadDAO {
                 RH_Ciudad c = new RH_Ciudad();
                 c.setIdCiudad(rs.getInt("idCiudad"));
                 c.setNombre(rs.getString("nombre"));
-                c.setNombreEstado(rs.getString("nombreEstado"));
-                c.setIdEstado(rs.getInt("idEstado"));
+                c.setEstado(new RH_Estado(rs.getInt("idEstado"),this.conexion));
                 lista.add(c);
             }
             rs.close();
@@ -68,8 +68,7 @@ public class CiudadDAO {
                 RH_Ciudad c = new RH_Ciudad();
                 c.setIdCiudad(rs.getInt("idCiudad"));
                 c.setNombre(rs.getString("nombre"));
-                c.setNombreEstado(rs.getString("nombreEstado"));
-                c.setIdEstado(rs.getInt("idEstado"));
+                c.setEstado(new RH_Estado(rs.getInt("idEstado"),this.conexion));
                 lista.add(c);
             }
             rs.close();
@@ -93,7 +92,7 @@ public class CiudadDAO {
                 RH_Ciudad ciudad = new RH_Ciudad();
                 ciudad.setIdCiudad(rs.getInt("idCiudad"));
                 ciudad.setNombre(rs.getString("nombre"));
-                ciudad.setIdEstado(rs.getInt("idEstado"));
+                ciudad.setEstado(new RH_Estado(rs.getInt("idEstado"),this.conexion));
                 rs.close();
                 st.close();
                 return ciudad;
@@ -159,7 +158,7 @@ public class CiudadDAO {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
             st.setInt(3, ciudad.getIdCiudad());
             st.setString(1, ciudad.getNombre());
-            st.setInt(2, ciudad.getIdEstado());
+            st.setInt(2, ciudad.getEstado().getIdEstado());
             st.execute();
             st.close();
             ban = true;

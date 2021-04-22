@@ -2,12 +2,12 @@ package GUI;
 
 import conexion.CiudadDAO;
 import conexion.ConexionBD;
-import conexion.EstadoDAO;
+
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Ciudad;
-import modelo.RH_Estado;
+
 
 public class CiudadesFrame extends javax.swing.JFrame {
 
@@ -203,7 +203,6 @@ public class CiudadesFrame extends javax.swing.JFrame {
         CiudadDAO DAO = new CiudadDAO(this.conexion);
         RH_Ciudad ciudad = new RH_Ciudad();
         ciudad = DAO.consultarCiudadId(idCiudad);
-        ciudad.setNombreEstado(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 2).toString());
         AddCiudadFrame modificarCiudad = new AddCiudadFrame(this.conexion, ciudad);
         this.dispose();
         modificarCiudad.setVisible(true);
@@ -216,7 +215,7 @@ public class CiudadesFrame extends javax.swing.JFrame {
         for (RH_Ciudad s : lista) {
             datos[ren][0] = s.getIdCiudad();
             datos[ren][1] = s.getNombre();
-            datos[ren][2] = s.getNombreEstado();
+            datos[ren][2] = s.getEstado().getNombre();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {

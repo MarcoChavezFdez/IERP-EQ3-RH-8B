@@ -18,6 +18,9 @@
  */
 package modelo;
 
+import conexion.ConexionBD;
+import conexion.EstadoDAO;
+
 public class RH_Estado {
 
     /*
@@ -27,17 +30,19 @@ public class RH_Estado {
     private String siglas;
     private String estatus;
 
-    public RH_Estado() {
+    public RH_Estado(Integer idEstado, ConexionBD conexion) {
+        EstadoDAO dao = new EstadoDAO(conexion);
+        RH_Estado estado = dao.consultaEstadoId(idEstado);
+        recuperaDatos(estado);
+    }
+    public void recuperaDatos(RH_Estado estado){
+        this.idEstado=estado.idEstado;
+        this.nombre=estado.nombre;
+        this.siglas=estado.getSiglas();
     }
 
-
-    
-
-    public RH_Estado(Integer idEstado, String nombre, String siglas, String estatus) {
-        this.idEstado = idEstado;
-        this.nombre = nombre;
-        this.siglas = siglas;
-        this.estatus = estatus;
+    public RH_Estado(){
+        
     }
 
     public Integer getIdEstado() {
