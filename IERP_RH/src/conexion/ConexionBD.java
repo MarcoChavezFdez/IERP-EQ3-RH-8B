@@ -10,9 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.RH_Estado;
 
 /**
  *
@@ -23,7 +21,7 @@ public class ConexionBD {
     private final String user;
     private final String pass;
 
-    private String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=ERP;integratedSecurity=false";
+    private String connectionUrl = "jdbc:sqlserver://54.85.71.68:1433;databaseName=ERP;integratedSecurity=false";
     private Connection conexion;
 
     public ConexionBD(String user, String pass) {
