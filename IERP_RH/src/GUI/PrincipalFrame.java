@@ -73,6 +73,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         lbl_User = new javax.swing.JLabel();
         btn_CerrarSesion = new javax.swing.JButton();
+        btn_Empleados = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -151,6 +152,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_CerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 30, -1, -1));
 
+        btn_Empleados.setText("Empleados");
+        btn_Empleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EmpleadosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Empleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 850, 500));
 
         pack();
@@ -197,6 +206,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_CerrarSesionActionPerformed
 
+    private void btn_EmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EmpleadosActionPerformed
+        EmpleadosFrame empleados = new EmpleadosFrame(this.conexion);
+        this.dispose();
+        empleados.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_EmpleadosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -206,6 +222,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_CerrarSesion;
     private javax.swing.JButton btn_Ciudades;
     private javax.swing.JButton btn_Deducciones;
+    private javax.swing.JButton btn_Empleados;
     private javax.swing.JButton btn_Turnos;
     private javax.swing.JLabel etiquetaReloj;
     private javax.swing.JLabel jLabel1;
