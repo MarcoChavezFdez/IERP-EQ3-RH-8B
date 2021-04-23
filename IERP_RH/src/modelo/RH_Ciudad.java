@@ -26,10 +26,6 @@ public class RH_Ciudad {
     public RH_Ciudad(Integer idCiudad, ConexionBD conexion) {
         CiudadDAO dao = new CiudadDAO(conexion);
         RH_Ciudad ciudad = dao.consultarCiudadId(idCiudad);
-        recuperaDatos(ciudad);
-    }
-
-    public void recuperaDatos(RH_Ciudad ciudad) {
         this.idCiudad = ciudad.idCiudad;
         this.nombre = ciudad.nombre;
         this.estado = ciudad.getEstado();

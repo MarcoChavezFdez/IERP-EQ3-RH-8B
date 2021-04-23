@@ -33,16 +33,13 @@ public class RH_Estado {
     public RH_Estado(Integer idEstado, ConexionBD conexion) {
         EstadoDAO dao = new EstadoDAO(conexion);
         RH_Estado estado = dao.consultaEstadoId(idEstado);
-        recuperaDatos(estado);
-    }
-    public void recuperaDatos(RH_Estado estado){
-        this.idEstado=estado.idEstado;
-        this.nombre=estado.nombre;
-        this.siglas=estado.getSiglas();
+        this.idEstado = estado.idEstado;
+        this.nombre = estado.nombre;
+        this.siglas = estado.getSiglas();
     }
 
-    public RH_Estado(){
-        
+    public RH_Estado() {
+
     }
 
     public Integer getIdEstado() {
