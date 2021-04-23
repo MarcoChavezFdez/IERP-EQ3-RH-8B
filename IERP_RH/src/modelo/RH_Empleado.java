@@ -15,6 +15,8 @@
  */
 package modelo;
 
+
+import java.io.InputStream;
 import java.sql.Date;
 
 public class RH_Empleado {
@@ -32,7 +34,7 @@ public class RH_Empleado {
     private String nss;
     private int diasVacaciones;
     private int diasPermiso;
-    private byte[] fotografia;
+    private InputStream fotografia;
     private String direccion;
     private String colonia;
     private String codigoPostal;
@@ -42,11 +44,17 @@ public class RH_Empleado {
     private String password;
     private String tipo;
     private String estatus;
-    private Integer idDepartamento;
-    private Integer idPuesto;
-    private Integer idCiudad;
-    private Integer idSucursal;
-    private Integer idTurno;
+    private RH_Departamento departamento;
+    private RH_Puesto puesto;
+    private RH_Ciudad ciudad;
+    private Compras_Sucursal sucursal;
+    private RH_Turno turno;
+
+
+    public RH_Empleado() {
+    }
+    
+    
 
     public String getPassword() {
         return password;
@@ -54,10 +62,6 @@ public class RH_Empleado {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-
-    public RH_Empleado() {
     }
 
     public Integer getIdEmpleado() {
@@ -164,11 +168,11 @@ public class RH_Empleado {
         this.diasPermiso = diasPermiso;
     }
 
-    public byte[] getFotografia() {
+    public InputStream getFotografia() {
         return fotografia;
     }
 
-    public void setFotografia(byte[] fotografia) {
+    public void setFotografia(InputStream fotografia) {
         this.fotografia = fotografia;
     }
 
@@ -236,44 +240,44 @@ public class RH_Empleado {
         this.estatus = estatus;
     }
 
-    public Integer getIdDepartamento() {
-        return idDepartamento;
+    public RH_Departamento getDepartamento() {
+        return departamento;
     }
 
-    public void setIdDepartamento(Integer idDepartamento) {
-        this.idDepartamento = idDepartamento;
+    public void setDepartamento(RH_Departamento departamento) {
+        this.departamento = departamento;
     }
 
-    public Integer getIdPuesto() {
-        return idPuesto;
+    public RH_Puesto getPuesto() {
+        return puesto;
     }
 
-    public void setIdPuesto(Integer idPuesto) {
-        this.idPuesto = idPuesto;
+    public void setPuesto(RH_Puesto puesto) {
+        this.puesto = puesto;
     }
 
-    public Integer getIdCiudad() {
-        return idCiudad;
+    public RH_Ciudad getCiudad() {
+        return ciudad;
     }
 
-    public void setIdCiudad(Integer idCiudad) {
-        this.idCiudad = idCiudad;
+    public void setCiudad(RH_Ciudad ciudad) {
+        this.ciudad = ciudad;
     }
 
-    public Integer getIdSucursal() {
-        return idSucursal;
+    public Compras_Sucursal getSucursal() {
+        return sucursal;
     }
 
-    public void setIdSucursal(Integer idSucursal) {
-        this.idSucursal = idSucursal;
+    public void setSucursal(Compras_Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 
-    public Integer getIdTurno() {
-        return idTurno;
+    public RH_Turno getTurno() {
+        return turno;
     }
 
-    public void setIdTurno(Integer idTurno) {
-        this.idTurno = idTurno;
+    public void setTurno(RH_Turno turno) {
+        this.turno = turno;
     }
 
 
