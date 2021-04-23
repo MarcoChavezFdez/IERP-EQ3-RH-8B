@@ -15,7 +15,8 @@
  */
 package modelo;
 
-
+import conexion.ConexionBD;
+import conexion.EmpleadoDAO;
 import java.io.InputStream;
 import java.sql.Date;
 
@@ -50,11 +51,40 @@ public class RH_Empleado {
     private Compras_Sucursal sucursal;
     private RH_Turno turno;
 
-
     public RH_Empleado() {
     }
-    
-    
+
+    public RH_Empleado(Integer idEmpleado, ConexionBD conexion) {
+        EmpleadoDAO dao = new EmpleadoDAO(conexion);
+        RH_Empleado e = dao.consultaEmpleadoId(idEmpleado);
+        this.idEmpleado=e.getIdEmpleado();
+        this.nombre=e.getNombre();
+        this.apellidoPaterno=e.getApellidoPaterno();
+        this.apellidoMaterno=e.getApellidoMaterno();
+        this.sexo=e.getSexo();
+        this.fechaNacimeinto=e.fechaNacimeinto;
+        this.curp=e.getCurp();
+        this.estadoCivil=e.getEstadoCivil();
+        this.fechaContratacion=e.getFechaContratacion();
+        this.salarioDiario=e.getSalarioDiario();
+        this.nss=e.getNss();
+        this.diasVacaciones=e.getDiasVacaciones();
+        this.diasPermiso=e.getDiasPermiso();
+        this.fotografia=e.getFotografia();
+        this.direccion=e.getDireccion();
+        this.codigoPostal=e.getCodigoPostal();
+        this.escolaridad=e.getEscolaridad();
+        this.especialidad=e.getEspecialidad();
+        this.email=e.getEmail();
+        this.password=e.getPassword();
+        this.tipo=e.getPassword();
+        this.estatus=e.getEstatus();
+        this.departamento=e.getDepartamento();
+        this.puesto=e.getPuesto();
+        this.ciudad=e.getCiudad();
+        this.sucursal=e.getSucursal();
+        this.turno=e.getTurno();
+    }
 
     public String getPassword() {
         return password;
@@ -279,6 +309,5 @@ public class RH_Empleado {
     public void setTurno(RH_Turno turno) {
         this.turno = turno;
     }
-
 
 }

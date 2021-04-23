@@ -377,10 +377,10 @@ public class EmpleadoDAO {
 
     }
 
-    public RH_Empleado consultaEmpleadoId(int idSucursal) {
+    public RH_Empleado consultaEmpleadoId(int idEmpleado) {
         String sql = (" select * "
                 + " from vEmpleados "
-                + " where idEmpleado" + idSucursal);
+                + " where idEmpleado" + idEmpleado);
         RH_Empleado empleado = new RH_Empleado();
         try {
             Statement st = conexion.getConexion().createStatement();
