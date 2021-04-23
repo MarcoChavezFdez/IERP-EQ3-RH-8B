@@ -26,6 +26,9 @@ public class RH_Departamento {
         
     }
 
+    public RH_Departamento() {
+    }
+   
     public Integer getIdDepartamento() {
         return idDepartamento;
     }
