@@ -9,13 +9,11 @@ package GUI;
  *
  * @author Carlos EsparzadeAnda
  */
-import conexion.CiudadDAO;
 import conexion.ConexionBD;
 import conexion.PercepcionDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.RH_Ciudad;
 import modelo.RH_Percepcion;
 public class Percepciones extends javax.swing.JFrame {
 

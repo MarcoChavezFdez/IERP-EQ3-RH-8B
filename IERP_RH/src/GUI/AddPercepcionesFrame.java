@@ -25,11 +25,13 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
     ConexionBD conexion;
     RH_Percepcion percepcion;
     Boolean bandera;
+
     public AddPercepcionesFrame(ConexionBD conexion) {
         initComponents();
         this.conexion = conexion;
         this.bandera = false;
     }
+
     public AddPercepcionesFrame(ConexionBD conexion, RH_Percepcion deduccion) {
         initComponents();
         jLabel1.setText("Realizar Operación");
@@ -178,8 +180,17 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
         RH_Percepcion nPercepcion = new RH_Percepcion();
         nPercepcion.setNombre(txNombre.getText().toUpperCase());
         nPercepcion.setDescripcion(TxDescripcion.getText().toUpperCase());
+        try {
+            if (Integer.parseInt(TxPorcentaje.getText()) > 0) {
+                nPercepcion.setDiasPagar(Integer.parseInt(TxPorcentaje.getText()));
+            } else {
+                TxPorcentaje.setText("0");
+            }
 
-        nPercepcion.setDiasPagar(TxPorcentaje.getText());
+        } catch (NumberFormatException e) {
+            TxPorcentaje.setText("0");
+        }
+
         PercepcionDAO PercepcionDAO = new PercepcionDAO(this.conexion);
         try {
             if (bandera) {
@@ -235,9 +246,7 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
-
-        public void verificarCampos() {
+    public void verificarCampos() {
         if ("".equals(txNombre.getText()) || "".equals(TxDescripcion.getText()) || "".equals(TxPorcentaje.getText())) {
             btn_Add.setEnabled(false);
             lbl_Mensaje.setText("Debe llenar los campos");
