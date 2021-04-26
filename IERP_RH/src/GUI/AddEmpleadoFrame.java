@@ -264,7 +264,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                         .addComponent(jLabel26)
                         .addGap(23, 23, 23)
                         .addComponent(cmb_Escolaridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lp_DatosPersonalesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bnt_Guardar)
@@ -365,7 +365,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                     .addComponent(txf_Colonia)
                     .addComponent(txf_CodigoPostal)
                     .addComponent(cmb_Ciudad, 0, 237, Short.MAX_VALUE))
-                .addContainerGap(381, Short.MAX_VALUE))
+                .addContainerGap(393, Short.MAX_VALUE))
         );
         lp_DomicilioLayout.setVerticalGroup(
             lp_DomicilioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,7 +386,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 .addGroup(lp_DomicilioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(cmb_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(825, Short.MAX_VALUE))
+                .addContainerGap(831, Short.MAX_VALUE))
         );
 
         tp_DatosEmpleado.addTab("Domicilio", lp_Domicilio);
@@ -461,7 +461,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                         .addComponent(jLabel20)
                         .addGap(18, 18, 18)
                         .addComponent(txff_SalarioDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         lp_DatosEmpresaLayout.setVerticalGroup(
             lp_DatosEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -496,7 +496,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 .addGroup(lp_DatosEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel19)
                     .addComponent(dp_FechaContratacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 678, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 694, Short.MAX_VALUE)
                 .addGroup(lp_DatosEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21))
@@ -533,7 +533,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                     .addComponent(pf_PasswordConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                     .addComponent(pf_Password)
                     .addComponent(txff_Email))
-                .addContainerGap(348, Short.MAX_VALUE))
+                .addContainerGap(367, Short.MAX_VALUE))
         );
         lp_LoginLayout.setVerticalGroup(
             lp_LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -562,18 +562,18 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
             .addGap(0, 830, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 43, Short.MAX_VALUE)
                     .addComponent(tp_DatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 43, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1050, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 26, Short.MAX_VALUE)
                     .addComponent(tp_DatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 27, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 1050));
