@@ -98,15 +98,11 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setToolTipText("");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 270, 110));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 270, 110));
 
         jLabel3.setText("Nombre:");
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-<<<<<<< Updated upstream
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 80, -1));
-=======
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 160, 30));
->>>>>>> Stashed changes
 
         txf_Nombre.setBackground(new java.awt.Color(153, 255, 153));
         txf_Nombre.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -114,27 +110,19 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
                 txf_NombreKeyReleased(evt);
             }
         });
-<<<<<<< Updated upstream
         jPanel2.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, 140, -1));
 
         jLabel4.setText("Hora Inicio");
         jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 210, -1, -1));
-=======
-        jPanel2.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 160, 30));
 
-        jLabel4.setText("Hora Inicio;");
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 170, 30));
->>>>>>> Stashed changes
-
-        jLabel5.setText("Hora Fin");
         jLabel5.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 280, 150, 30));
+        jLabel5.setText("Hora Fin");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, -1, -1));
 
-        jLabel6.setText("Días:");
         jLabel6.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, -1, -1));
+        jLabel6.setText("Días:");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
         btn_RealizaOperacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnGuardar.png"))); // NOI18N
         btn_RealizaOperacion.setBorderPainted(false);
@@ -209,29 +197,17 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
         rbLunes.setText("Lunes");
         rbLunes.setBackground(new java.awt.Color(241, 151, 89));
         rbLunes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-<<<<<<< Updated upstream
         pnl_Dias.add(rbLunes);
-=======
-        jPanel2.add(rbLunes, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
->>>>>>> Stashed changes
 
         rbMartes.setText("Martes");
         rbMartes.setBackground(new java.awt.Color(241, 151, 89));
         rbMartes.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-<<<<<<< Updated upstream
         pnl_Dias.add(rbMartes);
-=======
-        jPanel2.add(rbMartes, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, -1, -1));
->>>>>>> Stashed changes
 
         rbMiercoles.setText("Miercoles");
         rbMiercoles.setBackground(new java.awt.Color(241, 151, 89));
         rbMiercoles.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-<<<<<<< Updated upstream
         pnl_Dias.add(rbMiercoles);
-=======
-        jPanel2.add(rbMiercoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, -1, -1));
->>>>>>> Stashed changes
 
         rbJueves.setText("Jueves");
         rbJueves.setBackground(new java.awt.Color(241, 151, 89));
@@ -241,11 +217,7 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
                 rbJuevesActionPerformed(evt);
             }
         });
-<<<<<<< Updated upstream
         pnl_Dias.add(rbJueves);
-=======
-        jPanel2.add(rbJueves, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 310, -1, -1));
->>>>>>> Stashed changes
 
         rbViernes.setText("Viernes");
         rbViernes.setBackground(new java.awt.Color(241, 151, 89));
@@ -255,61 +227,22 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
                 rbViernesActionPerformed(evt);
             }
         });
-<<<<<<< Updated upstream
         pnl_Dias.add(rbViernes);
-=======
-        jPanel2.add(rbViernes, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 350, -1, -1));
->>>>>>> Stashed changes
 
         rbSabado.setText("Sabado");
         rbSabado.setBackground(new java.awt.Color(241, 151, 89));
         rbSabado.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-<<<<<<< Updated upstream
         pnl_Dias.add(rbSabado);
-=======
-        jPanel2.add(rbSabado, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 390, -1, -1));
-
-        btn_Operacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnGuardar.png"))); // NOI18N
-        btn_Operacion.setBorderPainted(false);
-        btn_Operacion.setContentAreaFilled(false);
-        btn_Operacion.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn_OperacionMouseEntered(evt);
-            }
-        });
-        btn_Operacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_OperacionActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btn_Operacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, 200, 80));
->>>>>>> Stashed changes
 
         rbDomingo.setText("Domingo");
         rbDomingo.setBackground(new java.awt.Color(241, 151, 89));
         rbDomingo.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-<<<<<<< Updated upstream
         pnl_Dias.add(rbDomingo);
 
         jPanel2.add(pnl_Dias, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 120, 260));
         jPanel2.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 490, 70));
-=======
-        jPanel2.add(rbDomingo, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 430, -1, -1));
 
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnAtras.png"))); // NOI18N
-        btnRegresar.setBorderPainted(false);
-        btnRegresar.setContentAreaFilled(false);
-        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegresarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, -1, -1));
-        jPanel2.add(tmp_HoraInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 230, 160, 30));
-        jPanel2.add(tmp_HoraFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 280, 160, 30));
->>>>>>> Stashed changes
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 510));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 880, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
