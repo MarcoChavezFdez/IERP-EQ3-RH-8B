@@ -17,12 +17,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -38,7 +40,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
     public AddEmpleadoFrame(ConexionBD conexion) {
         initComponents();
-        
+
         this.conexion = conexion;
     }
 
@@ -79,6 +81,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         lbImage = new javax.swing.JLabel();
         btn_Subir = new javax.swing.JButton();
         bnt_Guardar = new javax.swing.JButton();
+        ftf_NSS = new javax.swing.JFormattedTextField();
         lp_Domicilio = new javax.swing.JLayeredPane();
         jLabel9 = new javax.swing.JLabel();
         txf_Direccion = new javax.swing.JTextField();
@@ -116,6 +119,11 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         pf_PasswordConfirm = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
@@ -146,6 +154,12 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
         jLabel1.setText("NSS");
 
+        txf_NSS.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txf_NSSFocusLost(evt);
+            }
+        });
+
         jLabel25.setText("Fotografia");
 
         btn_Fotografia.setText("Seleccionar..");
@@ -175,6 +189,12 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
             }
         });
 
+        ftf_NSS.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ftf_NSSFocusLost(evt);
+            }
+        });
+
         lp_DatosPersonales.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(txf_Nombre, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -200,6 +220,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         lp_DatosPersonales.setLayer(lbImage, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(btn_Subir, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(bnt_Guardar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_DatosPersonales.setLayer(ftf_NSS, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lp_DatosPersonalesLayout = new javax.swing.GroupLayout(lp_DatosPersonales);
         lp_DatosPersonales.setLayout(lp_DatosPersonalesLayout);
@@ -244,18 +265,20 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel27)
                     .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(41, 41, 41)
-                        .addComponent(txf_NSS, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                .addGap(26, 26, 26)
                                 .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btn_Fotografia)
-                                    .addComponent(btn_Subir))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
+                                        .addGap(26, 26, 26)
+                                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(btn_Fotografia)
+                                            .addComponent(btn_Subir))
+                                        .addGap(26, 26, 26))
+                                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(ftf_NSS)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
                                 .addGap(21, 21, 21)
@@ -263,8 +286,12 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                     .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
                         .addComponent(jLabel26)
                         .addGap(23, 23, 23)
-                        .addComponent(cmb_Escolaridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addComponent(cmb_Escolaridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(41, 41, 41)
+                        .addComponent(txf_NSS, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lp_DatosPersonalesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bnt_Guardar)
@@ -285,7 +312,8 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                     .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
                         .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(txf_ApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txf_ApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ftf_NSS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -624,8 +652,27 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_SubirActionPerformed
 
     private void bnt_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_GuardarActionPerformed
-     
+
     }//GEN-LAST:event_bnt_GuardarActionPerformed
+
+    private void txf_NSSFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txf_NSSFocusLost
+
+
+    }//GEN-LAST:event_txf_NSSFocusLost
+
+    private void ftf_NSSFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ftf_NSSFocusLost
+
+        System.out.println(String.valueOf(ftf_NSS.getValue()));
+    }//GEN-LAST:event_ftf_NSSFocusLost
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            MaskFormatter mskNSS = new MaskFormatter("###-####-####");
+            mskNSS.install(ftf_NSS);
+        } catch (ParseException err) {
+
+        }
+    }//GEN-LAST:event_formWindowOpened
     BufferedImage createResizedCopy(Image originalImage, int scaledWidth, int scaledHeight, boolean preserveAlpha) {
         int imageType = preserveAlpha ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
         BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, imageType);
@@ -682,6 +729,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmb_Turno;
     private com.github.lgooddatepicker.components.DatePicker dp_FechaContratacion;
     private com.github.lgooddatepicker.components.DatePicker dp_FechaNacimiento;
+    private javax.swing.JFormattedTextField ftf_NSS;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

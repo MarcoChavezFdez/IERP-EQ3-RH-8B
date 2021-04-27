@@ -75,6 +75,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         btn_Empleados = new javax.swing.JButton();
         btn_Percepciones = new javax.swing.JButton();
         btn_Departamentos = new javax.swing.JButton();
+        btn_Puestos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -177,6 +178,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Departamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
 
+        btn_Puestos.setText("Puestos");
+        jPanel1.add(btn_Puestos, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 450, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 850, 500));
 
         pack();
@@ -256,6 +260,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Departamentos;
     private javax.swing.JButton btn_Empleados;
     private javax.swing.JButton btn_Percepciones;
+    private javax.swing.JButton btn_Puestos;
     private javax.swing.JButton btn_Turnos;
     private javax.swing.JLabel etiquetaReloj;
     private javax.swing.JLabel jLabel1;
