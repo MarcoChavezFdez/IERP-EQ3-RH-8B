@@ -178,7 +178,7 @@ public class EstadosFrame extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 540, -1, -1));
 
         lbl_PaginaActual.setText("1");
-        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, -1, -1));
+        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(406, 540, 10, -1));
 
         jLabel4.setText("de");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, -1, -1));
