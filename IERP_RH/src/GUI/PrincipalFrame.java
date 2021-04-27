@@ -6,7 +6,6 @@
 package GUI;
 
 import conexion.ConexionBD;
-import conexion.EstadoDAO;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -74,6 +73,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         lbl_User = new javax.swing.JLabel();
         btn_CerrarSesion = new javax.swing.JButton();
         btn_Empleados = new javax.swing.JButton();
+        btn_Percepciones = new javax.swing.JButton();
+        btn_Departamentos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -160,6 +161,22 @@ public class PrincipalFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Empleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, -1, -1));
 
+        btn_Percepciones.setText("Percepciones");
+        btn_Percepciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_PercepcionesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Percepciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
+
+        btn_Departamentos.setText("Departamentos");
+        btn_Departamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_DepartamentosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Departamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 850, 500));
 
         pack();
@@ -213,6 +230,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
         this.pack();
     }//GEN-LAST:event_btn_EmpleadosActionPerformed
 
+    private void btn_DepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DepartamentosActionPerformed
+        DepartamentoFrame departamentos = new DepartamentoFrame(this.conexion);
+        this.dispose();
+        departamentos.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_DepartamentosActionPerformed
+
+    private void btn_PercepcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_PercepcionesActionPerformed
+       Percepciones percepcion = new Percepciones(this.conexion);
+       this.dispose();
+       percepcion.setVisible(true);
+       this.pack();
+    }//GEN-LAST:event_btn_PercepcionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -222,7 +253,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_CerrarSesion;
     private javax.swing.JButton btn_Ciudades;
     private javax.swing.JButton btn_Deducciones;
+    private javax.swing.JButton btn_Departamentos;
     private javax.swing.JButton btn_Empleados;
+    private javax.swing.JButton btn_Percepciones;
     private javax.swing.JButton btn_Turnos;
     private javax.swing.JLabel etiquetaReloj;
     private javax.swing.JLabel jLabel1;
