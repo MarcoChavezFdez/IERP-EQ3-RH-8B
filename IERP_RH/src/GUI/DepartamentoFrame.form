@@ -33,7 +33,7 @@
                       <EmptySpace min="-2" pref="254" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="109" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtBusquedaD" min="-2" pref="222" max="-2" attributes="0"/>
+                      <Component id="txf_Busqueda" min="-2" pref="222" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -44,22 +44,22 @@
                           </Group>
                           <Component id="btnEliminar" min="-2" pref="157" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="92" max="32767" attributes="0"/>
+                      <EmptySpace pref="76" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="btndespues" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_Anterior" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                              <Component id="lblPaginaActual" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_PaginaActual" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                              <Component id="lblPaginaMaxima" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbl_PaginaMaxima" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                              <Component id="btnSiguiente" min="-2" max="-2" attributes="0"/>
+                              <Component id="btn_Siguiente" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
@@ -91,7 +91,7 @@
               </Group>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtBusquedaD" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txf_Busqueda" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -106,12 +106,12 @@
               </Group>
               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnSiguiente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_Siguiente" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblPaginaActual" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbl_PaginaActual" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblPaginaMaxima" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btndespues" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbl_PaginaMaxima" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btn_Anterior" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="34" max="32767" attributes="0"/>
           </Group>
@@ -142,14 +142,14 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAgregarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtBusquedaD">
+    <Component class="javax.swing.JTextField" name="txf_Busqueda">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="99" green="ff" red="99" type="rgb"/>
         </Property>
       </Properties>
       <Events>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtBusquedaDKeyReleased"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txf_BusquedaKeyReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnAtras">
@@ -208,17 +208,20 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btndespues">
+    <Component class="javax.swing.JButton" name="btn_Anterior">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Atras"/>
+        <Property name="text" type="java.lang.String" value="Anterior"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_AnteriorActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnSiguiente">
+    <Component class="javax.swing.JButton" name="btn_Siguiente">
       <Properties>
         <Property name="text" type="java.lang.String" value="Siguiente"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSiguienteActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_SiguienteActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -226,7 +229,7 @@
         <Property name="text" type="java.lang.String" value="Paginas"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblPaginaActual">
+    <Component class="javax.swing.JLabel" name="lbl_PaginaActual">
       <Properties>
         <Property name="text" type="java.lang.String" value="1"/>
       </Properties>
@@ -236,7 +239,7 @@
         <Property name="text" type="java.lang.String" value="de"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblPaginaMaxima">
+    <Component class="javax.swing.JLabel" name="lbl_PaginaMaxima">
       <Properties>
         <Property name="text" type="java.lang.String" value="1"/>
       </Properties>

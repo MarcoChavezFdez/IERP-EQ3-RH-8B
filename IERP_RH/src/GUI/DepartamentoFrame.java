@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import conexion.ConexionBD;
 import conexion.DepartamentoDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Departamento;
+
 /**
  *
  * @author selen
@@ -19,22 +21,20 @@ public class DepartamentoFrame extends javax.swing.JFrame {
     /**
      * Creates new form DepartamentoFrame
      */
-    
-    
     ConexionBD conexion;
     int paginaActual;
     int paginaMaxima;
     boolean banderaBusqueda = false;
 
     public DepartamentoFrame(ConexionBD conexion) {
-       this.conexion = conexion;
+        this.conexion = conexion;
         this.paginaActual = 1;
         initComponents();
-        DepartamentoDAO Depa= new DepartamentoDAO(this.conexion);
+        DepartamentoDAO Depa = new DepartamentoDAO(this.conexion);
         this.paginaMaxima = Depa.consultaPaginas();
-//        lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
-//        ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
-//        llenarTabla(lista);
+        lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
+        ArrayList<RH_Departamento> lista = Depa.consultaDepartamentosVistaPaginada(paginaActual);
+        llenarTabla(lista);
     }
 
     /**
@@ -49,18 +49,18 @@ public class DepartamentoFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JButton();
-        txtBusquedaD = new javax.swing.JTextField();
+        txf_Busqueda = new javax.swing.JTextField();
         btnAtras = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDatos = new javax.swing.JTable();
-        btndespues = new javax.swing.JButton();
-        btnSiguiente = new javax.swing.JButton();
+        btn_Anterior = new javax.swing.JButton();
+        btn_Siguiente = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        lblPaginaActual = new javax.swing.JLabel();
+        lbl_PaginaActual = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        lblPaginaMaxima = new javax.swing.JLabel();
+        lbl_PaginaMaxima = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 102, 0));
@@ -77,10 +77,10 @@ public class DepartamentoFrame extends javax.swing.JFrame {
             }
         });
 
-        txtBusquedaD.setBackground(new java.awt.Color(153, 255, 153));
-        txtBusquedaD.addKeyListener(new java.awt.event.KeyAdapter() {
+        txf_Busqueda.setBackground(new java.awt.Color(153, 255, 153));
+        txf_Busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtBusquedaDKeyReleased(evt);
+                txf_BusquedaKeyReleased(evt);
             }
         });
 
@@ -124,22 +124,27 @@ public class DepartamentoFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblDatos);
 
-        btndespues.setText("Atras");
-
-        btnSiguiente.setText("Siguiente");
-        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+        btn_Anterior.setText("Anterior");
+        btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSiguienteActionPerformed(evt);
+                btn_AnteriorActionPerformed(evt);
+            }
+        });
+
+        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SiguienteActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Paginas");
 
-        lblPaginaActual.setText("1");
+        lbl_PaginaActual.setText("1");
 
         jLabel5.setText("de");
 
-        lblPaginaMaxima.setText("1");
+        lbl_PaginaMaxima.setText("1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,7 +157,7 @@ public class DepartamentoFrame extends javax.swing.JFrame {
                         .addGap(254, 254, 254)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBusquedaD, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txf_Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,22 +165,22 @@ public class DepartamentoFrame extends javax.swing.JFrame {
                                 .addComponent(btnModificar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(32, 32, 32)
-                                .addComponent(btndespues)
+                                .addComponent(btn_Anterior)
                                 .addGap(39, 39, 39)
                                 .addComponent(jLabel3)
                                 .addGap(31, 31, 31)
-                                .addComponent(lblPaginaActual)
+                                .addComponent(lbl_PaginaActual)
                                 .addGap(33, 33, 33)
                                 .addComponent(jLabel5)
                                 .addGap(32, 32, 32)
-                                .addComponent(lblPaginaMaxima)
+                                .addComponent(lbl_PaginaMaxima)
                                 .addGap(70, 70, 70)
-                                .addComponent(btnSiguiente)))
+                                .addComponent(btn_Siguiente)))
                         .addGap(69, 69, 69))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,7 +202,7 @@ public class DepartamentoFrame extends javax.swing.JFrame {
                         .addGap(73, 73, 73)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtBusquedaD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txf_Busqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -209,12 +214,12 @@ public class DepartamentoFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSiguiente)
+                    .addComponent(btn_Siguiente)
                     .addComponent(jLabel3)
-                    .addComponent(lblPaginaActual)
+                    .addComponent(lbl_PaginaActual)
                     .addComponent(jLabel5)
-                    .addComponent(lblPaginaMaxima)
-                    .addComponent(btndespues))
+                    .addComponent(lbl_PaginaMaxima)
+                    .addComponent(btn_Anterior))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -222,14 +227,14 @@ public class DepartamentoFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-         AddDepartamento AddDepa = new AddDepartamento(this.conexion);
+        AddDepartamento AddDepa = new AddDepartamento(this.conexion);
         this.dispose();
         AddDepa.setVisible(true);
         this.pack();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
-      PrincipalFrame pf = new PrincipalFrame(this.conexion);
+        PrincipalFrame pf = new PrincipalFrame(this.conexion);
         this.dispose();
         pf.setVisible(true);
         this.pack();
@@ -246,12 +251,12 @@ public class DepartamentoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void tblDatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDatosMousePressed
-          btnModificar.setEnabled(true);
+        btnModificar.setEnabled(true);
         btnEliminar.setEnabled(true);
     }//GEN-LAST:event_tblDatosMousePressed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       Integer idDepartamento = Integer.parseInt(tblDatos.getValueAt(tblDatos.getSelectedRow(), 0).toString());
+        Integer idDepartamento = Integer.parseInt(tblDatos.getValueAt(tblDatos.getSelectedRow(), 0).toString());
         String nombre = tblDatos.getValueAt(tblDatos.getSelectedRow(), 1).toString();
         int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Departamento '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
@@ -269,81 +274,100 @@ public class DepartamentoFrame extends javax.swing.JFrame {
             }
 
         }
-        
-        
-        
+
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void txtBusquedaDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaDKeyReleased
-        if ("".equals(txtBusquedaD.getText())) {
+    private void txf_BusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_BusquedaKeyReleased
+        if ("".equals(txf_Busqueda.getText())) {
             this.banderaBusqueda = false;
-            this.btndespues.setEnabled(false);
-            this.btnSiguiente.setEnabled(true);
+            this.btn_Anterior.setEnabled(false);
+            this.btn_Siguiente.setEnabled(true);
             DepartamentoDAO depa = new DepartamentoDAO(this.conexion);
             this.paginaActual = 1;
             ArrayList<RH_Departamento> lista = depa.consultaDepartamentosVistaPaginada(this.paginaActual);
             this.paginaMaxima = depa.consultaPaginas();
-            this.lblPaginaMaxima.setText(String.valueOf(paginaMaxima));
-            this.lblPaginaActual.setText(String.valueOf(this.paginaActual));
+            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
+            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
             llenarTabla(lista);
         } else {
             this.banderaBusqueda = true;
             DepartamentoDAO depa = new DepartamentoDAO(this.conexion);
             this.paginaActual = 1;
-            ArrayList<RH_Departamento> lista = depa.consultaDepartamentosNombreVistaPaginada(txtBusquedaD.getText(), this.paginaActual);
-            this.paginaMaxima = depa.consultaPaginasNombre(txtBusquedaD.getText());
-            this.lblPaginaMaxima.setText(String.valueOf(paginaMaxima));
-            this.lblPaginaActual.setText(String.valueOf(this.paginaActual));
+            ArrayList<RH_Departamento> lista = depa.consultaDepartamentosNombreVistaPaginada(txf_Busqueda.getText(), this.paginaActual);
+            this.paginaMaxima = depa.consultaPaginasNombre(txf_Busqueda.getText());
+            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
+            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
             if (paginaMaxima == 0) {
-                lblPaginaActual.setText("0");
-                btnSiguiente.setEnabled(false);
-                btndespues.setEnabled(false);
+                lbl_PaginaActual.setText("0");
+                btn_Siguiente.setEnabled(false);
+                btn_Anterior.setEnabled(false);
             } else {
-                btndespues.setEnabled(false);
+                btn_Anterior.setEnabled(false);
                 if (paginaMaxima > 1) {
-                    btnSiguiente.setEnabled(true);
+                    btn_Siguiente.setEnabled(true);
                 } else {
-                    btnSiguiente.setEnabled(false);
+                    btn_Siguiente.setEnabled(false);
                 }
 
             }
             llenarTabla(lista);
         }
 
-    }//GEN-LAST:event_txtBusquedaDKeyReleased
+    }//GEN-LAST:event_txf_BusquedaKeyReleased
 
-    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-       if ((paginaActual + 1) <= paginaMaxima) {
-            btndespues.setEnabled(true);
+    private void btn_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SiguienteActionPerformed
+        if ((paginaActual + 1) <= paginaMaxima) {
+            btn_Anterior.setEnabled(true);
             paginaActual++;
             if (paginaActual == paginaMaxima) {
-                this.btnSiguiente.setEnabled(false);
+                this.btn_Siguiente.setEnabled(false);
             } else {
-                this.btnSiguiente.setEnabled(true);
+                this.btn_Siguiente.setEnabled(true);
             }
-            this.lblPaginaActual.setText(String.valueOf(paginaActual));
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
             DepartamentoDAO DAO = new DepartamentoDAO(this.conexion);
             ArrayList<RH_Departamento> lista = new ArrayList<>();
             if (this.banderaBusqueda) {
-                lista = DAO.consultaDepartamentosNombreVistaPaginada(txtBusquedaD.getText(), paginaActual);
+                lista = DAO.consultaDepartamentosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
             } else {
                 lista = DAO.consultaDepartamentosVistaPaginada(paginaActual);
             }
 
             llenarTabla(lista);
         }
-    }//GEN-LAST:event_btnSiguienteActionPerformed
-private void llenarTabla(ArrayList<RH_Departamento> lista) {
+    }//GEN-LAST:event_btn_SiguienteActionPerformed
+
+    private void btn_AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnteriorActionPerformed
+        if ((paginaActual - 1) >= 1) {
+            btn_Siguiente.setEnabled(true);
+            paginaActual--;
+            if (paginaActual == 1) {
+                this.btn_Anterior.setEnabled(false);
+            } else {
+                this.btn_Anterior.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            DepartamentoDAO DAO = new DepartamentoDAO(this.conexion);
+            ArrayList<RH_Departamento> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaDepartamentosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+            } else {
+                lista = DAO.consultaDepartamentosVistaPaginada(paginaActual);
+            }
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_AnteriorActionPerformed
+    private void llenarTabla(ArrayList<RH_Departamento> lista) {
         String[] encabezado = {"IdDepartamento", "Nombre"};
         Object[][] datos = new Object[lista.size()][2];
         int ren = 0;
         for (RH_Departamento s : lista) {
             datos[ren][0] = s.getIdDepartamento();
             datos[ren][1] = s.getNombre();
-           
             ren++;
         }
-         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
+        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
                 return false; //Disallow the editing of any cell
@@ -353,56 +377,22 @@ private void llenarTabla(ArrayList<RH_Departamento> lista) {
 
         tblDatos.setModel(m);
     }
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(DepartamentoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(DepartamentoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(DepartamentoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(DepartamentoFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new DepartamentoFrame().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnSiguiente;
-    private javax.swing.JButton btndespues;
+    private javax.swing.JButton btn_Anterior;
+    private javax.swing.JButton btn_Siguiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblPaginaActual;
-    private javax.swing.JLabel lblPaginaMaxima;
+    private javax.swing.JLabel lbl_PaginaActual;
+    private javax.swing.JLabel lbl_PaginaMaxima;
     private javax.swing.JTable tblDatos;
-    private javax.swing.JTextField txtBusquedaD;
+    private javax.swing.JTextField txf_Busqueda;
     // End of variables declaration//GEN-END:variables
 }

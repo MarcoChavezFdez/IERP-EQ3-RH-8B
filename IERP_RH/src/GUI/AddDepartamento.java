@@ -135,7 +135,7 @@ public class AddDepartamento extends javax.swing.JFrame {
     private void btnRealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizarActionPerformed
         RH_Departamento ndepa = new RH_Departamento();
         ndepa.setNombre(txtNombre.getText().toUpperCase());
-         ndepa.setEstatus("A");
+        ndepa.setEstatus("A");
         DepartamentoDAO depaDAO = new DepartamentoDAO(this.conexion);
         try {
             if (bandera) {
