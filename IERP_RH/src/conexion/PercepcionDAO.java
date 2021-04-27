@@ -26,14 +26,14 @@ public class PercepcionDAO {
     }
 
     public boolean insertarPercepcion(RH_Percepcion percepcion) {
-        String sql = "insert into RH.Percepciones values(?,?,?)";
+        String sql = "insert into RH.Percepciones values(?,?,?,?)";
         boolean ban = false;
         try {
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
             st.setString(1, percepcion.getNombre());
             st.setString(2, percepcion.getDescripcion());
             st.setInt(3, percepcion.getDiasPagar());
-            st.setString(4, "A");
+            st.setString(4,percepcion.getEstatus());
             st.execute();
             ban = true;
         } catch (SQLException e) {
