@@ -50,7 +50,7 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         btn_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
         btn_Eliminar.setBorderPainted(false);
         btn_Eliminar.setContentAreaFilled(false);
-        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 360, -1, -1));
+        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, -1, -1));
 
         jTable1.setBackground(new java.awt.Color(153, 255, 153));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -66,7 +66,7 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, -1, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, -1, -1));
 
         btn_AddEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
         btn_AddEmpleado.setBorderPainted(false);
@@ -76,16 +76,16 @@ public class EmpleadosFrame extends javax.swing.JFrame {
                 btn_AddEmpleadoActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_AddEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, -1, -1));
+        jPanel1.add(btn_AddEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
         btn_Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Modificar.png"))); // NOI18N
         btn_Modificar.setBorderPainted(false);
         btn_Modificar.setContentAreaFilled(false);
-        jPanel1.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, -1, -1));
+        jPanel1.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
 
-        jLabel2.setText("Empleados");
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, -1, 60));
+        jLabel2.setText("Empleados");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, 60));
 
         btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
         btn_Atras.setBorderPainted(false);
