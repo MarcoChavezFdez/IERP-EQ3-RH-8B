@@ -27,7 +27,7 @@ public class RH_Empleado {
     private String apellidoPaterno;
     private String apellidoMaterno;
     private String sexo;
-    private java.sql.Date fechaNacimeinto;
+    private java.sql.Date fechaNacimiento;
     private String curp;
     private String estadoCivil;
     private java.sql.Date fechaContratacion;
@@ -62,7 +62,7 @@ public class RH_Empleado {
         this.apellidoPaterno=e.getApellidoPaterno();
         this.apellidoMaterno=e.getApellidoMaterno();
         this.sexo=e.getSexo();
-        this.fechaNacimeinto=e.fechaNacimeinto;
+        this.fechaNacimiento=e.getFechaNacimiento();
         this.curp=e.getCurp();
         this.estadoCivil=e.getEstadoCivil();
         this.fechaContratacion=e.getFechaContratacion();
@@ -134,12 +134,12 @@ public class RH_Empleado {
         this.sexo = sexo;
     }
 
-    public Date getFechaNacimeinto() {
-        return fechaNacimeinto;
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFechaNacimeinto(Date fechaNacimeinto) {
-        this.fechaNacimeinto = fechaNacimeinto;
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getCurp() {
@@ -308,6 +308,11 @@ public class RH_Empleado {
 
     public void setTurno(RH_Turno turno) {
         this.turno = turno;
+    }
+
+    @Override
+    public String toString() {
+        return "RH_Empleado{" + "idEmpleado=" + idEmpleado + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", sexo=" + sexo + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", estadoCivil=" + estadoCivil + ", fechaContratacion=" + fechaContratacion + ", salarioDiario=" + salarioDiario + ", nss=" + nss + ", diasVacaciones=" + diasVacaciones + ", diasPermiso=" + diasPermiso + ", fotografia=" + fotografia + ", direccion=" + direccion + ", colonia=" + colonia + ", codigoPostal=" + codigoPostal + ", escolaridad=" + escolaridad + ", especialidad=" + especialidad + ", email=" + email + ", password=" + password + ", tipo=" + tipo + ", estatus=" + estatus + ", departamento=" + departamento + ", puesto=" + puesto + ", ciudad=" + ciudad + ", sucursal=" + sucursal + ", turno=" + turno + '}';
     }
 
 }

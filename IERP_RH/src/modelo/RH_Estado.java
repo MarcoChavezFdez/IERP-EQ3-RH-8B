@@ -74,4 +74,9 @@ public class RH_Estado {
         this.estatus = estatus;
     }
 
+    @Override
+    public String toString() {
+        return "RH_Estado{" + "idEstado=" + idEstado + ", nombre=" + nombre + ", siglas=" + siglas + ", estatus=" + estatus + '}';
+    }
+    
 }

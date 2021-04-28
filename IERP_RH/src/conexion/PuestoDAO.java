@@ -55,7 +55,7 @@ public class PuestoDAO {
                 e.setIdPuesto(rs.getInt("idPuesto"));
                 e.setNombre(rs.getString("nombre"));
                 e.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                e.setSalarioMaximo(rs.getFloat("salarioMaxmimo"));
+                e.setSalarioMaximo(rs.getFloat("salarioMaximo"));
                 lista.add(e);
             }
             rs.close();
@@ -81,7 +81,7 @@ public class PuestoDAO {
                 e.setIdPuesto(rs.getInt("idPuesto"));
                 e.setNombre(rs.getString("nombre"));
                 e.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                e.setSalarioMaximo(rs.getFloat("salarioMaxmimo"));
+                e.setSalarioMaximo(rs.getFloat("salarioMaximo"));
                 lista.add(e);
             }
             rs.close();
@@ -143,7 +143,7 @@ public class PuestoDAO {
                 e.setIdPuesto(rs.getInt("idPuesto"));
                 e.setNombre(rs.getString("nombre"));
                 e.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                e.setSalarioMaximo(rs.getFloat("salarioMaxmimo"));
+                e.setSalarioMaximo(rs.getFloat("salarioMaximo"));
                 lista.add(e);
             }
             rs.close();
@@ -167,7 +167,7 @@ public class PuestoDAO {
                 e.setIdPuesto(rs.getInt("idPuesto"));
                 e.setNombre(rs.getString("nombre"));
                 e.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                e.setSalarioMaximo(rs.getFloat("salarioMaxmimo"));
+                e.setSalarioMaximo(rs.getFloat("salarioMaximo"));
                 lista.add(e);
             }
             rs.close();
@@ -190,7 +190,7 @@ public class PuestoDAO {
                 puesto.setIdPuesto(rs.getInt("idPuesto"));
                 puesto.setNombre(rs.getString("nombre"));
                 puesto.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                puesto.setSalarioMaximo(rs.getFloat("salarioMaxmimo"));
+                puesto.setSalarioMaximo(rs.getFloat("salarioMaximo"));
             }
             rs.close();
             st.close();
@@ -212,7 +212,7 @@ public class PuestoDAO {
                 puesto.setIdPuesto(rs.getInt("idPuesto"));
                 puesto.setNombre(rs.getString("nombre"));
                 puesto.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                puesto.setSalarioMaximo(rs.getFloat("salarioMaxmimo"));
+                puesto.setSalarioMaximo(rs.getFloat("salarioMaximo"));
             }
             rs.close();
             st.close();

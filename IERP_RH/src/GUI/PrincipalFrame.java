@@ -196,6 +196,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         btn_Puestos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Puestos.png"))); // NOI18N
         btn_Puestos.setBorderPainted(false);
         btn_Puestos.setContentAreaFilled(false);
+        btn_Puestos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_PuestosActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_Puestos, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 290, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 710));
@@ -259,11 +264,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_DepartamentosActionPerformed
 
     private void btn_PercepcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_PercepcionesActionPerformed
-       Percepciones percepcion = new Percepciones(this.conexion);
-       this.dispose();
-       percepcion.setVisible(true);
-       this.pack();
+        Percepciones percepcion = new Percepciones(this.conexion);
+        this.dispose();
+        percepcion.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_PercepcionesActionPerformed
+
+    private void btn_PuestosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_PuestosActionPerformed
+        PuestosFrame puesto = new PuestosFrame(this.conexion);
+        this.dispose();
+        puesto.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_PuestosActionPerformed
 
     /**
      * @param args the command line arguments

@@ -14,13 +14,13 @@ import javax.swing.JOptionPane;
 import modelo.Compras_Sucursal;
 import modelo.RH_Ciudad;
 
-
 /**
  *
  * @author Marco Chavez
  */
 public class SucursalesDAO {
-        private ConexionBD conexion;
+
+    private ConexionBD conexion;
 
     public SucursalesDAO(ConexionBD conexion) {
         this.conexion = conexion;
@@ -63,7 +63,7 @@ public class SucursalesDAO {
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setPresupuesto(rs.getFloat("presupuesto"));
-                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"),this.conexion));
+                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
                 lista.add(e);
             }
             rs.close();
@@ -92,7 +92,7 @@ public class SucursalesDAO {
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setPresupuesto(rs.getFloat("presupuesto"));
-                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"),this.conexion));
+                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
                 lista.add(e);
             }
             rs.close();
@@ -157,7 +157,7 @@ public class SucursalesDAO {
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setPresupuesto(rs.getFloat("presupuesto"));
-                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"),this.conexion));
+                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
                 lista.add(e);
             }
             rs.close();
@@ -184,7 +184,7 @@ public class SucursalesDAO {
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setPresupuesto(rs.getFloat("presupuesto"));
-                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"),this.conexion));
+                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
                 lista.add(e);
             }
             rs.close();
@@ -210,7 +210,7 @@ public class SucursalesDAO {
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setPresupuesto(rs.getFloat("presupuesto"));
-                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"),this.conexion));
+                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
             }
             rs.close();
             st.close();
@@ -224,7 +224,7 @@ public class SucursalesDAO {
     public Compras_Sucursal consultaSucursalId(int idSucursal) {
         String sql = (" select * "
                 + " from Compras.Sucursales "
-                + " where idSucursal" + idSucursal);
+                + " where idSucursal=" + idSucursal);
         Compras_Sucursal e = new Compras_Sucursal();
         try {
             Statement st = conexion.getConexion().createStatement();
@@ -236,7 +236,7 @@ public class SucursalesDAO {
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setPresupuesto(rs.getFloat("presupuesto"));
-                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"),this.conexion));
+                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
             }
             rs.close();
             st.close();
@@ -286,7 +286,6 @@ public class SucursalesDAO {
         }
         return ban;
     }
-
 
     public ConexionBD getConexion() {
         return conexion;

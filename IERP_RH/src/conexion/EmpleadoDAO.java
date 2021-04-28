@@ -78,7 +78,7 @@ public class EmpleadoDAO {
                 empleado.setApellidoPaterno(rs.getString("apellidoPaterno"));
                 empleado.setApellidoMaterno(rs.getString("apellidoMaterno"));
                 empleado.setSexo(rs.getString("sexo"));
-                empleado.setFechaNacimeinto(rs.getDate("fechaNacimiento"));
+                empleado.setFechaNacimiento(rs.getDate("fechaNacimiento"));
                 empleado.setCurp(rs.getString("curp"));
                 empleado.setEstadoCivil(rs.getString("estadoCivil"));
                 empleado.setFechaContratacion(rs.getDate("fechaContratacion"));
@@ -120,28 +120,29 @@ public class EmpleadoDAO {
             st.setString(2, empleado.getApellidoPaterno());
             st.setString(3, empleado.getApellidoMaterno());
             st.setString(4, empleado.getSexo());
-            st.setDate(5, empleado.getFechaNacimeinto());
-            st.setString(6, empleado.getEstadoCivil());
-            st.setDate(7, empleado.getFechaContratacion());
-            st.setFloat(8, empleado.getSalarioDiario());
-            st.setString(9, empleado.getNss());
-            st.setInt(10, empleado.getDiasVacaciones());
-            st.setInt(11, empleado.getDiasPermiso());
-            st.setBinaryStream(12, empleado.getFotografia());
-            st.setString(13, empleado.getDireccion());
-            st.setString(14, empleado.getColonia());
-            st.setString(15, empleado.getCodigoPostal());
-            st.setString(16, empleado.getEscolaridad());
-            st.setString(17, empleado.getEspecialidad());
-            st.setString(18, empleado.getEmail());
-            st.setString(19, empleado.getPassword());
-            st.setString(20, empleado.getTipo());
-            st.setString(21, empleado.getEstatus());
-            st.setInt(22, empleado.getDepartamento().getIdDepartamento());
-            st.setInt(23, empleado.getPuesto().getIdPuesto());
-            st.setInt(24, empleado.getCiudad().getIdCiudad());
-            st.setInt(25, empleado.getSucursal().getIdSucursal());
-            st.setInt(26, empleado.getTurno().getIdTurno());
+            st.setDate(5, empleado.getFechaNacimiento());
+            st.setString(6, empleado.getCurp());
+            st.setString(7, empleado.getEstadoCivil());
+            st.setDate(8, empleado.getFechaContratacion());
+            st.setFloat(9, empleado.getSalarioDiario());
+            st.setString(10, empleado.getNss());
+            st.setInt(11, empleado.getDiasVacaciones());
+            st.setInt(12, empleado.getDiasPermiso());
+            st.setBinaryStream(13, empleado.getFotografia());
+            st.setString(14, empleado.getDireccion());
+            st.setString(15, empleado.getColonia());
+            st.setString(16, empleado.getCodigoPostal());
+            st.setString(17, empleado.getEscolaridad());
+            st.setString(18, empleado.getEspecialidad());
+            st.setString(19, empleado.getEmail());
+            st.setString(20, empleado.getPassword());
+            st.setString(21, empleado.getTipo());
+            st.setString(22, empleado.getEstatus());
+            st.setInt(23, empleado.getDepartamento().getIdDepartamento());
+            st.setInt(24, empleado.getPuesto().getIdPuesto());
+            st.setInt(25, empleado.getCiudad().getIdCiudad());
+            st.setInt(26, empleado.getSucursal().getIdSucursal());
+            st.setInt(27, empleado.getTurno().getIdTurno());
             st.execute();
             ban = true;
         } catch (SQLException e) {
@@ -162,11 +163,12 @@ public class EmpleadoDAO {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 RH_Empleado e = new RH_Empleado();
+                e.setIdEmpleado(rs.getInt("idEmpleado"));
                 e.setNombre(rs.getString("nombre"));
                 e.setApellidoPaterno(rs.getString("apellidoPaterno"));
                 e.setApellidoMaterno(rs.getString("apellidoMaterno"));
                 e.setSexo(rs.getString("sexo"));
-                e.setFechaNacimeinto(rs.getDate("fechaNacimiento"));
+                e.setFechaNacimiento(rs.getDate("fechaNacimiento"));
                 e.setCurp(rs.getString("curp"));
                 e.setEstadoCivil(rs.getString("estadoCivil"));
                 e.setFechaContratacion(rs.getDate("fechaContratacion"));
@@ -247,11 +249,12 @@ public class EmpleadoDAO {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 RH_Empleado e = new RH_Empleado();
+                e.setIdEmpleado(rs.getInt("idEmpleado"));
                 e.setNombre(rs.getString("nombre"));
                 e.setApellidoPaterno(rs.getString("apellidoPaterno"));
                 e.setApellidoMaterno(rs.getString("apellidoMaterno"));
                 e.setSexo(rs.getString("sexo"));
-                e.setFechaNacimeinto(rs.getDate("fechaNacimiento"));
+                e.setFechaNacimiento(rs.getDate("fechaNacimiento"));
                 e.setCurp(rs.getString("curp"));
                 e.setEstadoCivil(rs.getString("estadoCivil"));
                 e.setFechaContratacion(rs.getDate("fechaContratacion"));
@@ -294,11 +297,12 @@ public class EmpleadoDAO {
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
                 RH_Empleado e = new RH_Empleado();
+                e.setIdEmpleado(rs.getInt("idEmpleado"));
                 e.setNombre(rs.getString("nombre"));
                 e.setApellidoPaterno(rs.getString("apellidoPaterno"));
                 e.setApellidoMaterno(rs.getString("apellidoMaterno"));
                 e.setSexo(rs.getString("sexo"));
-                e.setFechaNacimeinto(rs.getDate("fechaNacimiento"));
+                e.setFechaNacimiento(rs.getDate("fechaNacimiento"));
                 e.setCurp(rs.getString("curp"));
                 e.setEstadoCivil(rs.getString("estadoCivil"));
                 e.setFechaContratacion(rs.getDate("fechaContratacion"));
@@ -340,11 +344,12 @@ public class EmpleadoDAO {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
+                empleado.setIdEmpleado(rs.getInt("idEmpleado"));
                 empleado.setNombre(rs.getString("nombre"));
                 empleado.setApellidoPaterno(rs.getString("apellidoPaterno"));
                 empleado.setApellidoMaterno(rs.getString("apellidoMaterno"));
                 empleado.setSexo(rs.getString("sexo"));
-                empleado.setFechaNacimeinto(rs.getDate("fechaNacimiento"));
+                empleado.setFechaNacimiento(rs.getDate("fechaNacimiento"));
                 empleado.setCurp(rs.getString("curp"));
                 empleado.setEstadoCivil(rs.getString("estadoCivil"));
                 empleado.setFechaContratacion(rs.getDate("fechaContratacion"));
@@ -380,17 +385,18 @@ public class EmpleadoDAO {
     public RH_Empleado consultaEmpleadoId(int idEmpleado) {
         String sql = (" select * "
                 + " from vEmpleados "
-                + " where idEmpleado" + idEmpleado);
+                + " where idEmpleado=" + idEmpleado);
         RH_Empleado empleado = new RH_Empleado();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
+                empleado.setIdEmpleado(rs.getInt("idEmpleado"));
                 empleado.setNombre(rs.getString("nombre"));
                 empleado.setApellidoPaterno(rs.getString("apellidoPaterno"));
                 empleado.setApellidoMaterno(rs.getString("apellidoMaterno"));
                 empleado.setSexo(rs.getString("sexo"));
-                empleado.setFechaNacimeinto(rs.getDate("fechaNacimiento"));
+                empleado.setFechaNacimiento(rs.getDate("fechaNacimiento"));
                 empleado.setCurp(rs.getString("curp"));
                 empleado.setEstadoCivil(rs.getString("estadoCivil"));
                 empleado.setFechaContratacion(rs.getDate("fechaContratacion"));
@@ -428,7 +434,7 @@ public class EmpleadoDAO {
                 + "salarioDiario=?, nss=?, diasVacaciones=?, diasPermiso=?, fotografia=?, "
                 + "direccion=?, colonia=?, codigoPostal=?, escolaridad=?, especialidad=?, "
                 + "email=?, password=?, tipo=?, idDepartamento=?, idPuesto=?,idCiudad=?,idSucursal=?, "
-                + "idTurno=? "
+                + "idTurno=?, curp=?"
                 + " where idEmpleado=?";
         boolean ban = false;
         try {
@@ -437,7 +443,7 @@ public class EmpleadoDAO {
             st.setString(2, empleado.getApellidoPaterno());
             st.setString(3, empleado.getApellidoMaterno());
             st.setString(4, empleado.getSexo());
-            st.setDate(5, empleado.getFechaNacimeinto());
+            st.setDate(5, empleado.getFechaNacimiento());
             st.setString(6, empleado.getEstadoCivil());
             st.setDate(7, empleado.getFechaContratacion());
             st.setFloat(8, empleado.getSalarioDiario());
@@ -459,7 +465,8 @@ public class EmpleadoDAO {
             st.setInt(24, empleado.getCiudad().getIdCiudad());
             st.setInt(25, empleado.getSucursal().getIdSucursal());
             st.setInt(26, empleado.getTurno().getIdTurno());
-            st.setInt(27, empleado.getIdEmpleado());
+            st.setString(27, empleado.getCurp());
+            st.setInt(28, empleado.getIdEmpleado());
             st.execute();
             st.close();
             ban = true;
@@ -470,7 +477,7 @@ public class EmpleadoDAO {
     }
 
     public boolean eliminacionLogica(RH_Empleado em) {
-        String sql = "update RH.Empleado set estatus=? "
+        String sql = "update RH.Empleados set estatus=? "
                 + " where idEmpleado=?";
         boolean ban = false;
         try {
