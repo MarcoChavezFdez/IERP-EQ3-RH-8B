@@ -24,6 +24,9 @@ public class DeduccionesFrame extends javax.swing.JFrame {
      * Creates new form DeduccionesFrame
      */
     ConexionBD conexion;
+    int paginaActual;
+    int paginaMaxima;
+    boolean banderaBusqueda = false;
 
     public DeduccionesFrame(ConexionBD conexion) {
         this.conexion = conexion;
@@ -52,6 +55,12 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         tbl_Datos = new javax.swing.JTable();
         btn_Eliminar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lbl_PaginaActual = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_PaginaMaxima = new javax.swing.JLabel();
+        btn_Siguiente = new javax.swing.JButton();
+        btn_Anterior = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Deducciones");
@@ -144,7 +153,36 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         jLabel2.setText("Deducciones");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 560));
+        jLabel3.setText("Página");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 560, -1, -1));
+
+        lbl_PaginaActual.setText("1");
+        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 560, 10, -1));
+
+        jLabel4.setText("de");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 560, -1, -1));
+
+        lbl_PaginaMaxima.setText("1");
+        jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 560, -1, -1));
+
+        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SiguienteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, -1, -1));
+
+        btn_Anterior.setText("Anterior");
+        btn_Anterior.setEnabled(false);
+        btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AnteriorActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 550, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -208,6 +246,50 @@ public class DeduccionesFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tbl_DatosMousePressed
 
+    private void btn_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SiguienteActionPerformed
+        if ((paginaActual + 1) <= paginaMaxima) {
+            btn_Anterior.setEnabled(true);
+            paginaActual++;
+            if (paginaActual == paginaMaxima) {
+                this.btn_Siguiente.setEnabled(false);
+            } else {
+                this.btn_Siguiente.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            DeduccionDAO DAO = new DeduccionDAO(this.conexion);
+            ArrayList<RH_Deduccion> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaDeduccionesNombre(txf_Busqueda.getText());
+            } else {
+                lista = DAO.consultaDeducciones(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_SiguienteActionPerformed
+
+    private void btn_AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnteriorActionPerformed
+        if ((paginaActual - 1) >= 1) {
+            btn_Siguiente.setEnabled(true);
+            paginaActual--;
+            if (paginaActual == 1) {
+                this.btn_Anterior.setEnabled(false);
+            } else {
+                this.btn_Anterior.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            DeduccionDAO DAO = new DeduccionDAO(this.conexion);
+            ArrayList<RH_Deduccion> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.(txf_Busqueda.getText(), paginaActual);
+            } else {
+                lista = DAO.(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_AnteriorActionPerformed
+
     private void llenarTabla(ArrayList<RH_Deduccion> lista) {
         String[] encabezado = {"IdDeduccion", "Nombre", "Descripcion", "Porcentaje"};
         Object[][] datos = new Object[lista.size()][4];
@@ -236,13 +318,19 @@ public class DeduccionesFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Add;
+    private javax.swing.JButton btn_Anterior;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
+    private javax.swing.JButton btn_Siguiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_PaginaActual;
+    private javax.swing.JLabel lbl_PaginaMaxima;
     private javax.swing.JTable tbl_Datos;
     private javax.swing.JTextField txf_Busqueda;
     // End of variables declaration//GEN-END:variables

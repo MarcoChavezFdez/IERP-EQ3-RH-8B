@@ -21,6 +21,9 @@ public class Percepciones extends javax.swing.JFrame {
      * Creates new form Percepciones
      */
     ConexionBD conexion;
+    int paginaActual;
+    int paginaMaxima;
+    boolean banderaBusqueda = false;
     public Percepciones(ConexionBD cn) {
         initComponents();
         conexion = cn;
@@ -48,6 +51,12 @@ public class Percepciones extends javax.swing.JFrame {
         tbl_Datos = new javax.swing.JTable();
         btn_Eliminar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btn_Anterior = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lbl_PaginaActual = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_PaginaMaxima = new javax.swing.JLabel();
+        btn_Siguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Percepciones");
@@ -121,7 +130,7 @@ public class Percepciones extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_Datos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 390, 350));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 390, 350));
 
         btn_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
         btn_Eliminar.setToolTipText("");
@@ -139,17 +148,46 @@ public class Percepciones extends javax.swing.JFrame {
         jLabel2.setText("Percepciones");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, 40));
 
+        btn_Anterior.setText("Anterior");
+        btn_Anterior.setEnabled(false);
+        btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AnteriorActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, -1, -1));
+
+        jLabel3.setText("Página");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, -1, -1));
+
+        lbl_PaginaActual.setText("1");
+        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, 10, -1));
+
+        jLabel4.setText("de");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 540, -1, -1));
+
+        lbl_PaginaMaxima.setText("1");
+        jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 540, -1, -1));
+
+        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SiguienteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 530, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -214,6 +252,50 @@ public class Percepciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_EliminarActionPerformed
 
+    private void btn_AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnteriorActionPerformed
+        if ((paginaActual - 1) >= 1) {
+            btn_Siguiente.setEnabled(true);
+            paginaActual--;
+            if (paginaActual == 1) {
+                this.btn_Anterior.setEnabled(false);
+            } else {
+                this.btn_Anterior.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            PercepcionDAO DAO = new PercepcionDAO(this.conexion);
+            ArrayList<RH_Percepcion> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaPercepcionesNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+            } else {
+                lista = DAO.consultaPercepcionesVistaPaginada(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_AnteriorActionPerformed
+
+    private void btn_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SiguienteActionPerformed
+        if ((paginaActual + 1) <= paginaMaxima) {
+            btn_Anterior.setEnabled(true);
+            paginaActual++;
+            if (paginaActual == paginaMaxima) {
+                this.btn_Siguiente.setEnabled(false);
+            } else {
+                this.btn_Siguiente.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            PercepcionDAO DAO = new PercepcionDAO(this.conexion);
+            ArrayList<RH_Percepcion> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaPercepcionesNombreVista(txf_Busqueda.getText());
+            } else {
+                lista = DAO.consultaPercepcionesNombreVista(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_SiguienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -241,13 +323,19 @@ public class Percepciones extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Add;
+    private javax.swing.JButton btn_Anterior;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
+    private javax.swing.JButton btn_Siguiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_PaginaActual;
+    private javax.swing.JLabel lbl_PaginaMaxima;
     private javax.swing.JTable tbl_Datos;
     private javax.swing.JTextField txf_Busqueda;
     // End of variables declaration//GEN-END:variables
