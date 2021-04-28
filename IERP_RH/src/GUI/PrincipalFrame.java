@@ -59,6 +59,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
+        evaluatorFloat1 = new org.jdesktop.core.animation.timing.evaluators.EvaluatorFloat();
         jPanel1 = new javax.swing.JPanel();
         btn_Ciudades = new javax.swing.JButton();
         btn_Deducciones = new javax.swing.JButton();
@@ -93,7 +94,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 btn_CiudadesActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Ciudades, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 100, -1, -1));
+        jPanel1.add(btn_Ciudades, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 110, -1, -1));
 
         btn_Deducciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Dedu.png"))); // NOI18N
         btn_Deducciones.setBorderPainted(false);
@@ -103,7 +104,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 btn_DeduccionesActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Deducciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, -1, -1));
+        jPanel1.add(btn_Deducciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, -1, -1));
 
         btn_Turnos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Tur.png"))); // NOI18N
         btn_Turnos.setBorderPainted(false);
@@ -113,7 +114,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 btn_TurnosActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Turnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, -1, -1));
+        jPanel1.add(btn_Turnos, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 490, -1, -1));
 
         bnt_Estados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Estados.png"))); // NOI18N
         bnt_Estados.setBorderPainted(false);
@@ -123,28 +124,35 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 bnt_EstadosActionPerformed(evt);
             }
         });
-        jPanel1.add(bnt_Estados, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 370, -1));
+        jPanel1.add(bnt_Estados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 370, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 0));
         jLabel1.setText("Menú Principal");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, -1, -1));
 
+        etiquetaReloj.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         etiquetaReloj.setText("hh:mm:ss");
-        jPanel1.add(etiquetaReloj, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 470, -1, -1));
+        jPanel1.add(etiquetaReloj, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 660, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Hora:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 660, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Fecha:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 470, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 660, -1, -1));
 
+        lbl_fecha.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbl_fecha.setText("dd/mm/aaaa");
-        jPanel1.add(lbl_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 470, -1, -1));
+        jPanel1.add(lbl_fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 660, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel4.setText("Hola de nuevo:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, -1, -1));
-        jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, -1, -1));
+
+        lbl_User.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 360, 100));
 
         btn_CerrarSesion.setText("Cerrar Sesion");
         btn_CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -152,36 +160,45 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 btn_CerrarSesionActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_CerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 30, -1, -1));
+        jPanel1.add(btn_CerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 50, -1, -1));
 
-        btn_Empleados.setText("Empleados");
+        btn_Empleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Empleados.png"))); // NOI18N
+        btn_Empleados.setToolTipText("");
+        btn_Empleados.setBorderPainted(false);
+        btn_Empleados.setContentAreaFilled(false);
         btn_Empleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_EmpleadosActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Empleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 60, -1, -1));
+        jPanel1.add(btn_Empleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 490, -1, -1));
 
-        btn_Percepciones.setText("Percepciones");
+        btn_Percepciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Percepciones.png"))); // NOI18N
+        btn_Percepciones.setBorderPainted(false);
+        btn_Percepciones.setContentAreaFilled(false);
         btn_Percepciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_PercepcionesActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Percepciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
+        jPanel1.add(btn_Percepciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
-        btn_Departamentos.setText("Departamentos");
+        btn_Departamentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Departamentos.png"))); // NOI18N
+        btn_Departamentos.setBorderPainted(false);
+        btn_Departamentos.setContentAreaFilled(false);
         btn_Departamentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_DepartamentosActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Departamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, -1, -1));
+        jPanel1.add(btn_Departamentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, -1, -1));
 
-        btn_Puestos.setText("Puestos");
-        jPanel1.add(btn_Puestos, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 450, -1, -1));
+        btn_Puestos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Puestos.png"))); // NOI18N
+        btn_Puestos.setBorderPainted(false);
+        btn_Puestos.setContentAreaFilled(false);
+        jPanel1.add(btn_Puestos, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 290, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 850, 500));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 710));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -263,6 +280,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Puestos;
     private javax.swing.JButton btn_Turnos;
     private javax.swing.JLabel etiquetaReloj;
+    private org.jdesktop.core.animation.timing.evaluators.EvaluatorFloat evaluatorFloat1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
