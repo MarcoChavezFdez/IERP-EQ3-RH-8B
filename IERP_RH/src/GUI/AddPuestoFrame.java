@@ -4,19 +4,23 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import conexion.ConexionBD;
 import conexion.PuestoDAO;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import modelo.RH_Puesto;
+
 /**
  *
  * @author Mino
  */
 public class AddPuestoFrame extends javax.swing.JFrame {
- ConexionBD conexion;
+
+    ConexionBD conexion;
     RH_Puesto puesto;
     Boolean bandera;
+
     /**
      * Creates new form AddPuestos
      */
@@ -27,7 +31,8 @@ public class AddPuestoFrame extends javax.swing.JFrame {
         btn_Realizar.setText("");
         this.bandera = false;
     }
-public AddPuestoFrame(ConexionBD conexion, RH_Puesto puesto) {
+
+    public AddPuestoFrame(ConexionBD conexion, RH_Puesto puesto) {
         initComponents();
         this.puesto = puesto;
         this.conexion = conexion;
@@ -39,6 +44,7 @@ public AddPuestoFrame(ConexionBD conexion, RH_Puesto puesto) {
         spSalMax.setValue(this.puesto.getSalarioMaximo());
         this.bandera = true;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,7 +97,7 @@ public AddPuestoFrame(ConexionBD conexion, RH_Puesto puesto) {
         jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, -1, -1));
 
         jLabel2.setText("Nombre");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, -1, -1));
 
         txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,12 +112,13 @@ public AddPuestoFrame(ConexionBD conexion, RH_Puesto puesto) {
         jPanel1.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, 111, -1));
 
         jLabel3.setText("Salario Minimo");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 80, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 100, -1));
         jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, 180, 40));
 
         jLabel1.setText("Salario Maximo");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 320, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, 100, -1));
 
+        spSalMin.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 0.01f));
         spSalMin.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 spSalMinMouseClicked(evt);
@@ -124,6 +131,7 @@ public AddPuestoFrame(ConexionBD conexion, RH_Puesto puesto) {
         });
         jPanel1.add(spSalMin, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 270, 110, -1));
 
+        spSalMax.setModel(new javax.swing.SpinnerNumberModel(0.0f, 0.0f, null, 0.01f));
         spSalMax.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 spSalMaxKeyReleased(evt);
@@ -154,40 +162,40 @@ public AddPuestoFrame(ConexionBD conexion, RH_Puesto puesto) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_RealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RealizarActionPerformed
-         int valueMin= (Integer) spSalMin.getValue();
-    int valueMax= (Integer) spSalMax.getValue();
-        if (valueMin<0 || valueMax<0) {
+        Float valueMin = (Float) spSalMin.getValue();
+        Float valueMax = (Float) spSalMax.getValue();
+        if (valueMin < 0 || valueMax < 0 || (valueMax<valueMin)) {
             JOptionPane.showMessageDialog(null, "Los valores introducidos no son validos");
-        } else if (valueMin>=0 || valueMax>=0){
-        RH_Puesto nPuesto = new RH_Puesto();
-        nPuesto.setNombre(txf_Nombre.getText().toUpperCase());
-        nPuesto.setSalarioMinimo(Float.parseFloat(spSalMin.getValue().toString()));
-        nPuesto.setSalarioMaximo(Float.parseFloat(spSalMax.getValue().toString()));
-        nPuesto.setEstatus("A");
-        PuestoDAO puestoDAO = new PuestoDAO(this.conexion);
-        try {
-            if (bandera) {
-                nPuesto.setIdPuesto(this.puesto.getIdPuesto());
-                if (puestoDAO.actualizarPuesto(nPuesto)) {
-                    JOptionPane.showMessageDialog(null, "Puesto Modificado con exito");
-                    PuestosFrame puestos = new PuestosFrame(this.conexion);
-                    this.dispose();
-                    puestos.setVisible(true);
-                    this.pack();
+        } else if ((valueMax>=valueMin)) {
+            RH_Puesto nPuesto = new RH_Puesto();
+            nPuesto.setNombre(txf_Nombre.getText().toUpperCase());
+            nPuesto.setSalarioMinimo(Float.parseFloat(spSalMin.getValue().toString()));
+            nPuesto.setSalarioMaximo(Float.parseFloat(spSalMax.getValue().toString()));
+            nPuesto.setEstatus("A");
+            PuestoDAO puestoDAO = new PuestoDAO(this.conexion);
+            try {
+                if (bandera) {
+                    nPuesto.setIdPuesto(this.puesto.getIdPuesto());
+                    if (puestoDAO.actualizarPuesto(nPuesto)) {
+                        JOptionPane.showMessageDialog(null, "Puesto Modificado con exito");
+                        PuestosFrame puestos = new PuestosFrame(this.conexion);
+                        this.dispose();
+                        puestos.setVisible(true);
+                        this.pack();
+                    }
+                } else {
+                    if (puestoDAO.insertarPuesto(nPuesto)) {
+                        JOptionPane.showMessageDialog(null, "Puesto Añadido con exito");
+                        PuestosFrame puestos = new PuestosFrame(this.conexion);
+                        this.dispose();
+                        puestos.setVisible(true);
+                        this.pack();
+                    }
                 }
-            } else {
-                if (puestoDAO.insertarPuesto(nPuesto)) {
-                    JOptionPane.showMessageDialog(null, "Puesto Añadido con exito");
-                    PuestosFrame puestos = new PuestosFrame(this.conexion);
-                    this.dispose();
-                    puestos.setVisible(true);
-                    this.pack();
-                }
-            }
 
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
-        }
+            } catch (HeadlessException e) {
+                JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+            }
         }
     }//GEN-LAST:event_btn_RealizarActionPerformed
 
@@ -208,20 +216,20 @@ public AddPuestoFrame(ConexionBD conexion, RH_Puesto puesto) {
 
     private void spSalMinKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spSalMinKeyReleased
         // TODO add your handling code here:
-       
+
     }//GEN-LAST:event_spSalMinKeyReleased
 
     private void spSalMaxKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_spSalMaxKeyReleased
         // TODO add your handling code here:
-      
+
     }//GEN-LAST:event_spSalMaxKeyReleased
 
     private void spSalMinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_spSalMinMouseClicked
         // TODO add your handling code here:
-         
+
     }//GEN-LAST:event_spSalMinMouseClicked
-public void verificarCampos() {
- 
+    public void verificarCampos() {
+
         if ("".equals(txf_Nombre.getText())) {
             btn_Realizar.setEnabled(false);
             lbl_Mensaje.setText("Debe llenar los campos");
@@ -231,6 +239,7 @@ public void verificarCampos() {
         }
 
     }
+
     /**
      * @param args the command line arguments
      */
@@ -262,7 +271,7 @@ public void verificarCampos() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-             
+
             }
         });
     }
