@@ -300,6 +300,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/PersonalPanel.png"))); // NOI18N
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, 410));
+        btn_Puestos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_PuestosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Puestos, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 290, -1, -1));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/EcoPanel.png"))); // NOI18N
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, 410));
@@ -371,10 +377,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_DepartamentosActionPerformed
 
     private void btn_PercepcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_PercepcionesActionPerformed
-       Percepciones percepcion = new Percepciones(this.conexion);
-       this.dispose();
-       percepcion.setVisible(true);
-       this.pack();
+        Percepciones percepcion = new Percepciones(this.conexion);
+        this.dispose();
+        percepcion.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_PercepcionesActionPerformed
 
     private void btn_AsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AsistenciasActionPerformed
@@ -408,6 +414,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void btn_FormasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_FormasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_FormasActionPerformed
+    private void btn_PuestosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_PuestosActionPerformed
+        PuestosFrame puesto = new PuestosFrame(this.conexion);
+        this.dispose();
+        puesto.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_PuestosActionPerformed
 
     /**
      * @param args the command line arguments

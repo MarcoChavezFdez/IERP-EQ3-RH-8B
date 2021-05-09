@@ -277,7 +277,9 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
     }
     private void btn_RealizaOperacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RealizaOperacionActionPerformed
         RH_Turno nTurno = new RH_Turno();
-        nTurno.setIdTurno(turno.getIdTurno());
+        if(!isNew){
+            nTurno.setIdTurno(turno.getIdTurno());
+        }
         nTurno.setNombre(txf_Nombre.getText().toUpperCase());
         nTurno.setHoraInicio(Time.valueOf(tmp_HoraInicio.getTime()));
         nTurno.setHoraFin(Time.valueOf(tmp_HoraFin.getTime()));

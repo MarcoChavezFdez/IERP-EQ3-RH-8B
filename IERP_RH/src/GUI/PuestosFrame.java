@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import conexion.ConexionBD;
 import conexion.PuestoDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Puesto;
+
 /**
  *
  * @author Lalo
@@ -19,15 +21,16 @@ public class PuestosFrame extends javax.swing.JFrame {
     /**
      * Creates new form Puestos
      */
-     ConexionBD conexion;
+    ConexionBD conexion;
     int paginaActual;
     int paginaMaxima;
     boolean banderaBusqueda = false;
+
     public PuestosFrame(ConexionBD conexion) {
-       this.conexion = conexion;
+        this.conexion = conexion;
         this.paginaActual = 1;
         initComponents();
-            PuestoDAO puestos = new PuestoDAO(this.conexion);
+        PuestoDAO puestos = new PuestoDAO(this.conexion);
         this.paginaMaxima = puestos.consultaPaginas();
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
         ArrayList<RH_Puesto> lista = puestos.consultaPuestosVistaPaginada(paginaActual);
@@ -185,7 +188,7 @@ public class PuestosFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-       AddPuestoFrame addPuesto = new AddPuestoFrame(this.conexion);
+        AddPuestoFrame addPuesto = new AddPuestoFrame(this.conexion);
         this.dispose();
         addPuesto.setVisible(true);
         this.pack();
@@ -206,7 +209,7 @@ public class PuestosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_DatosMouseClicked
 
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
-         btn_Modificar.setEnabled(true);
+        btn_Modificar.setEnabled(true);
         btn_Eliminar.setEnabled(true);
     }//GEN-LAST:event_tbl_DatosMousePressed
 
@@ -222,7 +225,7 @@ public class PuestosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txf_BusquedaActionPerformed
 
     private void txf_BusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_BusquedaKeyReleased
-         if ("".equals(txf_Busqueda.getText())) {
+        if ("".equals(txf_Busqueda.getText())) {
             this.banderaBusqueda = false;
             this.btn_Anterior.setEnabled(false);
             this.btn_Siguiente.setEnabled(true);
@@ -302,7 +305,7 @@ public class PuestosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_SiguienteActionPerformed
 
     private void btn_AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnteriorActionPerformed
-       if ((paginaActual - 1) >= 1) {
+        if ((paginaActual - 1) >= 1) {
             btn_Siguiente.setEnabled(true);
             paginaActual--;
             if (paginaActual == 1) {
@@ -322,8 +325,8 @@ public class PuestosFrame extends javax.swing.JFrame {
             llenarTabla(lista);
         }
     }//GEN-LAST:event_btn_AnteriorActionPerformed
- private void llenarTabla(ArrayList<RH_Puesto> lista) {
-        String[] encabezado = {"IdPuesto", "Nombre", "Salario Minimo", "Salario Maximo" };
+    private void llenarTabla(ArrayList<RH_Puesto> lista) {
+        String[] encabezado = {"IdPuesto", "Nombre", "Salario Minimo", "Salario Maximo"};
         Object[][] datos = new Object[lista.size()][4];
         int ren = 0;
         for (RH_Puesto s : lista) {
@@ -343,6 +346,7 @@ public class PuestosFrame extends javax.swing.JFrame {
 
         tbl_Datos.setModel(m);
     }
+
     /**
      * @param args the command line arguments
      */
@@ -374,7 +378,7 @@ public class PuestosFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }

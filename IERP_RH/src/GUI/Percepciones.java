@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Percepcion;
+
 public class Percepciones extends javax.swing.JFrame {
 
     /**
@@ -24,11 +25,16 @@ public class Percepciones extends javax.swing.JFrame {
     int paginaActual;
     int paginaMaxima;
     boolean banderaBusqueda = false;
+
     public Percepciones(ConexionBD cn) {
         initComponents();
         conexion = cn;
         PercepcionDAO percepcion = new PercepcionDAO(this.conexion);
-        ArrayList<RH_Percepcion> lista = percepcion.consultaPercepcionesVista();
+        this.paginaMaxima = percepcion.consultaPaginas();
+        this.paginaActual = 1;
+        ArrayList<RH_Percepcion> lista = percepcion.consultaPercepcionesVistaPaginada(this.paginaActual);
+        lbl_PaginaActual.setText(String.valueOf(paginaActual));
+        lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
         llenarTabla(lista);
     }
 
@@ -205,9 +211,39 @@ public class Percepciones extends javax.swing.JFrame {
     }//GEN-LAST:event_txf_BusquedaActionPerformed
 
     private void txf_BusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_BusquedaKeyReleased
-        PercepcionDAO deduccion = new PercepcionDAO(this.conexion);
-        ArrayList<RH_Percepcion> lista = deduccion.consultaPercepcionesNombreVista(txf_Busqueda.getText());
-        llenarTabla(lista);
+        if ("".equals(txf_Busqueda.getText())) {
+            this.banderaBusqueda = false;
+            this.btn_Anterior.setEnabled(false);
+            this.btn_Siguiente.setEnabled(true);
+            PercepcionDAO percepciones = new PercepcionDAO(this.conexion);
+            this.paginaActual = 1;
+            ArrayList<RH_Percepcion> lista = percepciones.consultaPercepcionesVistaPaginada(this.paginaActual);
+            this.paginaMaxima = percepciones.consultaPaginas();
+            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
+            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+            llenarTabla(lista);
+        } else {
+            this.banderaBusqueda = true;
+            PercepcionDAO estados = new PercepcionDAO(this.conexion);
+            this.paginaActual = 1;
+            ArrayList<RH_Percepcion> lista = estados.consultaPercepcionesNombreVistaPaginada(txf_Busqueda.getText(), this.paginaActual);
+            this.paginaMaxima = estados.consultaPaginasNombre(txf_Busqueda.getText());
+            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
+            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+            if (paginaMaxima == 0) {
+                lbl_PaginaActual.setText("0");
+                btn_Siguiente.setEnabled(false);
+                btn_Anterior.setEnabled(false);
+            } else {
+                btn_Anterior.setEnabled(false);
+                if (paginaMaxima > 1) {
+                    btn_Siguiente.setEnabled(true);
+                } else {
+                    btn_Siguiente.setEnabled(false);
+                }
+            }
+            llenarTabla(lista);
+        }
     }//GEN-LAST:event_txf_BusquedaKeyReleased
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
@@ -235,7 +271,7 @@ public class Percepciones extends javax.swing.JFrame {
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
         Integer idPercepcion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
         String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Percepcion '" + nombre+"' ?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Percepcion '" + nombre + "' ?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
         PercepcionDAO DAO = new PercepcionDAO(this.conexion);
         RH_Percepcion percepcion = new RH_Percepcion();
         percepcion = DAO.consultaPercepcionId(idPercepcion);
@@ -289,7 +325,7 @@ public class Percepciones extends javax.swing.JFrame {
             if (this.banderaBusqueda) {
                 lista = DAO.consultaPercepcionesNombreVista(txf_Busqueda.getText());
             } else {
-                lista = DAO.consultaPercepcionesNombreVista(paginaActual);
+                lista = DAO.consultaPercepcionesVistaPaginada(paginaActual);
             }
 
             llenarTabla(lista);
@@ -299,8 +335,7 @@ public class Percepciones extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
-   private void llenarTabla(ArrayList<RH_Percepcion> lista) {
+    private void llenarTabla(ArrayList<RH_Percepcion> lista) {
         String[] encabezado = {"IdPercepcion", "Nombre", "Descripcion", "DiasPagar"};
         Object[][] datos = new Object[lista.size()][4];
         int ren = 0;

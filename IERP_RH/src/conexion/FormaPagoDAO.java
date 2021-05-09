@@ -11,30 +11,29 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.RH_Puesto;
+
+import modelo.RH_FormaPago;
 
 /**
  *
  * @author Marco Chavez
  */
-public class PuestoDAO {
+public class FormaPagoDAO {
 
     private ConexionBD conexion;
 
-    public PuestoDAO(ConexionBD conexion) {
+    public FormaPagoDAO(ConexionBD conexion) {
         this.conexion = conexion;
 
     }
 
-    public boolean insertarPuesto(RH_Puesto puesto) {
-        String sql = "insert into RH.Puestos values(?,?,?,?)";
+    public boolean insertarFormaPago(RH_FormaPago formaPago) {
+        String sql = "insert into RH.FormasPago values(?,?)";
         boolean ban = false;
         try {
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
-            st.setString(1, puesto.getNombre());
-            st.setFloat(2, puesto.getSalarioMinimo());
-            st.setFloat(3, puesto.getSalarioMaximo());
-            st.setString(4, "A");
+            st.setString(1, formaPago.getNombre());
+            st.setString(2, "A");
             st.execute();
             ban = true;
         } catch (SQLException e) {
@@ -43,19 +42,18 @@ public class PuestoDAO {
         return ban;
     }
 
-    public ArrayList<RH_Puesto> consultaPuestosVista() {
-        String sql = "select * from vPuestos "
-                + "order by idPuesto ";
-        ArrayList<RH_Puesto> lista = new ArrayList<>();
+    public ArrayList<RH_FormaPago> consultaFormasPagoVista() {
+        String sql = "select * from vFormasPago "
+                + "order by idFormaPago ";
+
+        ArrayList<RH_FormaPago> lista = new ArrayList<>();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                RH_Puesto e = new RH_Puesto();
-                e.setIdPuesto(rs.getInt("idPuesto"));
+                RH_FormaPago e = new RH_FormaPago();
+                e.setIdFormaPago(rs.getInt("idFormaPago"));
                 e.setNombre(rs.getString("nombre"));
-                e.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                e.setSalarioMaximo(rs.getFloat("salarioMaximo"));
                 lista.add(e);
             }
             rs.close();
@@ -66,22 +64,20 @@ public class PuestoDAO {
         return lista;
     }
 
-    public ArrayList<RH_Puesto> consultaPuestosVistaPaginada(Integer pagina) {
-        String sql = "select * from vPuestos "
-                + "order by idPuesto "
+    public ArrayList<RH_FormaPago> consultaFormasPagoVistaPaginada(Integer pagina) {
+        String sql = "select * from vFormasPago "
+                + "order by idFormaPago "
                 + "offset " + (pagina - 1) * 3 + " rows "
                 + "fetch next 3 rows only ";
 
-        ArrayList<RH_Puesto> lista = new ArrayList<>();
+        ArrayList<RH_FormaPago> lista = new ArrayList<>();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                RH_Puesto e = new RH_Puesto();
-                e.setIdPuesto(rs.getInt("idPuesto"));
+                RH_FormaPago e = new RH_FormaPago();
+                e.setIdFormaPago(rs.getInt("idFormaPago"));
                 e.setNombre(rs.getString("nombre"));
-                e.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                e.setSalarioMaximo(rs.getFloat("salarioMaximo"));
                 lista.add(e);
             }
             rs.close();
@@ -93,7 +89,7 @@ public class PuestoDAO {
     }
 
     public Integer consultaPaginas() {
-        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as Puestos FROM vPuestos)/CAST(" + 3 + " AS float)))as paginasMaximas";
+        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as FormasPago FROM vFormasPago)/CAST(" + 3 + " AS float)))as paginasMaximas";
         Integer r = null;
         try {
             Statement st = conexion.getConexion().createStatement();
@@ -110,7 +106,7 @@ public class PuestoDAO {
     }
 
     public Integer consultaPaginasNombre(String nombre) {
-        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as Puestos FROM vPuestos where Nombre like CONCAT( '%','" + nombre + "','%'))/CAST(" + 3 + " AS float)))as paginasMaximas";
+        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as FormasPago FROM vFormasPago where Nombre like CONCAT( '%','" + nombre + "','%'))/CAST(" + 3 + " AS float)))as paginasMaximas";
         Integer r = null;
         try {
             Statement st = conexion.getConexion().createStatement();
@@ -126,24 +122,22 @@ public class PuestoDAO {
         return r;
     }
 
-    public ArrayList<RH_Puesto> consultaPuestosNombreVistaPaginada(String nombre, Integer pagina) {
+    public ArrayList<RH_FormaPago> consultaFormasPagoNombreVistaPaginada(String nombre, Integer pagina) {
         String sql = "select * "
-                + "from vPuestos "
+                + "from vFormasPago "
                 + "where nombre like CONCAT( '%','" + nombre + "','%') "
-                + "order by idPuesto "
+                + "order by idFormaPago "
                 + "offset " + (pagina - 1) * 3 + " rows "
                 + "fetch next 3 rows only ";
 
-        ArrayList<RH_Puesto> lista = new ArrayList<>();
+        ArrayList<RH_FormaPago> lista = new ArrayList<>();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                RH_Puesto e = new RH_Puesto();
-                e.setIdPuesto(rs.getInt("idPuesto"));
+                RH_FormaPago e = new RH_FormaPago();
+                e.setIdFormaPago(rs.getInt("idFormaPago"));
                 e.setNombre(rs.getString("nombre"));
-                e.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                e.setSalarioMaximo(rs.getFloat("salarioMaximo"));
                 lista.add(e);
             }
             rs.close();
@@ -154,20 +148,18 @@ public class PuestoDAO {
         return lista;
     }
 
-    public ArrayList<RH_Puesto> consultaPuestosNombreVista(String nombre) {
+    public ArrayList<RH_FormaPago> consultaFormasPagoNombreVista(String nombre) {
         String sql = "select * "
-                + "from RH.Puestos "
+                + "from RH.FormasPago "
                 + "where Nombre like CONCAT( '%','" + nombre + "','%')";
-        ArrayList<RH_Puesto> lista = new ArrayList<>();
+        ArrayList<RH_FormaPago> lista = new ArrayList<>();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                RH_Puesto e = new RH_Puesto();
-                e.setIdPuesto(rs.getInt("idPuesto"));
+                RH_FormaPago e = new RH_FormaPago();
+                e.setIdFormaPago(rs.getInt("idFormaPago"));
                 e.setNombre(rs.getString("nombre"));
-                e.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                e.setSalarioMaximo(rs.getFloat("salarioMaximo"));
                 lista.add(e);
             }
             rs.close();
@@ -178,60 +170,58 @@ public class PuestoDAO {
         return lista;
     }
 
-    public RH_Puesto consultaPuestoNombre(String nombre) {
+    public RH_FormaPago consultaFormaPagoNombre(String nombre) {
         String sql = "select * "
-                + "from RH.Puestos "
+                + "from RH.FormasPago "
                 + "where Nombre like CONCAT( '%','" + nombre + "','%')";
-        RH_Puesto puesto = new RH_Puesto();
+        RH_FormaPago formaPago = new RH_FormaPago();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                puesto.setIdPuesto(rs.getInt("idPuesto"));
-                puesto.setNombre(rs.getString("nombre"));
-                puesto.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                puesto.setSalarioMaximo(rs.getFloat("salarioMaximo"));
+                formaPago.setIdFormaPago(rs.getInt("idFormaPago"));
+                formaPago.setNombre(rs.getString("nombre"));
+                formaPago.setEstatus(rs.getString("estatus"));
+
             }
             rs.close();
             st.close();
-        } catch (SQLException er) {
-            JOptionPane.showMessageDialog(null, "Error:" + er.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
         }
-        return puesto;
+        return formaPago;
+
     }
 
-    public RH_Puesto consultaPuestoId(int idPuesto) {
+    public RH_FormaPago consultaFormaPagoId(int idFormaPago) {
         String sql = (" select * "
-                + " from RH.Puestos "
-                + " where idPuesto=" + idPuesto);
-        RH_Puesto puesto = new RH_Puesto();
+                + " from RH.FormasPago "
+                + " where idFormaPago=" + idFormaPago);
+        RH_FormaPago formaPago = new RH_FormaPago();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             while (rs.next()) {
-                puesto.setIdPuesto(rs.getInt("idPuesto"));
-                puesto.setNombre(rs.getString("nombre"));
-                puesto.setSalarioMinimo(rs.getFloat("salarioMinimo"));
-                puesto.setSalarioMaximo(rs.getFloat("salarioMaximo"));
+                formaPago.setIdFormaPago(rs.getInt("idFormaPago"));
+                formaPago.setNombre(rs.getString("nombre"));
             }
             rs.close();
             st.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
         }
-        return puesto;
+        return formaPago;
     }
 
-    public boolean actualizarPuesto(RH_Puesto puesto) {
-        String sql = "update RH.Puestos set nombre=?, salarioMinimo=?, salarioMaximo=? "
-                + " where idPuesto=?";
+    public boolean actualizarFormaPago(RH_FormaPago formaPago) {
+        String sql = "update RH.FormasPago set nombre=?, estatus=? "
+                + " where idFormaPago=?";
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
-            st.setInt(4, puesto.getIdPuesto());
-            st.setString(1, puesto.getNombre());
-            st.setFloat(2, puesto.getSalarioMinimo());
-            st.setFloat(3, puesto.getSalarioMaximo());
+            st.setString(1, formaPago.getNombre());
+            st.setString(2, formaPago.getEstatus());
+            st.setInt(3, formaPago.getIdFormaPago());
             st.execute();
             st.close();
             ban = true;
@@ -242,27 +232,26 @@ public class PuestoDAO {
         return ban;
     }
 
-    public boolean eliminacionLogica(RH_Puesto p) {
-        String sql = "update RH.Puestos set estatus=? "
-                + " where idPuesto=?";
+    public boolean eliminacionLogica(RH_FormaPago p) {
+        String sql = "update RH.FormasPago set estatus=? "
+                + " where idFormaPago=?";
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
-            st.setInt(2, p.getIdPuesto());
+            st.setInt(2, p.getIdFormaPago());
             st.setString(1, "I");
             st.execute();
             st.close();
             ban = true;
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
         }
         return ban;
     }
 
-    public boolean eliminacionPuesto(Integer p) {
-        String sql = "delete from RH.Puestos "
-                + "where idPuesto=" + p;
+    public boolean eliminacionFormaPago(Integer p) {
+        String sql = "delete from RH.FormasPago "
+                + "where idFormaPago=" + p;
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
@@ -283,5 +272,4 @@ public class PuestoDAO {
     public void setConexion(ConexionBD conexion) {
         this.conexion = conexion;
     }
-
 }

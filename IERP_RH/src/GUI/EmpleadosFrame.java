@@ -6,6 +6,11 @@
 package GUI;
 
 import conexion.ConexionBD;
+import conexion.EmpleadoDAO;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.RH_Empleado;
 
 /**
  *
@@ -17,10 +22,20 @@ public class EmpleadosFrame extends javax.swing.JFrame {
      * Creates new form EmpleadosFrame
      */
     ConexionBD conexion;
+    int paginaActual;
+    int paginaMaxima;
+    boolean banderaBusqueda = false;
 
     public EmpleadosFrame(ConexionBD conexion) {
         initComponents();
         this.conexion = conexion;
+        this.paginaActual = 1;
+        EmpleadoDAO empleados = new EmpleadoDAO(this.conexion);
+        this.paginaMaxima = empleados.consultaPaginas();
+        lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
+        lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+        ArrayList<RH_Empleado> lista = empleados.consultaEmpleadosVistaPaginada(paginaActual);
+        llenarTabla(lista);
     }
 
     /**
@@ -33,40 +48,57 @@ public class EmpleadosFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         evaluatorByte1 = new org.jdesktop.core.animation.timing.evaluators.EvaluatorByte();
-        jPanel1 = new javax.swing.JPanel();
+        btn_Anterior = new javax.swing.JPanel();
         btn_Eliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_Datos = new javax.swing.JTable();
         btn_AddEmpleado = new javax.swing.JButton();
         btn_Modificar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         btn_Atras = new javax.swing.JButton();
+        btn_Siguiente = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        lbl_PaginaActual = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lbl_PaginaMaxima = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(241, 151, 89));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        btn_Anterior.setBackground(new java.awt.Color(241, 151, 89));
+        btn_Anterior.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
         btn_Eliminar.setBorderPainted(false);
         btn_Eliminar.setContentAreaFilled(false);
-        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 380, -1, -1));
+        btn_Eliminar.setEnabled(false);
+        btn_Eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EliminarActionPerformed(evt);
+            }
+        });
+        btn_Anterior.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 30, -1, -1));
 
-        jTable1.setBackground(new java.awt.Color(153, 255, 153));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_Datos.setBackground(new java.awt.Color(153, 255, 153));
+        tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "IdEmpleado", "Nombre(s)", "Apellido Paterno", "Apellido Materno", "Sexo", "Fecha Nacimiento", "CURP", "Estado Civil", "Fecha Contratacion", "Salario Diario", "NSS", "Dias Vacaciones", "Dias Permisos", "Direccion", "Colonia", "Codigo Postal", "Escolaridad", "Especialidad", "Email", "Tipo", "Departamento", "Puesto", "Ciudad", "Sucursal", "Turno"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbl_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbl_DatosMousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbl_Datos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, -1, -1));
+        btn_Anterior.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 1830, -1));
 
         btn_AddEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
         btn_AddEmpleado.setBorderPainted(false);
@@ -76,16 +108,22 @@ public class EmpleadosFrame extends javax.swing.JFrame {
                 btn_AddEmpleadoActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_AddEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
+        btn_Anterior.add(btn_AddEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 30, -1, -1));
 
         btn_Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Modificar.png"))); // NOI18N
         btn_Modificar.setBorderPainted(false);
         btn_Modificar.setContentAreaFilled(false);
-        jPanel1.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
+        btn_Modificar.setEnabled(false);
+        btn_Modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ModificarActionPerformed(evt);
+            }
+        });
+        btn_Anterior.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 30, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel2.setText("Empleados");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, -1, 60));
+        btn_Anterior.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 30, -1, 60));
 
         btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
         btn_Atras.setBorderPainted(false);
@@ -95,17 +133,35 @@ public class EmpleadosFrame extends javax.swing.JFrame {
                 btn_AtrasActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        btn_Anterior.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        btn_Siguiente.setText("Siguiente");
+        btn_Anterior.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 570, -1, -1));
+
+        jButton2.setText("Anterior");
+        btn_Anterior.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 570, -1, -1));
+
+        lbl_PaginaActual.setText("1");
+        btn_Anterior.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 580, -1, -1));
+
+        jLabel3.setText("de");
+        btn_Anterior.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 580, -1, -1));
+
+        lbl_PaginaMaxima.setText("1");
+        btn_Anterior.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 580, -1, -1));
+
+        jButton1.setText("Documentacion Empleado");
+        btn_Anterior.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 50, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btn_Anterior, javax.swing.GroupLayout.DEFAULT_SIZE, 1874, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+            .addComponent(btn_Anterior, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
         );
 
         pack();
@@ -124,6 +180,46 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         pf.setVisible(true);
         this.pack();
     }//GEN-LAST:event_btn_AtrasActionPerformed
+
+    private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
+        btn_Modificar.setEnabled(true);
+        btn_Eliminar.setEnabled(true);
+    }//GEN-LAST:event_tbl_DatosMousePressed
+
+    private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
+        Integer idEmpleado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el empleado '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            RH_Empleado Empleado = new RH_Empleado();
+            EmpleadoDAO DAO = new EmpleadoDAO(this.conexion);
+            Empleado = DAO.consultaEmpleadoId(idEmpleado);
+            if (DAO.eliminacionLogica(Empleado)) {
+                JOptionPane.showMessageDialog(null, "Empleado Eliminado");
+                ArrayList<RH_Empleado> lista = DAO.consultaEmpleadosVistaPaginada(this.paginaActual);
+                llenarTabla(lista);
+                btn_Modificar.setEnabled(false);
+                btn_Eliminar.setEnabled(false);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+            }
+
+        }
+    }//GEN-LAST:event_btn_EliminarActionPerformed
+
+    private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
+        Integer idEmpleado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        RH_Empleado Empleado = new RH_Empleado();
+        EmpleadoDAO DAO = new EmpleadoDAO(this.conexion);
+        Empleado = DAO.consultaEmpleadoId(idEmpleado);
+        AddEmpleadoFrame modificar = new AddEmpleadoFrame(this.conexion, Empleado);
+        this.dispose();
+        modificar.setVisible(true);
+        this.pack();
+
+
+    }//GEN-LAST:event_btn_ModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,15 +251,64 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         /* Create and display the form */
     }
 
+    private void llenarTabla(ArrayList<RH_Empleado> lista) {
+        String[] encabezado = {"IdEmpleado", "Nombre", "Apellido Paterno", "Apellido Materno", "Sexo", "Fecha Nacimiento", "CURP", "estadoCivil", "Fecha Contratacion", "Salario Diario", "NSS", "Dias Vacaciones", "Dias Permiso", "Direccion", "Colonia", "Codigo Postal", "Escolaridad", "Especialidad", "Email", "Tipo", "Departamento", "Puesto", "Ciudad", "Sucursal", "Turno"};
+        Object[][] datos = new Object[lista.size()][26];
+        int ren = 0;
+        for (RH_Empleado s : lista) {
+            datos[ren][0] = s.getIdEmpleado();
+            datos[ren][1] = s.getNombre();
+            datos[ren][2] = s.getApellidoPaterno();
+            datos[ren][3] = s.getApellidoMaterno();
+            datos[ren][4] = s.getSexo();
+            datos[ren][5] = s.getFechaNacimiento();
+            datos[ren][6] = s.getCurp();
+            datos[ren][7] = s.getEstadoCivil();
+            datos[ren][8] = s.getFechaContratacion();
+            datos[ren][9] = s.getSalarioDiario();
+            datos[ren][10] = s.getNss();
+            datos[ren][11] = s.getDiasVacaciones();
+            datos[ren][12] = s.getDiasPermiso();
+            datos[ren][13] = s.getDireccion();
+            datos[ren][14] = s.getColonia();
+            datos[ren][15] = s.getCodigoPostal();
+            datos[ren][16] = s.getEscolaridad();
+            datos[ren][17] = s.getEspecialidad();
+            datos[ren][18] = s.getEmail();
+            datos[ren][19] = s.getTipo();
+            datos[ren][20] = s.getDepartamento().getNombre();
+            datos[ren][21] = s.getPuesto().getNombre();
+            datos[ren][22] = s.getCiudad().getNombre();
+            datos[ren][23] = s.getSucursal().getNombre();
+            datos[ren][24] = s.getTurno().getNombre();
+            ren++;
+        }
+        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false; //Disallow the editing of any cell
+            }
+
+        };
+
+        tbl_Datos.setModel(m);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_AddEmpleado;
+    private javax.swing.JPanel btn_Anterior;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
+    private javax.swing.JButton btn_Siguiente;
     private org.jdesktop.core.animation.timing.evaluators.EvaluatorByte evaluatorByte1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lbl_PaginaActual;
+    private javax.swing.JLabel lbl_PaginaMaxima;
+    private javax.swing.JTable tbl_Datos;
     // End of variables declaration//GEN-END:variables
 }
