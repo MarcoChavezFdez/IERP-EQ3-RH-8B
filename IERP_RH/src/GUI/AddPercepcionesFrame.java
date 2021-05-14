@@ -12,8 +12,6 @@ package GUI;
 import conexion.ConexionBD;
 import conexion.PercepcionDAO;
 import java.awt.HeadlessException;
-import java.sql.Time;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.RH_Percepcion;
 
@@ -32,7 +30,7 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
         this.bandera = false;
     }
 
-    public AddPercepcionesFrame(ConexionBD conexion, RH_Percepcion deduccion) {
+    public AddPercepcionesFrame(ConexionBD conexion, RH_Percepcion percepcion) {
         initComponents();
         jLabel1.setText("Realizar Operación");
         btn_Add.setText("");
@@ -42,7 +40,7 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
         TxDescripcion.setText(this.percepcion.getDescripcion());
         String h;
         h = String.valueOf(this.percepcion.getDiasPagar());
-        TxPorcentaje.setText(h);
+        TxDias.setText(h);
         this.bandera = true;
     }
 
@@ -64,7 +62,7 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
         txNombre = new javax.swing.JTextField();
         TxDescripcion = new javax.swing.JTextField();
         btn_Add = new javax.swing.JButton();
-        TxPorcentaje = new javax.swing.JTextField();
+        TxDias = new javax.swing.JTextField();
         lbl_MensajePorcentaje = new javax.swing.JLabel();
         lbl_Mensaje = new javax.swing.JLabel();
 
@@ -93,8 +91,8 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
         jLabel3.setText("Descripcion ");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, -1, -1));
 
-        jLabel5.setText("Dias");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, -1));
+        jLabel5.setText("Dias a pagar");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, -1, -1));
 
         txNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,18 +124,18 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, -1, -1));
 
-        TxPorcentaje.addKeyListener(new java.awt.event.KeyAdapter() {
+        TxDias.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                TxPorcentajeKeyPressed(evt);
+                TxDiasKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                TxPorcentajeKeyReleased(evt);
+                TxDiasKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                TxPorcentajeKeyTyped(evt);
+                TxDiasKeyTyped(evt);
             }
         });
-        jPanel1.add(TxPorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 160, -1));
+        jPanel1.add(TxDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 160, -1));
         jPanel1.add(lbl_MensajePorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, 150, 20));
         jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 80, 20));
 
@@ -180,15 +178,16 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
         RH_Percepcion nPercepcion = new RH_Percepcion();
         nPercepcion.setNombre(txNombre.getText().toUpperCase());
         nPercepcion.setDescripcion(TxDescripcion.getText().toUpperCase());
+        nPercepcion.setEstatus("A");
         try {
-            if (Integer.parseInt(TxPorcentaje.getText()) > 0) {
-                nPercepcion.setDiasPagar(Integer.parseInt(TxPorcentaje.getText()));
+            if (Integer.parseInt(TxDias.getText()) > 0) {
+                nPercepcion.setDiasPagar(Integer.parseInt(TxDias.getText()));
             } else {
-                TxPorcentaje.setText("0");
+                TxDias.setText("0");
             }
 
         } catch (NumberFormatException e) {
-            TxPorcentaje.setText("0");
+            TxDias.setText("0");
         }
 
         PercepcionDAO PercepcionDAO = new PercepcionDAO(this.conexion);
@@ -217,15 +216,15 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
         } // TODO add your handling code here:
     }//GEN-LAST:event_btn_AddActionPerformed
 
-    private void TxPorcentajeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyPressed
+    private void TxDiasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxDiasKeyPressed
 
-    }//GEN-LAST:event_TxPorcentajeKeyPressed
+    }//GEN-LAST:event_TxDiasKeyPressed
 
-    private void TxPorcentajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyReleased
+    private void TxDiasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxDiasKeyReleased
         try {
-            if (!(Float.parseFloat(TxPorcentaje.getText()) < 100.0f && Float.parseFloat(TxPorcentaje.getText()) > 0)) {
+            if (!(Float.parseFloat(TxDias.getText()) < 100.0f && Float.parseFloat(TxDias.getText()) > 0)) {
                 lbl_MensajePorcentaje.setText("Rango no valido");
-                TxPorcentaje.setText("0");
+                TxDias.setText("0");
                 btn_Add.setEnabled(false);
             } else {
                 lbl_MensajePorcentaje.setText("");
@@ -234,20 +233,20 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
             }
         } catch (NumberFormatException e) {
             lbl_MensajePorcentaje.setText("Rango no valido");
-            TxPorcentaje.setText("");
+            TxDias.setText("");
             btn_Add.setEnabled(false);
         }
-    }//GEN-LAST:event_TxPorcentajeKeyReleased
+    }//GEN-LAST:event_TxDiasKeyReleased
 
-    private void TxPorcentajeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyTyped
+    private void TxDiasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxDiasKeyTyped
 
-    }//GEN-LAST:event_TxPorcentajeKeyTyped
+    }//GEN-LAST:event_TxDiasKeyTyped
 
     /**
      * @param args the command line arguments
      */
     public void verificarCampos() {
-        if ("".equals(txNombre.getText()) || "".equals(TxDescripcion.getText()) || "".equals(TxPorcentaje.getText())) {
+        if ("".equals(txNombre.getText()) || "".equals(TxDescripcion.getText()) || "".equals(TxDias.getText())) {
             btn_Add.setEnabled(false);
             lbl_Mensaje.setText("Debe llenar los campos");
         } else {
@@ -258,7 +257,7 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField TxDescripcion;
-    private javax.swing.JTextField TxPorcentaje;
+    private javax.swing.JTextField TxDias;
     private javax.swing.JButton btn_Add;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

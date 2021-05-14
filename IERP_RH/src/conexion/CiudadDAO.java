@@ -45,7 +45,7 @@ public class CiudadDAO {
                 RH_Ciudad c = new RH_Ciudad();
                 c.setIdCiudad(rs.getInt("idCiudad"));
                 c.setNombre(rs.getString("nombre"));
-                c.setEstado(new RH_Estado(rs.getInt("idEstado"),this.conexion));
+                c.setEstado(new RH_Estado(rs.getInt("idEstado"), this.conexion));
                 lista.add(c);
             }
             rs.close();
@@ -68,7 +68,30 @@ public class CiudadDAO {
                 RH_Ciudad c = new RH_Ciudad();
                 c.setIdCiudad(rs.getInt("idCiudad"));
                 c.setNombre(rs.getString("nombre"));
-                c.setEstado(new RH_Estado(rs.getInt("idEstado"),this.conexion));
+                c.setEstado(new RH_Estado(rs.getInt("idEstado"), this.conexion));
+                lista.add(c);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return lista;
+    }
+
+    public ArrayList<RH_Ciudad> consultarCiudadesEstadoVista(Integer IdEstado) {
+        String sql = "select * "
+                + "from vCiudades "
+                + "where idEstado=" + IdEstado;
+        ArrayList<RH_Ciudad> lista = new ArrayList<>();
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                RH_Ciudad c = new RH_Ciudad();
+                c.setIdCiudad(rs.getInt("idCiudad"));
+                c.setNombre(rs.getString("nombre"));
+                c.setEstado(new RH_Estado(rs.getInt("idEstado"), this.conexion));
                 lista.add(c);
             }
             rs.close();
@@ -92,7 +115,7 @@ public class CiudadDAO {
                 RH_Ciudad ciudad = new RH_Ciudad();
                 ciudad.setIdCiudad(rs.getInt("idCiudad"));
                 ciudad.setNombre(rs.getString("nombre"));
-                ciudad.setEstado(new RH_Estado(rs.getInt("idEstado"),this.conexion));
+                ciudad.setEstado(new RH_Estado(rs.getInt("idEstado"), this.conexion));
                 rs.close();
                 st.close();
                 return ciudad;
@@ -150,6 +173,7 @@ public class CiudadDAO {
 //        return estado;
 //    }
 //
+
     public boolean actualizarCiudad(RH_Ciudad ciudad) {
         String sql = "update RH.Ciudades set nombre=?, idEstado=? "
                 + " where idCiudad=?";

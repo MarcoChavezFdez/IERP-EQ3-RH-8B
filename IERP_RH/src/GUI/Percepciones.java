@@ -15,17 +15,26 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Percepcion;
+
 public class Percepciones extends javax.swing.JFrame {
 
     /**
      * Creates new form Percepciones
      */
     ConexionBD conexion;
+    int paginaActual;
+    int paginaMaxima;
+    boolean banderaBusqueda = false;
+
     public Percepciones(ConexionBD cn) {
         initComponents();
         conexion = cn;
         PercepcionDAO percepcion = new PercepcionDAO(this.conexion);
-        ArrayList<RH_Percepcion> lista = percepcion.consultaPercepcionesVista();
+        this.paginaMaxima = percepcion.consultaPaginas();
+        this.paginaActual = 1;
+        ArrayList<RH_Percepcion> lista = percepcion.consultaPercepcionesVistaPaginada(this.paginaActual);
+        lbl_PaginaActual.setText(String.valueOf(paginaActual));
+        lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
         llenarTabla(lista);
     }
 
@@ -48,6 +57,12 @@ public class Percepciones extends javax.swing.JFrame {
         tbl_Datos = new javax.swing.JTable();
         btn_Eliminar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btn_Anterior = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lbl_PaginaActual = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_PaginaMaxima = new javax.swing.JLabel();
+        btn_Siguiente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Percepciones");
@@ -121,7 +136,7 @@ public class Percepciones extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_Datos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 390, 350));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 390, 350));
 
         btn_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
         btn_Eliminar.setToolTipText("");
@@ -139,17 +154,46 @@ public class Percepciones extends javax.swing.JFrame {
         jLabel2.setText("Percepciones");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, 40));
 
+        btn_Anterior.setText("Anterior");
+        btn_Anterior.setEnabled(false);
+        btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AnteriorActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, -1, -1));
+
+        jLabel3.setText("Página");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, -1, -1));
+
+        lbl_PaginaActual.setText("1");
+        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, 10, -1));
+
+        jLabel4.setText("de");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 540, -1, -1));
+
+        lbl_PaginaMaxima.setText("1");
+        jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 540, -1, -1));
+
+        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SiguienteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 530, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -167,9 +211,39 @@ public class Percepciones extends javax.swing.JFrame {
     }//GEN-LAST:event_txf_BusquedaActionPerformed
 
     private void txf_BusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_BusquedaKeyReleased
-        PercepcionDAO deduccion = new PercepcionDAO(this.conexion);
-        ArrayList<RH_Percepcion> lista = deduccion.consultaPercepcionesNombreVista(txf_Busqueda.getText());
-        llenarTabla(lista);
+        if ("".equals(txf_Busqueda.getText())) {
+            this.banderaBusqueda = false;
+            this.btn_Anterior.setEnabled(false);
+            this.btn_Siguiente.setEnabled(true);
+            PercepcionDAO percepciones = new PercepcionDAO(this.conexion);
+            this.paginaActual = 1;
+            ArrayList<RH_Percepcion> lista = percepciones.consultaPercepcionesVistaPaginada(this.paginaActual);
+            this.paginaMaxima = percepciones.consultaPaginas();
+            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
+            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+            llenarTabla(lista);
+        } else {
+            this.banderaBusqueda = true;
+            PercepcionDAO estados = new PercepcionDAO(this.conexion);
+            this.paginaActual = 1;
+            ArrayList<RH_Percepcion> lista = estados.consultaPercepcionesNombreVistaPaginada(txf_Busqueda.getText(), this.paginaActual);
+            this.paginaMaxima = estados.consultaPaginasNombre(txf_Busqueda.getText());
+            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
+            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+            if (paginaMaxima == 0) {
+                lbl_PaginaActual.setText("0");
+                btn_Siguiente.setEnabled(false);
+                btn_Anterior.setEnabled(false);
+            } else {
+                btn_Anterior.setEnabled(false);
+                if (paginaMaxima > 1) {
+                    btn_Siguiente.setEnabled(true);
+                } else {
+                    btn_Siguiente.setEnabled(false);
+                }
+            }
+            llenarTabla(lista);
+        }
     }//GEN-LAST:event_txf_BusquedaKeyReleased
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
@@ -197,7 +271,7 @@ public class Percepciones extends javax.swing.JFrame {
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
         Integer idPercepcion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
         String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Percepcion '" + nombre+"' ?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea ELIMINAR la Percepcion '" + nombre + "' ?", "Confirmar eliminacion", JOptionPane.YES_NO_OPTION);
         PercepcionDAO DAO = new PercepcionDAO(this.conexion);
         RH_Percepcion percepcion = new RH_Percepcion();
         percepcion = DAO.consultaPercepcionId(idPercepcion);
@@ -214,11 +288,54 @@ public class Percepciones extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_EliminarActionPerformed
 
+    private void btn_AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnteriorActionPerformed
+        if ((paginaActual - 1) >= 1) {
+            btn_Siguiente.setEnabled(true);
+            paginaActual--;
+            if (paginaActual == 1) {
+                this.btn_Anterior.setEnabled(false);
+            } else {
+                this.btn_Anterior.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            PercepcionDAO DAO = new PercepcionDAO(this.conexion);
+            ArrayList<RH_Percepcion> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaPercepcionesNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+            } else {
+                lista = DAO.consultaPercepcionesVistaPaginada(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_AnteriorActionPerformed
+
+    private void btn_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SiguienteActionPerformed
+        if ((paginaActual + 1) <= paginaMaxima) {
+            btn_Anterior.setEnabled(true);
+            paginaActual++;
+            if (paginaActual == paginaMaxima) {
+                this.btn_Siguiente.setEnabled(false);
+            } else {
+                this.btn_Siguiente.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            PercepcionDAO DAO = new PercepcionDAO(this.conexion);
+            ArrayList<RH_Percepcion> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaPercepcionesNombreVista(txf_Busqueda.getText());
+            } else {
+                lista = DAO.consultaPercepcionesVistaPaginada(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_SiguienteActionPerformed
+
     /**
      * @param args the command line arguments
      */
-
-   private void llenarTabla(ArrayList<RH_Percepcion> lista) {
+    private void llenarTabla(ArrayList<RH_Percepcion> lista) {
         String[] encabezado = {"IdPercepcion", "Nombre", "Descripcion", "DiasPagar"};
         Object[][] datos = new Object[lista.size()][4];
         int ren = 0;
@@ -241,13 +358,19 @@ public class Percepciones extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Add;
+    private javax.swing.JButton btn_Anterior;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
+    private javax.swing.JButton btn_Siguiente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_PaginaActual;
+    private javax.swing.JLabel lbl_PaginaMaxima;
     private javax.swing.JTable tbl_Datos;
     private javax.swing.JTextField txf_Busqueda;
     // End of variables declaration//GEN-END:variables
