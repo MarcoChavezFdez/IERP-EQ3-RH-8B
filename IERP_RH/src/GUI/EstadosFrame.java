@@ -27,10 +27,11 @@ public class EstadosFrame extends javax.swing.JFrame {
     boolean banderaBusqueda = false;
 
     public EstadosFrame(ConexionBD conexion) {
-        this.conexion = conexion;
-        this.paginaActual = 1;
         initComponents();
+        this.conexion = conexion;
+
         EstadoDAO estados = new EstadoDAO(this.conexion);
+        this.paginaActual = 1;
         this.paginaMaxima = estados.consultaPaginas();
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
         ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
@@ -278,9 +279,22 @@ public class EstadosFrame extends javax.swing.JFrame {
             if (DAO.eliminacionLogica(estado)) {
                 JOptionPane.showMessageDialog(null, "Estado Eliminado");
                 EstadoDAO estados = new EstadoDAO(this.conexion);
-                ArrayList<RH_Estado> lista = estados.consultaEstadosVista();
+                this.paginaActual = 1;
+                this.paginaMaxima = estados.consultaPaginas();
+                lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+                lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
+                ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
                 llenarTabla(lista);
-
+                txf_Busqueda.setText("");
+                banderaBusqueda = false;
+                btn_Anterior.setEnabled(false);
+                if ((paginaActual + 1) <= paginaMaxima) {
+                    btn_Siguiente.setEnabled(true);
+                }
+                else{
+                    btn_Siguiente.setEnabled(false);
+                }
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
             }

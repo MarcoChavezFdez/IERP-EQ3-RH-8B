@@ -61,6 +61,7 @@
         </Component>
         <Component class="javax.swing.JPasswordField" name="txPPassw">
           <Properties>
+            <Property name="text" type="java.lang.String" value="Hola.123"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>

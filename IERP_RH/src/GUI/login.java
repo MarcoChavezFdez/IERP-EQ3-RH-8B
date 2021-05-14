@@ -55,6 +55,7 @@ public class login extends javax.swing.JFrame {
         });
         jPanel1.add(txfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 260, 50));
 
+        txPPassw.setText("Hola.123");
         txPPassw.setToolTipText("");
         txPPassw.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
