@@ -74,6 +74,33 @@ public class SucursalesDAO {
         return lista;
     }
 
+    public ArrayList<Compras_Sucursal> consultaSucursalesVistaCiudad(Integer idCiudad) {
+        String sql = "select * from vSucursales "
+                + " where idCiudad="+idCiudad;
+        
+        ArrayList<Compras_Sucursal> lista = new ArrayList<>();
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                Compras_Sucursal e = new Compras_Sucursal();
+                e.setIdSucursal(rs.getInt("idSucursal"));
+                e.setNombre(rs.getString("nombre"));
+                e.setTelefono(rs.getString("telefono"));
+                e.setDireccion(rs.getString("direccion"));
+                e.setColonia(rs.getString("colonia"));
+                e.setPresupuesto(rs.getFloat("presupuesto"));
+                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
+                lista.add(e);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return lista;
+    }
+
     public ArrayList<Compras_Sucursal> consultaSucursalesVistaPaginada(Integer pagina) {
         String sql = "select * from vSucursales "
                 + "order by idSucursales "

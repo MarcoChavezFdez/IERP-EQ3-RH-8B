@@ -6,17 +6,19 @@
 package GUI;
 
 import conexion.ConexionBD;
-import conexion.EstadoDAO;
+import conexion.PeriodoDAO;
+
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.RH_Estado;
+import modelo.RH_Periodo;
+
 
 /**
  *
  * @author Marco Chavez
  */
-public class EstadosFrame extends javax.swing.JFrame {
+public class PeriodosFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form EstadosFrame
@@ -26,15 +28,21 @@ public class EstadosFrame extends javax.swing.JFrame {
     int paginaMaxima;
     boolean banderaBusqueda = false;
 
-    public EstadosFrame(ConexionBD conexion) {
+    public PeriodosFrame(ConexionBD conexion) {
         initComponents();
         this.conexion = conexion;
 
-        EstadoDAO estados = new EstadoDAO(this.conexion);
+        PeriodoDAO periodos = new PeriodoDAO(this.conexion);
         this.paginaActual = 1;
-        this.paginaMaxima = estados.consultaPaginas();
+        this.paginaMaxima = periodos.consultaPaginas();
+        if(paginaActual+1<=paginaMaxima){
+            btn_Siguiente.setEnabled(true);
+        }
+        else{
+             btn_Siguiente.setEnabled(false);
+        }
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
-        ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
+        ArrayList<RH_Periodo> lista = periodos.consultaPeriodosVistaPaginada(paginaActual);
         llenarTabla(lista);
     }
 
@@ -144,8 +152,8 @@ public class EstadosFrame extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel2.setText("Estado");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, -1, -1));
+        jLabel2.setText("Periodos");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, -1, -1));
 
         btn_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
         btn_Eliminar.setBorderPainted(false);
@@ -193,9 +201,9 @@ public class EstadosFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-        AddEstadoFrame addEstado = new AddEstadoFrame(this.conexion);
+        AddPeriodoFrame addPeriodo = new AddPeriodoFrame(this.conexion);
         this.dispose();
-        addEstado.setVisible(true);
+        addPeriodo.setVisible(true);
         this.pack();
 
     }//GEN-LAST:event_btn_AddActionPerformed
@@ -216,19 +224,19 @@ public class EstadosFrame extends javax.swing.JFrame {
             this.banderaBusqueda = false;
             this.btn_Anterior.setEnabled(false);
             this.btn_Siguiente.setEnabled(true);
-            EstadoDAO estados = new EstadoDAO(this.conexion);
+            PeriodoDAO periodos = new PeriodoDAO(this.conexion);
             this.paginaActual = 1;
-            ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(this.paginaActual);
-            this.paginaMaxima = estados.consultaPaginas();
+            ArrayList<RH_Periodo> lista = periodos.consultaPeriodosVistaPaginada(this.paginaActual);
+            this.paginaMaxima = periodos.consultaPaginas();
             this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
             this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
             llenarTabla(lista);
         } else {
             this.banderaBusqueda = true;
-            EstadoDAO estados = new EstadoDAO(this.conexion);
+             PeriodoDAO periodos = new PeriodoDAO(this.conexion);
             this.paginaActual = 1;
-            ArrayList<RH_Estado> lista = estados.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), this.paginaActual);
-            this.paginaMaxima = estados.consultaPaginasNombre(txf_Busqueda.getText());
+            ArrayList<RH_Periodo> lista = periodos.consultaPeriodosNombreVistaPaginada(txf_Busqueda.getText(), this.paginaActual);
+            this.paginaMaxima = periodos.consultaPaginasNombre(txf_Busqueda.getText());
             this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
             this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
             if (paginaMaxima == 0) {
@@ -254,13 +262,13 @@ public class EstadosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_DatosMouseClicked
 
     private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
-        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        EstadoDAO DAO = new EstadoDAO(this.conexion);
-        RH_Estado estado = new RH_Estado();
-        estado = DAO.consultaEstadoId(idEstado);
-        AddEstadoFrame modificarEstado = new AddEstadoFrame(this.conexion, estado);
+        Integer idPeriodo = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        PeriodoDAO DAO = new PeriodoDAO(this.conexion);
+        RH_Periodo periodo = new RH_Periodo();
+        periodo = DAO.consultaPeriodoId(idPeriodo);
+        AddPeriodoFrame modificarPeriodo = new AddPeriodoFrame(this.conexion, periodo);
         this.setVisible(false);
-        modificarEstado.setVisible(true);
+        modificarPeriodo.setVisible(true);
     }//GEN-LAST:event_btn_ModificarActionPerformed
 
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
@@ -269,21 +277,21 @@ public class EstadosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_DatosMousePressed
 
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
-        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        Integer idPeriodo = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
         String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Estado '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Periodo '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            RH_Estado estado = new RH_Estado();
-            EstadoDAO DAO = new EstadoDAO(this.conexion);
-            estado = DAO.consultaEstadoId(idEstado);
-            if (DAO.eliminacionLogica(estado)) {
-                JOptionPane.showMessageDialog(null, "Estado Eliminado");
-                EstadoDAO estados = new EstadoDAO(this.conexion);
+            RH_Periodo periodo = new RH_Periodo();
+            PeriodoDAO DAO = new PeriodoDAO(this.conexion);
+            periodo = DAO.consultaPeriodoId(idPeriodo);
+            if (DAO.eliminacionLogica(periodo)) {
+                JOptionPane.showMessageDialog(null, "Periodo Eliminado");
+                PeriodoDAO estados = new PeriodoDAO(this.conexion);
                 this.paginaActual = 1;
                 this.paginaMaxima = estados.consultaPaginas();
                 lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
                 lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
-                ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
+                ArrayList<RH_Periodo> lista = estados.consultaPeriodosVistaPaginada(paginaActual);
                 llenarTabla(lista);
                 txf_Busqueda.setText("");
                 banderaBusqueda = false;
@@ -312,14 +320,13 @@ public class EstadosFrame extends javax.swing.JFrame {
                 this.btn_Siguiente.setEnabled(true);
             }
             this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
-            EstadoDAO DAO = new EstadoDAO(this.conexion);
-            ArrayList<RH_Estado> lista = new ArrayList<>();
+            PeriodoDAO DAO = new PeriodoDAO(this.conexion);
+            ArrayList<RH_Periodo> lista = new ArrayList<>();
             if (this.banderaBusqueda) {
-                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+                lista = DAO.consultaPeriodosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
             } else {
-                lista = DAO.consultaEstadosVistaPaginada(paginaActual);
+                lista = DAO.consultaPeriodosVistaPaginada(paginaActual);
             }
-
             llenarTabla(lista);
         }
     }//GEN-LAST:event_btn_SiguienteActionPerformed
@@ -334,26 +341,27 @@ public class EstadosFrame extends javax.swing.JFrame {
                 this.btn_Anterior.setEnabled(true);
             }
             this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
-            EstadoDAO DAO = new EstadoDAO(this.conexion);
-            ArrayList<RH_Estado> lista = new ArrayList<>();
+            PeriodoDAO DAO = new PeriodoDAO(this.conexion);
+            ArrayList<RH_Periodo> lista = new ArrayList<>();
             if (this.banderaBusqueda) {
-                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+                lista = DAO.consultaPeriodosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
             } else {
-                lista = DAO.consultaEstadosVistaPaginada(paginaActual);
+                lista = DAO.consultaPeriodosVistaPaginada(paginaActual);
             }
 
             llenarTabla(lista);
         }
     }//GEN-LAST:event_btn_AnteriorActionPerformed
 
-    private void llenarTabla(ArrayList<RH_Estado> lista) {
-        String[] encabezado = {"IdEstado", "Nombre", "Siglas"};
-        Object[][] datos = new Object[lista.size()][3];
+    private void llenarTabla(ArrayList<RH_Periodo> lista) {
+        String[] encabezado = {"IdPeriodo", "Nombre", "Fecha Inicio","Fecha Fin"};
+        Object[][] datos = new Object[lista.size()][4];
         int ren = 0;
-        for (RH_Estado s : lista) {
-            datos[ren][0] = s.getIdEstado();
+        for (RH_Periodo s : lista) {
+            datos[ren][0] = s.getIdPeriodo();
             datos[ren][1] = s.getNombre();
-            datos[ren][2] = s.getSiglas();
+            datos[ren][2] = s.getFechaInicio();
+            datos[ren][3] = s.getFechaFin();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {

@@ -27,7 +27,7 @@ public class PeriodoDAO {
     }
 
     public boolean insertarPeriodo(RH_Periodo periodo) {
-        String sql = "insert into RH.Periodos values()";
+        String sql = "insert into RH.Periodos values(?,?,?,?)";
         boolean ban = false;
         try {
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
@@ -69,9 +69,9 @@ public class PeriodoDAO {
 
     public ArrayList<RH_Periodo> consultaPeriodosVistaPaginada(Integer pagina) {
         String sql = "select * from vPeriodos "
-                + "order by idFormaPago "
-                + "offset " + (pagina - 1) * 10 + " rows "
-                + "fetch next 10 rows only ";
+                + "order by idPeriodo "
+                + "offset " + (pagina - 1) * 5 + " rows "
+                + "fetch next 5 rows only ";
 
         ArrayList<RH_Periodo> lista = new ArrayList<>();
         try {
@@ -94,7 +94,7 @@ public class PeriodoDAO {
     }
 
     public Integer consultaPaginas() {
-        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as periodos FROM vPeriodos )/CAST(" + 3 + " AS float)))as paginasMaximas";
+        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as periodos FROM vPeriodos )/CAST(" + 5 + " AS float)))as paginasMaximas";
         Integer r = null;
         try {
             Statement st = conexion.getConexion().createStatement();
@@ -111,7 +111,7 @@ public class PeriodoDAO {
     }
 
     public Integer consultaPaginasNombre(String nombre) {
-        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as as periodos FROM vPeriodos where Nombre like CONCAT( '%','" + nombre + "','%'))/CAST(" + 3 + " AS float)))as paginasMaximas";
+        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as periodos FROM vPeriodos where Nombre like CONCAT( '%','" + nombre + "','%'))/CAST(" + 5 + " AS float)))as paginasMaximas";
         Integer r = null;
         try {
             Statement st = conexion.getConexion().createStatement();
@@ -132,8 +132,8 @@ public class PeriodoDAO {
                 + " from vPeriodos "
                 + " where nombre like CONCAT( '%','" + nombre + "','%') "
                 + " order by idPeriodo "
-                + " offset " + (pagina - 1) * 10 + " rows "
-                + " fetch next 10 rows only ";
+                + " offset " + (pagina - 1) * 5 + " rows "
+                + " fetch next 5 rows only ";
 
         ArrayList<RH_Periodo> lista = new ArrayList<>();
         try {
@@ -164,11 +164,10 @@ public class PeriodoDAO {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
-                RH_Periodo p = new RH_Periodo();
-                p.setIdPeriodo(rs.getInt("idPeriodo"));
-                p.setNombre(rs.getString("nombre"));
-                p.setFechaInicio(rs.getDate("fechaInicio"));
-                p.setFechaFin(rs.getDate("fechaFin"));
+                a.setIdPeriodo(rs.getInt("idPeriodo"));
+                a.setNombre(rs.getString("nombre"));
+                a.setFechaInicio(rs.getDate("fechaInicio"));
+                a.setFechaFin(rs.getDate("fechaFin"));
             }
             rs.close();
             st.close();
@@ -180,7 +179,7 @@ public class PeriodoDAO {
 
     public boolean actualizarPeriodo(RH_Periodo periodo) {
         String sql = "update RH.Periodos set "
-                + " nombre=?, fechaInicio=?, fechaFin=?, "
+                + " nombre=?, fechaInicio=?, fechaFin=? "
                 + " where idPeriodo=? ";
         boolean ban = false;
         try {

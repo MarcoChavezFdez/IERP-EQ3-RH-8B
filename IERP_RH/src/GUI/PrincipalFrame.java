@@ -102,7 +102,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         btn_Puestos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnDocumentacion.png"))); // NOI18N
         btn_Puestos1.setBorderPainted(false);
         btn_Puestos1.setContentAreaFilled(false);
-        jPanel1.add(btn_Puestos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 390, 180, 50));
+        jPanel1.add(btn_Puestos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 400, 180, 50));
 
         btn_Ciudades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnCiudades.png"))); // NOI18N
         btn_Ciudades.setBorderPainted(false);
@@ -296,16 +296,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
         btn_Puestos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnPuestos.png"))); // NOI18N
         btn_Puestos.setBorderPainted(false);
         btn_Puestos.setContentAreaFilled(false);
-        jPanel1.add(btn_Puestos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 180, 50));
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/PersonalPanel.png"))); // NOI18N
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, 410));
         btn_Puestos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_PuestosActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Puestos, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 290, -1, -1));
+        jPanel1.add(btn_Puestos, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 410, 180, 50));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/PersonalPanel.png"))); // NOI18N
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, 410));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/EcoPanel.png"))); // NOI18N
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, 410));
@@ -404,7 +403,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_NomdemActionPerformed
 
     private void btn_PeriodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_PeriodosActionPerformed
-        // TODO add your handling code here:
+       PeriodosFrame periodos = new PeriodosFrame(this.conexion);
+       this.dispose();
+       periodos.setVisible(true);
+       this.pack();
     }//GEN-LAST:event_btn_PeriodosActionPerformed
 
     private void btn_NomPerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NomPerActionPerformed
