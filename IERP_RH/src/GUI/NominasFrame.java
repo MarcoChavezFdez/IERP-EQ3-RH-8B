@@ -49,7 +49,6 @@ public class NominasFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        btn_Add = new javax.swing.JButton();
         btn_Modificar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Datos = new javax.swing.JTable();
@@ -64,6 +63,8 @@ public class NominasFrame extends javax.swing.JFrame {
         lbl_PaginaActual = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lbl_PaginaMaxima = new javax.swing.JLabel();
+        btn_AgregarMultiples = new javax.swing.JButton();
+        btn_Agregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estado");
@@ -72,16 +73,6 @@ public class NominasFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btn_Add.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
-        btn_Add.setBorderPainted(false);
-        btn_Add.setContentAreaFilled(false);
-        btn_Add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_AddActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 170, -1));
 
         btn_Modificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Modificar.png"))); // NOI18N
         btn_Modificar.setBorderPainted(false);
@@ -97,13 +88,13 @@ public class NominasFrame extends javax.swing.JFrame {
         tbl_Datos.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "idEstado", "Nombre", "Siglas", "Estatus"
+                "IdNomina", "Fecha Elaboracion", "Fecha Pago", "Total", "Dias Trabajados", "Estatus", "Empleado", "Forma Pago", "Periodo"
             }
         ));
         tbl_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -116,7 +107,7 @@ public class NominasFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_Datos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 440, 340));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, 870, 340));
 
         btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
         btn_Atras.setBorderPainted(false);
@@ -188,18 +179,16 @@ public class NominasFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText("1");
         jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 770, 580));
+        btn_AgregarMultiples.setText("Generar Multiples Nominas");
+        jPanel1.add(btn_AgregarMultiples, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+
+        btn_Agregar.setText("Generar Nomina");
+        jPanel1.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1130, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-        AddNominasMultiplesFrame addNominas = new AddNominasMultiplesFrame(this.conexion);
-        this.dispose();
-        addNominas.setVisible(true);
-        this.pack();
-
-    }//GEN-LAST:event_btn_AddActionPerformed
 
     private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
         PrincipalFrame pf = new PrincipalFrame(this.conexion);
@@ -348,20 +337,19 @@ public class NominasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_AnteriorActionPerformed
 
     private void llenarTabla(ArrayList<RH_Nomina> lista) {
-        String[] encabezado = {"IdNomina", "Fecha Elaboracion","Subtotal","Retenciones","Total","Dias Trabajados","Estatus","Empleado","Forma Pago","Periodo"};
-        Object[][] datos = new Object[lista.size()][10];
+        String[] encabezado = {"IdNomina", "Fecha Elaboracion", "Fecha Pago", "Total", "Dias Trabajados", "Estatus", "Empleado", "Forma Pago", "Periodo"};
+        Object[][] datos = new Object[lista.size()][9];
         int ren = 0;
         for (RH_Nomina s : lista) {
             datos[ren][0] = s.getIdNomina();
             datos[ren][1] = s.getFechaElaboracion();
-            datos[ren][2] = s.getSubtotal();
-            datos[ren][3] = s.getRetenciones();
-            datos[ren][4] = s.getTotal();
-            datos [ren][5] = s.getDiasTrabajados();
-            datos [ren][6] = s.getEstatus();
-            datos[ren][7] =s.getEmpleado().getNombreCompleto();
-            datos[ren][8] = s.getFormaPago().getNombre();
-            datos[ren][9] = s.getPeriodo().getNombre();
+            datos[ren][2] = s.getFechaPago();
+            datos[ren][3] = s.getTotal();
+            datos[ren][4] = s.getDiasTrabajados();
+            datos[ren][5] = s.getEstatus();
+            datos[ren][6] = s.getEmpleado().getNombreCompleto();
+            datos[ren][7] = s.getFormaPago().getNombre();
+            datos[ren][8] = s.getPeriodo().getNombre();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
@@ -371,7 +359,6 @@ public class NominasFrame extends javax.swing.JFrame {
             }
 
         };
-
         tbl_Datos.setModel(m);
     }
 
@@ -380,7 +367,8 @@ public class NominasFrame extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Add;
+    private javax.swing.JButton btn_Agregar;
+    private javax.swing.JButton btn_AgregarMultiples;
     private javax.swing.JButton btn_Anterior;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
