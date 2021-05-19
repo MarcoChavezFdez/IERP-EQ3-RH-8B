@@ -23,7 +23,9 @@ public class ConexionBD {
     private final String pass;
     private RH_Empleado empleado;
 
+
     private String connectionUrl = "jdbc:sqlserver://l72.17.93.207:1433;databaseName=ERP;integratedSecurity=false";
+
     private Connection conexion;
 
     public ConexionBD(String user, String pass) {
