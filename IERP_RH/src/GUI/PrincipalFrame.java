@@ -31,7 +31,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         lbl_fecha.setText(dateFormat.format(date));
         DateTimeFormatter formateador = DateTimeFormatter.ofPattern("HH:mm:ss");
-        lbl_User.setText(this.conexion.getName());
+        lbl_User.setText(this.conexion.getEmpleado().getNombre());
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -252,7 +252,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 500, -1, -1));
 
         lbl_User.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 540, 360, 100));
+        jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 540, 250, 100));
 
         btn_CerrarSesion.setText("Cerrar Sesion");
         btn_CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -395,7 +395,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_JustificacionesActionPerformed
 
     private void btn_NominasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NominasActionPerformed
-        // TODO add your handling code here:
+       NominasFrame nominas = new NominasFrame(this.conexion);
+       this.dispose();
+       nominas.setVisible(true);
+       this.pack();
     }//GEN-LAST:event_btn_NominasActionPerformed
 
     private void btn_NomdemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NomdemActionPerformed
