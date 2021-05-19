@@ -5,13 +5,23 @@
  */
 package GUI;
 
+import conexion.AsistenciaDAO;
 import conexion.ConexionBD;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import javax.swing.JOptionPane;
+import modelo.RH_Asistencia;
 
 /**
  *
@@ -23,6 +33,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
      * Creates new form PrincipalFrame
      */
     ConexionBD conexion;
+    RH_Asistencia asistencia;
 
     public PrincipalFrame(ConexionBD conexion) {
         this.conexion = conexion;
@@ -32,6 +43,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         lbl_fecha.setText(dateFormat.format(date));
         DateTimeFormatter formateador = DateTimeFormatter.ofPattern("HH:mm:ss");
         lbl_User.setText(this.conexion.getEmpleado().getNombre());
+        AsistenciaDAO daoAsistencia = new AsistenciaDAO(this.conexion);
+        asistencia = daoAsistencia.consultaAsistenciaFecha(java.sql.Date.valueOf(LocalDate.now()), this.conexion.getEmpleado());
+        if (Objects.isNull(asistencia)) {
+            btn_Asistencia.setText("Registrar Entrada");
+        } else {
+            btn_Asistencia.setText("Registrar Salida");
+        }
+
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -90,6 +109,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        btn_Asistencia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
@@ -251,8 +271,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel4.setText("Hola de nuevo:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 500, -1, -1));
 
-        lbl_User.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 540, 250, 100));
+        lbl_User.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 550, 250, 140));
 
         btn_CerrarSesion.setText("Cerrar Sesion");
         btn_CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -314,6 +334,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/ControlPanel.png"))); // NOI18N
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 70, -1, 410));
+
+        btn_Asistencia.setText("Asistencia");
+        btn_Asistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AsistenciaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Asistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 820, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1260, 870));
 
@@ -395,10 +423,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_JustificacionesActionPerformed
 
     private void btn_NominasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NominasActionPerformed
-       NominasFrame nominas = new NominasFrame(this.conexion);
-       this.dispose();
-       nominas.setVisible(true);
-       this.pack();
+        NominasFrame nominas = new NominasFrame(this.conexion);
+        this.dispose();
+        nominas.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_NominasActionPerformed
 
     private void btn_NomdemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NomdemActionPerformed
@@ -406,10 +434,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_NomdemActionPerformed
 
     private void btn_PeriodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_PeriodosActionPerformed
-       PeriodosFrame periodos = new PeriodosFrame(this.conexion);
-       this.dispose();
-       periodos.setVisible(true);
-       this.pack();
+        PeriodosFrame periodos = new PeriodosFrame(this.conexion);
+        this.dispose();
+        periodos.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_PeriodosActionPerformed
 
     private void btn_NomPerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NomPerActionPerformed
@@ -426,12 +454,72 @@ public class PrincipalFrame extends javax.swing.JFrame {
         this.pack();
     }//GEN-LAST:event_btn_PuestosActionPerformed
 
+    private void btn_AsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AsistenciaActionPerformed
+        AsistenciaDAO daoAsistencia = new AsistenciaDAO(this.conexion);
+        if (Objects.isNull(asistencia)) {
+            GregorianCalendar cal = new GregorianCalendar();
+            cal.setTime(java.sql.Date.valueOf(LocalDate.now()));
+            cal.get(GregorianCalendar.DAY_OF_WEEK);
+            asistencia = new RH_Asistencia();
+            asistencia.setFecha(java.sql.Date.valueOf(LocalDate.now()));
+            asistencia.setEmpleado(this.conexion.getEmpleado());
+            asistencia.setHoraEntrada(Time.valueOf(LocalTime.now()));
+            asistencia.setEstatus("A");
+            switch (cal.get(GregorianCalendar.DAY_OF_WEEK)) {
+                case 1:
+                    asistencia.setDia("DOMINGO");
+                    break;
+                case 2:
+                    asistencia.setDia("LUNES");
+                    break;
+                case 3:
+                    asistencia.setDia("MARTES");
+                    break;
+                case 4:
+                    asistencia.setDia("MIERCOLES");
+                    break;
+                case 5:
+                    asistencia.setDia("JUEVES");
+                    break;
+                case 6:
+                    asistencia.setDia("VIERNES");
+                    break;
+                case 7:
+                    asistencia.setDia("SABADO");
+            }
+
+            if (daoAsistencia.insertarAsistencia(asistencia)) {
+                JOptionPane.showMessageDialog(null, "Entrada Registrada con Exito");
+                asistencia = daoAsistencia.consultaAsistenciaFecha(java.sql.Date.valueOf(LocalDate.now()), this.conexion.getEmpleado());
+                btn_Asistencia.setText("Registrar Salida");
+            }
+
+        } else {
+            asistencia.setHoraSalida(java.sql.Time.valueOf(LocalTime.now()));
+            if (daoAsistencia.actualizarAsistencia(asistencia)) {
+                int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea registar la salida?. Se cerrará la sesión y no podrá iniciar de nuevo", "Confirmar Registro de salidaa", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    JOptionPane.showMessageDialog(null, "Salida Registrada con Exito");
+                    btn_Asistencia.setEnabled(false);
+                    login ventanaLogin = new login();
+                    this.dispose();
+                    ventanaLogin.setVisible(true);
+                    ventanaLogin.pack();
+                    JOptionPane.showMessageDialog(null, "Sesión Finalizada");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Registro de Salida Cancelado");
+                }
+
+            }
+        }
+    }//GEN-LAST:event_btn_AsistenciaActionPerformed
+
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bnt_Estados;
+    private javax.swing.JButton btn_Asistencia;
     private javax.swing.JButton btn_Asistencias;
     private javax.swing.JButton btn_CerrarSesion;
     private javax.swing.JButton btn_Ciudades;
