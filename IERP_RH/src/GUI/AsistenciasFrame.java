@@ -6,11 +6,11 @@
 package GUI;
 
 import conexion.ConexionBD;
-import conexion.EstadoDAO;
+import conexion.AsistenciaDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.RH_Estado;
+import modelo.RH_Asistencia;
 
 /**
  *
@@ -30,11 +30,11 @@ public class AsistenciasFrame extends javax.swing.JFrame {
         initComponents();
         this.conexion = conexion;
 
-        EstadoDAO estados = new EstadoDAO(this.conexion);
+        AsistenciaDAO asistencia = new AsistenciaDAO(this.conexion);
         this.paginaActual = 1;
-        this.paginaMaxima = estados.consultaPaginas();
+        this.paginaMaxima = asistencia.consultaPaginas();
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
-        ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
+        ArrayList<RH_Asistencia> lista = asistencia.consultaAsistenciasVistaPaginada(paginaActual);
         llenarTabla(lista);
     }
 
@@ -61,6 +61,8 @@ public class AsistenciasFrame extends javax.swing.JFrame {
         lbl_PaginaActual = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lbl_PaginaMaxima = new javax.swing.JLabel();
+        txf_Busqueda = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estado");
@@ -127,7 +129,7 @@ public class AsistenciasFrame extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel2.setText("Asistencias");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 30, -1, -1));
 
         btn_Eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btn_Eliminar.png"))); // NOI18N
         btn_Eliminar.setBorderPainted(false);
@@ -172,6 +174,10 @@ public class AsistenciasFrame extends javax.swing.JFrame {
 
         lbl_PaginaMaxima.setText("1");
         jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 530, -1, -1));
+        jPanel1.add(txf_Busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, 240, -1));
+
+        jLabel1.setText("Buscar:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 100, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1130, 580));
 
@@ -179,9 +185,9 @@ public class AsistenciasFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-        AddEstadoFrame addEstado = new AddEstadoFrame(this.conexion);
+        AddAsistenciaFrame addAsistencia = new AddAsistenciaFrame(this.conexion);
         this.dispose();
-        addEstado.setVisible(true);
+        addAsistencia.setVisible(true);
         this.pack();
 
     }//GEN-LAST:event_btn_AddActionPerformed
@@ -198,13 +204,13 @@ public class AsistenciasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_DatosMouseClicked
 
     private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
-        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        EstadoDAO DAO = new EstadoDAO(this.conexion);
-        RH_Estado estado = new RH_Estado();
-        estado = DAO.consultaEstadoId(idEstado);
-        AddEstadoFrame modificarEstado = new AddEstadoFrame(this.conexion, estado);
+        Integer idAsistencia = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        AsistenciaDAO DAO = new AsistenciaDAO(this.conexion);
+        RH_Asistencia asistencia = new RH_Asistencia();
+        asistencia = DAO.consultaAsistenciaId(idAsistencia);
+        AddAsistenciaFrame modificarAsistencia = new AddAsistenciaFrame(this.conexion, asistencia);
         this.setVisible(false);
-        modificarEstado.setVisible(true);
+        modificarAsistencia.setVisible(true);
     }//GEN-LAST:event_btn_ModificarActionPerformed
 
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
@@ -269,35 +275,37 @@ public class AsistenciasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_SiguienteActionPerformed
 
     private void btn_AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnteriorActionPerformed
-//        if ((paginaActual - 1) >= 1) {
-//            btn_Siguiente.setEnabled(true);
-//            paginaActual--;
-//            if (paginaActual == 1) {
-//                this.btn_Anterior.setEnabled(false);
-//            } else {
-//                this.btn_Anterior.setEnabled(true);
-//            }
-//            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
-//            EstadoDAO DAO = new EstadoDAO(this.conexion);
-//            ArrayList<RH_Estado> lista = new ArrayList<>();
-//            if (this.banderaBusqueda) {
-//                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
-//            } else {
-//                lista = DAO.consultaEstadosVistaPaginada(paginaActual);
-//            }
-//
-//            llenarTabla(lista);
-//        }
+       if ((paginaActual - 1) >= 1) {
+          btn_Siguiente.setEnabled(true);
+            paginaActual--;
+           if (paginaActual == 1) {
+                this.btn_Anterior.setEnabled(false);
+           } else {
+                this.btn_Anterior.setEnabled(true);
+          }
+          this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            AsistenciaDAO DAO = new AsistenciaDAO(this.conexion);
+          ArrayList<RH_Asistencia> lista = new ArrayList<>();
+           if (this.banderaBusqueda) {
+              
+           } else {
+               lista = DAO.consultaAsistenciasVistaPaginada(paginaActual);
+          }
+
+            llenarTabla(lista);
+       }
     }//GEN-LAST:event_btn_AnteriorActionPerformed
 
-    private void llenarTabla(ArrayList<RH_Estado> lista) {
-        String[] encabezado = {"IdEstado", "Nombre", "Siglas"};
-        Object[][] datos = new Object[lista.size()][3];
+    private void llenarTabla(ArrayList<RH_Asistencia> lista) {
+        String[] encabezado = {"IdAsistencia", "Fecha", "HoraEntrada", "HoraSalida","Dia"};
+        Object[][] datos = new Object[lista.size()][5];
         int ren = 0;
-        for (RH_Estado s : lista) {
-            datos[ren][0] = s.getIdEstado();
-            datos[ren][1] = s.getNombre();
-            datos[ren][2] = s.getSiglas();
+        for (RH_Asistencia s : lista) {
+            datos[ren][0] = s.getIdAsistencia();
+            datos[ren][1] = s.getFecha();
+            datos[ren][2] = s.getHoraEntrada();
+            datos[ren][3] = s.getHoraSalida();
+            datos[ren][4] = s.getDia();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
@@ -322,6 +330,7 @@ public class AsistenciasFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JButton btn_Siguiente;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -330,5 +339,6 @@ public class AsistenciasFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_PaginaActual;
     private javax.swing.JLabel lbl_PaginaMaxima;
     private javax.swing.JTable tbl_Datos;
+    private javax.swing.JTextField txf_Busqueda;
     // End of variables declaration//GEN-END:variables
 }

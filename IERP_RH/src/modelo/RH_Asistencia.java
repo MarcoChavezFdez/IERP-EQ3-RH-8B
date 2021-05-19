@@ -5,8 +5,10 @@
  */
 package modelo;
 
+import conexion.ConexionBD;
 import java.sql.Date;
 import java.sql.Time;
+import conexion.AsistenciaDAO;
 
 /**
  *
@@ -31,6 +33,18 @@ public class RH_Asistencia {
     }
 
     public RH_Asistencia() {
+    }
+    
+    public RH_Asistencia(Integer idAsistencia, ConexionBD conexion) {
+        AsistenciaDAO dao = new AsistenciaDAO(conexion);
+        RH_Asistencia asistencia = dao.consultaAsistenciaId(idAsistencia);
+        this.idAsistencia = idAsistencia;
+        this.dia = asistencia.getDia();
+        this.fecha = asistencia.getFecha();
+        this.empleado = asistencia.getEmpleado();
+        this.horaEntrada = asistencia.getHoraEntrada();
+        this.horaSalida = asistencia.getHoraSalida();
+        this.estatus = asistencia.getEstatus();
     }
 
     public Integer getIdAsistencia() {
