@@ -71,6 +71,7 @@ public class PeriodosFrame extends javax.swing.JFrame {
         lbl_PaginaActual = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         lbl_PaginaMaxima = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estado");
@@ -164,7 +165,7 @@ public class PeriodosFrame extends javax.swing.JFrame {
                 btn_EliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 190, -1));
+        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 190, -1));
 
         btn_Siguiente.setText("Siguiente");
         btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +195,10 @@ public class PeriodosFrame extends javax.swing.JFrame {
 
         lbl_PaginaMaxima.setText("1");
         jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, -1, -1));
+
+        jButton1.setText("Generar Nominas");
+        jButton1.setEnabled(false);
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 770, 580));
 
@@ -386,6 +391,7 @@ public class PeriodosFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JButton btn_Siguiente;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
