@@ -247,8 +247,9 @@ public class DepartamentoFrame extends javax.swing.JFrame {
             this.banderaBusqueda = true;
             DepartamentoDAO depa = new DepartamentoDAO(this.conexion);
             this.paginaActual = 1;
-            ArrayList<RH_Departamento> lista = depa.consultaDepartamentosNombreVistaPaginada(txf_Busqueda.getText(), this.paginaActual);
             this.paginaMaxima = depa.consultaPaginasNombre(txf_Busqueda.getText());
+            ArrayList<RH_Departamento> lista = depa.consultaDepartamentosNombreVistaPaginada(txf_Busqueda.getText(), this.paginaActual);
+            
             this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
             this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
             if (paginaMaxima == 0) {
