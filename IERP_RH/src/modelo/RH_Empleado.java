@@ -53,6 +53,10 @@ public class RH_Empleado {
 
     public RH_Empleado() {
     }
+    
+    public String getNombreCompleto(){
+        return this.getApellidoPaterno()+" "+this.getApellidoMaterno()+" "+this.getNombre();
+    }
 
     public RH_Empleado(Integer idEmpleado, ConexionBD conexion) {
         EmpleadoDAO dao = new EmpleadoDAO(conexion);
@@ -310,9 +314,6 @@ public class RH_Empleado {
         this.turno = turno;
     }
 
-    @Override
-    public String toString() {
-        return "RH_Empleado{" + "idEmpleado=" + idEmpleado + ", nombre=" + nombre + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", sexo=" + sexo + ", fechaNacimiento=" + fechaNacimiento + ", curp=" + curp + ", estadoCivil=" + estadoCivil + ", fechaContratacion=" + fechaContratacion + ", salarioDiario=" + salarioDiario + ", nss=" + nss + ", diasVacaciones=" + diasVacaciones + ", diasPermiso=" + diasPermiso + ", fotografia=" + fotografia + ", direccion=" + direccion + ", colonia=" + colonia + ", codigoPostal=" + codigoPostal + ", escolaridad=" + escolaridad + ", especialidad=" + especialidad + ", email=" + email + ", password=" + password + ", tipo=" + tipo + ", estatus=" + estatus + ", departamento=" + departamento + ", puesto=" + puesto + ", ciudad=" + ciudad + ", sucursal=" + sucursal + ", turno=" + turno + '}';
-    }
+
 
 }
