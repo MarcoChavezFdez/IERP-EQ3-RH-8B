@@ -5,17 +5,50 @@
  */
 package GUI;
 
+import conexion.AusenciaJustificadaDAO;
+import conexion.ConexionBD;
+import conexion.EmpleadoDAO;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import modelo.RH_AusenciaJustificada;
+import modelo.RH_Empleado;
+
 /**
  *
  * @author Marco Chavez
  */
 public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AddAusenciaJustificadaFrame
-     */
-    public AddAusenciaJustificadaFrame() {
+    ConexionBD conexion;
+    RH_AusenciaJustificada aj;
+    ArrayList<RH_Empleado> empleados = new ArrayList<>();
+
+    public AddAusenciaJustificadaFrame(ConexionBD conexion) {
         initComponents();
+        aj = new RH_AusenciaJustificada();
+        this.conexion = conexion;
+        dp_FechaSolicitud.setVisible(false);
+        jLabel1.setVisible(false);
+        EmpleadoDAO daoEmpleados = new EmpleadoDAO(conexion);
+        empleados = daoEmpleados.consultaEmpleadosVista();
+        
+        empleados.forEach((t) -> {
+            cmb_Empleados.addItem(t.getNombreCompleto());
+        });
+
+    }
+        public AddAusenciaJustificadaFrame(ConexionBD conexion,RH_AusenciaJustificada ausencia) {
+        initComponents();
+        
+        aj = ausencia;
+        this.conexion = conexion;
+        EmpleadoDAO daoEmpleados = new EmpleadoDAO(conexion);
+        empleados = daoEmpleados.consultaEmpleadosVista();
+        empleados.forEach((t) -> {
+            cmb_Empleados.addItem(t.getNombreCompleto());
+        });
+
     }
 
     /**
@@ -27,6 +60,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -40,18 +74,29 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         dp_FechaSolicitud = new com.github.lgooddatepicker.components.DatePicker();
         jLabel5 = new javax.swing.JLabel();
         dp_FechaInicio = new com.github.lgooddatepicker.components.DatePicker();
-        jTextField1 = new javax.swing.JTextField();
+        txf_Estatus = new javax.swing.JTextField();
         dp_FechaFin = new com.github.lgooddatepicker.components.DatePicker();
-        jButton2 = new javax.swing.JButton();
         cmb_Tipo = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        cmb_Empleados = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        btn_Autorizar = new javax.swing.JButton();
+        btn_Rechazar = new javax.swing.JButton();
+
+        jLabel8.setText("jLabel8");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                jPanel1MouseMoved(evt);
+            }
+        });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Documento");
@@ -65,7 +110,13 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         btn_Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/RealOp.png"))); // NOI18N
         btn_Realizar.setBorderPainted(false);
         btn_Realizar.setContentAreaFilled(false);
-        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 170, 80));
+        btn_Realizar.setEnabled(false);
+        btn_Realizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_RealizarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 510, 170, 80));
 
         jLabel1.setText("Fecha Solicitud");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
@@ -98,30 +149,57 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         dp_FechaInicio.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.add(dp_FechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
 
-        jTextField1.setText("Pendiente");
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 60, 20));
+        txf_Estatus.setText("PENDIENTE");
+        jPanel1.add(txf_Estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 100, 20));
 
         dp_FechaFin.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.add(dp_FechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, -1, -1));
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/Aut.png"))); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, 170, 60));
 
         cmb_Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MATRIMONIO", "MATERNIDAD/PATERNIDAD", "ACCIDENTE", "ENFERMEDAD", "HOSPITALIZACIÓN", "MUDANZA", "FALLECIMIENTO FAMILIAR" }));
         cmb_Tipo.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.add(cmb_Tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, -1, -1));
 
         jLabel6.setText("Estatus");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 320, -1, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/SelDoc.png"))); // NOI18N
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 370, 180, 70));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 600));
+        jLabel9.setText("Añadir Ausencia Justificada");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, -1, -1));
+
+        cmb_Empleados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un Empleado" }));
+        cmb_Empleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmb_EmpleadosActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmb_Empleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 440, 180, -1));
+
+        jLabel10.setText("Empleado");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 440, -1, -1));
+
+        btn_Autorizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/Aut.png"))); // NOI18N
+        btn_Autorizar.setBorderPainted(false);
+        btn_Autorizar.setContentAreaFilled(false);
+        btn_Autorizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AutorizarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Autorizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 300, 170, 60));
+
+        btn_Rechazar.setText("RECHAZAR");
+        btn_Rechazar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_RechazarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Rechazar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 380, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 920, 630));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -129,6 +207,70 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
     private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_AtrasActionPerformed
+
+    private void cmb_EmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_EmpleadosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmb_EmpleadosActionPerformed
+
+    private void btn_RealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RealizarActionPerformed
+        if (validaCampos()) {
+            aj.setFechaInicio(java.sql.Date.valueOf(dp_FechaInicio.getDate()));
+            aj.setFechaFin(java.sql.Date.valueOf(dp_FechaFin.getDate()));
+            aj.setMotivo(ta_Motivo.getText().toUpperCase());
+            aj.setTipo(cmb_Tipo.getItemAt(cmb_Tipo.getSelectedIndex()));
+            aj.setEmpleadoSolicitador(empleados.get(cmb_Empleados.getSelectedIndex() - 1));
+            aj.setEstatus(txf_Estatus.getText());
+            aj.setFechaSolicitud(java.sql.Date.valueOf(LocalDate.now()));
+            aj.setEmpleadoAutorizador(conexion.getEmpleado());
+            AusenciaJustificadaDAO daoAusencia = new AusenciaJustificadaDAO(this.conexion);
+            if (daoAusencia.insertarAusenciaJustificada(aj)) {
+                JOptionPane.showMessageDialog(null, "AusenciaJustificada añadida con exito");
+                AusenciasJustificadasFrame ausenciasFrame = new AusenciasJustificadasFrame(this.conexion);
+                this.dispose();
+                ausenciasFrame.setVisible(true);
+                this.pack();
+            }
+        }
+    }//GEN-LAST:event_btn_RealizarActionPerformed
+
+    private void btn_AutorizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AutorizarActionPerformed
+        if (!"AUTORIZADO".equals(txf_Estatus.getText())) {
+            aj.setEstatus("AUTORIZADO");
+            txf_Estatus.setText("AUTORIZADO");
+            aj.setEmpleadoAutorizador(conexion.getEmpleado());
+        }
+    }//GEN-LAST:event_btn_AutorizarActionPerformed
+
+    private void btn_RechazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RechazarActionPerformed
+        if (!"RECHAZADO".equals(txf_Estatus.getText())) {
+            aj.setEstatus("RECHAZADO");
+            txf_Estatus.setText("RECHAZADO");
+            aj.setEmpleadoAutorizador(conexion.getEmpleado());
+        }
+    }//GEN-LAST:event_btn_RechazarActionPerformed
+
+    private void jPanel1MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseMoved
+        if(validaCampos()){
+            btn_Realizar.setEnabled(true);
+        }
+        else{
+          btn_Realizar.setEnabled(false);
+    }
+    }//GEN-LAST:event_jPanel1MouseMoved
+    public boolean validaCampos() {
+        try {
+            if ((dp_FechaInicio.getDate().isBefore(dp_FechaFin.getDate())
+                    || dp_FechaInicio.getDate().isEqual(dp_FechaFin.getDate()))
+                    && (dp_FechaFin.getDate().isBefore(LocalDate.now()) || dp_FechaFin.getDate().isEqual(LocalDate.now())) && cmb_Tipo.getSelectedIndex() > 0 && !"".equals(ta_Motivo.getText())) {
+                return true;
+
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -158,32 +300,32 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddAusenciaJustificadaFrame().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Atras;
+    private javax.swing.JButton btn_Autorizar;
     private javax.swing.JButton btn_Realizar;
+    private javax.swing.JButton btn_Rechazar;
+    private javax.swing.JComboBox<String> cmb_Empleados;
     private javax.swing.JComboBox<String> cmb_Tipo;
     private com.github.lgooddatepicker.components.DatePicker dp_FechaFin;
     private com.github.lgooddatepicker.components.DatePicker dp_FechaInicio;
     private com.github.lgooddatepicker.components.DatePicker dp_FechaSolicitud;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextPane ta_Motivo;
+    private javax.swing.JTextField txf_Estatus;
     // End of variables declaration//GEN-END:variables
 }
