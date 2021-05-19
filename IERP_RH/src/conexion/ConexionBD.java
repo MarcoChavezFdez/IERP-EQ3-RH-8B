@@ -23,7 +23,7 @@ public class ConexionBD {
     private final String pass;
     private RH_Empleado empleado;
 
-    private String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=ERP;integratedSecurity=false";
+    private String connectionUrl = "jdbc:sqlserver://ec2-54-85-200-56.compute-1.amazonaws.com:1433;databaseName=ERP;integratedSecurity=false";
     private Connection conexion;
 
     public ConexionBD(String user, String pass) {
