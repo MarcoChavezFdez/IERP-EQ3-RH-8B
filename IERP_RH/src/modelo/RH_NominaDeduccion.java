@@ -12,6 +12,7 @@ package modelo;
 public class RH_NominaDeduccion {
     private RH_Nomina nomina;
     private RH_Deduccion deduccion;
+    private Float importe;
     private String estatus;
 
     public RH_NominaDeduccion() {
@@ -21,6 +22,14 @@ public class RH_NominaDeduccion {
         return nomina;
     }
 
+    public Float getImporte() {
+        return importe;
+    }
+
+    public void setImporte(Float importe) {
+        this.importe = importe;
+    }
+    
     public void setNomina(RH_Nomina nomina) {
         this.nomina = nomina;
     }
