@@ -244,6 +244,7 @@ public class DeduccionDAO {
                 deduccion.setNombre(rs.getString("nombre"));
                 deduccion.setDescripcion(rs.getString("descripcion"));
                 deduccion.setPorcentaje(rs.getFloat("porcentaje"));
+                deduccion.setEstatus(rs.getString("estatus"));
             }
             rs.close();
             st.close();
