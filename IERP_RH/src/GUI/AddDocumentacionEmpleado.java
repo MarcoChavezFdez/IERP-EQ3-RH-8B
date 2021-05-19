@@ -4,45 +4,51 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import conexion.ConexionBD;
-import conexion.PuestoDAO;
-import java.awt.HeadlessException;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
+
 import modelo.RH_DocumentacionEmpleado;
-import modelo.RH_Puesto;
+
+
 /**
  *
  * @author Mino
  */
 public class AddDocumentacionEmpleado extends javax.swing.JFrame {
- ConexionBD conexion;
+
+    ConexionBD conexion;
     RH_DocumentacionEmpleado documentacionEmpleado;
+    ArrayList<RH_DocumentacionEmpleado> empleados = new ArrayList();
     Boolean bandera;
+
     /**
      * Creates new form AddPuestos
      */
     public AddDocumentacionEmpleado(ConexionBD conexion) {
         initComponents();
         this.conexion = conexion;
-        lbl_Titulo.setText("Realizar Operación");
+        lbl_Titulo.setText("Añadir Documentación Empleado");
         btn_Realizar.setText("");
         this.bandera = false;
     }
-public AddDocumentacionEmpleado(ConexionBD conexion, RH_DocumentacionEmpleado documentacion) {
+
+    public AddDocumentacionEmpleado(ConexionBD conexion, RH_DocumentacionEmpleado documentacion) {
         initComponents();
         this.documentacionEmpleado = documentacion;
         this.conexion = conexion;
-        lbl_Titulo.setText("Realizar Operación");
+        lbl_Titulo.setText("Modificar Documentación Empleado");
         btn_Realizar.setText("");
         btn_Realizar.setEnabled(true);
         this.bandera = true;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,7 +60,7 @@ public AddDocumentacionEmpleado(ConexionBD conexion, RH_DocumentacionEmpleado do
 
         jPanel1 = new javax.swing.JPanel();
         btn_Realizar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_Atras = new javax.swing.JButton();
         lbl_Titulo = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txf_Nombre = new javax.swing.JTextField();
@@ -63,10 +69,17 @@ public AddDocumentacionEmpleado(ConexionBD conexion, RH_DocumentacionEmpleado do
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         dp_FechaEntrega = new com.github.lgooddatepicker.components.DatePicker();
-        cmb_Empleado = new javax.swing.JComboBox<>();
+        btn_Ver = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -74,27 +87,26 @@ public AddDocumentacionEmpleado(ConexionBD conexion, RH_DocumentacionEmpleado do
         btn_Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
         btn_Realizar.setBorderPainted(false);
         btn_Realizar.setContentAreaFilled(false);
-        btn_Realizar.setEnabled(false);
         btn_Realizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_RealizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 400, -1, -1));
+        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, -1, -1));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
+        btn_Atras.setBorderPainted(false);
+        btn_Atras.setContentAreaFilled(false);
+        btn_Atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_AtrasActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 260, 110));
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 110));
 
-        lbl_Titulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbl_Titulo.setText("Realizar Operación");
-        jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, -1));
+        lbl_Titulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 130, -1, -1));
 
         jLabel2.setText("Nombre");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
@@ -109,8 +121,8 @@ public AddDocumentacionEmpleado(ConexionBD conexion, RH_DocumentacionEmpleado do
                 txf_NombreKeyReleased(evt);
             }
         });
-        jPanel1.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 111, -1));
-        jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 350, 180, 40));
+        jPanel1.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 200, -1));
+        jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 180, 40));
 
         btn_Fotografia.setText("Seleccionar..");
         btn_Fotografia.addActionListener(new java.awt.event.ActionListener() {
@@ -127,78 +139,45 @@ public AddDocumentacionEmpleado(ConexionBD conexion, RH_DocumentacionEmpleado do
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, -1, -1));
         jPanel1.add(dp_FechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
 
-        cmb_Empleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Empleado" }));
-        jPanel1.add(cmb_Empleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, -1, -1));
+        btn_Ver.setText("Ver Documento");
+        jPanel1.add(btn_Ver, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
 
-        jLabel4.setText("Empledo");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, -1, -1));
+        jLabel4.setText("Documentación de Empleados");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
+
+        jLabel5.setText("Empleado: ");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, -1, -1));
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un Empleado" }));
+        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 250, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 520, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_RealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RealizarActionPerformed
-         int valueMin= (Integer) spSalMin.getValue();
-    int valueMax= (Integer) spSalMax.getValue();
-        if (valueMin<0 || valueMax<0) {
-            JOptionPane.showMessageDialog(null, "Los valores introducidos no son validos");
-        } else if (valueMin>=0 || valueMax>=0){
-        RH_Puesto nPuesto = new RH_Puesto();
-        nPuesto.setNombre(txf_Nombre.getText().toUpperCase());
-        nPuesto.setSalarioMinimo(Float.parseFloat(spSalMin.getValue().toString()));
-        nPuesto.setSalarioMaximo(Float.parseFloat(spSalMax.getValue().toString()));
-        nPuesto.setEstatus("A");
-        PuestoDAO puestoDAO = new PuestoDAO(this.conexion);
-        try {
-            if (bandera) {
-                nPuesto.setIdPuesto(this.puesto.getIdPuesto());
-                if (puestoDAO.actualizarPuesto(nPuesto)) {
-                    JOptionPane.showMessageDialog(null, "Puesto Modificado con exito");
-                    PuestosFrame puestos = new PuestosFrame(this.conexion);
-                    this.dispose();
-                    puestos.setVisible(true);
-                    this.pack();
-                }
-            } else {
-                if (puestoDAO.insertarPuesto(nPuesto)) {
-                    JOptionPane.showMessageDialog(null, "Puesto Añadido con exito");
-                    PuestosFrame puestos = new PuestosFrame(this.conexion);
-                    this.dispose();
-                    puestos.setVisible(true);
-                    this.pack();
-                }
-            }
 
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
-        }
-        }
     }//GEN-LAST:event_btn_RealizarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        PuestosFrame puestos = new PuestosFrame(this.conexion);
+    private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
+        PrincipalFrame principal = new PrincipalFrame(this.conexion);
         this.dispose();
-        puestos.setVisible(true);
-        puestos.pack();
-    }//GEN-LAST:event_jButton2ActionPerformed
+        principal.setVisible(true);
+        principal.pack();
+    }//GEN-LAST:event_btn_AtrasActionPerformed
 
     private void txf_NombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_NombreKeyReleased
         verificarCampos();
@@ -216,15 +195,18 @@ public AddDocumentacionEmpleado(ConexionBD conexion, RH_DocumentacionEmpleado do
             File f = new File(ruta);
             InputStream inputStream = new DataInputStream(new FileInputStream(f));
 
-
         } catch (NullPointerException e) {
             System.out.println("No se ha seleccionado ningún fichero");
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_btn_FotografiaActionPerformed
-public void verificarCampos() {
- 
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+    }//GEN-LAST:event_formWindowOpened
+    public void verificarCampos() {
+
         if ("".equals(txf_Nombre.getText())) {
             btn_Realizar.setEnabled(false);
             lbl_Mensaje.setText("Debe llenar los campos");
@@ -234,6 +216,7 @@ public void verificarCampos() {
         }
 
     }
+
     /**
      * @param args the command line arguments
      */
@@ -267,21 +250,23 @@ public void verificarCampos() {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-             
+
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Fotografia;
     private javax.swing.JButton btn_Realizar;
-    private javax.swing.JComboBox<String> cmb_Empleado;
+    private javax.swing.JButton btn_Ver;
     private com.github.lgooddatepicker.components.DatePicker dp_FechaEntrega;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lbl_Mensaje;
     private javax.swing.JLabel lbl_Titulo;
