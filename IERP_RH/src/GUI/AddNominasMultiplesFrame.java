@@ -98,6 +98,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         lbl_Titulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -107,6 +108,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 547));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tp_DatosNominas.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -252,7 +254,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
                     .addComponent(cmb_Periodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmb_FormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dp_FechaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(547, Short.MAX_VALUE))
+                .addContainerGap(586, Short.MAX_VALUE))
         );
         lp_ResumenLayout.setVerticalGroup(
             lp_ResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,19 +271,26 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
                 .addGroup(lp_ResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_Periodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(332, Short.MAX_VALUE))
+                .addContainerGap(334, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Pago", lp_Resumen);
 
-        btn_Atras.setText("Atras");
+        jPanel1.add(tp_DatosNominas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+
+        btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
+        btn_Atras.setBorderPainted(false);
+        btn_Atras.setContentAreaFilled(false);
         btn_Atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AtrasActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 80));
 
-        btn_RealizarOperacion.setText("Realizar Operacion");
+        btn_RealizarOperacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
+        btn_RealizarOperacion.setBorderPainted(false);
+        btn_RealizarOperacion.setContentAreaFilled(false);
         btn_RealizarOperacion.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 btn_RealizarOperacionMouseMoved(evt);
@@ -292,44 +301,14 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
                 btn_RealizarOperacionActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_RealizarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 640, 190, 80));
 
         lbl_Titulo.setText("Generar Nominas");
+        lbl_Titulo.setFocusable(false);
+        lbl_Titulo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 40, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tp_DatosNominas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(76, 76, 76))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(btn_Atras)
-                        .addGap(305, 305, 305)
-                        .addComponent(lbl_Titulo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(390, 390, 390)
-                        .addComponent(btn_RealizarOperacion)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Atras)
-                    .addComponent(lbl_Titulo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tp_DatosNominas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_RealizarOperacion)
-                .addContainerGap())
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 30, 920, 650));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

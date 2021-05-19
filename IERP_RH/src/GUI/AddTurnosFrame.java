@@ -95,10 +95,10 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, -1, 340));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/Turnos.png"))); // NOI18N
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setToolTipText("");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 270, 110));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 280, 90));
 
         jLabel3.setText("Nombre:");
         jLabel3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -137,7 +137,7 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
                 btn_RealizaOperacionActionPerformed(evt);
             }
         });
-        jPanel2.add(btn_RealizaOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 400, 160, 80));
+        jPanel2.add(btn_RealizaOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 390, 180, 90));
 
         btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Turnos/btnAtras.png"))); // NOI18N
         btnRegresar.setBorderPainted(false);
@@ -173,6 +173,7 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
         lbl_Titulo.setText("Añadir turno");
         jPanel2.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, -1, -1));
 
+        pnl_Dias.setBackground(new java.awt.Color(241, 151, 89));
         pnl_Dias.setToolTipText("");
         pnl_Dias.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -242,7 +243,7 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
         jPanel2.add(pnl_Dias, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 120, 260));
         jPanel2.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 490, 70));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 880, 550));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 530));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

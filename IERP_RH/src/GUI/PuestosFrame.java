@@ -90,6 +90,7 @@ public class PuestosFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 190, -1));
 
+        tbl_Datos.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -123,6 +124,7 @@ public class PuestosFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 230, -1));
 
+        txf_Busqueda.setBackground(new java.awt.Color(153, 255, 153));
         txf_Busqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txf_BusquedaActionPerformed(evt);
@@ -133,7 +135,7 @@ public class PuestosFrame extends javax.swing.JFrame {
                 txf_BusquedaKeyReleased(evt);
             }
         });
-        jPanel1.add(txf_Busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 254, -1));
+        jPanel1.add(txf_Busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 140, 254, 20));
 
         jLabel1.setText("Busqueda por nombre");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, -1));
@@ -153,22 +155,26 @@ public class PuestosFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 190, -1));
 
-        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
+        btn_Siguiente.setBorderPainted(false);
+        btn_Siguiente.setContentAreaFilled(false);
         btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_SiguienteActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 530, -1, -1));
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 530, 160, 40));
 
-        btn_Anterior.setText("Anterior");
+        btn_Anterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
+        btn_Anterior.setBorderPainted(false);
+        btn_Anterior.setContentAreaFilled(false);
         btn_Anterior.setEnabled(false);
         btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AnteriorActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 530, -1, -1));
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 530, 150, 40));
 
         jLabel3.setText("Página");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 540, -1, -1));
@@ -182,7 +188,7 @@ public class PuestosFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText("1");
         jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 760, 570));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 780, 610));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

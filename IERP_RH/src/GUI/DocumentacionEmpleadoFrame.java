@@ -103,6 +103,7 @@ public class DocumentacionEmpleadoFrame extends javax.swing.JFrame {
         jLabel2.setText("Buscar por nombre");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
 
+        txf_Ciudad.setBackground(new java.awt.Color(153, 255, 153));
         txf_Ciudad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txf_CiudadKeyReleased(evt);

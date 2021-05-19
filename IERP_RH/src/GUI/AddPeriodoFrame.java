@@ -70,6 +70,7 @@ public class AddPeriodoFrame extends javax.swing.JFrame {
         dp_FechaFin = new com.github.lgooddatepicker.components.DatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -111,6 +112,8 @@ public class AddPeriodoFrame extends javax.swing.JFrame {
         jLabel2.setText("Nombre");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
 
+        txf_Nombre.setAutoscrolls(false);
+        txf_Nombre.setBackground(new java.awt.Color(153, 255, 153));
         txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txf_NombreActionPerformed(evt);
@@ -126,6 +129,8 @@ public class AddPeriodoFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Fecha Incio");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, -1, -1));
+
+        dp_FechaInicio.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.add(dp_FechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
 
         jLabel4.setText("Periodos");
@@ -133,6 +138,8 @@ public class AddPeriodoFrame extends javax.swing.JFrame {
 
         jLabel5.setText("Fecha Fin");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, -1, -1));
+
+        dp_FechaFin.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.add(dp_FechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

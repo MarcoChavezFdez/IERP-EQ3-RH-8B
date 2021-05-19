@@ -83,7 +83,7 @@ public class NominasFrame extends javax.swing.JFrame {
                 btn_ModificarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 190, -1));
+        jPanel1.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 190, -1));
 
         tbl_Datos.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
@@ -117,7 +117,7 @@ public class NominasFrame extends javax.swing.JFrame {
                 btn_AtrasActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 230, -1));
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 230, -1));
 
         txf_Busqueda.setBackground(new java.awt.Color(153, 255, 153));
         txf_Busqueda.addActionListener(new java.awt.event.ActionListener() {
@@ -148,24 +148,30 @@ public class NominasFrame extends javax.swing.JFrame {
                 btn_EliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 190, -1));
+        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 190, -1));
 
-        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
+        btn_Siguiente.setBorderPainted(false);
+        btn_Siguiente.setContentAreaFilled(false);
+        btn_Siguiente.setDefaultCapable(false);
         btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_SiguienteActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 530, -1, -1));
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 530, 150, 40));
 
-        btn_Anterior.setText("Anterior");
+        btn_Anterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
+        btn_Anterior.setBorderPainted(false);
+        btn_Anterior.setContentAreaFilled(false);
+        btn_Anterior.setDefaultCapable(false);
         btn_Anterior.setEnabled(false);
         btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AnteriorActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 530, -1, -1));
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 530, 150, 40));
 
         jLabel3.setText("Página");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 540, -1, -1));
@@ -179,13 +185,17 @@ public class NominasFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText("1");
         jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, -1, -1));
 
-        btn_AgregarMultiples.setText("Generar Multiples Nominas");
-        jPanel1.add(btn_AgregarMultiples, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
+        btn_AgregarMultiples.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GMN.png"))); // NOI18N
+        btn_AgregarMultiples.setBorderPainted(false);
+        btn_AgregarMultiples.setContentAreaFilled(false);
+        jPanel1.add(btn_AgregarMultiples, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 80, 210, 90));
 
-        btn_Agregar.setText("Generar Nomina");
-        jPanel1.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, -1, -1));
+        btn_Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GN.png"))); // NOI18N
+        btn_Agregar.setBorderPainted(false);
+        btn_Agregar.setContentAreaFilled(false);
+        jPanel1.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 80, 210, 80));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 1130, 580));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

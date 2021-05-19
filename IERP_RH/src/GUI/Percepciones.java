@@ -154,14 +154,16 @@ public class Percepciones extends javax.swing.JFrame {
         jLabel2.setText("Percepciones");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, 40));
 
-        btn_Anterior.setText("Anterior");
+        btn_Anterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
+        btn_Anterior.setBorderPainted(false);
+        btn_Anterior.setContentAreaFilled(false);
         btn_Anterior.setEnabled(false);
         btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AnteriorActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, -1, -1));
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 530, 140, 40));
 
         jLabel3.setText("Página");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, -1, -1));
@@ -175,25 +177,25 @@ public class Percepciones extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText("1");
         jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 540, -1, -1));
 
-        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
+        btn_Siguiente.setBorderPainted(false);
+        btn_Siguiente.setContentAreaFilled(false);
         btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_SiguienteActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 530, -1, -1));
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 530, 150, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 701, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

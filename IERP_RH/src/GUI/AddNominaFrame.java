@@ -66,9 +66,6 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         tp_DatosNominas = new javax.swing.JTabbedPane();
-        lp_Percepciones = new javax.swing.JLayeredPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tbl_Percepciones = new javax.swing.JTable();
         lp_Deducciones = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Deducciones = new javax.swing.JTable();
@@ -79,11 +76,15 @@ public class AddNominaFrame extends javax.swing.JFrame {
         dp_FechaPago = new com.github.lgooddatepicker.components.DatePicker();
         cmb_Periodo = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        btn_Atras = new javax.swing.JButton();
+        lp_Percepciones = new javax.swing.JLayeredPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl_Percepciones = new javax.swing.JTable();
         btn_RealizarOperacion = new javax.swing.JButton();
+        btn_Atras = new javax.swing.JButton();
         lbl_Titulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -93,47 +94,13 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 547));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tp_DatosNominas.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tp_DatosNominasPropertyChange(evt);
             }
         });
-
-        tbl_Percepciones.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(tbl_Percepciones);
-        tbl_Percepciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-
-        lp_Percepciones.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout lp_PercepcionesLayout = new javax.swing.GroupLayout(lp_Percepciones);
-        lp_Percepciones.setLayout(lp_PercepcionesLayout);
-        lp_PercepcionesLayout.setHorizontalGroup(
-            lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(lp_PercepcionesLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(287, Short.MAX_VALUE))
-        );
-        lp_PercepcionesLayout.setVerticalGroup(
-            lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(lp_PercepcionesLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(151, Short.MAX_VALUE))
-        );
-
-        tp_DatosNominas.addTab("Percepciones de Nominas", lp_Percepciones);
 
         tbl_Deducciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -147,6 +114,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
             }
         ));
         tbl_Deducciones.setColumnSelectionAllowed(true);
+        tbl_Deducciones.setForeground(new java.awt.Color(153, 255, 153));
         jScrollPane1.setViewportView(tbl_Deducciones);
         tbl_Deducciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -159,14 +127,14 @@ public class AddNominaFrame extends javax.swing.JFrame {
             .addGroup(lp_DeduccionesLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(287, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         lp_DeduccionesLayout.setVerticalGroup(
             lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lp_DeduccionesLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Deducciones de Nomina", lp_Deducciones);
@@ -203,7 +171,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
                     .addComponent(cmb_Periodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmb_FormaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dp_FechaPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(571, Short.MAX_VALUE))
+                .addContainerGap(415, Short.MAX_VALUE))
         );
         lp_ResumenLayout.setVerticalGroup(
             lp_ResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,17 +188,32 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 .addGroup(lp_ResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_Periodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(427, Short.MAX_VALUE))
+                .addContainerGap(349, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Pago", lp_Resumen);
 
-        btn_Atras.setText("Atras");
-        btn_Atras.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_AtrasActionPerformed(evt);
+        lp_Percepciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tbl_Percepciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane2.setViewportView(tbl_Percepciones);
+        tbl_Percepciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+
+        lp_Percepciones.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 616, -1));
+
+        tp_DatosNominas.addTab("Percepciones de Nominas", lp_Percepciones);
+
+        jPanel1.add(tp_DatosNominas, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 740, 550));
 
         btn_RealizarOperacion.setText("Realizar Operacion");
         btn_RealizarOperacion.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -243,43 +226,23 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 btn_RealizarOperacionActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_RealizarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 1207, -1, -1));
+
+        btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
+        btn_Atras.setBorderPainted(false);
+        btn_Atras.setContentAreaFilled(false);
+        btn_Atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AtrasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 240, 90));
 
         lbl_Titulo.setText("Generar Nomina");
+        lbl_Titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 50, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(390, 390, 390)
-                        .addComponent(btn_RealizarOperacion))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(btn_Atras)
-                        .addGap(305, 305, 305)
-                        .addComponent(lbl_Titulo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(tp_DatosNominas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Atras)
-                    .addComponent(lbl_Titulo))
-                .addGap(18, 18, 18)
-                .addComponent(tp_DatosNominas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(525, 525, 525)
-                .addComponent(btn_RealizarOperacion)
-                .addContainerGap())
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 30, 980, 650));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 970, 710));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -296,9 +259,9 @@ public class AddNominaFrame extends javax.swing.JFrame {
         deducciones = daoDeduccion.consultaDeducionesVista();
         percepciones = daoPercepcion.consultaPercepcionesVista();
 
-        llenarTablaEmpleados(empleados);
-        llenarTablaPercepciones(percepciones);
-        llenarTablaDeducciones(deducciones);
+//        llenarTablaEmpleados(empleados);
+//        llenarTablaPercepciones(percepciones);
+//        llenarTablaDeducciones(deducciones);
 
         FormaPagoDAO daoFormaPago = new FormaPagoDAO(this.conexion);
         PeriodoDAO daoPeriodo = new PeriodoDAO(this.conexion);
@@ -317,17 +280,17 @@ public class AddNominaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btn_RealizarOperacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RealizarOperacionActionPerformed
-        for (int i = 0; i < tbl_Empleados.getRowCount(); i++) {
-            if ((Boolean) tbl_Empleados.getValueAt(i, 3)) {
-                RH_Empleado e = new RH_Empleado(Integer.parseInt(tbl_Empleados.getValueAt(i, 0).toString()), this.conexion);
-                empleados.add(e);
-
-            }
-        }
-        System.out.println("Lista Seleccionados");
-        empleados.forEach((t) -> {
-            System.out.println(t.getNombreCompleto());;
-        });
+//        for (int i = 0; i < tbl_Empleados.getRowCount(); i++) {
+//            if ((Boolean) tbl_Empleados.getValueAt(i, 3)) {
+//                RH_Empleado e = new RH_Empleado(Integer.parseInt(tbl_Empleados.getValueAt(i, 0).toString()), this.conexion);
+//                empleados.add(e);
+//
+//            }
+//        }
+//        System.out.println("Lista Seleccionados");
+//        empleados.forEach((t) -> {
+//            System.out.println(t.getNombreCompleto());;
+//        });
 
 
     }//GEN-LAST:event_btn_RealizarOperacionActionPerformed
@@ -347,125 +310,125 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tp_DatosNominasPropertyChange
 
-    private void llenarTablaEmpleados(ArrayList<RH_Empleado> lista) {
-        String[] encabezado = {"IdEmpleado", "Nombre Completo", "Puesto", "Seleccionado"};
-        Object[][] datos = new Object[lista.size()][4];
-        int ren = 0;
-        for (RH_Empleado s : lista) {
-            datos[ren][0] = s.getIdEmpleado();
-            datos[ren][1] = s.getNombreCompleto();
-            datos[ren][2] = s.getPuesto().getNombre();
-            datos[ren][3] = false;
-            ren++;
-        }
-        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) {
-                if (colIndex != 3) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return Integer.class;
-                    case 3:
-                        return Boolean.class;
-                    default:
-                        return Boolean.class;
-                }
-            }
-
-        };
-        tbl_Empleados.setModel(m);
-    }
-
-    private void llenarTablaPercepciones(ArrayList<RH_Percepcion> lista) {
-        String[] encabezado = {"IdPercepcion", "Nombre", "Dias a Pagar", "Seleccionado"};
-        Object[][] datos = new Object[lista.size()][4];
-        int ren = 0;
-        for (RH_Percepcion s : lista) {
-            datos[ren][0] = s.getIdPercepcion();
-            datos[ren][1] = s.getNombre();
-            datos[ren][2] = s.getDiasPagar();
-            datos[ren][3] = false;
-            ren++;
-        }
-        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) {
-                if (colIndex != 3) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return Integer.class;
-                    case 3:
-                        return Boolean.class;
-                    default:
-                        return Boolean.class;
-                }
-            }
-
-        };
-        tbl_Percepciones.setModel(m);
-    }
-
-    private void llenarTablaDeducciones(ArrayList<RH_Deduccion> lista) {
-        String[] encabezado = {"Nombre", "Porcentanje", "Seleccionado"};
-        Object[][] datos = new Object[lista.size()][4];
-        int ren = 0;
-        for (RH_Deduccion s : lista) {
-            datos[ren][0] = s.getNombre();
-            datos[ren][1] = s.getPorcentaje();
-            datos[ren][2] = false;
-            ren++;
-        }
-        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) {
-                if (colIndex != 2) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return Boolean.class;
-                    default:
-                        return String.class;
-                }
-            }
-
-        };
-        tbl_Deducciones.setModel(m);
-    }
+//    private void llenarTablaEmpleados(ArrayList<RH_Empleado> lista) {
+//        String[] encabezado = {"IdEmpleado", "Nombre Completo", "Puesto", "Seleccionado"};
+//        Object[][] datos = new Object[lista.size()][4];
+//        int ren = 0;
+//        for (RH_Empleado s : lista) {
+//            datos[ren][0] = s.getIdEmpleado();
+//            datos[ren][1] = s.getNombreCompleto();
+//            datos[ren][2] = s.getPuesto().getNombre();
+//            datos[ren][3] = false;
+//            ren++;
+//        }
+//        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
+//            @Override
+//            public boolean isCellEditable(int rowIndex, int colIndex) {
+//                if (colIndex != 3) {
+//                    return false;
+//                } else {
+//                    return true;
+//                }
+//            }
+//
+//            @Override
+//            public Class getColumnClass(int column) {
+//                switch (column) {
+//                    case 0:
+//                        return String.class;
+//                    case 1:
+//                        return String.class;
+//                    case 2:
+//                        return Integer.class;
+//                    case 3:
+//                        return Boolean.class;
+//                    default:
+//                        return Boolean.class;
+//                }
+//            }
+//
+//        };
+//        tbl_Empleados.setModel(m);
+//    }
+//
+//    private void llenarTablaPercepciones(ArrayList<RH_Percepcion> lista) {
+//        String[] encabezado = {"IdPercepcion", "Nombre", "Dias a Pagar", "Seleccionado"};
+//        Object[][] datos = new Object[lista.size()][4];
+//        int ren = 0;
+//        for (RH_Percepcion s : lista) {
+//            datos[ren][0] = s.getIdPercepcion();
+//            datos[ren][1] = s.getNombre();
+//            datos[ren][2] = s.getDiasPagar();
+//            datos[ren][3] = false;
+//            ren++;
+//        }
+//        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
+//            @Override
+//            public boolean isCellEditable(int rowIndex, int colIndex) {
+//                if (colIndex != 3) {
+//                    return false;
+//                } else {
+//                    return true;
+//                }
+//            }
+//
+//            @Override
+//            public Class getColumnClass(int column) {
+//                switch (column) {
+//                    case 0:
+//                        return String.class;
+//                    case 1:
+//                        return String.class;
+//                    case 2:
+//                        return Integer.class;
+//                    case 3:
+//                        return Boolean.class;
+//                    default:
+//                        return Boolean.class;
+//                }
+//            }
+//
+//        };
+//        tbl_Percepciones.setModel(m);
+//    }
+//
+//    private void llenarTablaDeducciones(ArrayList<RH_Deduccion> lista) {
+//        String[] encabezado = {"Nombre", "Porcentanje", "Seleccionado"};
+//        Object[][] datos = new Object[lista.size()][4];
+//        int ren = 0;
+//        for (RH_Deduccion s : lista) {
+//            datos[ren][0] = s.getNombre();
+//            datos[ren][1] = s.getPorcentaje();
+//            datos[ren][2] = false;
+//            ren++;
+//        }
+//        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
+//            @Override
+//            public boolean isCellEditable(int rowIndex, int colIndex) {
+//                if (colIndex != 2) {
+//                    return false;
+//                } else {
+//                    return true;
+//                }
+//            }
+//
+//            @Override
+//            public Class getColumnClass(int column) {
+//                switch (column) {
+//                    case 0:
+//                        return String.class;
+//                    case 1:
+//                        return String.class;
+//                    case 2:
+//                        return Boolean.class;
+//                    default:
+//                        return String.class;
+//                }
+//            }
+//
+//        };
+//        tbl_Deducciones.setModel(m);
+//    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

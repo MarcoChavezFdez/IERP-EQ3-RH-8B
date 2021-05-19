@@ -142,32 +142,6 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         tp_DatosEmpleado = new javax.swing.JTabbedPane();
-        lp_DatosPersonales = new javax.swing.JLayeredPane();
-        jLabel2 = new javax.swing.JLabel();
-        txf_Nombre = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txf_ApellidoPaterno = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txf_ApellidoMaterno = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        cmb_Sexo = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        dp_FechaNacimiento = new com.github.lgooddatepicker.components.DatePicker();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        cmb_EstadoCivil = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        btn_Seleccionar = new javax.swing.JButton();
-        jLabel26 = new javax.swing.JLabel();
-        cmb_Escolaridad = new javax.swing.JComboBox<>();
-        jLabel27 = new javax.swing.JLabel();
-        txf_Especialidad = new javax.swing.JTextField();
-        lbImage = new javax.swing.JLabel();
-        ftf_NSS = new javax.swing.JFormattedTextField();
-        ftf_CURP = new javax.swing.JFormattedTextField();
-        lbl_MensajeDatosPersonales = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         lp_Domicilio = new javax.swing.JLayeredPane();
         jLabel9 = new javax.swing.JLabel();
         txf_Direccion = new javax.swing.JTextField();
@@ -208,11 +182,38 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         pf_Password = new javax.swing.JPasswordField();
         pf_PasswordConfirm = new javax.swing.JPasswordField();
         lbl_MensajeDatosSistema = new javax.swing.JLabel();
+        lp_DatosPersonales = new javax.swing.JLayeredPane();
+        jLabel2 = new javax.swing.JLabel();
+        txf_Nombre = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txf_ApellidoPaterno = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txf_ApellidoMaterno = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        cmb_Sexo = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        dp_FechaNacimiento = new com.github.lgooddatepicker.components.DatePicker();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        cmb_EstadoCivil = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        btn_Seleccionar = new javax.swing.JButton();
+        jLabel26 = new javax.swing.JLabel();
+        cmb_Escolaridad = new javax.swing.JComboBox<>();
+        jLabel27 = new javax.swing.JLabel();
+        txf_Especialidad = new javax.swing.JTextField();
+        lbImage = new javax.swing.JLabel();
+        ftf_NSS = new javax.swing.JFormattedTextField();
+        ftf_CURP = new javax.swing.JFormattedTextField();
+        lbl_MensajeDatosPersonales = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         btn_Atras = new javax.swing.JButton();
         btn_RealizarOperacion = new javax.swing.JButton();
         lbl_Titulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -222,237 +223,13 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 547));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tp_DatosEmpleado.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tp_DatosEmpleadoPropertyChange(evt);
             }
         });
-
-        lp_DatosPersonales.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                lp_DatosPersonalesMouseMoved(evt);
-            }
-        });
-
-        jLabel2.setText("Nombre");
-
-        txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txf_NombreActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Apellido Paterno ");
-
-        jLabel4.setText("Apellido Materno");
-
-        jLabel5.setText("Sexo");
-
-        cmb_Sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU SEXO", "MASCULINO", "FEMENINO" }));
-
-        jLabel6.setText("Fecha de Nacimiento");
-
-        jLabel7.setText("CURP");
-
-        jLabel8.setText("Estado Civil");
-
-        cmb_EstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU ESTADO CIVIL", "SOLTERO", "CASADO", "DIVORCIADO", "VIUDO", "CONCUBINATO" }));
-
-        jLabel1.setText("NSS");
-
-        jLabel25.setText("Fotografia");
-
-        btn_Seleccionar.setText("Seleccionar..");
-        btn_Seleccionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_SeleccionarActionPerformed(evt);
-            }
-        });
-
-        jLabel26.setText("Escolaridad");
-
-        cmb_Escolaridad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU ESCOLARIDAD", "SECUNDARIA", "PREPARATORIA", "LICENCIATURA", "POSGRADO" }));
-
-        jLabel27.setText("Especialidad");
-
-        ftf_NSS.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                ftf_NSSFocusLost(evt);
-            }
-        });
-
-        ftf_CURP.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                ftf_CURPFocusLost(evt);
-            }
-        });
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        lp_DatosPersonales.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(txf_Nombre, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(txf_ApellidoPaterno, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(txf_ApellidoMaterno, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(cmb_Sexo, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(dp_FechaNacimiento, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(cmb_EstadoCivil, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel25, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(btn_Seleccionar, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel26, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(cmb_Escolaridad, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jLabel27, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(txf_Especialidad, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(lbImage, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(ftf_NSS, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(ftf_CURP, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(lbl_MensajeDatosPersonales, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout lp_DatosPersonalesLayout = new javax.swing.GroupLayout(lp_DatosPersonales);
-        lp_DatosPersonales.setLayout(lp_DatosPersonalesLayout);
-        lp_DatosPersonalesLayout.setHorizontalGroup(
-            lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lp_DatosPersonalesLayout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(40, 40, 40))
-                                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(92, 92, 92)))
-                                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txf_Nombre)
-                                    .addComponent(txf_ApellidoPaterno)))
-                            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(41, 41, 41)
-                                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cmb_Sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txf_ApellidoMaterno)))
-                            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(dp_FechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(92, 92, 92))
-                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7))
-                        .addGap(72, 72, 72)
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmb_EstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                .addComponent(ftf_CURP, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))))
-                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                        .addComponent(jLabel25)
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btn_Seleccionar)
-                                    .addComponent(jButton1))
-                                .addGap(26, 26, 26)
-                                .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(txf_Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jLabel27)
-                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                        .addComponent(jLabel26)
-                        .addGap(23, 23, 23)
-                        .addComponent(cmb_Escolaridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(26, 26, 26)
-                        .addComponent(ftf_NSS, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lp_DatosPersonalesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lbl_MensajeDatosPersonales, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(161, 161, 161))
-        );
-        lp_DatosPersonalesLayout.setVerticalGroup(
-            lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txf_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1)
-                    .addComponent(ftf_NSS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(txf_ApellidoPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(txf_ApellidoMaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel25)
-                                    .addComponent(btn_Seleccionar))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)))
-                .addGap(9, 9, 9)
-                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cmb_Escolaridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26)))
-                    .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cmb_Sexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(dp_FechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(27, 27, 27)
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel27)
-                            .addComponent(txf_Especialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ftf_CURP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(19, 19, 19)
-                        .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(cmb_EstadoCivil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
-                .addComponent(lbl_MensajeDatosPersonales, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
-        );
-
-        tp_DatosEmpleado.addTab("Datos Personales", lp_DatosPersonales);
 
         lp_Domicilio.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -545,7 +322,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 .addGroup(lp_DomicilioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
                 .addComponent(lbl_MensajeDatosDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81))
         );
@@ -654,7 +431,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                     .addGroup(lp_DatosEmpresaLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lbl_MensajeDatosEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
         lp_DatosEmpresaLayout.setVerticalGroup(
             lp_DatosEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -695,7 +472,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                     .addComponent(jLabel29))
                 .addGap(62, 62, 62)
                 .addComponent(lbl_MensajeDatosEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         tp_DatosEmpleado.addTab("Datos Empresa", lp_DatosEmpresa);
@@ -740,7 +517,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                     .addGroup(lp_LoginLayout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(lbl_MensajeDatosSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(372, Short.MAX_VALUE))
+                .addContainerGap(378, Short.MAX_VALUE))
         );
         lp_LoginLayout.setVerticalGroup(
             lp_LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -764,14 +541,114 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
         tp_DatosEmpleado.addTab("Ingreso al Sistema", lp_Login);
 
+        lp_DatosPersonales.setBackground(new java.awt.Color(153, 255, 153));
+        lp_DatosPersonales.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                lp_DatosPersonalesMouseMoved(evt);
+            }
+        });
+        lp_DatosPersonales.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setText("Nombre");
+        lp_DatosPersonales.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 14, -1, -1));
+
+        txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txf_NombreActionPerformed(evt);
+            }
+        });
+        lp_DatosPersonales.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 11, 154, -1));
+
+        jLabel3.setText("Apellido Paterno ");
+        lp_DatosPersonales.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 49, -1, -1));
+        lp_DatosPersonales.add(txf_ApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 49, 154, -1));
+
+        jLabel4.setText("Apellido Materno");
+        lp_DatosPersonales.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, -1, -1));
+        lp_DatosPersonales.add(txf_ApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 75, 162, -1));
+
+        jLabel5.setText("Sexo");
+        lp_DatosPersonales.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 141, -1, -1));
+
+        cmb_Sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU SEXO", "MASCULINO", "FEMENINO" }));
+        lp_DatosPersonales.add(cmb_Sexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 138, -1, -1));
+
+        jLabel6.setText("Fecha de Nacimiento");
+        lp_DatosPersonales.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 186, -1, -1));
+        lp_DatosPersonales.add(dp_FechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(127, 184, -1, -1));
+
+        jLabel7.setText("CURP");
+        lp_DatosPersonales.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 234, -1, -1));
+
+        jLabel8.setText("Estado Civil");
+        lp_DatosPersonales.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 273, -1, -1));
+
+        cmb_EstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU ESTADO CIVIL", "SOLTERO", "CASADO", "DIVORCIADO", "VIUDO", "CONCUBINATO" }));
+        lp_DatosPersonales.add(cmb_EstadoCivil, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 270, -1, -1));
+
+        jLabel1.setText("NSS");
+        lp_DatosPersonales.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 14, -1, -1));
+
+        jLabel25.setText("Fotografia");
+        lp_DatosPersonales.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 75, -1, -1));
+
+        btn_Seleccionar.setText("Seleccionar..");
+        btn_Seleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SeleccionarActionPerformed(evt);
+            }
+        });
+        lp_DatosPersonales.add(btn_Seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(508, 71, -1, -1));
+
+        jLabel26.setText("Escolaridad");
+        lp_DatosPersonales.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 184, -1, -1));
+
+        cmb_Escolaridad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU ESCOLARIDAD", "SECUNDARIA", "PREPARATORIA", "LICENCIATURA", "POSGRADO" }));
+        lp_DatosPersonales.add(cmb_Escolaridad, new org.netbeans.lib.awtextra.AbsoluteConstraints(509, 181, -1, -1));
+
+        jLabel27.setText("Especialidad");
+        lp_DatosPersonales.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 234, -1, -1));
+        lp_DatosPersonales.add(txf_Especialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(503, 231, 196, -1));
+        lp_DatosPersonales.add(lbImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(629, 49, 84, 77));
+
+        ftf_NSS.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ftf_NSSFocusLost(evt);
+            }
+        });
+        lp_DatosPersonales.add(ftf_NSS, new org.netbeans.lib.awtextra.AbsoluteConstraints(477, 11, 264, -1));
+
+        ftf_CURP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ftf_CURPFocusLost(evt);
+            }
+        });
+        lp_DatosPersonales.add(ftf_CURP, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 231, 291, -1));
+        lp_DatosPersonales.add(lbl_MensajeDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 372, 433, 26));
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        lp_DatosPersonales.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(508, 106, -1, -1));
+
+        tp_DatosEmpleado.addTab("Datos Personales", lp_DatosPersonales);
+
+        jPanel1.add(tp_DatosEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 45, -1, -1));
+
         btn_Atras.setText("Atras");
         btn_Atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AtrasActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        btn_RealizarOperacion.setText("Realizar Operacion");
+        btn_RealizarOperacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
+        btn_RealizarOperacion.setBorderPainted(false);
+        btn_RealizarOperacion.setContentAreaFilled(false);
         btn_RealizarOperacion.setEnabled(false);
         btn_RealizarOperacion.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -783,44 +660,12 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 btn_RealizarOperacionActionPerformed(evt);
             }
         });
+        jPanel1.add(btn_RealizarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 580, 180, 70));
 
         lbl_Titulo.setText("Añadir Empleado al Sistema");
+        jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 15, -1, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(btn_Atras)
-                .addGap(305, 305, 305)
-                .addComponent(lbl_Titulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(tp_DatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_RealizarOperacion)
-                        .addGap(378, 378, 378))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Atras)
-                    .addComponent(lbl_Titulo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tp_DatosEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_RealizarOperacion)
-                .addContainerGap())
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 30, 920, 650));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 660));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

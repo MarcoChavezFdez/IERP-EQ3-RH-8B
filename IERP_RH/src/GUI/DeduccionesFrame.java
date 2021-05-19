@@ -79,6 +79,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
+        txf_Busqueda.setBackground(new java.awt.Color(153, 255, 153));
         txf_Busqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txf_BusquedaActionPerformed(evt);
@@ -164,22 +165,26 @@ public class DeduccionesFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText("1");
         jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 560, -1, -1));
 
-        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
+        btn_Siguiente.setBorderPainted(false);
+        btn_Siguiente.setContentAreaFilled(false);
         btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_SiguienteActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, -1, -1));
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 550, 160, 50));
 
-        btn_Anterior.setText("Anterior");
+        btn_Anterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
+        btn_Anterior.setBorderPainted(false);
+        btn_Anterior.setContentAreaFilled(false);
         btn_Anterior.setEnabled(false);
         btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AnteriorActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 550, -1, -1));
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 550, 160, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 620));
 

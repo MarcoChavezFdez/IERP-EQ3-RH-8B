@@ -67,6 +67,7 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
         lbl_Mensaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

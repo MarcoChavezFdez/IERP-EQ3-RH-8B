@@ -27,137 +27,108 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btn_Atras = new javax.swing.JButton();
-        dp_FechaSolicitud = new com.github.lgooddatepicker.components.DatePicker();
-        dp_FechaInicio = new com.github.lgooddatepicker.components.DatePicker();
-        dp_FechaFin = new com.github.lgooddatepicker.components.DatePicker();
-        cmb_Tipo = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ta_Motivo = new javax.swing.JTextPane();
+        btn_Realizar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        btn_Atras = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        dp_FechaSolicitud = new com.github.lgooddatepicker.components.DatePicker();
         jLabel5 = new javax.swing.JLabel();
+        dp_FechaInicio = new com.github.lgooddatepicker.components.DatePicker();
         jTextField1 = new javax.swing.JTextField();
+        dp_FechaFin = new com.github.lgooddatepicker.components.DatePicker();
         jButton2 = new javax.swing.JButton();
+        cmb_Tipo = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        btn_Realizar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn_Atras.setText("Atras");
-
-        cmb_Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MATRIMONIO", "MATERNIDAD/PATERNIDAD", "ACCIDENTE", "ENFERMEDAD", "HOSPITALIZACIÓN", "MUDANZA", "FALLECIMIENTO FAMILIAR" }));
-
-        jButton1.setText("Seleccionar Documento");
-
-        jScrollPane1.setViewportView(ta_Motivo);
-
-        jLabel1.setText("Fecha Solicitud");
-
-        jLabel2.setText("Fecha Inicio");
-
-        jLabel3.setText("Fecha Fin");
-
-        jLabel4.setText("Motivo");
-
-        jLabel5.setText("Tipo de Ausencia");
-
-        jTextField1.setText("Pendiente");
-
-        jButton2.setText("Autorizar");
-
-        jLabel6.setText("Estatus");
+        jPanel1.setBackground(new java.awt.Color(241, 151, 89));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Documento");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 390, -1, -1));
 
-        btn_Realizar.setText("Realizar Operacion");
+        ta_Motivo.setBackground(new java.awt.Color(153, 255, 153));
+        jScrollPane1.setViewportView(ta_Motivo);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(44, 44, 44)
-                            .addComponent(btn_Atras))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(133, 133, 133)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel1))
-                            .addGap(72, 72, 72)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(dp_FechaSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(dp_FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(cmb_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(dp_FechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(jButton2)))
-                .addGap(35, 35, 35))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btn_Realizar)
-                .addGap(397, 397, 397))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addComponent(btn_Atras)
-                .addGap(1, 1, 1)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(dp_FechaSolicitud, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(dp_FechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(dp_FechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmb_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel6))
-                .addGap(46, 46, 46)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
-                .addComponent(btn_Realizar)
-                .addGap(108, 108, 108))
-        );
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 282, 93));
+
+        btn_Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/RealOp.png"))); // NOI18N
+        btn_Realizar.setBorderPainted(false);
+        btn_Realizar.setContentAreaFilled(false);
+        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 170, 80));
+
+        jLabel1.setText("Fecha Solicitud");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
+
+        jLabel2.setText("Fecha Inicio");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, -1, -1));
+
+        jLabel3.setText("Fecha Fin");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 260, -1, -1));
+
+        btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
+        btn_Atras.setBorderPainted(false);
+        btn_Atras.setContentAreaFilled(false);
+        btn_Atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AtrasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 90));
+
+        jLabel4.setText("Motivo");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 120, -1, -1));
+
+        dp_FechaSolicitud.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.add(dp_FechaSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, -1, -1));
+
+        jLabel5.setText("Tipo de Ausencia");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, -1, -1));
+
+        dp_FechaInicio.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.add(dp_FechaInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
+
+        jTextField1.setText("Pendiente");
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 60, 20));
+
+        dp_FechaFin.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.add(dp_FechaFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, -1, -1));
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/Aut.png"))); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, 170, 60));
+
+        cmb_Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MATRIMONIO", "MATERNIDAD/PATERNIDAD", "ACCIDENTE", "ENFERMEDAD", "HOSPITALIZACIÓN", "MUDANZA", "FALLECIMIENTO FAMILIAR" }));
+        cmb_Tipo.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.add(cmb_Tipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, -1, -1));
+
+        jLabel6.setText("Estatus");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 320, -1, -1));
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/SelDoc.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setContentAreaFilled(false);
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 370, 180, 70));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_AtrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,6 +181,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextPane ta_Motivo;

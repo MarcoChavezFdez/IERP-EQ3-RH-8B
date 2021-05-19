@@ -67,6 +67,7 @@ public class AddPuestoFrame extends javax.swing.JFrame {
         spSalMax = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -99,6 +100,7 @@ public class AddPuestoFrame extends javax.swing.JFrame {
         jLabel2.setText("Nombre");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 230, -1, -1));
 
+        txf_Nombre.setBackground(new java.awt.Color(153, 255, 153));
         txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txf_NombreActionPerformed(evt);

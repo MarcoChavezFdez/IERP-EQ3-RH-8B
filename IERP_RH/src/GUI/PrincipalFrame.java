@@ -249,7 +249,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 0));
         jLabel1.setText("Menú Principal");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, -1, -1));
 
         etiquetaReloj.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         etiquetaReloj.setText("hh:mm:ss");
@@ -274,13 +274,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
         lbl_User.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 550, 250, 140));
 
-        btn_CerrarSesion.setText("Cerrar Sesion");
+        btn_CerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Cerrar.png"))); // NOI18N
+        btn_CerrarSesion.setBorderPainted(false);
+        btn_CerrarSesion.setContentAreaFilled(false);
         btn_CerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_CerrarSesionActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_CerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 30, -1, -1));
+        jPanel1.add(btn_CerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 10, -1, -1));
 
         btn_Empleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnEmpleados.png"))); // NOI18N
         btn_Empleados.setToolTipText("");

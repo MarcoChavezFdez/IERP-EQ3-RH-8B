@@ -283,7 +283,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="480" y="10" width="-1" height="-1"/>
+              <AbsoluteConstraints x="490" y="10" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -366,14 +366,18 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_CerrarSesion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cerrar Sesion"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/Assets/General/Cerrar.png"/>
+            </Property>
+            <Property name="borderPainted" type="boolean" value="false"/>
+            <Property name="contentAreaFilled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_CerrarSesionActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="1110" y="30" width="-1" height="-1"/>
+              <AbsoluteConstraints x="1010" y="10" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

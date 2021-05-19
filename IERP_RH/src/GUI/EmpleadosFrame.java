@@ -135,11 +135,15 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         });
         btn_Anterior.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        btn_Siguiente.setText("Siguiente");
-        btn_Anterior.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 570, -1, -1));
+        btn_Siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
+        btn_Siguiente.setBorderPainted(false);
+        btn_Siguiente.setContentAreaFilled(false);
+        btn_Anterior.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 570, 160, 40));
 
-        jButton2.setText("Anterior");
-        btn_Anterior.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 570, -1, -1));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
+        jButton2.setBorderPainted(false);
+        jButton2.setContentAreaFilled(false);
+        btn_Anterior.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 570, 170, 40));
 
         lbl_PaginaActual.setText("1");
         btn_Anterior.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 580, -1, -1));
@@ -151,7 +155,7 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         btn_Anterior.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 580, -1, -1));
 
         jButton1.setText("Documentacion Empleado");
-        btn_Anterior.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 50, -1, -1));
+        btn_Anterior.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1520, 60, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,7 +165,7 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btn_Anterior, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
+            .addComponent(btn_Anterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
