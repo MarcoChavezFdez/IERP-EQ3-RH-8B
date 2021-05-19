@@ -5,6 +5,7 @@
  */
 package conexion;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,16 +65,16 @@ public class EmpleadoDAO {
         }
         return null;
     }
-
-    public RH_Empleado consultaEmpleado(Integer idEmpleado) {
-        String sql = "select * from vEmpleados"
-                + "where idEmpleado=" + idEmpleado;
+        public RH_Empleado consultaEmpleadoCorreo(String correo) throws IOException {
+        String sql = "select * from vEmpleados "
+                + "where email like '"+correo+"'";
         try {
             Statement st = conexion.getConexion().createStatement();
+           
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
                 RH_Empleado empleado = new RH_Empleado();
-                empleado.setIdEmpleado(idEmpleado);
+                empleado.setIdEmpleado(rs.getInt("idEmpleado"));
                 empleado.setNombre(rs.getString("nombre"));
                 empleado.setApellidoPaterno(rs.getString("apellidoPaterno"));
                 empleado.setApellidoMaterno(rs.getString("apellidoMaterno"));
@@ -89,7 +90,53 @@ public class EmpleadoDAO {
                 empleado.setFotografia(rs.getBinaryStream("fotografia"));
                 empleado.setDireccion(rs.getString("direccion"));
                 empleado.setColonia(rs.getString("colonia"));
-                empleado.setCodigoPostal(rs.getString("cp"));
+                empleado.setCodigoPostal(rs.getString("codigoPostal"));
+                empleado.setEscolaridad(rs.getString("escolaridad"));
+                empleado.setEspecialidad(rs.getString("especialidad"));
+                empleado.setEmail(rs.getString("email"));
+                empleado.setPassword(rs.getString("password"));
+                empleado.setTipo(rs.getString("tipo"));
+                empleado.setEstatus(rs.getString("estatus"));
+                empleado.setDepartamento(new RH_Departamento(rs.getInt("idDepartamento"), this.conexion));
+                empleado.setPuesto(new RH_Puesto(rs.getInt("idPuesto"), this.conexion));
+                empleado.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
+                empleado.setSucursal(new Compras_Sucursal(rs.getInt("idSucursal"), this.conexion));
+                empleado.setTurno(new RH_Turno(rs.getInt("idTurno"), this.conexion));
+                rs.close();
+                st.close();
+                return empleado;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return null;
+    }
+
+    public RH_Empleado consultaEmpleado(Integer idEmpleado) throws IOException {
+        String sql = "select * from vEmpleados"
+                + "where idEmpleado=" + idEmpleado;
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                RH_Empleado empleado = new RH_Empleado();
+                empleado.setIdEmpleado(rs.getInt("idEmpleado"));
+                empleado.setNombre(rs.getString("nombre"));
+                empleado.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                empleado.setApellidoMaterno(rs.getString("apellidoMaterno"));
+                empleado.setSexo(rs.getString("sexo"));
+                empleado.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                empleado.setCurp(rs.getString("curp"));
+                empleado.setEstadoCivil(rs.getString("estadoCivil"));
+                empleado.setFechaContratacion(rs.getDate("fechaContratacion"));
+                empleado.setSalarioDiario(rs.getFloat("salarioDiario"));
+                empleado.setNss(rs.getString("nss"));
+                empleado.setDiasVacaciones(rs.getInt("diasVacaciones"));
+                empleado.setDiasPermiso(rs.getInt("diasPermiso"));
+                empleado.setFotografia(rs.getBinaryStream("fotografia"));
+                empleado.setDireccion(rs.getString("direccion"));
+                empleado.setColonia(rs.getString("colonia"));
+                empleado.setCodigoPostal(rs.getString("codigoPostal"));
                 empleado.setEscolaridad(rs.getString("escolaridad"));
                 empleado.setEspecialidad(rs.getString("especialidad"));
                 empleado.setEmail(rs.getString("email"));
@@ -156,6 +203,54 @@ public class EmpleadoDAO {
                 + "order by idEmpleado "
                 + "offset " + (pagina - 1) * 3 + " rows "
                 + "fetch next 3 rows only ";
+
+        ArrayList<RH_Empleado> lista = new ArrayList<>();
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                RH_Empleado e = new RH_Empleado();
+                e.setIdEmpleado(rs.getInt("idEmpleado"));
+                e.setNombre(rs.getString("nombre"));
+                e.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                e.setApellidoMaterno(rs.getString("apellidoMaterno"));
+                e.setSexo(rs.getString("sexo"));
+                e.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                e.setCurp(rs.getString("curp"));
+                e.setEstadoCivil(rs.getString("estadoCivil"));
+                e.setFechaContratacion(rs.getDate("fechaContratacion"));
+                e.setSalarioDiario(rs.getFloat("salarioDiario"));
+                e.setNss(rs.getString("nss"));
+                e.setDiasVacaciones(rs.getInt("diasVacaciones"));
+                e.setDiasPermiso(rs.getInt("diasPermiso"));
+                e.setFotografia(rs.getBinaryStream("fotografia"));
+                e.setDireccion(rs.getString("direccion"));
+                e.setColonia(rs.getString("colonia"));
+                e.setCodigoPostal(rs.getString("codigoPostal"));
+                e.setEscolaridad(rs.getString("escolaridad"));
+                e.setEspecialidad(rs.getString("especialidad"));
+                e.setEmail(rs.getString("email"));
+                e.setPassword(rs.getString("password"));
+                e.setTipo(rs.getString("tipo"));
+                e.setEstatus(rs.getString("estatus"));
+                e.setDepartamento(new RH_Departamento(rs.getInt("idDepartamento"), this.conexion));
+                e.setPuesto(new RH_Puesto(rs.getInt("idPuesto"), this.conexion));
+                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
+                e.setSucursal(new Compras_Sucursal(rs.getInt("idSucursal"), this.conexion));
+                e.setTurno(new RH_Turno(rs.getInt("idTurno"), this.conexion));
+                lista.add(e);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return lista;
+    }
+
+    public ArrayList<RH_Empleado> consultaEmpleadosVista() {
+        String sql = "select * from vEmpleados "
+                + "order by idEmpleado ";
 
         ArrayList<RH_Empleado> lista = new ArrayList<>();
         try {
@@ -383,14 +478,14 @@ public class EmpleadoDAO {
     }
 
     public RH_Empleado consultaEmpleadoId(int idEmpleado) {
-        String sql = (" select * "
+        String sql = " select * "
                 + " from vEmpleados "
-                + " where idEmpleado=" + idEmpleado);
+                + " where idEmpleado=" + idEmpleado;
         RH_Empleado empleado = new RH_Empleado();
         try {
             Statement st = conexion.getConexion().createStatement();
             ResultSet rs = st.executeQuery(sql);
-            while (rs.next()) {
+            if (rs.next()) {
                 empleado.setIdEmpleado(rs.getInt("idEmpleado"));
                 empleado.setNombre(rs.getString("nombre"));
                 empleado.setApellidoPaterno(rs.getString("apellidoPaterno"));
@@ -430,7 +525,7 @@ public class EmpleadoDAO {
 
     public boolean actualizarEmpleado(RH_Empleado empleado) {
         String sql = "update RH.Empleados set nombre=?, apellidoPaterno=?,apellidoMaterno=?, "
-                + "sexo=?, fechaNacimiento=?, curp=?, estadoCivil=?, fechaContratacion=?, "
+                + "sexo=?, fechaNacimiento=?, estadoCivil=?, fechaContratacion=?, "
                 + "salarioDiario=?, nss=?, diasVacaciones=?, diasPermiso=?, fotografia=?, "
                 + "direccion=?, colonia=?, codigoPostal=?, escolaridad=?, especialidad=?, "
                 + "email=?, password=?, tipo=?, idDepartamento=?, idPuesto=?,idCiudad=?,idSucursal=?, "
@@ -459,14 +554,13 @@ public class EmpleadoDAO {
             st.setString(18, empleado.getEmail());
             st.setString(19, empleado.getPassword());
             st.setString(20, empleado.getTipo());
-            st.setString(21, empleado.getEstatus());
-            st.setInt(22, empleado.getDepartamento().getIdDepartamento());
-            st.setInt(23, empleado.getPuesto().getIdPuesto());
-            st.setInt(24, empleado.getCiudad().getIdCiudad());
-            st.setInt(25, empleado.getSucursal().getIdSucursal());
-            st.setInt(26, empleado.getTurno().getIdTurno());
-            st.setString(27, empleado.getCurp());
-            st.setInt(28, empleado.getIdEmpleado());
+            st.setInt(21, empleado.getDepartamento().getIdDepartamento());
+            st.setInt(22, empleado.getPuesto().getIdPuesto());
+            st.setInt(23, empleado.getCiudad().getIdCiudad());
+            st.setInt(24, empleado.getSucursal().getIdSucursal());
+            st.setInt(25, empleado.getTurno().getIdTurno());
+            st.setString(26, empleado.getCurp());
+            st.setInt(27, empleado.getIdEmpleado());
             st.execute();
             st.close();
             ban = true;
