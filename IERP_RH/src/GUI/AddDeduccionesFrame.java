@@ -101,6 +101,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         jLabel5.setText("Porcentaje");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, -1));
 
+        txNombre.setBackground(new java.awt.Color(153, 255, 153));
         txNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txNombreActionPerformed(evt);
@@ -113,6 +114,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         });
         jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 140, -1));
 
+        TxDescripcion.setBackground(new java.awt.Color(153, 255, 153));
         TxDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TxDescripcionKeyReleased(evt);
@@ -131,6 +133,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, -1, -1));
 
+        TxPorcentaje.setBackground(new java.awt.Color(153, 255, 153));
         TxPorcentaje.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TxPorcentajeKeyPressed(evt);

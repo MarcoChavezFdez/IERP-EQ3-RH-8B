@@ -75,11 +75,13 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
         });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -92,7 +94,7 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
                 btn_RealizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 490, -1, -1));
+        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 470, -1, -1));
 
         btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
         btn_Atras.setBorderPainted(false);
@@ -111,6 +113,7 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
         jLabel2.setText("Nombre");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
 
+        txf_Nombre.setBackground(new java.awt.Color(153, 255, 153));
         txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txf_NombreActionPerformed(evt);
@@ -124,23 +127,29 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
         jPanel1.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 200, -1));
         jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 420, 180, 40));
 
-        btn_Fotografia.setText("Seleccionar..");
+        btn_Fotografia.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Documentacion/Sele.png"))); // NOI18N
+        btn_Fotografia.setBorderPainted(false);
+        btn_Fotografia.setContentAreaFilled(false);
         btn_Fotografia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_FotografiaActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Fotografia, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, -1, -1));
+        jPanel1.add(btn_Fotografia, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 220, 170, 50));
 
         jLabel1.setText("Documento");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, -1, 20));
 
         jLabel3.setText("Fecha Documento");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 280, -1, -1));
+
+        dp_FechaEntrega.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.add(dp_FechaEntrega, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
 
-        btn_Ver.setText("Ver Documento");
-        jPanel1.add(btn_Ver, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
+        btn_Ver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Documentacion/Ver.png"))); // NOI18N
+        btn_Ver.setBorderPainted(false);
+        btn_Ver.setContentAreaFilled(false);
+        jPanel1.add(btn_Ver, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 180, 50));
 
         jLabel4.setText("Documentación de Empleados");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
@@ -149,21 +158,10 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, -1, -1));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un Empleado" }));
+        jComboBox1.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 250, 30));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 660, 599));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
