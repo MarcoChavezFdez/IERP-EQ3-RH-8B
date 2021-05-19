@@ -5,6 +5,7 @@
  */
 package conexion;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -215,6 +216,33 @@ public class AsistenciaDAO {
         return a;
     }
 
+    public RH_Asistencia consultaAsistenciaFecha(Date fecha, RH_Empleado empleado) {
+        String sql = " select * "
+                + " from vAsistencias "
+                + " where fecha=? AND idEmpleado =? ";
+        RH_Asistencia a=null;
+        try {
+            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
+            st.setDate(1, fecha);
+            st.setInt(2, empleado.getIdEmpleado());
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                a = new RH_Asistencia();
+                a.setIdAsistencia(rs.getInt("idAsistencia"));
+                a.setFecha(rs.getDate("fecha"));
+                a.setHoraEntrada(rs.getTime("horaEntrada"));
+                a.setHoraSalida(rs.getTime("horaSalida"));
+                a.setDia(rs.getString("dia"));
+                a.setEmpleado(new RH_Empleado(rs.getInt("idEmpleado"), this.conexion));
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return a;
+    }
+
     public boolean actualizarAsistencia(RH_Asistencia asistencia) {
         String sql = "update RH.Asistencias set fecha=?, horaEntrada=?, horaSalida=?,"
                 + " dia=?, idEmpleado=? "
@@ -254,7 +282,6 @@ public class AsistenciaDAO {
         }
         return ban;
     }
-
 
     public ConexionBD getConexion() {
         return conexion;
