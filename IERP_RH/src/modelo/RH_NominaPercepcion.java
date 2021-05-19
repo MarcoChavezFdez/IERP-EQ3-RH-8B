@@ -49,5 +49,9 @@ public class RH_NominaPercepcion {
     public void setEstatus(String estatus) {
         this.estatus = estatus;
     }
+
+    public void calculaImporte() {
+        this.importe = this.getNomina().getEmpleado().getSalarioDiario()* this.getPercepcion().getDiasPagar();
+    }
     
 }
