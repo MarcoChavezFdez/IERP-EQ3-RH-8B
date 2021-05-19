@@ -17,10 +17,11 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.DataInputStream;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
@@ -42,6 +43,7 @@ import modelo.RH_Empleado;
 import modelo.RH_Estado;
 import modelo.RH_Puesto;
 import modelo.RH_Turno;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -71,6 +73,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
     ArrayList<RH_Turno> turnos;
     ArrayList<RH_Estado> estados;
     Boolean isNew;
+    Integer bandera = 0;
 
     public AddEmpleadoFrame(ConexionBD conexion) {
         initComponents();
@@ -90,7 +93,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         this.txf_ApellidoMaterno.setText(empleado.getApellidoMaterno());
         this.ftf_NSS.setValue(empleado.getNss());
         this.ftf_CURP.setValue(empleado.getCurp());
-        this.dp_FechaNacimiento.setText(String.valueOf(empleado.getFechaNacimiento()));
+        this.dp_FechaNacimiento.setDate(empleado.getFechaNacimiento().toLocalDate());
         this.txf_Especialidad.setText(empleado.getEspecialidad());
         txf_Direccion.setText(empleado.getDireccion());
         txf_Colonia.setText(empleado.getColonia());
@@ -98,9 +101,34 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         sp_diasVacaciones.setValue(empleado.getDiasVacaciones());
         sp_diasPermiso.setValue(empleado.getDiasPermiso());
         sp_SalarioDiario.setValue(empleado.getSalarioDiario());
-        dp_FechaContratacion.setText(String.valueOf(empleado.getFechaContratacion()));
+        dp_FechaContratacion.setDate(empleado.getFechaContratacion().toLocalDate());
         ftf_Email.setText(empleado.getEmail());
-        
+        pf_Password.setText(empleado.getPassword());
+        pf_PasswordConfirm.setText(empleado.getPassword());
+
+        if ("MASCULINO".equals(empleado.getSexo())) {
+            cmb_Sexo.setSelectedIndex(1);
+        } else {
+            cmb_Sexo.setSelectedIndex(2);
+        }
+
+        for (int i = 1; i <= cmb_Escolaridad.getItemCount(); i++) {
+            if (empleado.getEscolaridad().equals(cmb_Escolaridad.getItemAt(i))) {
+                cmb_Escolaridad.setSelectedIndex(i);
+            }
+        }
+
+        for (int i = 1; i <= cmb_EstadoCivil.getItemCount(); i++) {
+            if (empleado.getEstadoCivil().equals(cmb_EstadoCivil.getItemAt(i))) {
+                cmb_EstadoCivil.setSelectedIndex(i);
+            }
+        }
+        for (int i = 1; i <= cmb_Tipo.getItemCount(); i++) {
+            if (empleado.getTipo().equals(cmb_Tipo.getItemAt(i))) {
+                cmb_Tipo.setSelectedIndex(i);
+            }
+        }
+
     }
 
     /**
@@ -130,7 +158,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         cmb_EstadoCivil = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        btn_Fotografia = new javax.swing.JButton();
+        btn_Seleccionar = new javax.swing.JButton();
         jLabel26 = new javax.swing.JLabel();
         cmb_Escolaridad = new javax.swing.JComboBox<>();
         jLabel27 = new javax.swing.JLabel();
@@ -139,6 +167,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         ftf_NSS = new javax.swing.JFormattedTextField();
         ftf_CURP = new javax.swing.JFormattedTextField();
         lbl_MensajeDatosPersonales = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         lp_Domicilio = new javax.swing.JLayeredPane();
         jLabel9 = new javax.swing.JLabel();
         txf_Direccion = new javax.swing.JTextField();
@@ -234,10 +263,10 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
         jLabel25.setText("Fotografia");
 
-        btn_Fotografia.setText("Seleccionar..");
-        btn_Fotografia.addActionListener(new java.awt.event.ActionListener() {
+        btn_Seleccionar.setText("Seleccionar..");
+        btn_Seleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_FotografiaActionPerformed(evt);
+                btn_SeleccionarActionPerformed(evt);
             }
         });
 
@@ -259,6 +288,13 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         lp_DatosPersonales.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(txf_Nombre, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -274,7 +310,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         lp_DatosPersonales.setLayer(cmb_EstadoCivil, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(jLabel25, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_DatosPersonales.setLayer(btn_Fotografia, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_DatosPersonales.setLayer(btn_Seleccionar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(jLabel26, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(cmb_Escolaridad, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(jLabel27, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -283,6 +319,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         lp_DatosPersonales.setLayer(ftf_NSS, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(ftf_CURP, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosPersonales.setLayer(lbl_MensajeDatosPersonales, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_DatosPersonales.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lp_DatosPersonalesLayout = new javax.swing.GroupLayout(lp_DatosPersonales);
         lp_DatosPersonales.setLayout(lp_DatosPersonalesLayout);
@@ -333,7 +370,9 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                         .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
                                 .addGap(26, 26, 26)
-                                .addComponent(btn_Fotografia)
+                                .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btn_Seleccionar)
+                                    .addComponent(jButton1))
                                 .addGap(26, 26, 26)
                                 .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
@@ -380,8 +419,10 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                                 .addGap(2, 2, 2)
                                 .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel25)
-                                    .addComponent(btn_Fotografia))))))
-                .addGap(19, 19, 19)
+                                    .addComponent(btn_Seleccionar))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)))
+                .addGap(9, 9, 9)
                 .addGroup(lp_DatosPersonalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(lp_DatosPersonalesLayout.createSequentialGroup()
                         .addGap(43, 43, 43)
@@ -428,6 +469,11 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         jLabel12.setText("Ciudad");
 
         cmb_Ciudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione una Ciudad" }));
+        cmb_Ciudad.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmb_CiudadItemStateChanged(evt);
+            }
+        });
 
         cmb_Estado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un Estado" }));
         cmb_Estado.addItemListener(new java.awt.event.ItemListener() {
@@ -499,7 +545,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 .addGroup(lp_DomicilioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 206, Short.MAX_VALUE)
                 .addComponent(lbl_MensajeDatosDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81))
         );
@@ -649,7 +695,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                     .addComponent(jLabel29))
                 .addGap(62, 62, 62)
                 .addComponent(lbl_MensajeDatosEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         tp_DatosEmpleado.addTab("Datos Empresa", lp_DatosEmpresa);
@@ -711,7 +757,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 .addGroup(lp_LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
                     .addComponent(pf_PasswordConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
                 .addComponent(lbl_MensajeDatosSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(128, 128, 128))
         );
@@ -783,36 +829,45 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txf_NombreActionPerformed
 
-    private void btn_FotografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_FotografiaActionPerformed
+    private void btn_SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SeleccionarActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        //Filtro del filechooser   
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Imagenes", "jpg", "png"));
         fileChooser.showOpenDialog(fileChooser);
-        try {
-            String ruta = fileChooser.getSelectedFile().getAbsolutePath();
-            File f = new File(ruta);
-            InputStream inputStream = new DataInputStream(new FileInputStream(f));
-            this.fotografia=inputStream ; 
-            Image imagen;
-            try {
-                imagen = ImageIO.read(inputStream);
-
-                ImageIcon imgIcon = new ImageIcon(imagen);
-                Image imgEscalada = imgIcon.getImage().getScaledInstance(lbImage.getWidth(),
-                        lbImage.getHeight(), Image.SCALE_SMOOTH);
-                Icon iconoEscalado = new ImageIcon(imgEscalada);
-                lbImage.setIcon(iconoEscalado);
-
-            } catch (IOException ex) {
-                Logger.getLogger(AddEmpleadoFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-
-
-        } catch (NullPointerException e) {
-            System.out.println("No se ha seleccionado ningún fichero");
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-    }//GEN-LAST:event_btn_FotografiaActionPerformed
+//        try {
+//            InputStream inputStream = new FileInputStream(fileChooser.getSelectedFile());
+////            OutputStream out = new FileOutputStream(new File("img.png"));
+////            byte [] buf = new byte [1024];
+////            for (int readNum;(readNum=inputStream.read(buf))!=-1;) {
+////                out.write(buf,0,readNum);
+////            }
+////            this.fotografia = new FileInputStream(out) {
+////                @Override
+////                public int read() throws IOException {
+////                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+////                }
+//            };
+//            Image imagen;
+//            try {
+//                imagen = ImageIO.read(inputStream);
+//
+//                ImageIcon imgIcon = new ImageIcon(imagen);
+//                Image imgEscalada = imgIcon.getImage().getScaledInstance(lbImage.getWidth(),
+//                        lbImage.getHeight(), Image.SCALE_SMOOTH);
+//                Icon iconoEscalado = new ImageIcon(imgEscalada);
+//                lbImage.setIcon(iconoEscalado);
+//            } catch (IOException ex) {
+//                Logger.getLogger(AddEmpleadoFrame.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        } catch (NullPointerException e) {
+//            System.out.println("No se ha seleccionado ningún fichero");
+//        } catch (FileNotFoundException e) {
+//            System.out.println(e.getMessage());
+//        } catch (IOException ex) {
+//            Logger.getLogger(AddEmpleadoFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_btn_SeleccionarActionPerformed
 
     private void ftf_NSSFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ftf_NSSFocusLost
 
@@ -836,22 +891,63 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
             departamentos = daoDepartamento.consultaDepartamentosVista();
             puestos = daoPuesto.consultaPuestosVista();
             turnos = daoTurno.consultaTurnosVista();
-            sucursales = daoSucursal.consultaSucursalesVista();
-            estados.forEach((s) -> {
-                cmb_Estado.addItem(s.getNombre());
-            });
-            departamentos.forEach((d) -> {
-                cmb_Departamento.addItem(d.getNombre());
-            });
-            puestos.forEach((p) -> {
-                cmb_Puesto.addItem(p.getNombre());
-            });
-            turnos.forEach((t) -> {
-                cmb_Turno.addItem(t.getNombre());
-            });
-            sucursales.forEach((s) -> {
-                cmb_Sucursal.addItem(s.getNombre());
-            });
+
+            if (!isNew) {
+
+                for (int i = 0; i < estados.size(); i++) {
+                    cmb_Estado.addItem(estados.get(i).getNombre());
+                    if (estados.get(i).getNombre().equals(empleado.getCiudad().getEstado().getNombre())) {
+                        cmb_Estado.setSelectedIndex(i + 1);
+                    }
+                }
+                this.ciudades = daoCiudad.consultarCiudadesEstadoVista(estados.get(cmb_Estado.getSelectedIndex() - 1).getIdEstado());
+                for (int i = 0; i < ciudades.size(); i++) {
+                    cmb_Ciudad.addItem(ciudades.get(i).getNombre());
+                    try {
+                        if ((ciudades.get(i).getNombre().equals(empleado.getCiudad().getNombre())) && !isNew) {
+                            cmb_Ciudad.setSelectedIndex(i + 1);
+                            bandera++;
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+
+                for (int i = 0; i < departamentos.size(); i++) {
+                    cmb_Departamento.addItem(departamentos.get(i).getNombre());
+                    if (departamentos.get(i).getNombre().equals(empleado.getDepartamento().getNombre())) {
+                        cmb_Departamento.setSelectedIndex(i + 1);
+                    }
+                }
+
+                for (int i = 0; i < puestos.size(); i++) {
+                    cmb_Puesto.addItem(puestos.get(i).getNombre());
+                    if (puestos.get(i).getNombre().equals(empleado.getPuesto().getNombre())) {
+                        cmb_Puesto.setSelectedIndex(i + 1);
+                    }
+                }
+
+                for (int i = 0; i < turnos.size(); i++) {
+                    cmb_Turno.addItem(turnos.get(i).getNombre());
+                    if (turnos.get(i).getNombre().equals(empleado.getTurno().getNombre())) {
+                        cmb_Turno.setSelectedIndex(i + 1);
+                    }
+                }
+
+            } else {
+                estados.forEach((s) -> {
+                    cmb_Estado.addItem(s.getNombre());
+                });
+
+                departamentos.forEach((d) -> {
+                    cmb_Departamento.addItem(d.getNombre());
+                });
+                puestos.forEach((p) -> {
+                    cmb_Puesto.addItem(p.getNombre());
+                });
+                turnos.forEach((t) -> {
+                    cmb_Turno.addItem(t.getNombre());
+                });
+            }
 
         } catch (ParseException err) {
 
@@ -868,10 +964,9 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
             cmb_Ciudad.removeAllItems();
             cmb_Ciudad.addItem("Seleccione una ciudad");
             this.ciudades = daoCiudad.consultarCiudadesEstadoVista(estados.get(cmb_Estado.getSelectedIndex() - 1).getIdEstado());
-            this.ciudades.forEach((s) -> {
-                cmb_Ciudad.addItem(s.getNombre());
-            });
-            System.out.println(estados.get(cmb_Estado.getSelectedIndex() - 1).toString());
+            for (int i = 0; i < ciudades.size(); i++) {
+                cmb_Ciudad.addItem(ciudades.get(i).getNombre());
+            }
         } else {
             cmb_Ciudad.setEnabled(false);
         }
@@ -989,8 +1084,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         nEmpleado.setEmail((String) ftf_Email.getText());
         nEmpleado.setPassword(pf_Password.getText().toUpperCase());
         nEmpleado.setEstatus("A");
-        System.out.println(nEmpleado.toString());
-        
+
         EmpleadoDAO dao = new EmpleadoDAO(this.conexion);
         if (!isNew) {
             nEmpleado.setIdEmpleado(this.empleado.getIdEmpleado());
@@ -1011,6 +1105,45 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btn_RealizarOperacionActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Image imagen;
+        try {
+            imagen = ImageIO.read(this.fotografia);
+            ImageIcon imgIcon = new ImageIcon(imagen);
+            Image imgEscalada = imgIcon.getImage().getScaledInstance(lbImage.getWidth(),
+                    lbImage.getHeight(), Image.SCALE_SMOOTH);
+            Icon iconoEscalado = new ImageIcon(imgEscalada);
+            lbImage.setIcon(iconoEscalado);
+
+        } catch (NullPointerException np) {
+            System.out.println("Null pointer " + np.getMessage());
+        } catch (IOException ex) {
+            Logger.getLogger(AddEmpleadoFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cmb_CiudadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_CiudadItemStateChanged
+        if (cmb_Ciudad.getSelectedIndex() > 0) {
+            cmb_Sucursal.setEnabled(true);
+            cmb_Sucursal.removeAllItems();
+            cmb_Sucursal.addItem("Seleccione una Sucursal");
+            sucursales = daoSucursal.consultaSucursalesVistaCiudad(ciudades.get(cmb_Ciudad.getSelectedIndex() - 1).getIdCiudad());
+            for (int i = 0; i < sucursales.size(); i++) {
+                cmb_Sucursal.addItem(sucursales.get(i).getNombre());
+                try {
+                    if ((sucursales.get(i).getNombre().equals(empleado.getSucursal().getNombre())) && !isNew) {
+                        cmb_Sucursal.setSelectedIndex(i + 1);
+                        System.out.println("Bandera 2 " + bandera);
+                        bandera++;
+                    }
+                } catch (Exception e) {
+                }
+            }
+        }
+
+
+    }//GEN-LAST:event_cmb_CiudadItemStateChanged
     BufferedImage createResizedCopy(Image originalImage, int scaledWidth, int scaledHeight, boolean preserveAlpha) {
         int imageType = preserveAlpha ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
         BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, imageType);
@@ -1054,7 +1187,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         LocalDate date = LocalDate.now();
         boolean bandera = false;
         try {
-            bandera = (Integer) sp_diasVacaciones.getValue() >= 6 && (Integer) sp_diasPermiso.getValue() >= 6 && (Float) sp_SalarioDiario.getValue() >= 0 && cmb_Departamento.getSelectedIndex() > 0 && cmb_Puesto.getSelectedIndex() > 0 && cmb_Sucursal.getSelectedIndex() > 0 && cmb_Turno.getSelectedIndex() > 0 && cmb_Tipo.getSelectedIndex() > 0 && dp_FechaContratacion.getDate().isBefore(date);
+            bandera = (Integer) sp_diasVacaciones.getValue() >= 6 && (Integer) sp_diasPermiso.getValue() >= 6 && (Float) sp_SalarioDiario.getValue() >= 0 && cmb_Departamento.getSelectedIndex() > 0 && cmb_Puesto.getSelectedIndex() > 0 && cmb_Sucursal.getSelectedIndex() > 0 && cmb_Turno.getSelectedIndex() > 0 && cmb_Tipo.getSelectedIndex() > 0 && (dp_FechaContratacion.getDate().isBefore(date) || dp_FechaContratacion.getDate().isEqual(date));
         } catch (Exception e) {
             bandera = false;
         }
@@ -1100,8 +1233,8 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Atras;
-    private javax.swing.JButton btn_Fotografia;
     private javax.swing.JButton btn_RealizarOperacion;
+    private javax.swing.JButton btn_Seleccionar;
     private javax.swing.JComboBox<String> cmb_Ciudad;
     private javax.swing.JComboBox<String> cmb_Departamento;
     private javax.swing.JComboBox<String> cmb_Escolaridad;
@@ -1118,6 +1251,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField ftf_CodigoPostal;
     private javax.swing.JFormattedTextField ftf_Email;
     private javax.swing.JFormattedTextField ftf_NSS;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
