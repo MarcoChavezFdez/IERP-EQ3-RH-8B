@@ -5,6 +5,9 @@
  */
 package modelo;
 
+import conexion.CiudadDAO;
+import conexion.ConexionBD;
+
 /**
  *
  * @author Marco Chavez
@@ -18,6 +21,15 @@ public class RH_Ciudad {
 
     public RH_Estado getEstado() {
         return estado;
+    }
+
+    public RH_Ciudad(Integer idCiudad, ConexionBD conexion) {
+        CiudadDAO dao = new CiudadDAO(conexion);
+        RH_Ciudad ciudad = dao.consultarCiudadId(idCiudad);
+        this.idCiudad = ciudad.idCiudad;
+        this.nombre = ciudad.nombre;
+        this.estado = ciudad.getEstado();
+        this.estatus = ciudad.getEstatus();
     }
 
     public void setEstado(RH_Estado estado) {

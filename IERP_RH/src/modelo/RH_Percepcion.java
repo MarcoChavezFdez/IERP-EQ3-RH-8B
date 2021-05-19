@@ -5,6 +5,9 @@
  */
 package modelo;
 
+import conexion.ConexionBD;
+import conexion.PercepcionDAO;
+
 /**
  *
  * @author Marco Chavez
@@ -16,6 +19,21 @@ public class RH_Percepcion {
     private Integer diasPagar;
     private String estatus;
 
+
+    public RH_Percepcion(){
+        
+    }
+    
+    public RH_Percepcion(int idPercepcion,ConexionBD conexion){
+        PercepcionDAO dao = new PercepcionDAO(conexion);
+        RH_Percepcion p = dao.consultaPercepcionId(idPercepcion);
+        this.idPercepcion = p.getIdPercepcion();
+        nombre = p.getDescripcion();
+        descripcion = p.getDescripcion();
+        diasPagar = p.getDiasPagar();
+        estatus = p.getEstatus();
+    }
+    
     public String getEstatus() {
         return estatus;
     }

@@ -101,6 +101,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         jLabel5.setText("Porcentaje");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, -1));
 
+        txNombre.setBackground(new java.awt.Color(153, 255, 153));
         txNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txNombreActionPerformed(evt);
@@ -113,6 +114,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         });
         jPanel1.add(txNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 140, -1));
 
+        TxDescripcion.setBackground(new java.awt.Color(153, 255, 153));
         TxDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 TxDescripcionKeyReleased(evt);
@@ -131,6 +133,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Add, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, -1, -1));
 
+        TxPorcentaje.setBackground(new java.awt.Color(153, 255, 153));
         TxPorcentaje.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 TxPorcentajeKeyPressed(evt);
@@ -151,12 +154,31 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DeduccionesFrame deduccion = new DeduccionesFrame(this.conexion);
-        this.dispose();
-        deduccion.setVisible(true);
-        deduccion.pack();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void TxPorcentajeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyTyped
+
+    }//GEN-LAST:event_TxPorcentajeKeyTyped
+
+    private void TxPorcentajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyReleased
+        try {
+            if (!(Float.parseFloat(TxPorcentaje.getText()) < 100.0f && Float.parseFloat(TxPorcentaje.getText()) > 0)) {
+                lbl_MensajePorcentaje.setText("Rango no valido");
+                TxPorcentaje.setText("0");
+                btn_Add.setEnabled(false);
+            } else {
+                lbl_MensajePorcentaje.setText("");
+                btn_Add.setEnabled(true);
+                verificarCampos();
+            }
+        } catch (NumberFormatException e) {
+            lbl_MensajePorcentaje.setText("Rango no valido");
+            TxPorcentaje.setText("");
+            btn_Add.setEnabled(false);
+        }
+    }//GEN-LAST:event_TxPorcentajeKeyReleased
+
+    private void TxPorcentajeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyPressed
+
+    }//GEN-LAST:event_TxPorcentajeKeyPressed
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
         RH_Deduccion nDeduccion = new RH_Deduccion();
@@ -190,6 +212,25 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         } // TODO add your handling code here:
     }//GEN-LAST:event_btn_AddActionPerformed
 
+    private void TxDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxDescripcionKeyReleased
+        verificarCampos();        // TODO add your handling code here:
+    }//GEN-LAST:event_TxDescripcionKeyReleased
+
+    private void txNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txNombreKeyReleased
+        verificarCampos();
+    }//GEN-LAST:event_txNombreKeyReleased
+
+    private void txNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txNombreActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DeduccionesFrame deduccion = new DeduccionesFrame(this.conexion);
+        this.dispose();
+        deduccion.setVisible(true);
+        deduccion.pack();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void verificarCampos() {
         if ("".equals(txNombre.getText()) || "".equals(TxDescripcion.getText()) || "".equals(TxPorcentaje.getText())) {
             btn_Add.setEnabled(false);
@@ -200,45 +241,6 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
         }
 
     }
-    private void txNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txNombreActionPerformed
-
-    private void txNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txNombreKeyReleased
-        verificarCampos();
-    }//GEN-LAST:event_txNombreKeyReleased
-
-    private void TxDescripcionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxDescripcionKeyReleased
-        verificarCampos();        // TODO add your handling code here:
-    }//GEN-LAST:event_TxDescripcionKeyReleased
-
-    private void TxPorcentajeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyReleased
-        try {
-            if (!(Float.parseFloat(TxPorcentaje.getText()) < 100.0f && Float.parseFloat(TxPorcentaje.getText()) > 0)) {
-                lbl_MensajePorcentaje.setText("Rango no valido");
-                TxPorcentaje.setText("0");
-                btn_Add.setEnabled(false);
-            } else {
-                lbl_MensajePorcentaje.setText("");
-                btn_Add.setEnabled(true);
-                verificarCampos();
-            }
-        } catch (NumberFormatException e) {
-            lbl_MensajePorcentaje.setText("Rango no valido");
-            TxPorcentaje.setText("");
-            btn_Add.setEnabled(false);
-        }
-
-    }//GEN-LAST:event_TxPorcentajeKeyReleased
-
-    private void TxPorcentajeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyPressed
-
-    }//GEN-LAST:event_TxPorcentajeKeyPressed
-
-    private void TxPorcentajeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TxPorcentajeKeyTyped
-
-    }//GEN-LAST:event_TxPorcentajeKeyTyped
-
     /**
      * @param args the command line arguments
      */

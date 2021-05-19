@@ -5,6 +5,9 @@
  */
 package modelo;
 
+import conexion.ConexionBD;
+import conexion.PuestoDAO;
+
 /**
  *
  * @author Marco Chavez
@@ -17,6 +20,15 @@ public class RH_Puesto {
     private String estatus;
 
     public RH_Puesto() {
+    }
+    public RH_Puesto(Integer idPuesto,ConexionBD conexion){
+        PuestoDAO dao= new PuestoDAO(conexion);
+        RH_Puesto p = dao.consultaPuestoId(idPuesto);
+        this.idPuesto=p.getIdPuesto();
+        this.nombre= p.getNombre();
+        this.salarioMinimo = p.getSalarioMinimo();
+        this.salarioMaximo = p.getSalarioMaximo();
+        this.estatus = p.getEstatus();
     }
     
     public Integer getIdPuesto() {

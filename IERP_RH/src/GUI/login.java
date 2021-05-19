@@ -5,8 +5,17 @@
  */
 package GUI;
 
+import conexion.AsistenciaDAO;
 import conexion.ConexionBD;
+import conexion.EmpleadoDAO;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import modelo.RH_Asistencia;
+import modelo.RH_Empleado;
 
 /**
  *
@@ -47,7 +56,7 @@ public class login extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txfUsuario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        txfUsuario.setText("Admin");
+        txfUsuario.setText("MCHAVEZ297@ACCITESZ.COM");
         txfUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txfUsuarioActionPerformed(evt);
@@ -55,6 +64,7 @@ public class login extends javax.swing.JFrame {
         });
         jPanel1.add(txfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 260, 50));
 
+        txPPassw.setText("HOLA.123");
         txPPassw.setToolTipText("");
         txPPassw.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,12 +102,36 @@ public class login extends javax.swing.JFrame {
         if (txfUsuario.getText().isEmpty() || txPPassw.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Debes informar el usuario y password");
         } else {
-            ConexionBD conexion = new ConexionBD(txfUsuario.getText(), txPPassw.getText());
-            if (conexion.getConexion() != null) {
-                PrincipalFrame pf = new PrincipalFrame(conexion);
-                this.dispose();
-                pf.setVisible(true);
-                pf.pack();
+            ConexionBD conexion = new ConexionBD("Admin", "Hola.123");
+            EmpleadoDAO dao = new EmpleadoDAO(conexion);
+            RH_Empleado empleado = new RH_Empleado();
+            try {
+                empleado = dao.consultaEmpleadoCorreo(txfUsuario.getText().toUpperCase());
+
+            } catch (IOException ex) {
+                Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (empleado != null & (empleado.getPassword() == null ? txPPassw.getText() == null : empleado.getPassword().equals(txPPassw.getText()))) {
+                conexion.setEmpleado(empleado);
+                AsistenciaDAO daoAsistencia = new AsistenciaDAO(conexion);
+                RH_Asistencia asistencia = daoAsistencia.consultaAsistenciaFecha(java.sql.Date.valueOf(LocalDate.now()), empleado);
+                if (!Objects.isNull(asistencia)) {
+                    if (Objects.isNull(asistencia.getHoraSalida())) {
+                        PrincipalFrame pf = new PrincipalFrame(conexion);
+                        this.dispose();
+                        pf.setVisible(true);
+                        pf.pack();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ya ha registrado su salida, no puede ingresar al sistema");
+                    }
+                } else {
+                    PrincipalFrame pf = new PrincipalFrame(conexion);
+                    this.dispose();
+                    pf.setVisible(true);
+                    pf.pack();
+                    
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Credenciales invalidas");
             }
@@ -127,28 +161,24 @@ public class login extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                
 
-}
+                }
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(login.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (InstantiationException ex) {
+        } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(login.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (IllegalAccessException ex) {
+        } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(login.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
-} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(login.class
-.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 

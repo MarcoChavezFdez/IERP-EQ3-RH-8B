@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import conexion.ConexionBD;
+import conexion.TurnosDAO;
 import java.sql.Time;
 
 /**
@@ -27,9 +29,18 @@ public class RH_Turno {
     public void setEstatus(String estatus) {
         this.estatus = estatus;
     }
-    
 
     public RH_Turno() {
+    }
+
+    public RH_Turno(Integer idTurno, ConexionBD conexion) {
+        TurnosDAO dao = new TurnosDAO(conexion);
+        RH_Turno turno = dao.consultarTurnoId(idTurno);
+        this.idTurno = idTurno;
+        this.nombre = turno.getNombre();
+        this.horaInicio = turno.getHoraInicio();
+        this.horaFin = turno.getHoraFin();
+        this.estatus = turno.getEstatus();
     }
 
     public Integer getIdTurno() {
@@ -71,8 +82,5 @@ public class RH_Turno {
     public void setHoraFin(Time horaFin) {
         this.horaFin = horaFin;
     }
-
-
-
 
 }

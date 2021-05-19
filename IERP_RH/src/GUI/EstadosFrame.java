@@ -27,10 +27,11 @@ public class EstadosFrame extends javax.swing.JFrame {
     boolean banderaBusqueda = false;
 
     public EstadosFrame(ConexionBD conexion) {
-        this.conexion = conexion;
-        this.paginaActual = 1;
         initComponents();
+        this.conexion = conexion;
+
         EstadoDAO estados = new EstadoDAO(this.conexion);
+        this.paginaActual = 1;
         this.paginaMaxima = estados.consultaPaginas();
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
         ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
@@ -157,28 +158,32 @@ public class EstadosFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 190, -1));
 
-        btn_Siguiente.setText("Siguiente");
+        btn_Siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
+        btn_Siguiente.setBorderPainted(false);
+        btn_Siguiente.setContentAreaFilled(false);
         btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_SiguienteActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 530, -1, -1));
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 520, 160, 50));
 
-        btn_Anterior.setText("Anterior");
+        btn_Anterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
+        btn_Anterior.setBorderPainted(false);
+        btn_Anterior.setContentAreaFilled(false);
         btn_Anterior.setEnabled(false);
         btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AnteriorActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 530, -1, -1));
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 520, 150, 50));
 
         jLabel3.setText("Página");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 540, -1, -1));
 
         lbl_PaginaActual.setText("1");
-        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, -1, -1));
+        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(406, 540, 10, -1));
 
         jLabel4.setText("de");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, -1, -1));
@@ -186,7 +191,7 @@ public class EstadosFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText("1");
         jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 760, 570));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 590));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -278,9 +283,22 @@ public class EstadosFrame extends javax.swing.JFrame {
             if (DAO.eliminacionLogica(estado)) {
                 JOptionPane.showMessageDialog(null, "Estado Eliminado");
                 EstadoDAO estados = new EstadoDAO(this.conexion);
-                ArrayList<RH_Estado> lista = estados.consultaEstadosVista();
+                this.paginaActual = 1;
+                this.paginaMaxima = estados.consultaPaginas();
+                lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+                lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
+                ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
                 llenarTabla(lista);
-
+                txf_Busqueda.setText("");
+                banderaBusqueda = false;
+                btn_Anterior.setEnabled(false);
+                if ((paginaActual + 1) <= paginaMaxima) {
+                    btn_Siguiente.setEnabled(true);
+                }
+                else{
+                    btn_Siguiente.setEnabled(false);
+                }
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
             }

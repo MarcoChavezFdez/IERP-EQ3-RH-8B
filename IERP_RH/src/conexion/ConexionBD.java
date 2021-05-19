@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import modelo.RH_Empleado;
 
 /**
  *
@@ -20,8 +21,9 @@ public class ConexionBD {
 
     private final String user;
     private final String pass;
+    private RH_Empleado empleado;
 
-    private String connectionUrl = "jdbc:sqlserver://54.85.71.68:1433;databaseName=ERP;integratedSecurity=false";
+    private String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=ERP;integratedSecurity=false";
     private Connection conexion;
 
     public ConexionBD(String user, String pass) {
@@ -45,21 +47,22 @@ public class ConexionBD {
         this.conexion = conexion;
     }
 
-    //Modificar este metodo 
-    public static Connection GetConexion() throws SQLException, ClassNotFoundException {
-        String url = "jdbc:sqlserver://localhost:1433;"
-                + "databaseName=ERP;"
-                + "user=sa;"
-                + "password=1234;";
-        try {
-
-            Connection con = DriverManager.getConnection(url);
-            return con;
-        } catch (SQLException e) {
-            System.out.println(e.toString());
-            return null;
-        }
+    public RH_Empleado getEmpleado() {
+        return empleado;
     }
+
+    public void setEmpleado(RH_Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    public String getConnectionUrl() {
+        return connectionUrl;
+    }
+
+    public void setConnectionUrl(String connectionUrl) {
+        this.connectionUrl = connectionUrl;
+    }
+
 
     public String getName() {
         String sql = "SELECT login_name "

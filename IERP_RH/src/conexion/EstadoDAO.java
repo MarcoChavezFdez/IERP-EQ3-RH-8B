@@ -71,8 +71,8 @@ public class EstadoDAO {
     public ArrayList<RH_Estado> consultaEstadosVistaPaginada(Integer pagina) {
         String sql = "select * from vEstados "
                 + "order by idEstado "
-                + "offset " + (pagina - 1) * 3 + " rows "
-                + "fetch next 3 rows only ";
+                + "offset " + (pagina - 1) * 10 + " rows "
+                + "fetch next 10 rows only ";
 
         ArrayList<RH_Estado> lista = new ArrayList<>();
         try {
@@ -94,7 +94,7 @@ public class EstadoDAO {
     }
 
     public Integer consultaPaginas() {
-        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as Estados FROM vEstados)/CAST(" + 3 + " AS float)))as paginasMaximas";
+        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as Estados FROM vEstados)/CAST(" + 10 + " AS float)))as paginasMaximas";
         Integer r = null;
         try {
             Statement st = conexion.getConexion().createStatement();
@@ -112,7 +112,7 @@ public class EstadoDAO {
     }
 
     public Integer consultaPaginasNombre(String nombre) {
-        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as Estados FROM vEstados where Nombre like CONCAT( '%','" + nombre + "','%'))/CAST(" + 3 + " AS float)))as paginasMaximas";
+        String sql = "SELECT CEILING((SELECT(SELECT COUNT(*) as Estados FROM vEstados where Nombre like CONCAT( '%','" + nombre + "','%'))/CAST(" + 10 + " AS float)))as paginasMaximas";
         Integer r = null;
         try {
             Statement st = conexion.getConexion().createStatement();
@@ -134,8 +134,8 @@ public class EstadoDAO {
                 + "from vEstados "
                 + "where nombre like CONCAT( '%','" + nombre + "','%') "
                 + "order by idEstado "
-                + "offset " + (pagina - 1) * 3 + " rows "
-                + "fetch next 3 rows only ";
+                + "offset " + (pagina - 1) * 10 + " rows "
+                + "fetch next 10 rows only ";
 
         ArrayList<RH_Estado> lista = new ArrayList<>();
         try {

@@ -99,6 +99,7 @@ public class AddEstadoFrame extends javax.swing.JFrame {
         jLabel2.setText("Nombre");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, -1, -1));
 
+        txf_Nombre.setBackground(new java.awt.Color(153, 255, 153));
         txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txf_NombreActionPerformed(evt);
@@ -114,6 +115,7 @@ public class AddEstadoFrame extends javax.swing.JFrame {
         jLabel3.setText("Siglas");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
 
+        txf_Siglas.setBackground(new java.awt.Color(153, 255, 153));
         txf_Siglas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txf_SiglasKeyReleased(evt);
