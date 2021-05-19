@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import conexion.ConexionBD;
+import conexion.PeriodoDAO;
 import java.sql.Date;
 
 /**
@@ -17,8 +19,19 @@ public class RH_Periodo {
     private java.sql.Date fechaInicio;
     private java.sql.Date fechaFin;
     private String estatus;
-
+    
     public RH_Periodo() {
+    }
+    
+    public RH_Periodo(Integer idPeriodo,ConexionBD conexion){
+        PeriodoDAO dao = new PeriodoDAO(conexion);
+        RH_Periodo p = new RH_Periodo();
+        p = dao.consultaPeriodoId(idPeriodo);
+        this.idPeriodo=p.getIdPeriodo();
+        this.nombre=p.getNombre();
+        this.fechaInicio=p.getFechaInicio();
+        this.fechaFin=p.getFechaFin();
+        this.estatus=p.getEstatus();  
     }
 
     public Integer getIdPeriodo() {
