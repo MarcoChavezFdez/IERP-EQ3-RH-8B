@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import conexion.ConexionBD;
+import conexion.NominaDAO;
 import java.sql.Date;
 
 /**
@@ -25,6 +27,23 @@ public class RH_Nomina {
     private RH_Periodo periodo;
 
     public RH_Nomina() {
+    }
+    
+    public void recuperaNomina(ConexionBD conexion){
+        NominaDAO dao = new NominaDAO(conexion);
+        RH_Nomina nomina = new RH_Nomina();
+        nomina = dao.consultaNominaId(this.idNomina);
+        this.fechaElaboracion=nomina.getFechaElaboracion();
+        this.fechaPago=nomina.getFechaPago();
+        this.subtotal=nomina.getSubtotal();
+        this.retenciones=nomina.getRetenciones();
+        this.total=nomina.getTotal();
+        this.diasTrabajados=nomina.getDiasTrabajados();
+        this.Estatus=nomina.getEstatus();
+        this.empleado=nomina.getEmpleado();
+        this.formaPago=nomina.getFormaPago();
+        this.periodo =nomina.getPeriodo();
+        
     }
 
     public Integer getIdNomina() {
