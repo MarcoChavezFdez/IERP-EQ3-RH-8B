@@ -5,12 +5,12 @@
  */
 package GUI;
 
+import conexion.AsistenciaDAO;
 import conexion.ConexionBD;
-import conexion.EstadoDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.RH_Estado;
+import modelo.RH_Asistencia;
 
 /**
  *
@@ -29,12 +29,16 @@ public class AsistenciasFrame extends javax.swing.JFrame {
     public AsistenciasFrame(ConexionBD conexion) {
         initComponents();
         this.conexion = conexion;
-
-        EstadoDAO estados = new EstadoDAO(this.conexion);
+        AsistenciaDAO dao = new AsistenciaDAO(this.conexion);
         this.paginaActual = 1;
-        this.paginaMaxima = estados.consultaPaginas();
+        this.paginaMaxima = dao.consultaPaginas();
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
-        ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
+        if (paginaActual + 1 <= paginaMaxima) {
+            btn_Siguiente.setEnabled(true);
+        } else {
+            btn_Siguiente.setEnabled(false);
+        }
+        ArrayList<RH_Asistencia> lista = dao.consultaAsistenciasVistaPaginada(paginaActual);
         llenarTabla(lista);
     }
 
@@ -179,9 +183,9 @@ public class AsistenciasFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-        AddEstadoFrame addEstado = new AddEstadoFrame(this.conexion);
+        AddAsistenciaFrame addAsistencia = new AddAsistenciaFrame(this.conexion);
         this.dispose();
-        addEstado.setVisible(true);
+        addAsistencia.setVisible(true);
         this.pack();
 
     }//GEN-LAST:event_btn_AddActionPerformed
@@ -198,13 +202,14 @@ public class AsistenciasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_DatosMouseClicked
 
     private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
-        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        EstadoDAO DAO = new EstadoDAO(this.conexion);
-        RH_Estado estado = new RH_Estado();
-        estado = DAO.consultaEstadoId(idEstado);
-        AddEstadoFrame modificarEstado = new AddEstadoFrame(this.conexion, estado);
+        Integer idAsistencia = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        AsistenciaDAO daoAsistencias = new AsistenciaDAO(this.conexion);
+        RH_Asistencia asistencia = new RH_Asistencia();
+        asistencia = daoAsistencias.consultaAsistenciaId(idAsistencia);
+        AddAsistenciaFrame modificarAsistencia = new AddAsistenciaFrame(this.conexion, asistencia);
         this.setVisible(false);
-        modificarEstado.setVisible(true);
+        modificarAsistencia.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_ModificarActionPerformed
 
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
@@ -213,91 +218,93 @@ public class AsistenciasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_DatosMousePressed
 
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
-//        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-//        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
-//        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Estado '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
-//        if (reply == JOptionPane.YES_OPTION) {
-//            RH_Estado estado = new RH_Estado();
-//            EstadoDAO DAO = new EstadoDAO(this.conexion);
-//            estado = DAO.consultaEstadoId(idEstado);
-//            if (DAO.eliminacionLogica(estado)) {
-//                JOptionPane.showMessageDialog(null, "Estado Eliminado");
-//                EstadoDAO estados = new EstadoDAO(this.conexion);
-//                this.paginaActual = 1;
-//                this.paginaMaxima = estados.consultaPaginas();
-//                lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
-//                lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
-//                ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
-//                llenarTabla(lista);
+        Integer idAsistencia = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        AsistenciaDAO daoAsistencias = new AsistenciaDAO(this.conexion);
+        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
+        String fecha = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 2).toString();
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la asistencia del empleado '" + nombre + "' del dia '" + fecha + "' ?", "Confirmar Eliminación de la asistencia", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            RH_Asistencia asistencia = new RH_Asistencia();
+            asistencia = daoAsistencias.consultaAsistenciaId(idAsistencia);
+            if (daoAsistencias.eliminacionLogica(asistencia)) {
+                JOptionPane.showMessageDialog(null, "Asistencia eliminada con exito");
+                this.paginaActual = 1;
+                this.paginaMaxima = daoAsistencias.consultaPaginas();
+                lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
+                lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
+                ArrayList<RH_Asistencia> lista = daoAsistencias.consultaAsistenciasVistaPaginada(paginaActual);
+                llenarTabla(lista);
 //                txf_Busqueda.setText("");
-//                banderaBusqueda = false;
-//                btn_Anterior.setEnabled(false);
-//                if ((paginaActual + 1) <= paginaMaxima) {
-//                    btn_Siguiente.setEnabled(true);
-//                }
-//                else{
-//                    btn_Siguiente.setEnabled(false);
-//                }
-//                
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-//            }
-//
-//        }
+                banderaBusqueda = false;
+                btn_Anterior.setEnabled(false);
+                if ((paginaActual + 1) <= paginaMaxima) {
+                    btn_Siguiente.setEnabled(true);
+                } else {
+                    btn_Siguiente.setEnabled(false);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+            }
+
+        }
     }//GEN-LAST:event_btn_EliminarActionPerformed
 
     private void btn_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SiguienteActionPerformed
-//        if ((paginaActual + 1) <= paginaMaxima) {
-//            btn_Anterior.setEnabled(true);
-//            paginaActual++;
-//            if (paginaActual == paginaMaxima) {
-//                this.btn_Siguiente.setEnabled(false);
-//            } else {
-//                this.btn_Siguiente.setEnabled(true);
-//            }
-//            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
-//            EstadoDAO DAO = new EstadoDAO(this.conexion);
-//            ArrayList<RH_Estado> lista = new ArrayList<>();
-//            if (this.banderaBusqueda) {
+        if ((paginaActual + 1) <= paginaMaxima) {
+            btn_Anterior.setEnabled(true);
+            paginaActual++;
+            if (paginaActual == paginaMaxima) {
+                this.btn_Siguiente.setEnabled(false);
+            } else {
+                this.btn_Siguiente.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            AsistenciaDAO daoAsistencias = new AsistenciaDAO(this.conexion);
+            ArrayList<RH_Asistencia> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
 //                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
-//            } else {
-//                lista = DAO.consultaEstadosVistaPaginada(paginaActual);
-//            }
-//
-//            llenarTabla(lista);
-//        }
+            } else {
+                lista = daoAsistencias.consultaAsistenciasVistaPaginada(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
     }//GEN-LAST:event_btn_SiguienteActionPerformed
 
     private void btn_AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnteriorActionPerformed
-//        if ((paginaActual - 1) >= 1) {
-//            btn_Siguiente.setEnabled(true);
-//            paginaActual--;
-//            if (paginaActual == 1) {
-//                this.btn_Anterior.setEnabled(false);
-//            } else {
-//                this.btn_Anterior.setEnabled(true);
-//            }
-//            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
-//            EstadoDAO DAO = new EstadoDAO(this.conexion);
-//            ArrayList<RH_Estado> lista = new ArrayList<>();
-//            if (this.banderaBusqueda) {
+        if ((paginaActual - 1) >= 1) {
+            btn_Siguiente.setEnabled(true);
+            paginaActual--;
+            if (paginaActual == 1) {
+                this.btn_Anterior.setEnabled(false);
+            } else {
+                this.btn_Anterior.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            AsistenciaDAO daoAsistencias = new AsistenciaDAO(this.conexion);
+            ArrayList<RH_Asistencia> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
 //                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
-//            } else {
-//                lista = DAO.consultaEstadosVistaPaginada(paginaActual);
-//            }
-//
-//            llenarTabla(lista);
-//        }
+            } else {
+                lista = daoAsistencias.consultaAsistenciasVistaPaginada(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
     }//GEN-LAST:event_btn_AnteriorActionPerformed
 
-    private void llenarTabla(ArrayList<RH_Estado> lista) {
-        String[] encabezado = {"IdEstado", "Nombre", "Siglas"};
-        Object[][] datos = new Object[lista.size()][3];
+    private void llenarTabla(ArrayList<RH_Asistencia> lista) {
+        String[] encabezado = {"IdAsistencia", "Empleado", "Fecha", "Dia", "Hora Entrada", "Hora Salida"};
+        Object[][] datos = new Object[lista.size()][6];
         int ren = 0;
-        for (RH_Estado s : lista) {
-            datos[ren][0] = s.getIdEstado();
-            datos[ren][1] = s.getNombre();
-            datos[ren][2] = s.getSiglas();
+        for (RH_Asistencia s : lista) {
+            datos[ren][0] = s.getIdAsistencia();
+            datos[ren][1] = s.getEmpleado().getNombreCompleto();
+            datos[ren][2] = s.getFecha();
+            datos[ren][3] = s.getDia();
+            datos[ren][4] = s.getHoraEntrada();
+            datos[ren][5] = s.getHoraSalida();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
