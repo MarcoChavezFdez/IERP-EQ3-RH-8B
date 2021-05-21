@@ -209,7 +209,7 @@ public class AddPeriodoFrame extends javax.swing.JFrame {
         PeriodosFrame periodos = new PeriodosFrame(this.conexion);
         this.dispose();
         periodos.setVisible(true);
-        periodos.pack();
+        this.pack();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txf_NombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_NombreKeyReleased
