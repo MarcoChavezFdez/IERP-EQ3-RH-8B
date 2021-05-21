@@ -413,7 +413,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_PercepcionesActionPerformed
 
     private void btn_AsistenciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AsistenciasActionPerformed
-        // TODO add your handling code here:
+        AsistenciasFrame asistencias = new AsistenciasFrame(this.conexion);
+        this.dispose();
+        asistencias.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_AsistenciasActionPerformed
 
     private void btn_HistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_HistorialActionPerformed
