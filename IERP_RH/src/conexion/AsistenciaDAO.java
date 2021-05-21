@@ -75,7 +75,7 @@ public class AsistenciaDAO {
 
     public ArrayList<RH_Asistencia> consultaAsistenciasVistaPaginada(Integer pagina) {
         String sql = "select * from vAsistencias "
-                + "order by idAsistencias "
+                + "order by idAsistencia "
                 + "offset " + (pagina - 1) * 10 + " rows "
                 + "fetch next 10 rows only ";
 
@@ -215,7 +215,7 @@ public class AsistenciaDAO {
         }
         return a;
     }
-
+    //Consulta asistencia por empleado
     public RH_Asistencia consultaAsistenciaFecha(Date fecha, RH_Empleado empleado) {
         String sql = " select * "
                 + " from vAsistencias "
@@ -242,7 +242,7 @@ public class AsistenciaDAO {
         }
         return a;
     }
-
+    
     public boolean actualizarAsistencia(RH_Asistencia asistencia) {
         String sql = "update RH.Asistencias set fecha=?, horaEntrada=?, horaSalida=?,"
                 + " dia=?, idEmpleado=? "
@@ -282,7 +282,7 @@ public class AsistenciaDAO {
         }
         return ban;
     }
-
+    
     public ConexionBD getConexion() {
         return conexion;
     }
