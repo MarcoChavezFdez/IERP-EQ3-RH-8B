@@ -10,15 +10,12 @@ import conexion.ConexionBD;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import javax.swing.JOptionPane;
 import modelo.RH_Asistencia;
@@ -424,7 +421,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_HistorialActionPerformed
 
     private void btn_JustificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_JustificacionesActionPerformed
-        // TODO add your handling code here:
+        AusenciasJustificadasFrame ausenciasFrame = new AusenciasJustificadasFrame(this.conexion);
+        this.dispose();
+        ausenciasFrame.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_JustificacionesActionPerformed
 
     private void btn_NominasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NominasActionPerformed
