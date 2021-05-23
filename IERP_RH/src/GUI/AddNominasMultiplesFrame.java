@@ -18,12 +18,7 @@ import conexion.PeriodoDAO;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
-
-import javax.swing.JOptionPane;
-
 import modelo.RH_Empleado;
-
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Deduccion;
 import modelo.RH_FormaPago;
