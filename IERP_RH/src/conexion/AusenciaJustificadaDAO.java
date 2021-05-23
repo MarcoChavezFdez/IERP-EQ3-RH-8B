@@ -5,6 +5,7 @@
  */
 package conexion;
 
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -171,6 +172,40 @@ public class AusenciaJustificadaDAO {
             JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
         }
         return lista;
+    }
+
+    public Integer calculaDiasVacaciones(java.sql.Date fechaFin, Integer idEmpleado) {
+        Integer diasVacaciones = 0;
+        String sql = "{call RH.calculaDiasVacaciones(?,?,?)}";
+        try {
+            CallableStatement cstmt = conexion.getConexion().prepareCall(sql);
+            cstmt.setDate(1, fechaFin);
+            cstmt.setInt(2, idEmpleado);
+            cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
+            cstmt.execute();
+            diasVacaciones=cstmt.getInt(3);
+            cstmt.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en Executar calculaDiasVacaciones: " + ex.getMessage());
+        }
+        return diasVacaciones;
+    }
+    
+        public Integer calculaDiasPermiso(java.sql.Date fechaFin, Integer idEmpleado) {
+        Integer diasPermiso = 0;
+        String sql = "{call RH.calculaDiasPermiso(?,?,?)}";
+        try {
+            CallableStatement cstmt = conexion.getConexion().prepareCall(sql);
+            cstmt.setDate(1, fechaFin);
+            cstmt.setInt(2, idEmpleado);
+            cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
+            cstmt.execute();
+            diasPermiso=cstmt.getInt(3);
+            cstmt.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en Executar calculaDiasVacaciones: " + ex.getMessage());
+        }
+        return diasPermiso;
     }
 
 //    public ArrayList<RH_Asistencia> consultaAsistenciaFechaVista(java.sql.Date fechaInicio, java.sql.Date fechaFin) {
