@@ -193,6 +193,11 @@ public class NominasFrame extends javax.swing.JFrame {
         btn_Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GN.png"))); // NOI18N
         btn_Agregar.setBorderPainted(false);
         btn_Agregar.setContentAreaFilled(false);
+        btn_Agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AgregarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 80, 210, 80));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 600));
@@ -345,6 +350,13 @@ public class NominasFrame extends javax.swing.JFrame {
             llenarTabla(lista);
         }
     }//GEN-LAST:event_btn_AnteriorActionPerformed
+
+    private void btn_AgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarActionPerformed
+        AddNominaFrame addNomina = new AddNominaFrame(this.conexion);
+        this.dispose();
+        addNomina.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_AgregarActionPerformed
 
     private void llenarTabla(ArrayList<RH_Nomina> lista) {
         String[] encabezado = {"IdNomina", "Fecha Elaboracion", "Fecha Pago", "Total", "Dias Trabajados", "Estatus", "Empleado", "Forma Pago", "Periodo"};
