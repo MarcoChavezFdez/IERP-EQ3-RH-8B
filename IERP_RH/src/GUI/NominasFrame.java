@@ -188,6 +188,11 @@ public class NominasFrame extends javax.swing.JFrame {
         btn_AgregarMultiples.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GMN.png"))); // NOI18N
         btn_AgregarMultiples.setBorderPainted(false);
         btn_AgregarMultiples.setContentAreaFilled(false);
+        btn_AgregarMultiples.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AgregarMultiplesActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_AgregarMultiples, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 80, 210, 90));
 
         btn_Agregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GN.png"))); // NOI18N
@@ -357,6 +362,14 @@ public class NominasFrame extends javax.swing.JFrame {
         addNomina.setVisible(true);
         this.pack();
     }//GEN-LAST:event_btn_AgregarActionPerformed
+
+    private void btn_AgregarMultiplesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarMultiplesActionPerformed
+       AddNominasMultiplesFrame addNominas = new AddNominasMultiplesFrame(this.conexion);
+       this.dispose();
+       addNominas.setVisible(true);
+       this.pack();
+       
+    }//GEN-LAST:event_btn_AgregarMultiplesActionPerformed
 
     private void llenarTabla(ArrayList<RH_Nomina> lista) {
         String[] encabezado = {"IdNomina", "Fecha Elaboracion", "Fecha Pago", "Total", "Dias Trabajados", "Estatus", "Empleado", "Forma Pago", "Periodo"};

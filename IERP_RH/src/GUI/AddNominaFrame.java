@@ -13,6 +13,7 @@ import conexion.FormaPagoDAO;
 import conexion.PercepcionDAO;
 import conexion.PeriodoDAO;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 import modelo.RH_Empleado;
 import modelo.RH_Deduccion;
 import modelo.RH_FormaPago;
@@ -33,7 +34,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
     ArrayList<RH_FormaPago> formasPago;
     ArrayList<RH_Periodo> periodos;
-    ArrayList<RH_Empleado> empleadosTabla = new ArrayList<>();
+    ArrayList<RH_Empleado> empleados = new ArrayList<>();
     ArrayList<RH_Percepcion> percepcionesTabla = new ArrayList<>();
     ArrayList<RH_Deduccion> deduccionesTabla = new ArrayList<>();
 
@@ -132,6 +133,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Deducciones.setEnabled(false);
         jScrollPane3.setViewportView(tbl_Deducciones);
 
         jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 610, -1, 120));
@@ -147,11 +149,17 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Percepciones.setEnabled(false);
         jScrollPane4.setViewportView(tbl_Percepciones);
 
         jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, -1, 120));
 
         cmb_Empleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR EMPLEADO" }));
+        cmb_Empleado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmb_EmpleadoItemStateChanged(evt);
+            }
+        });
         jPanel1.add(cmb_Empleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 210, -1));
 
         jLabel4.setText("Empleado");
@@ -172,18 +180,15 @@ public class AddNominaFrame extends javax.swing.JFrame {
         jTable3.setAutoCreateRowSorter(true);
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"
             }
         ));
         jScrollPane5.setViewportView(jTable3);
 
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 380, 430, 100));
+        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, 540, 50));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Deducciones Nomina");
@@ -191,7 +196,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Resumen Nomina");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 340, -1, 20));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, -1, 20));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Percepciones Nomina");
@@ -211,20 +216,18 @@ public class AddNominaFrame extends javax.swing.JFrame {
         EmpleadoDAO daoEmpleado = new EmpleadoDAO(this.conexion);
         DeduccionDAO daoDeduccion = new DeduccionDAO(this.conexion);
         PercepcionDAO daoPercepcion = new PercepcionDAO(this.conexion);
-
-        empleadosTabla = daoEmpleado.consultaEmpleadosVista();
-        deduccionesTabla = daoDeduccion.consultaDeducionesVista();
-        percepcionesTabla = daoPercepcion.consultaPercepcionesVista();
-
-        llenarTablaEmpleados(empleadosTabla);
-        llenarTablaPercepciones(percepcionesTabla);
-        llenarTablaDeducciones(deduccionesTabla);
-
         FormaPagoDAO daoFormaPago = new FormaPagoDAO(this.conexion);
         PeriodoDAO daoPeriodo = new PeriodoDAO(this.conexion);
+
+        empleados = daoEmpleado.consultaEmpleadosVista();
+        deduccionesTabla = daoDeduccion.consultaDeducionesVista();
+        percepcionesTabla = daoPercepcion.consultaPercepcionesVista();
         formasPago = daoFormaPago.consultaFormasPagoVista();
-        //Crear un filtro para los periodos que no han tenido nomina
         periodos = daoPeriodo.consultaPeriodosVista();
+
+        empleados.forEach((e) -> {
+            cmb_Empleado.addItem(e.getNombreCompleto());
+        });
 
         periodos.forEach((t) -> {
             cmb_Periodo.addItem(t.getNombre());
@@ -233,6 +236,10 @@ public class AddNominaFrame extends javax.swing.JFrame {
         formasPago.forEach((t) -> {
             cmb_FormaPago.addItem(t.getNombre());
         });
+
+        llenarTablaPercepciones(percepcionesTabla);
+        llenarTablaDeducciones(deduccionesTabla);
+
 
     }//GEN-LAST:event_formWindowOpened
 
@@ -263,46 +270,15 @@ public class AddNominaFrame extends javax.swing.JFrame {
         this.pack();
     }//GEN-LAST:event_btn_AtrasActionPerformed
 
-    private void llenarTablaEmpleados(ArrayList<RH_Empleado> lista) {
-        String[] encabezado = {"IdEmpleado", "Nombre Completo", "Puesto", "Seleccionado"};
-        Object[][] datos = new Object[lista.size()][4];
-        int ren = 0;
-        for (RH_Empleado s : lista) {
-            datos[ren][0] = s.getIdEmpleado();
-            datos[ren][1] = s.getNombreCompleto();
-            datos[ren][2] = s.getPuesto().getNombre();
-            datos[ren][3] = false;
-            ren++;
+    private void cmb_EmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_EmpleadoItemStateChanged
+        if (cmb_Empleado.getSelectedIndex() > 0) {
+            tbl_Percepciones.setEnabled(true);
+            tbl_Deducciones.setEnabled(true);
+        } else {
+            tbl_Percepciones.setEnabled(false);
+            tbl_Deducciones.setEnabled(false);
         }
-        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
-            @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) {
-                if (colIndex != 3) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-
-            @Override
-            public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return Integer.class;
-                    case 3:
-                        return Boolean.class;
-                    default:
-                        return Boolean.class;
-                }
-            }
-
-        };
-        tbl_Empleados.setModel(m);
-    }
+    }//GEN-LAST:event_cmb_EmpleadoItemStateChanged
 
     private void llenarTablaPercepciones(ArrayList<RH_Percepcion> lista) {
         String[] encabezado = {"IdPercepcion", "Nombre", "Dias a Pagar", "Seleccionado"};
