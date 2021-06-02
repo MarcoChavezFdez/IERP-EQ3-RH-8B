@@ -5,12 +5,13 @@
  */
 package GUI;
 
+import conexion.AusenciaJustificadaDAO;
 import conexion.ConexionBD;
-import conexion.EstadoDAO;
+
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.RH_Estado;
+import modelo.RH_AusenciaJustificada;
 
 /**
  *
@@ -29,12 +30,11 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
     public AusenciasJustificadasFrame(ConexionBD conexion) {
         initComponents();
         this.conexion = conexion;
-
-        EstadoDAO estados = new EstadoDAO(this.conexion);
+        AusenciaJustificadaDAO ausencias = new AusenciaJustificadaDAO(this.conexion);
         this.paginaActual = 1;
-        this.paginaMaxima = estados.consultaPaginas();
+        this.paginaMaxima = ausencias.consultaPaginas();
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
-        ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
+        ArrayList<RH_AusenciaJustificada> lista = ausencias.consultaAusenciasJustificadasVistaPaginada(paginaActual);
         llenarTabla(lista);
     }
 
@@ -53,8 +53,6 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Datos = new javax.swing.JTable();
         btn_Atras = new javax.swing.JButton();
-        txf_Busqueda = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_Eliminar = new javax.swing.JButton();
         btn_Siguiente = new javax.swing.JButton();
@@ -96,13 +94,13 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
         tbl_Datos.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "idEstado", "Nombre", "Siglas", "Estatus"
+                "idAusencia", "Fecha Solicitud", "Fecha Inicio", "Fecha Fin", "Empleado ", "Estatus"
             }
         ));
         tbl_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -126,22 +124,6 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 230, -1));
-
-        txf_Busqueda.setBackground(new java.awt.Color(153, 255, 153));
-        txf_Busqueda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txf_BusquedaActionPerformed(evt);
-            }
-        });
-        txf_Busqueda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txf_BusquedaKeyReleased(evt);
-            }
-        });
-        jPanel1.add(txf_Busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 140, 254, -1));
-
-        jLabel1.setText("Busqueda por nombre");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel2.setText("Ausencias Justificadas");
@@ -197,9 +179,9 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-        AddEstadoFrame addEstado = new AddEstadoFrame(this.conexion);
+        AddAusenciaJustificadaFrame addAusencia = new AddAusenciaJustificadaFrame(this.conexion);
         this.dispose();
-        addEstado.setVisible(true);
+        addAusencia.setVisible(true);
         this.pack();
 
     }//GEN-LAST:event_btn_AddActionPerformed
@@ -211,60 +193,18 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
         this.pack();
     }//GEN-LAST:event_btn_AtrasActionPerformed
 
-    private void txf_BusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txf_BusquedaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txf_BusquedaActionPerformed
-
-    private void txf_BusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_BusquedaKeyReleased
-        if ("".equals(txf_Busqueda.getText())) {
-            this.banderaBusqueda = false;
-            this.btn_Anterior.setEnabled(false);
-            this.btn_Siguiente.setEnabled(true);
-            EstadoDAO estados = new EstadoDAO(this.conexion);
-            this.paginaActual = 1;
-            ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(this.paginaActual);
-            this.paginaMaxima = estados.consultaPaginas();
-            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
-            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
-            llenarTabla(lista);
-        } else {
-            this.banderaBusqueda = true;
-            EstadoDAO estados = new EstadoDAO(this.conexion);
-            this.paginaActual = 1;
-            ArrayList<RH_Estado> lista = estados.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), this.paginaActual);
-            this.paginaMaxima = estados.consultaPaginasNombre(txf_Busqueda.getText());
-            this.lbl_PaginaMaxima.setText(String.valueOf(paginaMaxima));
-            this.lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
-            if (paginaMaxima == 0) {
-                lbl_PaginaActual.setText("0");
-                btn_Siguiente.setEnabled(false);
-                btn_Anterior.setEnabled(false);
-            } else {
-                btn_Anterior.setEnabled(false);
-                if (paginaMaxima > 1) {
-                    btn_Siguiente.setEnabled(true);
-                } else {
-                    btn_Siguiente.setEnabled(false);
-                }
-
-            }
-            llenarTabla(lista);
-        }
-
-    }//GEN-LAST:event_txf_BusquedaKeyReleased
-
     private void tbl_DatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMouseClicked
 
     }//GEN-LAST:event_tbl_DatosMouseClicked
 
     private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
-        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        EstadoDAO DAO = new EstadoDAO(this.conexion);
-        RH_Estado estado = new RH_Estado();
-        estado = DAO.consultaEstadoId(idEstado);
-        AddEstadoFrame modificarEstado = new AddEstadoFrame(this.conexion, estado);
+        Integer idAusencia = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        AusenciaJustificadaDAO ausencias = new AusenciaJustificadaDAO(this.conexion);
+        RH_AusenciaJustificada ausencia = new RH_AusenciaJustificada();
+        ausencia = ausencias.consultaAusenciaJustificadaId(idAusencia);
+        AddAusenciaJustificadaFrame modificarAusencia = new AddAusenciaJustificadaFrame(this.conexion, ausencia);
         this.setVisible(false);
-        modificarEstado.setVisible(true);
+        modificarAusencia.setVisible(true);
     }//GEN-LAST:event_btn_ModificarActionPerformed
 
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
@@ -273,32 +213,31 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_DatosMousePressed
 
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
-        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
-        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Estado '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        Integer idAusencia = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la ausencia  '" + idAusencia + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            RH_Estado estado = new RH_Estado();
-            EstadoDAO DAO = new EstadoDAO(this.conexion);
-            estado = DAO.consultaEstadoId(idEstado);
-            if (DAO.eliminacionLogica(estado)) {
-                JOptionPane.showMessageDialog(null, "Estado Eliminado");
-                EstadoDAO estados = new EstadoDAO(this.conexion);
+            AusenciaJustificadaDAO ausencias = new AusenciaJustificadaDAO(this.conexion);
+            RH_AusenciaJustificada ausencia = new RH_AusenciaJustificada();
+            ausencia = ausencias.consultaAusenciaJustificadaId(idAusencia);
+            if (ausencias.eliminacionLogica(ausencia)) {
+                JOptionPane.showMessageDialog(null, "Ausencia Eliminado");
+   
                 this.paginaActual = 1;
-                this.paginaMaxima = estados.consultaPaginas();
+                this.paginaMaxima = ausencias.consultaPaginas();
                 lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
                 lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
-                ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
+                ArrayList<RH_AusenciaJustificada> lista = ausencias.consultaAusenciasJustificadasVistaPaginada(paginaActual);
                 llenarTabla(lista);
-                txf_Busqueda.setText("");
-                banderaBusqueda = false;
+//                txf_Busqueda.setText("");
+//                banderaBusqueda = false;
                 btn_Anterior.setEnabled(false);
                 if ((paginaActual + 1) <= paginaMaxima) {
                     btn_Siguiente.setEnabled(true);
-                }
-                else{
+                } else {
                     btn_Siguiente.setEnabled(false);
                 }
-                
+
             } else {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
             }
@@ -316,12 +255,12 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
                 this.btn_Siguiente.setEnabled(true);
             }
             this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
-            EstadoDAO DAO = new EstadoDAO(this.conexion);
-            ArrayList<RH_Estado> lista = new ArrayList<>();
+            AusenciaJustificadaDAO DAO = new AusenciaJustificadaDAO(this.conexion);
+            ArrayList<RH_AusenciaJustificada> lista = new ArrayList<>();
             if (this.banderaBusqueda) {
-                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+//                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
             } else {
-                lista = DAO.consultaEstadosVistaPaginada(paginaActual);
+                lista = DAO.consultaAusenciasJustificadasVistaPaginada(paginaActual);
             }
 
             llenarTabla(lista);
@@ -338,26 +277,29 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
                 this.btn_Anterior.setEnabled(true);
             }
             this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
-            EstadoDAO DAO = new EstadoDAO(this.conexion);
-            ArrayList<RH_Estado> lista = new ArrayList<>();
+            AusenciaJustificadaDAO DAO = new AusenciaJustificadaDAO(this.conexion);
+            ArrayList<RH_AusenciaJustificada> lista = new ArrayList<>();
             if (this.banderaBusqueda) {
-                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+//                lista = DAO.consultaEstadosNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
             } else {
-                lista = DAO.consultaEstadosVistaPaginada(paginaActual);
+                lista = DAO.consultaAusenciasJustificadasVistaPaginada(paginaActual);
             }
 
             llenarTabla(lista);
         }
     }//GEN-LAST:event_btn_AnteriorActionPerformed
 
-    private void llenarTabla(ArrayList<RH_Estado> lista) {
-        String[] encabezado = {"IdEstado", "Nombre", "Siglas"};
-        Object[][] datos = new Object[lista.size()][3];
+    private void llenarTabla(ArrayList<RH_AusenciaJustificada> lista) {
+        String[] encabezado = {"IdAusencia", "Fecha Solicitud", "Fecha Fin","Fecha Inicio","Empleado","Estatus"};
+        Object[][] datos = new Object[lista.size()][6];
         int ren = 0;
-        for (RH_Estado s : lista) {
-            datos[ren][0] = s.getIdEstado();
-            datos[ren][1] = s.getNombre();
-            datos[ren][2] = s.getSiglas();
+        for (RH_AusenciaJustificada s : lista) {
+            datos[ren][0] = s.getIdAusencia();
+            datos[ren][1] = s.getFechaSolicitud();
+            datos[ren][2] = s.getFechaInicio();
+            datos[ren][3] = s.getFechaFin();
+            datos[ren][4] = s.getEmpleadoSolicitador().getNombreCompleto();
+            datos[ren][5] = s.getEstatus();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
@@ -382,7 +324,6 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Eliminar;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JButton btn_Siguiente;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -391,6 +332,5 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_PaginaActual;
     private javax.swing.JLabel lbl_PaginaMaxima;
     private javax.swing.JTable tbl_Datos;
-    private javax.swing.JTextField txf_Busqueda;
     // End of variables declaration//GEN-END:variables
 }

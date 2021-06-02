@@ -421,7 +421,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_HistorialActionPerformed
 
     private void btn_JustificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_JustificacionesActionPerformed
-        // TODO add your handling code here:
+        AusenciasJustificadasFrame ausenciasFrame = new AusenciasJustificadasFrame(conexion);
+        this.dispose();
+        ausenciasFrame.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_JustificacionesActionPerformed
 
     private void btn_NominasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NominasActionPerformed
