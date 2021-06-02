@@ -185,17 +185,22 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 380, 430, 100));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Deducciones Nomina");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 580, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Resumen Nomina");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 340, -1, 20));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Percepciones Nomina");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, -1, -1));
 
-        btn_Realizar.setText("Realizar Operación");
-        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 650, -1, -1));
+        btn_Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
+        btn_Realizar.setBorderPainted(false);
+        btn_Realizar.setContentAreaFilled(false);
+        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 610, 180, 90));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 1170, 840));
 

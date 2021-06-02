@@ -236,7 +236,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 btn_RealizarOperacionActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_RealizarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 580, 180, 70));
+        jPanel1.add(btn_RealizarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 630, 180, 70));
 
         tp_DatosEmpleado.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -652,9 +652,10 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         lbl_Titulo.setText("Añadir Empleado al Sistema");
+        lbl_Titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 15, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 660));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 730));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
