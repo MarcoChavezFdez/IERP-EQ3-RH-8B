@@ -17,7 +17,6 @@ package modelo;
 
 import conexion.ConexionBD;
 import conexion.EmpleadoDAO;
-import java.io.InputStream;
 import java.sql.Date;
 
 public class RH_Empleado {
@@ -35,7 +34,7 @@ public class RH_Empleado {
     private String nss;
     private int diasVacaciones;
     private int diasPermiso;
-    private InputStream fotografia;
+    private byte[] fotografia;
     private String direccion;
     private String colonia;
     private String codigoPostal;
@@ -202,11 +201,11 @@ public class RH_Empleado {
         this.diasPermiso = diasPermiso;
     }
 
-    public InputStream getFotografia() {
+    public byte[] getFotografia() {
         return fotografia;
     }
 
-    public void setFotografia(InputStream fotografia) {
+    public void setFotografia(byte[] fotografia) {
         this.fotografia = fotografia;
     }
 
@@ -313,7 +312,5 @@ public class RH_Empleado {
     public void setTurno(RH_Turno turno) {
         this.turno = turno;
     }
-
-
 
 }
