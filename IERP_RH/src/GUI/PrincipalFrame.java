@@ -7,6 +7,7 @@ package GUI;
 
 import conexion.AsistenciaDAO;
 import conexion.ConexionBD;
+import java.awt.Image;
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,6 +18,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import modelo.RH_Asistencia;
 
@@ -107,10 +110,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btn_Asistencia = new javax.swing.JButton();
+        lbImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menú Principal");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(241, 151, 89));
@@ -269,7 +278,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 500, -1, -1));
 
         lbl_User.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 550, 250, 140));
+        jPanel1.add(lbl_User, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 550, 230, 60));
 
         btn_CerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Cerrar.png"))); // NOI18N
         btn_CerrarSesion.setBorderPainted(false);
@@ -341,6 +350,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Asistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 820, -1, -1));
+        jPanel1.add(lbImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 620, 120, 110));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1260, 870));
 
@@ -519,6 +529,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_AsistenciaActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        try {
+            ImageIcon imgIcon = new ImageIcon(this.conexion.getEmpleado().getFotografia());
+            Image imgEscalada = imgIcon.getImage().getScaledInstance(lbImage.getWidth(),
+                    lbImage.getHeight(), Image.SCALE_SMOOTH);
+
+            Icon iconoEscalado = new ImageIcon(imgEscalada);
+            lbImage.setIcon(iconoEscalado);
+        } catch (NullPointerException np) {
+            System.out.println("Null pointer " + np.getMessage());
+        }
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -554,6 +577,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbImage;
     private javax.swing.JLabel lbl_User;
     private javax.swing.JLabel lbl_fecha;
     // End of variables declaration//GEN-END:variables
