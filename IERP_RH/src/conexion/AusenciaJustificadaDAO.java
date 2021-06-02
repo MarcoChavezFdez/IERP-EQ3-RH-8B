@@ -39,8 +39,8 @@ public class AusenciaJustificadaDAO {
             st.setString(4, ausenciaJustificada.getTipo());
             st.setInt(5, ausenciaJustificada.getEmpleadoSolicitador().getIdEmpleado());
             st.setInt(6, ausenciaJustificada.getEmpleadoAutorizador().getIdEmpleado());
-            st.setBinaryStream(7, ausenciaJustificada.getEvidencia());
-            st.setString(8, "A");
+            st.setBytes(7, ausenciaJustificada.getEvidencia());
+            st.setString(8,ausenciaJustificada.getEstatus());
             st.setString(9, ausenciaJustificada.getMotivo());
             st.execute();
             ban = true;
@@ -64,9 +64,11 @@ public class AusenciaJustificadaDAO {
                 a.setFechaSolicitud(rs.getDate("fechaSolicitud"));
                 a.setFechaInicio(rs.getDate("fechaInicio"));
                 a.setFechaFin(rs.getDate("fechaFin"));
+                a.setTipo(rs.getString("tipo"));
                 a.setEmpleadoSolicitador(new RH_Empleado(rs.getInt("idEmpleadoSolicita"), this.conexion));
                 a.setEmpleadoAutorizador(new RH_Empleado(rs.getInt("idEmpleadoAutoriza"), this.conexion));
-                a.setEvidencia(rs.getBinaryStream("evidencia"));
+                a.setEvidencia(rs.getBytes("evidencia"));
+                a.setEstatus(rs.getString("estatus"));
                 a.setMotivo(rs.getString("motivo"));
                 lista.add(a);
             }
@@ -94,9 +96,11 @@ public class AusenciaJustificadaDAO {
                 a.setFechaSolicitud(rs.getDate("fechaSolicitud"));
                 a.setFechaInicio(rs.getDate("fechaInicio"));
                 a.setFechaFin(rs.getDate("fechaFin"));
+                a.setTipo(rs.getString("tipo"));
                 a.setEmpleadoSolicitador(new RH_Empleado(rs.getInt("idEmpleadoSolicita"), this.conexion));
                 a.setEmpleadoAutorizador(new RH_Empleado(rs.getInt("idEmpleadoAutoriza"), this.conexion));
-                a.setEvidencia(rs.getBinaryStream("evidencia"));
+                a.setEvidencia(rs.getBytes("evidencia"));
+                a.setEstatus(rs.getString("estatus"));
                 a.setMotivo(rs.getString("motivo"));
                 lista.add(a);
             }
@@ -160,9 +164,11 @@ public class AusenciaJustificadaDAO {
                 a.setFechaSolicitud(rs.getDate("fechaSolicitud"));
                 a.setFechaInicio(rs.getDate("fechaInicio"));
                 a.setFechaFin(rs.getDate("fechaFin"));
+                a.setTipo(rs.getString("tipo"));
                 a.setEmpleadoSolicitador(new RH_Empleado(rs.getInt("idEmpleadoSolicita"), this.conexion));
                 a.setEmpleadoAutorizador(new RH_Empleado(rs.getInt("idEmpleadoAutoriza"), this.conexion));
-                a.setEvidencia(rs.getBinaryStream("evidencia"));
+                a.setEvidencia(rs.getBytes("evidencia"));
+                a.setEstatus(rs.getString("estatus"));
                 a.setMotivo(rs.getString("motivo"));
                 lista.add(a);
             }
@@ -246,9 +252,11 @@ public class AusenciaJustificadaDAO {
                 a.setFechaSolicitud(rs.getDate("fechaSolicitud"));
                 a.setFechaInicio(rs.getDate("fechaInicio"));
                 a.setFechaFin(rs.getDate("fechaFin"));
+                a.setTipo(rs.getString("tipo"));
                 a.setEmpleadoSolicitador(new RH_Empleado(rs.getInt("idEmpleadoSolicita"), this.conexion));
                 a.setEmpleadoAutorizador(new RH_Empleado(rs.getInt("idEmpleadoAutoriza"), this.conexion));
-                a.setEvidencia(rs.getBinaryStream("evidencia"));
+                a.setEvidencia(rs.getBytes("evidencia"));
+                a.setEstatus(rs.getString("estatus"));
                 a.setMotivo(rs.getString("motivo"));
             }
             rs.close();
@@ -263,7 +271,7 @@ public class AusenciaJustificadaDAO {
         String sql = "update RH.AusenciasJustificadas set "
                 + " fechaSolicitud=?, fechaInicio=?, fechaFin=? "
                 + " tipo=?, idEmpleadoSolicita=?, idEmpleadoAutoriza=? "
-                + " evidencia=?, motivo=? "
+                + " evidencia=?, motivo=?, estatus=? "
                 + " where idAusencia=?";
         boolean ban = false;
         try {
@@ -274,9 +282,10 @@ public class AusenciaJustificadaDAO {
             st.setString(4, ausenciaJustificada.getTipo());
             st.setInt(5, ausenciaJustificada.getEmpleadoSolicitador().getIdEmpleado());
             st.setInt(6, ausenciaJustificada.getEmpleadoAutorizador().getIdEmpleado());
-            st.setBinaryStream(7, ausenciaJustificada.getEvidencia());
+            st.setBytes(7, ausenciaJustificada.getEvidencia());
             st.setString(8, ausenciaJustificada.getMotivo());
-            st.setInt(9, ausenciaJustificada.getIdAusencia());
+            st.setString(9, ausenciaJustificada.getEstatus());
+            st.setInt(10, ausenciaJustificada.getIdAusencia());
             st.execute();
             st.close();
             ban = true;
