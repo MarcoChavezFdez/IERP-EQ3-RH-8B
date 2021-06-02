@@ -32,39 +32,6 @@ public class EmpleadoDAO {
         this.conexion = conexion;
     }
 
-    public boolean insertarPrueba(InputStream image) {
-        String sql = "insert into RH.Fotografias values(?)";
-        boolean ban = false;
-        try {
-            PreparedStatement st = conexion.getConexion().prepareStatement(sql);
-            st.setBinaryStream(1, image);
-            st.execute();
-            ban = true;
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
-        }
-        return ban;
-    }
-
-    public InputStream consultaFotografia(Integer idFoto) {
-        String sql = "select * from RH.Fotografias "
-                + "where idFotografia=" + idFoto;
-        try {
-            Statement st = conexion.getConexion().createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            if (rs.next()) {
-                InputStream image;
-                image = rs.getBinaryStream("fotografia");
-                return image;
-            }
-            rs.close();
-            st.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
-        }
-        return null;
-    }
         public RH_Empleado consultaEmpleadoCorreo(String correo) throws IOException {
         String sql = "select * from vEmpleados "
                 + "where email like '"+correo+"'";
@@ -87,7 +54,7 @@ public class EmpleadoDAO {
                 empleado.setNss(rs.getString("nss"));
                 empleado.setDiasVacaciones(rs.getInt("diasVacaciones"));
                 empleado.setDiasPermiso(rs.getInt("diasPermiso"));
-                empleado.setFotografia(rs.getBinaryStream("fotografia"));
+                empleado.setFotografia(rs.getBytes("fotografia"));
                 empleado.setDireccion(rs.getString("direccion"));
                 empleado.setColonia(rs.getString("colonia"));
                 empleado.setCodigoPostal(rs.getString("codigoPostal"));
@@ -133,7 +100,7 @@ public class EmpleadoDAO {
                 empleado.setNss(rs.getString("nss"));
                 empleado.setDiasVacaciones(rs.getInt("diasVacaciones"));
                 empleado.setDiasPermiso(rs.getInt("diasPermiso"));
-                empleado.setFotografia(rs.getBinaryStream("fotografia"));
+                empleado.setFotografia(rs.getBytes("fotografia"));
                 empleado.setDireccion(rs.getString("direccion"));
                 empleado.setColonia(rs.getString("colonia"));
                 empleado.setCodigoPostal(rs.getString("codigoPostal"));
@@ -175,7 +142,7 @@ public class EmpleadoDAO {
             st.setString(10, empleado.getNss());
             st.setInt(11, empleado.getDiasVacaciones());
             st.setInt(12, empleado.getDiasPermiso());
-            st.setBinaryStream(13, empleado.getFotografia());
+            st.setBytes(13, empleado.getFotografia());
             st.setString(14, empleado.getDireccion());
             st.setString(15, empleado.getColonia());
             st.setString(16, empleado.getCodigoPostal());
@@ -223,7 +190,7 @@ public class EmpleadoDAO {
                 e.setNss(rs.getString("nss"));
                 e.setDiasVacaciones(rs.getInt("diasVacaciones"));
                 e.setDiasPermiso(rs.getInt("diasPermiso"));
-                e.setFotografia(rs.getBinaryStream("fotografia"));
+                e.setFotografia(rs.getBytes("fotografia"));
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setCodigoPostal(rs.getString("codigoPostal"));
@@ -271,7 +238,7 @@ public class EmpleadoDAO {
                 e.setNss(rs.getString("nss"));
                 e.setDiasVacaciones(rs.getInt("diasVacaciones"));
                 e.setDiasPermiso(rs.getInt("diasPermiso"));
-                e.setFotografia(rs.getBinaryStream("fotografia"));
+                e.setFotografia(rs.getBytes("fotografia"));
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setCodigoPostal(rs.getString("codigoPostal"));
@@ -357,7 +324,7 @@ public class EmpleadoDAO {
                 e.setNss(rs.getString("nss"));
                 e.setDiasVacaciones(rs.getInt("diasVacaciones"));
                 e.setDiasPermiso(rs.getInt("diasPermiso"));
-                e.setFotografia(rs.getBinaryStream("fotografia"));
+                e.setFotografia(rs.getBytes("fotografia"));
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setCodigoPostal(rs.getString("codigoPostal"));
@@ -405,7 +372,7 @@ public class EmpleadoDAO {
                 e.setNss(rs.getString("nss"));
                 e.setDiasVacaciones(rs.getInt("diasVacaciones"));
                 e.setDiasPermiso(rs.getInt("diasPermiso"));
-                e.setFotografia(rs.getBinaryStream("fotografia"));
+                e.setFotografia(rs.getBytes("fotografia"));
                 e.setDireccion(rs.getString("direccion"));
                 e.setColonia(rs.getString("colonia"));
                 e.setCodigoPostal(rs.getString("codigoPostal"));
@@ -452,7 +419,7 @@ public class EmpleadoDAO {
                 empleado.setNss(rs.getString("nss"));
                 empleado.setDiasVacaciones(rs.getInt("diasVacaciones"));
                 empleado.setDiasPermiso(rs.getInt("diasPermiso"));
-                empleado.setFotografia(rs.getBinaryStream("fotografia"));
+                empleado.setFotografia(rs.getBytes("fotografia"));
                 empleado.setDireccion(rs.getString("direccion"));
                 empleado.setColonia(rs.getString("colonia"));
                 empleado.setCodigoPostal(rs.getString("codigoPostal"));
@@ -499,7 +466,7 @@ public class EmpleadoDAO {
                 empleado.setNss(rs.getString("nss"));
                 empleado.setDiasVacaciones(rs.getInt("diasVacaciones"));
                 empleado.setDiasPermiso(rs.getInt("diasPermiso"));
-                empleado.setFotografia(rs.getBinaryStream("fotografia"));
+                empleado.setFotografia(rs.getBytes("fotografia"));
                 empleado.setDireccion(rs.getString("direccion"));
                 empleado.setColonia(rs.getString("colonia"));
                 empleado.setCodigoPostal(rs.getString("codigoPostal"));
@@ -545,7 +512,7 @@ public class EmpleadoDAO {
             st.setString(9, empleado.getNss());
             st.setInt(10, empleado.getDiasVacaciones());
             st.setInt(11, empleado.getDiasPermiso());
-            st.setBinaryStream(12, empleado.getFotografia());
+            st.setBytes(12, empleado.getFotografia());
             st.setString(13, empleado.getDireccion());
             st.setString(14, empleado.getColonia());
             st.setString(15, empleado.getCodigoPostal());
