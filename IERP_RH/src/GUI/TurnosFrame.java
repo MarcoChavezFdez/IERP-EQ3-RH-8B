@@ -138,7 +138,7 @@ public class TurnosFrame extends javax.swing.JFrame {
         jLabel2.setText("Turnos");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1053, 612));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1053, 650));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
