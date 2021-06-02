@@ -17,13 +17,10 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Date;
 import java.text.ParseException;
 import java.time.LocalDate;
@@ -44,6 +41,7 @@ import modelo.RH_Estado;
 import modelo.RH_Puesto;
 import modelo.RH_Turno;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -54,7 +52,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
     /**
      * Creates new form AddEmpleadoFrame
      */
-    InputStream fotografia;
+    byte[] fotografia;
     ConexionBD conexion;
     RH_Empleado empleado;
 
@@ -141,7 +139,33 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        btn_RealizarOperacion = new javax.swing.JButton();
         tp_DatosEmpleado = new javax.swing.JTabbedPane();
+        lp_DatosPersonales = new javax.swing.JLayeredPane();
+        jLabel2 = new javax.swing.JLabel();
+        txf_Nombre = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txf_ApellidoPaterno = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        txf_ApellidoMaterno = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        cmb_Sexo = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        dp_FechaNacimiento = new com.github.lgooddatepicker.components.DatePicker();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        cmb_EstadoCivil = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        btn_Seleccionar = new javax.swing.JButton();
+        jLabel26 = new javax.swing.JLabel();
+        cmb_Escolaridad = new javax.swing.JComboBox<>();
+        jLabel27 = new javax.swing.JLabel();
+        txf_Especialidad = new javax.swing.JTextField();
+        lbImage = new javax.swing.JLabel();
+        ftf_NSS = new javax.swing.JFormattedTextField();
+        ftf_CURP = new javax.swing.JFormattedTextField();
+        lbl_MensajeDatosPersonales = new javax.swing.JLabel();
         lp_Domicilio = new javax.swing.JLayeredPane();
         jLabel9 = new javax.swing.JLabel();
         txf_Direccion = new javax.swing.JTextField();
@@ -182,34 +206,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         pf_Password = new javax.swing.JPasswordField();
         pf_PasswordConfirm = new javax.swing.JPasswordField();
         lbl_MensajeDatosSistema = new javax.swing.JLabel();
-        lp_DatosPersonales = new javax.swing.JLayeredPane();
-        jLabel2 = new javax.swing.JLabel();
-        txf_Nombre = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txf_ApellidoPaterno = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txf_ApellidoMaterno = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        cmb_Sexo = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        dp_FechaNacimiento = new com.github.lgooddatepicker.components.DatePicker();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        cmb_EstadoCivil = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        btn_Seleccionar = new javax.swing.JButton();
-        jLabel26 = new javax.swing.JLabel();
-        cmb_Escolaridad = new javax.swing.JComboBox<>();
-        jLabel27 = new javax.swing.JLabel();
-        txf_Especialidad = new javax.swing.JTextField();
-        lbImage = new javax.swing.JLabel();
-        ftf_NSS = new javax.swing.JFormattedTextField();
-        ftf_CURP = new javax.swing.JFormattedTextField();
-        lbl_MensajeDatosPersonales = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         btn_Atras = new javax.swing.JButton();
-        btn_RealizarOperacion = new javax.swing.JButton();
         lbl_Titulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -225,11 +222,114 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 547));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btn_RealizarOperacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
+        btn_RealizarOperacion.setBorderPainted(false);
+        btn_RealizarOperacion.setContentAreaFilled(false);
+        btn_RealizarOperacion.setEnabled(false);
+        btn_RealizarOperacion.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                btn_RealizarOperacionMouseMoved(evt);
+            }
+        });
+        btn_RealizarOperacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_RealizarOperacionActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_RealizarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 580, 180, 70));
+
         tp_DatosEmpleado.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tp_DatosEmpleadoPropertyChange(evt);
             }
         });
+
+        lp_DatosPersonales.setBackground(new java.awt.Color(153, 255, 153));
+        lp_DatosPersonales.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                lp_DatosPersonalesMouseMoved(evt);
+            }
+        });
+        lp_DatosPersonales.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setText("Nombre");
+        lp_DatosPersonales.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 14, -1, -1));
+
+        txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txf_NombreActionPerformed(evt);
+            }
+        });
+        lp_DatosPersonales.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 11, 154, -1));
+
+        jLabel3.setText("Apellido Paterno ");
+        lp_DatosPersonales.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 49, -1, -1));
+        lp_DatosPersonales.add(txf_ApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 49, 154, -1));
+
+        jLabel4.setText("Apellido Materno");
+        lp_DatosPersonales.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, -1, -1));
+        lp_DatosPersonales.add(txf_ApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 75, 162, -1));
+
+        jLabel5.setText("Sexo");
+        lp_DatosPersonales.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 141, -1, -1));
+
+        cmb_Sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU SEXO", "MASCULINO", "FEMENINO" }));
+        lp_DatosPersonales.add(cmb_Sexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 138, -1, -1));
+
+        jLabel6.setText("Fecha de Nacimiento");
+        lp_DatosPersonales.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 186, -1, -1));
+        lp_DatosPersonales.add(dp_FechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(127, 184, -1, -1));
+
+        jLabel7.setText("CURP");
+        lp_DatosPersonales.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 234, -1, -1));
+
+        jLabel8.setText("Estado Civil");
+        lp_DatosPersonales.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 273, -1, -1));
+
+        cmb_EstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU ESTADO CIVIL", "SOLTERO", "CASADO", "DIVORCIADO", "VIUDO", "CONCUBINATO" }));
+        lp_DatosPersonales.add(cmb_EstadoCivil, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 270, -1, -1));
+
+        jLabel1.setText("NSS");
+        lp_DatosPersonales.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 14, -1, -1));
+
+        jLabel25.setText("Fotografia");
+        lp_DatosPersonales.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 75, -1, -1));
+
+        btn_Seleccionar.setText("Seleccionar..");
+        btn_Seleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SeleccionarActionPerformed(evt);
+            }
+        });
+        lp_DatosPersonales.add(btn_Seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(508, 71, -1, -1));
+
+        jLabel26.setText("Escolaridad");
+        lp_DatosPersonales.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 184, -1, -1));
+
+        cmb_Escolaridad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU ESCOLARIDAD", "SECUNDARIA", "PREPARATORIA", "LICENCIATURA", "POSGRADO" }));
+        lp_DatosPersonales.add(cmb_Escolaridad, new org.netbeans.lib.awtextra.AbsoluteConstraints(509, 181, -1, -1));
+
+        jLabel27.setText("Especialidad");
+        lp_DatosPersonales.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 234, -1, -1));
+        lp_DatosPersonales.add(txf_Especialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(503, 231, 196, -1));
+        lp_DatosPersonales.add(lbImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(629, 49, 84, 77));
+
+        ftf_NSS.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ftf_NSSFocusLost(evt);
+            }
+        });
+        lp_DatosPersonales.add(ftf_NSS, new org.netbeans.lib.awtextra.AbsoluteConstraints(477, 11, 264, -1));
+
+        ftf_CURP.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ftf_CURPFocusLost(evt);
+            }
+        });
+        lp_DatosPersonales.add(ftf_CURP, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 231, 291, -1));
+        lp_DatosPersonales.add(lbl_MensajeDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 372, 433, 26));
+
+        tp_DatosEmpleado.addTab("Datos Personales", lp_DatosPersonales);
 
         lp_Domicilio.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
@@ -322,7 +422,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 .addGroup(lp_DomicilioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
                 .addComponent(lbl_MensajeDatosDomicilio, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(81, 81, 81))
         );
@@ -534,109 +634,14 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 .addGroup(lp_LoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
                     .addComponent(pf_PasswordConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
                 .addComponent(lbl_MensajeDatosSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(128, 128, 128))
         );
 
         tp_DatosEmpleado.addTab("Ingreso al Sistema", lp_Login);
 
-        lp_DatosPersonales.setBackground(new java.awt.Color(153, 255, 153));
-        lp_DatosPersonales.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                lp_DatosPersonalesMouseMoved(evt);
-            }
-        });
-        lp_DatosPersonales.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setText("Nombre");
-        lp_DatosPersonales.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 14, -1, -1));
-
-        txf_Nombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txf_NombreActionPerformed(evt);
-            }
-        });
-        lp_DatosPersonales.add(txf_Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 11, 154, -1));
-
-        jLabel3.setText("Apellido Paterno ");
-        lp_DatosPersonales.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 49, -1, -1));
-        lp_DatosPersonales.add(txf_ApellidoPaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(139, 49, 154, -1));
-
-        jLabel4.setText("Apellido Materno");
-        lp_DatosPersonales.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 78, -1, -1));
-        lp_DatosPersonales.add(txf_ApellidoMaterno, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 75, 162, -1));
-
-        jLabel5.setText("Sexo");
-        lp_DatosPersonales.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 141, -1, -1));
-
-        cmb_Sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU SEXO", "MASCULINO", "FEMENINO" }));
-        lp_DatosPersonales.add(cmb_Sexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(131, 138, -1, -1));
-
-        jLabel6.setText("Fecha de Nacimiento");
-        lp_DatosPersonales.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 186, -1, -1));
-        lp_DatosPersonales.add(dp_FechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(127, 184, -1, -1));
-
-        jLabel7.setText("CURP");
-        lp_DatosPersonales.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 234, -1, -1));
-
-        jLabel8.setText("Estado Civil");
-        lp_DatosPersonales.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 273, -1, -1));
-
-        cmb_EstadoCivil.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU ESTADO CIVIL", "SOLTERO", "CASADO", "DIVORCIADO", "VIUDO", "CONCUBINATO" }));
-        lp_DatosPersonales.add(cmb_EstadoCivil, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 270, -1, -1));
-
-        jLabel1.setText("NSS");
-        lp_DatosPersonales.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 14, -1, -1));
-
-        jLabel25.setText("Fotografia");
-        lp_DatosPersonales.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 75, -1, -1));
-
-        btn_Seleccionar.setText("Seleccionar..");
-        btn_Seleccionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_SeleccionarActionPerformed(evt);
-            }
-        });
-        lp_DatosPersonales.add(btn_Seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(508, 71, -1, -1));
-
-        jLabel26.setText("Escolaridad");
-        lp_DatosPersonales.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 184, -1, -1));
-
-        cmb_Escolaridad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE SU ESCOLARIDAD", "SECUNDARIA", "PREPARATORIA", "LICENCIATURA", "POSGRADO" }));
-        lp_DatosPersonales.add(cmb_Escolaridad, new org.netbeans.lib.awtextra.AbsoluteConstraints(509, 181, -1, -1));
-
-        jLabel27.setText("Especialidad");
-        lp_DatosPersonales.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 234, -1, -1));
-        lp_DatosPersonales.add(txf_Especialidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(503, 231, 196, -1));
-        lp_DatosPersonales.add(lbImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(629, 49, 84, 77));
-
-        ftf_NSS.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                ftf_NSSFocusLost(evt);
-            }
-        });
-        lp_DatosPersonales.add(ftf_NSS, new org.netbeans.lib.awtextra.AbsoluteConstraints(477, 11, 264, -1));
-
-        ftf_CURP.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                ftf_CURPFocusLost(evt);
-            }
-        });
-        lp_DatosPersonales.add(ftf_CURP, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 231, 291, -1));
-        lp_DatosPersonales.add(lbl_MensajeDatosPersonales, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 372, 433, 26));
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        lp_DatosPersonales.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(508, 106, -1, -1));
-
-        tp_DatosEmpleado.addTab("Datos Personales", lp_DatosPersonales);
-
-        jPanel1.add(tp_DatosEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 45, -1, -1));
+        jPanel1.add(tp_DatosEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
 
         btn_Atras.setText("Atras");
         btn_Atras.addActionListener(new java.awt.event.ActionListener() {
@@ -645,22 +650,6 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-
-        btn_RealizarOperacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
-        btn_RealizarOperacion.setBorderPainted(false);
-        btn_RealizarOperacion.setContentAreaFilled(false);
-        btn_RealizarOperacion.setEnabled(false);
-        btn_RealizarOperacion.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                btn_RealizarOperacionMouseMoved(evt);
-            }
-        });
-        btn_RealizarOperacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_RealizarOperacionActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_RealizarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 580, 180, 70));
 
         lbl_Titulo.setText("Añadir Empleado al Sistema");
         jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 15, -1, -1));
@@ -679,39 +668,28 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         //Filtro del filechooser   
         fileChooser.setFileFilter(new FileNameExtensionFilter("Imagenes", "jpg", "png"));
         fileChooser.showOpenDialog(fileChooser);
-//        try {
-//            InputStream inputStream = new FileInputStream(fileChooser.getSelectedFile());
-////            OutputStream out = new FileOutputStream(new File("img.png"));
-////            byte [] buf = new byte [1024];
-////            for (int readNum;(readNum=inputStream.read(buf))!=-1;) {
-////                out.write(buf,0,readNum);
-////            }
-////            this.fotografia = new FileInputStream(out) {
-////                @Override
-////                public int read() throws IOException {
-////                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-////                }
-//            };
-//            Image imagen;
-//            try {
-//                imagen = ImageIO.read(inputStream);
-//
-//                ImageIcon imgIcon = new ImageIcon(imagen);
-//                Image imgEscalada = imgIcon.getImage().getScaledInstance(lbImage.getWidth(),
-//                        lbImage.getHeight(), Image.SCALE_SMOOTH);
-//                Icon iconoEscalado = new ImageIcon(imgEscalada);
-//                lbImage.setIcon(iconoEscalado);
-//            } catch (IOException ex) {
-//                Logger.getLogger(AddEmpleadoFrame.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        } catch (NullPointerException e) {
-//            System.out.println("No se ha seleccionado ningún fichero");
-//        } catch (FileNotFoundException e) {
-//            System.out.println(e.getMessage());
-//        } catch (IOException ex) {
-//            Logger.getLogger(AddEmpleadoFrame.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            FileInputStream inputStream = new FileInputStream(fileChooser.getSelectedFile());
+            fotografia = FileUtils.readFileToByteArray(fileChooser.getSelectedFile());
+            Image imagen;
+            try {
+                imagen = ImageIO.read(inputStream);
+                ImageIcon imgIcon = new ImageIcon(imagen);
+                Image imgEscalada = imgIcon.getImage().getScaledInstance(lbImage.getWidth(),
+                        lbImage.getHeight(), Image.SCALE_SMOOTH);
+                Icon iconoEscalado = new ImageIcon(imgEscalada);
+                lbImage.setIcon(iconoEscalado);
+            } catch (IOException ex) {
+                Logger.getLogger(AddEmpleadoFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } catch (NullPointerException e) {
+            System.out.println("No se ha seleccionado ningún fichero");
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException ex) {
+            Logger.getLogger(AddEmpleadoFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btn_SeleccionarActionPerformed
 
     private void ftf_NSSFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ftf_NSSFocusLost
@@ -776,6 +754,16 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                     if (turnos.get(i).getNombre().equals(empleado.getTurno().getNombre())) {
                         cmb_Turno.setSelectedIndex(i + 1);
                     }
+                }
+                try {
+                    ImageIcon imgIcon = new ImageIcon(this.fotografia);
+                    Image imgEscalada = imgIcon.getImage().getScaledInstance(lbImage.getWidth(),
+                            lbImage.getHeight(), Image.SCALE_SMOOTH);
+
+                    Icon iconoEscalado = new ImageIcon(imgEscalada);
+                    lbImage.setIcon(iconoEscalado);
+                } catch (NullPointerException np) {
+                    System.out.println("Null pointer " + np.getMessage());
                 }
 
             } else {
@@ -940,6 +928,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 empleados.setVisible(true);
                 this.pack();
             }
+
         } else {
             if (dao.insertarEmpleado(nEmpleado)) {
                 JOptionPane.showMessageDialog(null, " Empleado Añadido con exito");
@@ -950,23 +939,6 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btn_RealizarOperacionActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Image imagen;
-        try {
-            imagen = ImageIO.read(this.fotografia);
-            ImageIcon imgIcon = new ImageIcon(imagen);
-            Image imgEscalada = imgIcon.getImage().getScaledInstance(lbImage.getWidth(),
-                    lbImage.getHeight(), Image.SCALE_SMOOTH);
-            Icon iconoEscalado = new ImageIcon(imgEscalada);
-            lbImage.setIcon(iconoEscalado);
-
-        } catch (NullPointerException np) {
-            System.out.println("Null pointer " + np.getMessage());
-        } catch (IOException ex) {
-            Logger.getLogger(AddEmpleadoFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void cmb_CiudadItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_CiudadItemStateChanged
         if (cmb_Ciudad.getSelectedIndex() > 0) {
@@ -979,7 +951,6 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 try {
                     if ((sucursales.get(i).getNombre().equals(empleado.getSucursal().getNombre())) && !isNew) {
                         cmb_Sucursal.setSelectedIndex(i + 1);
-                        System.out.println("Bandera 2 " + bandera);
                         bandera++;
                     }
                 } catch (Exception e) {
@@ -1040,7 +1011,6 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
     }
 
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_RealizarOperacion;
@@ -1061,7 +1031,6 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField ftf_CodigoPostal;
     private javax.swing.JFormattedTextField ftf_Email;
     private javax.swing.JFormattedTextField ftf_NSS;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
