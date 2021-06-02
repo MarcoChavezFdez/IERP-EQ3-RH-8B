@@ -32,6 +32,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.text.MaskFormatter;
 import modelo.Compras_Sucursal;
 import modelo.RH_Ciudad;
@@ -198,6 +199,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         sp_diasPermiso = new javax.swing.JSpinner();
         sp_SalarioDiario = new javax.swing.JSpinner();
         lbl_MensajeDatosEmpresa = new javax.swing.JLabel();
+        lbl_Salario = new javax.swing.JLabel();
         lp_Login = new javax.swing.JLayeredPane();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
@@ -461,6 +463,11 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         cmb_Departamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un departamento" }));
 
         cmb_Puesto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un puesto" }));
+        cmb_Puesto.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmb_PuestoItemStateChanged(evt);
+            }
+        });
 
         jLabel20.setText("Salario Diario");
 
@@ -473,6 +480,8 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         sp_diasPermiso.setModel(new javax.swing.SpinnerNumberModel(6, 6, null, 1));
 
         sp_SalarioDiario.setModel(new javax.swing.SpinnerNumberModel(100.0f, 0.0f, null, 0.01f));
+
+        lbl_Salario.setText("jLabel21");
 
         lp_DatosEmpresa.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosEmpresa.setLayer(jLabel14, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -493,6 +502,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
         lp_DatosEmpresa.setLayer(sp_diasPermiso, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosEmpresa.setLayer(sp_SalarioDiario, javax.swing.JLayeredPane.DEFAULT_LAYER);
         lp_DatosEmpresa.setLayer(lbl_MensajeDatosEmpresa, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_DatosEmpresa.setLayer(lbl_Salario, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lp_DatosEmpresaLayout = new javax.swing.GroupLayout(lp_DatosEmpresa);
         lp_DatosEmpresa.setLayout(lp_DatosEmpresaLayout);
@@ -527,7 +537,9 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                                 .addGap(42, 42, 42)
                                 .addComponent(jLabel20)
                                 .addGap(41, 41, 41)
-                                .addComponent(sp_SalarioDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(lp_DatosEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(sp_SalarioDiario, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbl_Salario)))))
                     .addGroup(lp_DatosEmpresaLayout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(lbl_MensajeDatosEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -545,7 +557,8 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(lp_DatosEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(sp_diasPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sp_diasPermiso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbl_Salario))
                 .addGap(26, 26, 26)
                 .addGroup(lp_DatosEmpresaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
@@ -961,6 +974,26 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_cmb_CiudadItemStateChanged
+
+    private void cmb_PuestoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_PuestoItemStateChanged
+        if (cmb_Puesto.getSelectedIndex() > 0) {
+            Float salarioMinimo = puestos.get(cmb_Puesto.getSelectedIndex() - 1).getSalarioMinimo();
+            Float salarioMaximo = puestos.get(cmb_Puesto.getSelectedIndex() - 1).getSalarioMaximo();
+            Float step = 0.01f;
+            lbl_Salario.setText("El salario debe de estar en el rango de " + salarioMinimo + " y " + salarioMaximo);
+            SpinnerNumberModel model1;
+            if (!isNew) {
+                Float salarioDiario = this.empleado.getSalarioDiario();
+                model1 = new SpinnerNumberModel(salarioDiario, salarioMinimo, salarioMaximo, step);
+            } else {
+                model1 = new SpinnerNumberModel(salarioMinimo, salarioMinimo, salarioMaximo, step);
+            }
+            sp_SalarioDiario.setModel(model1);
+        }
+        else{
+            lbl_Salario.setText("");
+        }
+    }//GEN-LAST:event_cmb_PuestoItemStateChanged
     BufferedImage createResizedCopy(Image originalImage, int scaledWidth, int scaledHeight, boolean preserveAlpha) {
         int imageType = preserveAlpha ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
         BufferedImage scaledBI = new BufferedImage(scaledWidth, scaledHeight, imageType);
@@ -1066,6 +1099,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_MensajeDatosEmpresa;
     private javax.swing.JLabel lbl_MensajeDatosPersonales;
     private javax.swing.JLabel lbl_MensajeDatosSistema;
+    private javax.swing.JLabel lbl_Salario;
     private javax.swing.JLabel lbl_Titulo;
     private javax.swing.JLayeredPane lp_DatosEmpresa;
     private javax.swing.JLayeredPane lp_DatosPersonales;
