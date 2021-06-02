@@ -21,7 +21,7 @@ public class RH_AusenciaJustificada {
     private String tipo;
     private RH_Empleado empleadoSolicitador;
     private RH_Empleado empleadoAutorizador;
-    private InputStream evidencia;
+    private byte[] evidencia;
     private String estatus;
     private String motivo;
 
@@ -84,11 +84,11 @@ public class RH_AusenciaJustificada {
         this.empleadoAutorizador = empleadoAutorizador;
     }
 
-    public InputStream getEvidencia() {
+    public byte[] getEvidencia() {
         return evidencia;
     }
 
-    public void setEvidencia(InputStream evidencia) {
+    public void setEvidencia(byte[] evidencia) {
         this.evidencia = evidencia;
     }
 
