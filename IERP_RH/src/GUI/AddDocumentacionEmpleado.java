@@ -33,6 +33,7 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
      */
     public AddDocumentacionEmpleado(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         lbl_Titulo.setText("Añadir Documentación Empleado");
         btn_Realizar.setText("");

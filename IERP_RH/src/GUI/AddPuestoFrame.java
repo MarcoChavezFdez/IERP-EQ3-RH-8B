@@ -26,6 +26,7 @@ public class AddPuestoFrame extends javax.swing.JFrame {
      */
     public AddPuestoFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         lbl_Titulo.setText("Realizar Operación");
         btn_Realizar.setText("");

@@ -23,6 +23,7 @@ public class AddDepartamento extends javax.swing.JFrame {
      */
     public AddDepartamento(ConexionBD conexion) {
        initComponents();
+        this.setLocationRelativeTo(null);
         this.conexion = conexion;
         tblTitulo.setText("Agregar Departamento");
         btnRealizar.setText("");

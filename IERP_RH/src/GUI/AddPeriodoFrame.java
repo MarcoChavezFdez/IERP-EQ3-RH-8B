@@ -28,6 +28,7 @@ public class AddPeriodoFrame extends javax.swing.JFrame {
      */
     public AddPeriodoFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         lbl_Titulo.setText("Añadir Periodo");
         btn_Realizar.setText("");

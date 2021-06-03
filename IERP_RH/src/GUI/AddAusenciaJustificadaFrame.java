@@ -39,6 +39,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
 
     public AddAusenciaJustificadaFrame(ConexionBD conexion) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.isNew = true;
     }

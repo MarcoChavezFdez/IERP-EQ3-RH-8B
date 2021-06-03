@@ -28,6 +28,7 @@ public class AsistenciasFrame extends javax.swing.JFrame {
 
     public AsistenciasFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         AsistenciaDAO dao = new AsistenciaDAO(this.conexion);
         this.paginaActual = 1;

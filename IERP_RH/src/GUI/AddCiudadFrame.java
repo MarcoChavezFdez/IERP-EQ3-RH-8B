@@ -29,6 +29,7 @@ public class AddCiudadFrame extends javax.swing.JFrame {
 
     public AddCiudadFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         isNewCiudad = true;
         EstadoDAO estadosDAO = new EstadoDAO(this.conexion);

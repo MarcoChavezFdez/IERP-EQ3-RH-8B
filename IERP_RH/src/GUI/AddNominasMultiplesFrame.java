@@ -56,6 +56,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
 
     public AddNominasMultiplesFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.isNew = true;
 

@@ -26,6 +26,7 @@ public class AddDeduccionesFrame extends javax.swing.JFrame {
 
     public AddDeduccionesFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.bandera = false;
     }

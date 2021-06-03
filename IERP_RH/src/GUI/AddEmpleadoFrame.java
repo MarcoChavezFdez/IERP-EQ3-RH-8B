@@ -76,6 +76,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
     public AddEmpleadoFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.isNew = true;
 
@@ -238,7 +239,7 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
                 btn_RealizarOperacionActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_RealizarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 630, 180, 70));
+        jPanel1.add(btn_RealizarOperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 670, 180, 70));
 
         tp_DatosEmpleado.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -654,15 +655,17 @@ public class AddEmpleadoFrame extends javax.swing.JFrame {
 
         tp_DatosEmpleado.addTab("Ingreso al Sistema", lp_Login);
 
-        jPanel1.add(tp_DatosEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
+        jPanel1.add(tp_DatosEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, -1, -1));
 
-        btn_Atras.setText("Atras");
+        btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
+        btn_Atras.setBorderPainted(false);
+        btn_Atras.setContentAreaFilled(false);
         btn_Atras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AtrasActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, -1, -1));
 
         lbl_Titulo.setText("Añadir Empleado al Sistema");
         lbl_Titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

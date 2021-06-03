@@ -43,6 +43,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
     public AddNominaFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.isNew = true;
 

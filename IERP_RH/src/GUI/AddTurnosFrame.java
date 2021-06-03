@@ -30,6 +30,7 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
      */
     public AddTurnosFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.isNew = true;
 

@@ -32,9 +32,11 @@ public class AddAsistenciaFrame extends javax.swing.JFrame {
     public AddAsistenciaFrame(ConexionBD conexion) {
         initComponents();
         this.conexion = conexion;
+         this.setLocationRelativeTo(null);
         lbl_Titulo.setText("Añadir Asistencia");
         btn_Realizar.setText("");
         this.isNew = true;
+        
 
     }
 

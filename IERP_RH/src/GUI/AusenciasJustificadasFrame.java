@@ -28,6 +28,7 @@ public class AusenciasJustificadasFrame extends javax.swing.JFrame {
 
     public AusenciasJustificadasFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         AusenciaJustificadaDAO daoAusencia = new AusenciaJustificadaDAO(this.conexion);
         this.paginaActual = 1;
