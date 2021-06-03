@@ -27,14 +27,15 @@ public class DocumentacionEmpleadoDAO {
     }
 
     public boolean insertarDocumentacionEmpleado(RH_DocumentacionEmpleado documentacionEmpleado) {
-        String sql = "insert into RH.DocumentacionEmpleado values(?,?,?,?)";
+        String sql = "insert into RH.DocumentacionEmpleado values(?,?,?,?,?)";
         boolean ban = false;
         try {
             PreparedStatement st = conexion.getConexion().prepareStatement(sql);
             st.setString(1, documentacionEmpleado.getNombreDocumento());
             st.setDate(2, documentacionEmpleado.getFechaEntrega());
-            st.setBinaryStream(3, documentacionEmpleado.getDocumento());
+            st.setBytes(3, documentacionEmpleado.getDocumento());
             st.setInt(4, documentacionEmpleado.getEmpleado().getIdEmpleado());
+            st.setString(5, documentacionEmpleado.getEstatus());
             st.execute();
             ban = true;
         } catch (SQLException e) {
@@ -55,8 +56,9 @@ public class DocumentacionEmpleadoDAO {
                 de.setIdDocumento(rs.getInt("idDocumento"));
                 de.setNombreDocumento(rs.getString("nombreDocumento"));
                 de.setFechaEntrega(rs.getDate("fechaEntrega"));
-                de.setDocumento(rs.getBinaryStream("documento"));
+                de.setDocumento(rs.getBytes("documento"));
                 de.setEmpleado(new RH_Empleado(rs.getInt("idEmpleado"), this.conexion));
+                de.setEstatus(rs.getString("estatus"));
                 lista.add(de);
             }
             rs.close();
@@ -82,8 +84,9 @@ public class DocumentacionEmpleadoDAO {
                 de.setIdDocumento(rs.getInt("idDocumento"));
                 de.setNombreDocumento(rs.getString("nombreDocumento"));
                 de.setFechaEntrega(rs.getDate("fechaEntrega"));
-                de.setDocumento(rs.getBinaryStream("documento"));
+                de.setDocumento(rs.getBytes("documento"));
                 de.setEmpleado(new RH_Empleado(rs.getInt("idEmpleado"), this.conexion));
+                de.setEstatus(rs.getString("estatus"));
                 lista.add(de);
             }
             rs.close();
@@ -145,8 +148,9 @@ public class DocumentacionEmpleadoDAO {
                 de.setIdDocumento(rs.getInt("idDocumento"));
                 de.setNombreDocumento(rs.getString("nombreDocumento"));
                 de.setFechaEntrega(rs.getDate("fechaEntrega"));
-                de.setDocumento(rs.getBinaryStream("documento"));
+                de.setDocumento(rs.getBytes("documento"));
                 de.setEmpleado(new RH_Empleado(rs.getInt("idEmpleado"), this.conexion));
+                de.setEstatus(rs.getString("estatus"));
                 lista.add(de);
             }
             rs.close();
@@ -170,8 +174,9 @@ public class DocumentacionEmpleadoDAO {
                 de.setIdDocumento(rs.getInt("idDocumento"));
                 de.setNombreDocumento(rs.getString("nombreDocumento"));
                 de.setFechaEntrega(rs.getDate("fechaEntrega"));
-                de.setDocumento(rs.getBinaryStream("documento"));
+                de.setDocumento(rs.getBytes("documento"));
                 de.setEmpleado(new RH_Empleado(rs.getInt("idEmpleado"), this.conexion));
+                de.setEstatus(rs.getString("estatus"));
                 lista.add(de);
             }
             rs.close();
@@ -194,8 +199,9 @@ public class DocumentacionEmpleadoDAO {
                 de.setIdDocumento(rs.getInt("idDocumento"));
                 de.setNombreDocumento(rs.getString("nombreDocumento"));
                 de.setFechaEntrega(rs.getDate("fechaEntrega"));
-                de.setDocumento(rs.getBinaryStream("documento"));
+                de.setDocumento(rs.getBytes("documento"));
                 de.setEmpleado(new RH_Empleado(rs.getInt("idEmpleado"), this.conexion));
+                de.setEstatus(rs.getString("estatus"));
             }
             rs.close();
             st.close();
@@ -218,8 +224,9 @@ public class DocumentacionEmpleadoDAO {
                 de.setIdDocumento(rs.getInt("idDocumento"));
                 de.setNombreDocumento(rs.getString("nombreDocumento"));
                 de.setFechaEntrega(rs.getDate("fechaEntrega"));
-                de.setDocumento(rs.getBinaryStream("documento"));
+                de.setDocumento(rs.getBytes("documento"));
                 de.setEmpleado(new RH_Empleado(rs.getInt("idEmpleado"), this.conexion));
+                de.setEstatus(rs.getString("estatus"));
             }
             rs.close();
             st.close();
@@ -230,16 +237,16 @@ public class DocumentacionEmpleadoDAO {
     }
 
     public boolean actualizarDocumentacionEmpleado(RH_DocumentacionEmpleado documentacionEmpleado) {
-        String sql = "update vDocumentacionEmpleados set nombreDocumento=?, fechaEntrega=?, documento=? , idEmpleado=? "
+        String sql = "update RH.DocumentacionEmpleados set nombreDocumento=?, fechaEntrega=?, documento=? , idEmpleado=? "
                 + " where idDocumento=?";
         boolean ban = false;
         try {
             PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
             st.setString(1, documentacionEmpleado.getNombreDocumento());
             st.setDate(2, documentacionEmpleado.getFechaEntrega());
-            st.setBinaryStream(3, documentacionEmpleado.getDocumento());
+            st.setBytes(3, documentacionEmpleado.getDocumento());
             st.setInt(4, documentacionEmpleado.getEmpleado().getIdEmpleado());
-            st.setInt(5, documentacionEmpleado.getEmpleado().getIdEmpleado());
+            st.setInt(5, documentacionEmpleado.getIdDocumento());
             st.execute();
             st.close();
             ban = true;
