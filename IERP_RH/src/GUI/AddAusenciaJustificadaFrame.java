@@ -17,6 +17,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FileUtils;
 
@@ -46,16 +47,23 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         initComponents();
         this.ausencia = ausencia;
         this.conexion = conexion;
+        this.documento = ausencia.getEvidencia();
         this.isNew = false;
         ta_Motivo.setText(ausencia.getMotivo());
-        for (int i = 1; i <= cmb_Tipo.getItemCount(); i++) {
-            if (cmb_Tipo.getItemAt(i).equals(ausencia.getTipo())) {
+        for (int i = 1; i < cmb_Tipo.getItemCount(); i++) {
+            if (cmb_Tipo.getItemAt(i).equals(this.ausencia.getTipo())) {
                 cmb_Tipo.setSelectedIndex(i);
             }
         }
-        dp_FechaInicio.setDate(ausencia.getFechaInicio().toLocalDate());
-        dp_FechaFin.setDate(ausencia.getFechaFin().toLocalDate());
-        txf_Estatus.setText(ausencia.getEstatus());
+
+        for (int i = 1; i < cmb_Empleado.getItemCount(); i++) {
+            if (cmb_Empleado.getItemAt(i).equals(this.ausencia.getEmpleadoSolicitador().getNombreCompleto())) {
+                cmb_Empleado.setSelectedIndex(i);
+            }
+        }
+        dp_FechaInicio.setDate(this.ausencia.getFechaInicio().toLocalDate());
+        dp_FechaFin.setDate(this.ausencia.getFechaFin().toLocalDate());
+        txf_Estatus.setText(this.ausencia.getEstatus());
     }
 
     /**
@@ -277,38 +285,67 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_dp_FechaFinPropertyChange
 
     private void btn_RealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RealizarActionPerformed
-       RH_AusenciaJustificada ausenciaJustificada = new RH_AusenciaJustificada();
-       ausenciaJustificada.setFechaSolicitud(java.sql.Date.valueOf(txf_Fecha.getText()));
-       ausenciaJustificada.setEvidencia(documento);
+        RH_AusenciaJustificada ausenciaJustificada = new RH_AusenciaJustificada();
+        ausenciaJustificada.setFechaSolicitud(java.sql.Date.valueOf(txf_Fecha.getText()));
+        ausenciaJustificada.setEvidencia(documento);
+        ausenciaJustificada.setFechaFin(java.sql.Date.valueOf(dp_FechaFin.getDate()));
+        ausenciaJustificada.setFechaInicio(java.sql.Date.valueOf(dp_FechaInicio.getDate()));
+        ausenciaJustificada.setMotivo(ta_Motivo.getText());
+        ausenciaJustificada.setEstatus(txf_Estatus.getText());
+        ausenciaJustificada.setTipo(cmb_Tipo.getItemAt(cmb_Tipo.getSelectedIndex()));
+        ausenciaJustificada.setEmpleadoSolicitador(empleados.get(cmb_Empleado.getSelectedIndex() - 1));
+        ausenciaJustificada.setEmpleadoAutorizador(empleados.get(0));
+        AusenciaJustificadaDAO ausenciaDAO = new AusenciaJustificadaDAO(this.conexion);
+        if (isNew) {
+            if (ausenciaDAO.insertarAusenciaJustificada(ausenciaJustificada)) {
+                JOptionPane.showMessageDialog(null, "Ausencia Añadida con exito");
+                AusenciasJustificadasFrame ausenciasJustificadas = new AusenciasJustificadasFrame(this.conexion);
+                this.dispose();
+                ausenciasJustificadas.setVisible(true);
+                this.pack();
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al añadir la ausencia");
+            }
+        } else {
+
+            if (ausenciaDAO.actualizarAusenciaJustificada(ausenciaJustificada)) {
+                JOptionPane.showMessageDialog(null, "Ausencia Modificada con exito");
+                AusenciasJustificadasFrame ausenciasJustificadas = new AusenciasJustificadasFrame(this.conexion);
+                this.dispose();
+                ausenciasJustificadas.setVisible(true);
+                this.pack();
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error al modificar la ausencia");
+            }
+        }
     }//GEN-LAST:event_btn_RealizarActionPerformed
 
     private void cmb_TipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_TipoItemStateChanged
         AusenciaJustificadaDAO daoAusencia = new AusenciaJustificadaDAO(this.conexion);
         Integer diasUtilizados;
-        Integer diasRestantes=0;
+        Integer diasRestantes = 0;
         if (cmb_Tipo.getSelectedIndex() > 1) {
             if (cmb_Tipo.getSelectedIndex() == 2) {
-                diasRestantes = empleados.get(cmb_Empleado.getSelectedIndex()-1).getDiasPermiso();
+                diasRestantes = empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasPermiso();
                 diasUtilizados = daoAusencia.calculaDiasPermiso(java.sql.Date.valueOf(LocalDate.now()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
                 diasRestantes -= diasUtilizados;
             } else if (cmb_Tipo.getSelectedIndex() == 3) {
-                diasRestantes = empleados.get(cmb_Empleado.getSelectedIndex()-1).getDiasVacaciones();
+                diasRestantes = empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasVacaciones();
                 diasUtilizados = daoAusencia.calculaDiasVacaciones(java.sql.Date.valueOf(LocalDate.now()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
                 diasRestantes -= diasUtilizados;
             }
-            lbl_DiasD.setText("Dias Disponibles: "+diasRestantes);
-        }
-        else{
+            lbl_DiasD.setText("Dias Disponibles: " + diasRestantes);
+        }  else {
             lbl_DiasD.setText("");
         }
+
     }//GEN-LAST:event_cmb_TipoItemStateChanged
 
     private void cmb_EmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_EmpleadoItemStateChanged
-        if(cmb_Empleado.getSelectedIndex()>0){
+        if (cmb_Empleado.getSelectedIndex() > 0) {
             cmb_Tipo.setEnabled(true);
-        }
-        else{
-             cmb_Tipo.setEnabled(false);
+        } else {
+            cmb_Tipo.setEnabled(false);
         }
     }//GEN-LAST:event_cmb_EmpleadoItemStateChanged
     public void validaDias() {
@@ -317,25 +354,31 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         try {
             //vaccaciones
             long daysBetween = DAYS.between(dp_FechaInicio.getDate(), dp_FechaFin.getDate()) + 1;
-            if (cmb_Tipo.getSelectedIndex() == 2) {
-                diasUtilizados = daoAusencia.calculaDiasPermiso(java.sql.Date.valueOf(dp_FechaInicio.getDate()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
-                if (empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasPermiso() - diasUtilizados >= daysBetween) {
-                    //puede pedir permiso
-                    aprobacion = true;
-                } else {
-                    //no puede pedir permiso
-                    aprobacion = false;
-                }
-            } else if (cmb_Tipo.getSelectedIndex() == 3) {
-                diasUtilizados = daoAusencia.calculaDiasVacaciones(java.sql.Date.valueOf(dp_FechaInicio.getDate()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
-                if (empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasVacaciones() - diasUtilizados >= daysBetween) {
-                    //puede pedir vacaciones
-                    aprobacion = true;
-
-                } else {
-                    //no puede pedir vacaciones
-                    aprobacion = false;
-                }
+            switch (cmb_Tipo.getSelectedIndex()) {
+                case 2:
+                    diasUtilizados = daoAusencia.calculaDiasPermiso(java.sql.Date.valueOf(dp_FechaInicio.getDate()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
+                    if (empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasPermiso() - diasUtilizados >= daysBetween) {
+                        //puede pedir permiso
+                        aprobacion = true;
+                    } else {
+                        //no puede pedir permiso
+                        aprobacion = false;
+                    }   break;
+                case 3:
+                    diasUtilizados = daoAusencia.calculaDiasVacaciones(java.sql.Date.valueOf(dp_FechaInicio.getDate()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
+                    if (empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasVacaciones() - diasUtilizados >= daysBetween) {
+                        //puede pedir vacaciones
+                        aprobacion = true;
+                        
+                    } else {
+                        //no puede pedir vacaciones
+                        aprobacion = false;
+                    }   break;
+                case 1:
+                    aprobacion=true;
+                    break;
+                default:
+                    break;
             }
         } catch (NullPointerException ex) {
             aprobacion = false;
