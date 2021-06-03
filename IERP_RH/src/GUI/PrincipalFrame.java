@@ -128,6 +128,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         btn_Puestos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnDocumentacion.png"))); // NOI18N
         btn_Puestos1.setBorderPainted(false);
         btn_Puestos1.setContentAreaFilled(false);
+        btn_Puestos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Puestos1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_Puestos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 400, 180, 50));
 
         btn_Ciudades.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnCiudades.png"))); // NOI18N
@@ -541,6 +546,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
             System.out.println("Null pointer " + np.getMessage());
         }
     }//GEN-LAST:event_formWindowOpened
+
+    private void btn_Puestos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Puestos1ActionPerformed
+        DocumentacionEmpleadoFrame documentacion = new DocumentacionEmpleadoFrame (this.conexion);
+        this.dispose();
+        documentacion.setVisible(true);
+        this.pack();
+    }//GEN-LAST:event_btn_Puestos1ActionPerformed
 
     /**
      * @param args the command line arguments
