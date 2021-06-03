@@ -30,6 +30,7 @@ public class DepartamentoFrame extends javax.swing.JFrame {
         this.conexion = conexion;
         this.paginaActual = 1;
         initComponents();
+         this.setLocationRelativeTo(null);
         DepartamentoDAO Depa = new DepartamentoDAO(this.conexion);
         this.paginaMaxima = Depa.consultaPaginas();
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));

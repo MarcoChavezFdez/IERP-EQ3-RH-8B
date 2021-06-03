@@ -28,6 +28,7 @@ public class EmpleadosFrame extends javax.swing.JFrame {
 
     public EmpleadosFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.paginaActual = 1;
         EmpleadoDAO empleados = new EmpleadoDAO(this.conexion);

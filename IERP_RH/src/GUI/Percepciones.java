@@ -28,6 +28,7 @@ public class Percepciones extends javax.swing.JFrame {
 
     public Percepciones(ConexionBD cn) {
         initComponents();
+         this.setLocationRelativeTo(null);
         conexion = cn;
         PercepcionDAO percepcion = new PercepcionDAO(this.conexion);
         this.paginaMaxima = percepcion.consultaPaginas();

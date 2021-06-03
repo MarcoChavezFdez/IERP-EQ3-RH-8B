@@ -29,6 +29,7 @@ public class NominasFrame extends javax.swing.JFrame {
 
     public NominasFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
 
         NominaDAO nomina = new NominaDAO(this.conexion);

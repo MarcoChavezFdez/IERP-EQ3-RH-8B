@@ -15,6 +15,7 @@ public class DocumentacionEmpleadoFrame extends javax.swing.JFrame {
 
     public DocumentacionEmpleadoFrame(ConexionBD cn) {
         initComponents();
+         this.setLocationRelativeTo(null);
         conexion = cn;
         CiudadDAO ciudades = new CiudadDAO(this.conexion);
         ArrayList<RH_Ciudad> lista = ciudades.consultaCiudadesVista();

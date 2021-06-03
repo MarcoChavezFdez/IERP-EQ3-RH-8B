@@ -28,6 +28,7 @@ public class EstadosFrame extends javax.swing.JFrame {
 
     public EstadosFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
 
         EstadoDAO estados = new EstadoDAO(this.conexion);

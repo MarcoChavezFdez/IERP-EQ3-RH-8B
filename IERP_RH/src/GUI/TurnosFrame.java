@@ -22,6 +22,9 @@ import modelo.RH_Turno;
 public class TurnosFrame extends javax.swing.JFrame {
 
     ConexionBD conexion;
+    int paginaActual;
+    int paginaMaxima;
+    boolean banderaBusqueda = false;
 
     /**
      * Creates new form TurnoP
@@ -29,6 +32,7 @@ public class TurnosFrame extends javax.swing.JFrame {
     public TurnosFrame(ConexionBD conexion) {
         this.conexion = conexion;
         initComponents();
+           this.setLocationRelativeTo(null);
         TurnosDAO turno = new TurnosDAO(this.conexion);
         ArrayList<RH_Turno> lista = turno.consultaTurnosVista();
         llenarTabla(lista);
@@ -138,7 +142,7 @@ public class TurnosFrame extends javax.swing.JFrame {
         jLabel2.setText("Turnos");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1053, 650));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1020, 670));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

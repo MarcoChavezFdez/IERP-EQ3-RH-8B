@@ -26,6 +26,7 @@ public class AddPercepcionesFrame extends javax.swing.JFrame {
 
     public AddPercepcionesFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.bandera = false;
     }

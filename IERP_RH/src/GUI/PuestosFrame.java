@@ -30,6 +30,7 @@ public class PuestosFrame extends javax.swing.JFrame {
         this.conexion = conexion;
         this.paginaActual = 1;
         initComponents();
+         this.setLocationRelativeTo(null);
         PuestoDAO puestos = new PuestoDAO(this.conexion);
         this.paginaMaxima = puestos.consultaPaginas();
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
@@ -188,7 +189,7 @@ public class PuestosFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText("1");
         jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 780, 610));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 610));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

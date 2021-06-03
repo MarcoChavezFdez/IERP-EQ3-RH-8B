@@ -38,6 +38,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public PrincipalFrame(ConexionBD conexion) {
         this.conexion = conexion;
         initComponents();
+         this.setLocationRelativeTo(null);
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         lbl_fecha.setText(dateFormat.format(date));

@@ -29,6 +29,7 @@ public class DeduccionesFrame extends javax.swing.JFrame {
     public DeduccionesFrame(ConexionBD conexion) {
         this.conexion = conexion;
         initComponents();
+         this.setLocationRelativeTo(null);
         DeduccionDAO deduccion = new DeduccionDAO(this.conexion);
         ArrayList<RH_Deduccion> lista = deduccion.consultaDeducciones();
         

@@ -15,6 +15,7 @@ public class CiudadesFrame extends javax.swing.JFrame {
 
     public CiudadesFrame(ConexionBD cn) {
         initComponents();
+         this.setLocationRelativeTo(null);
         conexion = cn;
         CiudadDAO ciudades = new CiudadDAO(this.conexion);
         ArrayList<RH_Ciudad> lista = ciudades.consultaCiudadesVista();

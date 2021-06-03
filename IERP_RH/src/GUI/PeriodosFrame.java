@@ -30,6 +30,7 @@ public class PeriodosFrame extends javax.swing.JFrame {
 
     public PeriodosFrame(ConexionBD conexion) {
         initComponents();
+         this.setLocationRelativeTo(null);
         this.conexion = conexion;
 
         PeriodoDAO periodos = new PeriodoDAO(this.conexion);
