@@ -65,6 +65,7 @@ public class DepartamentoFrame extends javax.swing.JFrame {
         tblDatos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Departamentos");
         setBackground(new java.awt.Color(255, 102, 0));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
