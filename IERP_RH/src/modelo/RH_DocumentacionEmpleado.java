@@ -17,7 +17,7 @@ public class RH_DocumentacionEmpleado {
     private Integer idDocumento;
     private String nombreDocumento;
     private java.sql.Date fechaEntrega;
-    private InputStream documento;
+    private byte[] documento;
     private RH_Empleado empleado;
     private String estatus;
 
@@ -56,11 +56,11 @@ public class RH_DocumentacionEmpleado {
         this.fechaEntrega = fechaEntrega;
     }
 
-    public InputStream getDocumento() {
+    public byte[] getDocumento() {
         return documento;
     }
 
-    public void setDocumento(InputStream documento) {
+    public void setDocumento(byte[] documento) {
         this.documento = documento;
     }
 
@@ -73,7 +73,7 @@ public class RH_DocumentacionEmpleado {
     }
 
     public void setEmpleado(Integer idEmpleado) {
-        
+
     }
 
 }
