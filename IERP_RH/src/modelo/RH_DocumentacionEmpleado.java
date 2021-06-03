@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import java.io.InputStream;
+
 import java.sql.Date;
 
 /**
@@ -72,8 +72,5 @@ public class RH_DocumentacionEmpleado {
         this.empleado = empleado;
     }
 
-    public void setEmpleado(Integer idEmpleado) {
-
-    }
 
 }
