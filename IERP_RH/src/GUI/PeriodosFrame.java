@@ -165,7 +165,7 @@ public class PeriodosFrame extends javax.swing.JFrame {
                 btn_EliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 430, 190, -1));
+        jPanel1.add(btn_Eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 190, -1));
 
         btn_Siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
         btn_Siguiente.setBorderPainted(false);
@@ -175,7 +175,7 @@ public class PeriodosFrame extends javax.swing.JFrame {
                 btn_SiguienteActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 530, 160, 50));
+        jPanel1.add(btn_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 530, 160, 50));
 
         btn_Anterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
         btn_Anterior.setBorderPainted(false);
@@ -186,27 +186,27 @@ public class PeriodosFrame extends javax.swing.JFrame {
                 btn_AnteriorActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 530, 150, 50));
+        jPanel1.add(btn_Anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 530, 150, 50));
 
         jLabel3.setText("Página");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 540, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 540, -1, -1));
 
         lbl_PaginaActual.setText("1");
-        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(406, 540, 10, -1));
+        jPanel1.add(lbl_PaginaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 540, 10, -1));
 
         jLabel4.setText("de");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 540, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 540, -1, -1));
 
         lbl_PaginaMaxima.setText("1");
-        jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 540, -1, -1));
+        jPanel1.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 540, -1, -1));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GN.png"))); // NOI18N
         jButton1.setBorderPainted(false);
         jButton1.setContentAreaFilled(false);
         jButton1.setEnabled(false);
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 220, 80));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 220, 80));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 770, 590));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 760, 610));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
