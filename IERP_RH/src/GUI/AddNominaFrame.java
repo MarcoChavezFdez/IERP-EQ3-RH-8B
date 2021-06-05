@@ -170,6 +170,11 @@ public class AddNominaFrame extends javax.swing.JFrame {
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 190, -1, -1));
 
         cmb_Periodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR PERIODO" }));
+        cmb_Periodo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmb_PeriodoItemStateChanged(evt);
+            }
+        });
         jPanel1.add(cmb_Periodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 190, -1, -1));
 
         jLabel6.setText("Forma Pago");
@@ -280,6 +285,12 @@ public class AddNominaFrame extends javax.swing.JFrame {
             tbl_Deducciones.setEnabled(false);
         }
     }//GEN-LAST:event_cmb_EmpleadoItemStateChanged
+
+    private void cmb_PeriodoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_PeriodoItemStateChanged
+       if(cmb_Periodo.getSelectedIndex()>0){
+           
+       }
+    }//GEN-LAST:event_cmb_PeriodoItemStateChanged
 
     private void llenarTablaPercepciones(ArrayList<RH_Percepcion> lista) {
         String[] encabezado = {"IdPercepcion", "Nombre", "Dias a Pagar", "Seleccionado"};

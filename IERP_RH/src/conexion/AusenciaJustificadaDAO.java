@@ -269,8 +269,8 @@ public class AusenciaJustificadaDAO {
 
     public boolean actualizarAusenciaJustificada(RH_AusenciaJustificada ausenciaJustificada) {
         String sql = "update RH.AusenciasJustificadas set "
-                + " fechaSolicitud=?, fechaInicio=?, fechaFin=? "
-                + " tipo=?, idEmpleadoSolicita=?, idEmpleadoAutoriza=? "
+                + " fechaSolicitud=?, fechaInicio=?, fechaFin=?, "
+                + " tipo=?, idEmpleadoSolicita=?, idEmpleadoAutoriza=?, "
                 + " evidencia=?, motivo=?, estatus=? "
                 + " where idAusencia=?";
         boolean ban = false;

@@ -231,7 +231,7 @@ public class AddPeriodoFrame extends javax.swing.JFrame {
 
     private void verificaCampos() {
         try {
-            if (!"".equals(txf_Nombre.getText()) && (dp_FechaInicio.getDate().isBefore(dp_FechaFin.getDate()) || dp_FechaInicio.getDate().isEqual(dp_FechaFin.getDate())) && (dp_FechaFin.getDate().isBefore(LocalDate.now()) || dp_FechaFin.getDate().isEqual(LocalDate.now()))) {
+            if (!"".equals(txf_Nombre.getText()) && (dp_FechaInicio.getDate().isBefore(dp_FechaFin.getDate()))) {
                 btn_Realizar.setEnabled(true);
                 lbl_Mensaje.setText("");
             } else {

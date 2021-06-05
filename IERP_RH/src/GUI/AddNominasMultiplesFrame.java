@@ -390,7 +390,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
                     nominaPercepcion.calculaImporte();
                     daoNominaPercepcion.insertarNominaPercepcion(nominaPercepcion);
                 });
-                daoNomina.calculaNominaPercepciones(nomina.getIdNomina());
+                daoNomina.calculaNominaPercepciones(nomina.getIdNomina(),nomina.getPeriodo().getIdPeriodo());
                 nomina.recuperaNomina(conexion);
 
                 deduccionesSeleccionadas.forEach((d) -> {

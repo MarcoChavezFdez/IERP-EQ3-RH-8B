@@ -85,11 +85,12 @@ public class NominaDAO {
         return lista;
     }
 
-    public void calculaNominaPercepciones(Integer idNomina) {
-        String sql = "{call RH.calculaNominaPercepciones(?)}";
+    public void calculaNominaPercepciones(Integer idNomina,Integer idPeriodo) {
+        String sql = "{call RH.calculaNominaPercepciones(?,?)}";
         try {
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(sql);
             pstmt.setInt(1, idNomina);
+            pstmt.setInt(2, idPeriodo);
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException ex) {

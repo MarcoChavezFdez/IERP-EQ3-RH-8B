@@ -114,25 +114,10 @@ public class login extends javax.swing.JFrame {
             }
             if (empleado != null & (empleado.getPassword() == null ? txPPassw.getText() == null : empleado.getPassword().equals(txPPassw.getText()))) {
                 conexion.setEmpleado(empleado);
-                AsistenciaDAO daoAsistencia = new AsistenciaDAO(conexion);
-                RH_Asistencia asistencia = daoAsistencia.consultaAsistenciaFecha(java.sql.Date.valueOf(LocalDate.now()), empleado);
-                if (!Objects.isNull(asistencia)) {
-                    if (Objects.isNull(asistencia.getHoraSalida())) {
-                        PrincipalFrame pf = new PrincipalFrame(conexion);
-                        this.dispose();
-                        pf.setVisible(true);
-                        pf.pack();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ya ha registrado su salida, no puede ingresar al sistema");
-                    }
-                } else {
-                    PrincipalFrame pf = new PrincipalFrame(conexion);
-                    this.dispose();
-                    pf.setVisible(true);
-                    pf.pack();
-                    
-                }
-
+                PrincipalFrame pf = new PrincipalFrame(conexion);
+                this.dispose();
+                pf.setVisible(true);
+                pf.pack();
             } else {
                 JOptionPane.showMessageDialog(null, "Credenciales invalidas");
             }

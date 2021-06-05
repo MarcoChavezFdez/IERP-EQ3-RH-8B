@@ -167,10 +167,10 @@ public class DocumentacionEmpleadoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_AtrasActionPerformed
 
     private void btn_AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AddActionPerformed
-//        AddCiudadFrame addDocumentacion = new AddCiudadFrame(this.conexion);
-//        this.dispose();
-//        addCiudad.setVisible(true);
-//        this.pack();
+        AddDocumentacionEmpleado addDocumentacion = new AddDocumentacionEmpleado(this.conexion);
+        this.dispose();
+        addDocumentacion.setVisible(true);
+        this.pack();
 
     }//GEN-LAST:event_btn_AddActionPerformed
 

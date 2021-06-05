@@ -248,7 +248,7 @@ public class AddAsistenciaFrame extends javax.swing.JFrame {
         try {
 
             LocalDate date = LocalDate.now();
-            if ((dp_Fecha.getDate().isBefore(date) || dp_Fecha.getDate().isEqual(date)) && (tp_HoraEntrada.getTime().isBefore(tp_HoraSalida.getTime())) && cmb_Empleado.getSelectedIndex() > 0 && cmb_Dia.getSelectedIndex() > 0) {
+            if ( (tp_HoraEntrada.getTime().isBefore(tp_HoraSalida.getTime())) && cmb_Empleado.getSelectedIndex() > 0 && cmb_Dia.getSelectedIndex() > 0) {
                 lbl_Mensaje.setText("");
                 btn_Realizar.setEnabled(true);
             } else {

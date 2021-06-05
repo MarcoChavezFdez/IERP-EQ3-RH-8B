@@ -308,7 +308,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error al añadir la ausencia");
             }
         } else {
-
+            ausenciaJustificada.setIdAusencia(this.ausencia.getIdAusencia());
             if (ausenciaDAO.actualizarAusenciaJustificada(ausenciaJustificada)) {
                 JOptionPane.showMessageDialog(null, "Ausencia Modificada con exito");
                 AusenciasJustificadasFrame ausenciasJustificadas = new AusenciasJustificadasFrame(this.conexion);

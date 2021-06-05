@@ -6,16 +6,24 @@
 package GUI;
 
 import conexion.ConexionBD;
+import conexion.DocumentacionEmpleadoDAO;
+import conexion.EmpleadoDAO;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import modelo.RH_DocumentacionEmpleado;
-
+import modelo.RH_Empleado;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -25,11 +33,14 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
 
     ConexionBD conexion;
     RH_DocumentacionEmpleado documentacionEmpleado;
-    ArrayList<RH_DocumentacionEmpleado> empleados = new ArrayList();
+    byte[] documento;
+    ArrayList<RH_Empleado> empleados = new ArrayList();
     Boolean bandera;
+    Boolean isNew;
 
     /**
      * Creates new form AddPuestos
+     * @param conexion
      */
     public AddDocumentacionEmpleado(ConexionBD conexion) {
         initComponents();
@@ -38,16 +49,19 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
         lbl_Titulo.setText("Añadir Documentación Empleado");
         btn_Realizar.setText("");
         this.bandera = false;
+        this.isNew = true;
     }
 
     public AddDocumentacionEmpleado(ConexionBD conexion, RH_DocumentacionEmpleado documentacion) {
         initComponents();
         this.documentacionEmpleado = documentacion;
+        documento = this.documentacionEmpleado.getDocumento();
         this.conexion = conexion;
         lbl_Titulo.setText("Modificar Documentación Empleado");
         btn_Realizar.setText("");
         btn_Realizar.setEnabled(true);
         this.bandera = true;
+        this.isNew = false;
     }
 
     /**
@@ -73,10 +87,15 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
         btn_Ver = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmb_Empleado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -158,9 +177,9 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
         jLabel5.setText("Empleado: ");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un Empleado" }));
-        jComboBox1.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 250, 30));
+        cmb_Empleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un Empleado" }));
+        cmb_Empleado.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.add(cmb_Empleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 300, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 11, 660, 599));
 
@@ -168,7 +187,30 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_RealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RealizarActionPerformed
-
+        DocumentacionEmpleadoDAO documentacionDAO = new DocumentacionEmpleadoDAO(this.conexion);
+        RH_DocumentacionEmpleado documentacion = new RH_DocumentacionEmpleado();
+        documentacion.setNombreDocumento(txf_Nombre.getText());
+        documentacion.setFechaEntrega(java.sql.Date.valueOf(dp_FechaEntrega.getDate()));
+        documentacion.setDocumento(documento);
+        documentacion.setEmpleado(empleados.get(cmb_Empleado.getSelectedIndex()-1));
+        documentacion.setEstatus("A");
+        if(!isNew){
+          documentacion.setIdDocumento(this.documentacionEmpleado.getIdDocumento());
+          if(documentacionDAO.actualizarDocumentacionEmpleado(documentacion)){
+              
+          }
+          else{
+              
+          }
+        }
+        else{
+            if(documentacionDAO.insertarDocumentacionEmpleado(documentacion)){
+                
+            }
+            else{
+                
+            }
+        }
     }//GEN-LAST:event_btn_RealizarActionPerformed
 
     private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
@@ -188,25 +230,40 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
 
     private void btn_FotografiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_FotografiaActionPerformed
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Documentos", "pdf"));
         fileChooser.showOpenDialog(fileChooser);
         try {
             String ruta = fileChooser.getSelectedFile().getAbsolutePath();
-            File f = new File(ruta);
-            InputStream inputStream = new DataInputStream(new FileInputStream(f));
-
+            documento = FileUtils.readFileToByteArray(fileChooser.getSelectedFile());
         } catch (NullPointerException e) {
             System.out.println("No se ha seleccionado ningún fichero");
+            
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
+        } catch (IOException ex) {
+            Logger.getLogger(AddDocumentacionEmpleado.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btn_FotografiaActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-
+        EmpleadoDAO daoEmpleado = new EmpleadoDAO(this.conexion);
+        empleados = daoEmpleado.consultaEmpleadosVista();
+        empleados.forEach((e) -> {
+            cmb_Empleado.addItem(e.getNombreCompleto());
+            if (!isNew) {
+                if (e.getNombreCompleto().equals(documentacionEmpleado.getEmpleado().getNombreCompleto())) {
+                    cmb_Empleado.setSelectedIndex(empleados.indexOf(e) + 1);
+                }
+            }
+        });
     }//GEN-LAST:event_formWindowOpened
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        verificarCampos();
+    }//GEN-LAST:event_formMouseMoved
     public void verificarCampos() {
 
-        if ("".equals(txf_Nombre.getText())) {
+        if (!"".equals(txf_Nombre.getText())&&cmb_Empleado.getSelectedIndex()>0 && (dp_FechaEntrega.getDate().isBefore(LocalDate.now())||dp_FechaEntrega.getDate().isEqual(LocalDate.now())) && documento!=null ) {
             btn_Realizar.setEnabled(false);
             lbl_Mensaje.setText("Debe llenar los campos");
         } else {
@@ -221,8 +278,8 @@ public class AddDocumentacionEmpleado extends javax.swing.JFrame {
     private javax.swing.JButton btn_Fotografia;
     private javax.swing.JButton btn_Realizar;
     private javax.swing.JButton btn_Ver;
+    private javax.swing.JComboBox<String> cmb_Empleado;
     private com.github.lgooddatepicker.components.DatePicker dp_FechaEntrega;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
