@@ -38,7 +38,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public PrincipalFrame(ConexionBD conexion) {
         this.conexion = conexion;
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         Date date = new Date();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         lbl_fecha.setText(dateFormat.format(date));
@@ -466,7 +466,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_NomPerActionPerformed
 
     private void btn_FormasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_FormasActionPerformed
-        // TODO add your handling code here:
+        FormasPagoFrame formasPago = new FormasPagoFrame(this.conexion);
+        this.dispose();
+        formasPago.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_FormasActionPerformed
     private void btn_PuestosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_PuestosActionPerformed
         PuestosFrame puesto = new PuestosFrame(this.conexion);
@@ -549,7 +552,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void btn_Puestos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Puestos1ActionPerformed
-        DocumentacionEmpleadoFrame documentacion = new DocumentacionEmpleadoFrame (this.conexion);
+        DocumentacionEmpleadoFrame documentacion = new DocumentacionEmpleadoFrame(this.conexion);
         this.dispose();
         documentacion.setVisible(true);
         this.pack();
