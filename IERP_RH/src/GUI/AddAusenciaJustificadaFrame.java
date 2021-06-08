@@ -8,6 +8,7 @@ package GUI;
 import conexion.AusenciaJustificadaDAO;
 import conexion.ConexionBD;
 import conexion.EmpleadoDAO;
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
     Boolean isNew;
     RH_AusenciaJustificada ausencia;
     Boolean aprobacion = false;
+    String path;
     byte[] documento;
 
     public AddAusenciaJustificadaFrame(ConexionBD conexion) {
@@ -49,6 +51,12 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         this.ausencia = ausencia;
         this.conexion = conexion;
         this.documento = ausencia.getEvidencia();
+        try {
+            path = (new File(".").getCanonicalPath());
+            FileUtils.writeByteArrayToFile(new File(path + "\\resources\\docAusencia.pdf"), this.documento);
+        } catch (IOException ex) {
+            Logger.getLogger(AddAusenciaJustificadaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.isNew = false;
         ta_Motivo.setText(ausencia.getMotivo());
         for (int i = 1; i < cmb_Tipo.getItemCount(); i++) {
@@ -227,6 +235,11 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         jPanel1.add(lbl_DiasD, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 260, 130, 20));
 
         btn_Ver.setText("Ver Documento");
+        btn_Ver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_VerActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_Ver, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, -1, -1));
 
         jLabel9.setText("Ausencias Justificadas");
@@ -322,22 +335,26 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_RealizarActionPerformed
 
     private void cmb_TipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_TipoItemStateChanged
-        AusenciaJustificadaDAO daoAusencia = new AusenciaJustificadaDAO(this.conexion);
-        Integer diasUtilizados;
-        Integer diasRestantes = 0;
-        if (cmb_Tipo.getSelectedIndex() > 1) {
-            if (cmb_Tipo.getSelectedIndex() == 2) {
-                diasRestantes = empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasPermiso();
-                diasUtilizados = daoAusencia.calculaDiasPermiso(java.sql.Date.valueOf(LocalDate.now()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
-                diasRestantes -= diasUtilizados;
-            } else if (cmb_Tipo.getSelectedIndex() == 3) {
-                diasRestantes = empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasVacaciones();
-                diasUtilizados = daoAusencia.calculaDiasVacaciones(java.sql.Date.valueOf(LocalDate.now()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
-                diasRestantes -= diasUtilizados;
+        try {
+            AusenciaJustificadaDAO daoAusencia = new AusenciaJustificadaDAO(this.conexion);
+            Integer diasUtilizados;
+            Integer diasRestantes = 0;
+            if (cmb_Tipo.getSelectedIndex() > 1) {
+                if (cmb_Tipo.getSelectedIndex() == 2) {
+                    diasRestantes = empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasPermiso();
+                    diasUtilizados = daoAusencia.calculaDiasPermiso(java.sql.Date.valueOf(LocalDate.now()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
+                    diasRestantes -= diasUtilizados;
+                } else if (cmb_Tipo.getSelectedIndex() == 3) {
+                    diasRestantes = empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasVacaciones();
+                    diasUtilizados = daoAusencia.calculaDiasVacaciones(java.sql.Date.valueOf(LocalDate.now()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
+                    diasRestantes -= diasUtilizados;
+                }
+                lbl_DiasD.setText("Dias Disponibles: " + diasRestantes);
+            } else {
+                lbl_DiasD.setText("");
             }
-            lbl_DiasD.setText("Dias Disponibles: " + diasRestantes);
-        }  else {
-            lbl_DiasD.setText("");
+        } catch (NullPointerException e) {
+
         }
 
     }//GEN-LAST:event_cmb_TipoItemStateChanged
@@ -349,6 +366,17 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
             cmb_Tipo.setEnabled(false);
         }
     }//GEN-LAST:event_cmb_EmpleadoItemStateChanged
+
+    private void btn_VerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_VerActionPerformed
+        try {
+            path = (new File(".").getCanonicalPath());
+
+            Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\docAusencia.pdf");
+        } catch (Exception evvv) {
+            JOptionPane.showMessageDialog(null, "No se puede abrir el archivo de ayuda, probablemente fue borrado", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_btn_VerActionPerformed
     public void validaDias() {
         AusenciaJustificadaDAO daoAusencia = new AusenciaJustificadaDAO(this.conexion);
         Integer diasUtilizados;
@@ -364,19 +392,21 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
                     } else {
                         //no puede pedir permiso
                         aprobacion = false;
-                    }   break;
+                    }
+                    break;
                 case 3:
                     diasUtilizados = daoAusencia.calculaDiasVacaciones(java.sql.Date.valueOf(dp_FechaInicio.getDate()), empleados.get(cmb_Empleado.getSelectedIndex() - 1).getIdEmpleado());
                     if (empleados.get(cmb_Empleado.getSelectedIndex() - 1).getDiasVacaciones() - diasUtilizados >= daysBetween) {
                         //puede pedir vacaciones
                         aprobacion = true;
-                        
+
                     } else {
                         //no puede pedir vacaciones
                         aprobacion = false;
-                    }   break;
+                    }
+                    break;
                 case 1:
-                    aprobacion=true;
+                    aprobacion = true;
                     break;
                 default:
                     break;
@@ -401,6 +431,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         }
 
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Atras;
