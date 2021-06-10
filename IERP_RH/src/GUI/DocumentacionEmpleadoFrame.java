@@ -1,12 +1,13 @@
 package GUI;
 
-import conexion.CiudadDAO;
-import conexion.ConexionBD;
 
+import conexion.ConexionBD;
+import conexion.DocumentacionEmpleadoDAO;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.RH_Ciudad;
+import modelo.RH_DocumentacionEmpleado;
+
 
 
 public class DocumentacionEmpleadoFrame extends javax.swing.JFrame {
@@ -17,8 +18,8 @@ public class DocumentacionEmpleadoFrame extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
         conexion = cn;
-        CiudadDAO ciudades = new CiudadDAO(this.conexion);
-        ArrayList<RH_Ciudad> lista = ciudades.consultaCiudadesVista();
+        DocumentacionEmpleadoDAO documentacionEmpleado = new DocumentacionEmpleadoDAO(this.conexion);
+        ArrayList<RH_DocumentacionEmpleado> lista = documentacionEmpleado.consultaDocumentacionEmpleadosVista();
         llenarTabla(lista);
     }
 
@@ -118,11 +119,11 @@ public class DocumentacionEmpleadoFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "IdCiudad", "Nombre", "Estado"
+                "IdDocumentacion", "Nombre del Documento", "Fecha Entrega", "Empleado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -179,13 +180,12 @@ public class DocumentacionEmpleadoFrame extends javax.swing.JFrame {
         String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
         int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la Documentacion '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
-            RH_Ciudad ciudad = new RH_Ciudad();
-            CiudadDAO DAO = new CiudadDAO(this.conexion);
-            ciudad = DAO.consultarCiudadId(idDocumentacion);
-            if (DAO.eliminacionLogicaCiudad(ciudad)) {
-                JOptionPane.showMessageDialog(null, "Ciudad Eliminada");
-                CiudadDAO ciudades = new CiudadDAO(this.conexion);
-                ArrayList<RH_Ciudad> lista = ciudades.consultaCiudadesVista();
+            RH_DocumentacionEmpleado documentacionEmpleado = new RH_DocumentacionEmpleado();
+            DocumentacionEmpleadoDAO daoDocumentacionEmpleado = new DocumentacionEmpleadoDAO(this.conexion);
+            documentacionEmpleado = daoDocumentacionEmpleado.consultaDocumentacionEmpleadoId(idDocumentacion);
+            if (daoDocumentacionEmpleado.eliminacionLogica(documentacionEmpleado)) {
+                JOptionPane.showMessageDialog(null, "Documentacion Eliminada");   
+                ArrayList<RH_DocumentacionEmpleado> lista = daoDocumentacionEmpleado.consultaDocumentacionEmpleadosVista();
                 llenarTabla(lista);
 
             } else {
@@ -196,29 +196,30 @@ public class DocumentacionEmpleadoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_EliminarActionPerformed
 
     private void txf_CiudadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txf_CiudadKeyReleased
-        CiudadDAO ciudades = new CiudadDAO(this.conexion);
-        ArrayList<RH_Ciudad> lista = ciudades.consultarCiudadesNombre(txf_Ciudad.getText());
-        llenarTabla(lista);
+//        CiudadDAO ciudades = new CiudadDAO(this.conexion);
+//        ArrayList<RH_Ciudad> lista = ciudades.consultarCiudadesNombre(txf_Ciudad.getText());
+//        llenarTabla(lista);
     }//GEN-LAST:event_txf_CiudadKeyReleased
 
     private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
-        Integer idCiudad = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        CiudadDAO DAO = new CiudadDAO(this.conexion);
-        RH_Ciudad ciudad = new RH_Ciudad();
-        ciudad = DAO.consultarCiudadId(idCiudad);
-        AddCiudadFrame modificarCiudad = new AddCiudadFrame(this.conexion, ciudad);
+        Integer idDocumentacion = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        DocumentacionEmpleadoDAO daoDocumentacion = new DocumentacionEmpleadoDAO(this.conexion);
+        RH_DocumentacionEmpleado documentacion = new RH_DocumentacionEmpleado();
+        documentacion = daoDocumentacion.consultaDocumentacionEmpleadoId(idDocumentacion);
+        AddDocumentacionEmpleado modificarDocumentacion = new AddDocumentacionEmpleado(this.conexion, documentacion);
         this.dispose();
-        modificarCiudad.setVisible(true);
+        modificarDocumentacion.setVisible(true);
         this.pack();
     }//GEN-LAST:event_btn_ModificarActionPerformed
-    private void llenarTabla(ArrayList<RH_Ciudad> lista) {
-        String[] encabezado = {"IdCiudad", "Nombre Ciudad", "Estado"};
+    private void llenarTabla(ArrayList<RH_DocumentacionEmpleado> lista) {
+        String[] encabezado = {"IdDocumentacion","Empleado" ,"Nombre del Documento", "Fecha Entrega"};
         Object[][] datos = new Object[lista.size()][4];
         int ren = 0;
-        for (RH_Ciudad s : lista) {
-            datos[ren][0] = s.getIdCiudad();
-            datos[ren][1] = s.getNombre();
-            datos[ren][2] = s.getEstado().getNombre();
+        for (RH_DocumentacionEmpleado s : lista) {
+            datos[ren][0] = s.getIdDocumento();
+            datos[ren][1] = s.getEmpleado().getNombreCompleto();
+            datos[ren][2] = s.getNombreDocumento();
+            datos[ren][3] = s.getFechaEntrega();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
