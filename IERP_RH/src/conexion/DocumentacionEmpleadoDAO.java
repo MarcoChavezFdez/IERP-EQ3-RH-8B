@@ -215,7 +215,7 @@ public class DocumentacionEmpleadoDAO {
     public RH_DocumentacionEmpleado consultaDocumentacionEmpleadoId(int idDocumento) {
         String sql = (" select * "
                 + " from vDocumentacionEmpleados "
-                + " where idDocumentacionEmpleado=" + idDocumento);
+                + " where idDocumento =" + idDocumento);
         RH_DocumentacionEmpleado de = new RH_DocumentacionEmpleado();
         try {
             Statement st = conexion.getConexion().createStatement();
@@ -237,7 +237,7 @@ public class DocumentacionEmpleadoDAO {
     }
 
     public boolean actualizarDocumentacionEmpleado(RH_DocumentacionEmpleado documentacionEmpleado) {
-        String sql = "update RH.DocumentacionEmpleados set nombreDocumento=?, fechaEntrega=?, documento=? , idEmpleado=? "
+        String sql = "update RH.DocumentacionEmpleado set nombreDocumento=?, fechaEntrega=?, documento=? , idEmpleado=? "
                 + " where idDocumento=?";
         boolean ban = false;
         try {
