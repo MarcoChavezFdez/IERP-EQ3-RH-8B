@@ -5,13 +5,12 @@
  */
 package conexion;
 
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import modelo.RH_Empleado;
 import modelo.RH_FormaPago;
@@ -85,7 +84,7 @@ public class NominaDAO {
         return lista;
     }
 
-    public void calculaNominaPercepciones(Integer idNomina,Integer idPeriodo) {
+    public void calculaNominaPercepciones(Integer idNomina, Integer idPeriodo) {
         String sql = "{call RH.calculaNominaPercepciones(?,?)}";
         try {
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(sql);
@@ -97,8 +96,25 @@ public class NominaDAO {
             JOptionPane.showMessageDialog(null, "Error en Executar calculaNominaPercepciones: " + ex.getMessage());
         }
     }
-    
-        public void calculaNominaDeducciones(Integer idNomina) {
+
+    public Integer calculaDiasTrabajados(Integer idEmpleado, Integer idPeriodo) {
+        Integer diasTrabajados = 0;
+        String sql = "{call RH.calculaDiasTrabajados(?,?,?)}";
+        try {
+            CallableStatement cstmt = conexion.getConexion().prepareCall(sql);
+            cstmt.setInt(1, idEmpleado);
+            cstmt.setInt(2, idPeriodo);
+            cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
+            cstmt.execute();
+            diasTrabajados=cstmt.getInt(3);
+            cstmt.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en Executar calculaDiasTrabajados: " + ex.getMessage());
+        }
+        return diasTrabajados;
+    }
+
+    public void calculaNominaDeducciones(Integer idNomina) {
         String sql = "{call RH.calculaNominaDeducciones(?)}";
         try {
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(sql);
