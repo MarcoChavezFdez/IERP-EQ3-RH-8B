@@ -54,6 +54,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         try {
             path = (new File(".").getCanonicalPath());
             FileUtils.writeByteArrayToFile(new File(path + "\\resources\\docAusencia.pdf"), this.documento);
+            creaArchivo();
         } catch (IOException ex) {
             Logger.getLogger(AddAusenciaJustificadaFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -280,6 +281,14 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         validaCampos();
     }//GEN-LAST:event_jPanel1MouseMoved
 
+    private void creaArchivo() {
+        try {
+            path = (new File(".").getCanonicalPath());
+            FileUtils.writeByteArrayToFile(new File(path + "\\resources\\docAusencia.pdf"), this.documento);
+        } catch (IOException ex) {
+            Logger.getLogger(AddAusenciaJustificadaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void btn_SeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SeleccionarActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         //Filtro del filechooser   
@@ -287,7 +296,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         fileChooser.showOpenDialog(fileChooser);
         try {
             documento = FileUtils.readFileToByteArray(fileChooser.getSelectedFile());
-
+            creaArchivo();
         } catch (IOException ex) {
             Logger.getLogger(AddAusenciaJustificadaFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
