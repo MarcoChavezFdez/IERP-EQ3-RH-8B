@@ -35,7 +35,7 @@ public class DeduccionDAO {
             st.setString(1, deduccion.getNombre());
             st.setString(2, deduccion.getDescripcion());
             st.setFloat(3, deduccion.getPorcentaje());
-            st.setString(4, "A");
+            st.setString(4, deduccion.getEstatus());
             st.execute();
 
             ban = true;
@@ -60,6 +60,7 @@ public class DeduccionDAO {
                 e.setNombre(rs.getString("nombre"));
                 e.setDescripcion(rs.getString("descripcion"));
                 e.setPorcentaje(rs.getFloat("porcentaje"));
+                e.setEstatus(rs.getString("estatus"));
                 lista.add(e);
             }
             rs.close();
@@ -84,6 +85,7 @@ public class DeduccionDAO {
                 e.setNombre(rs.getString("nombre"));
                 e.setDescripcion(rs.getString("descripcion"));
                 e.setPorcentaje(rs.getFloat("porcentaje"));
+                e.setEstatus(rs.getString("estatus"));
                 lista.add(e);
             }
             rs.close();
@@ -108,6 +110,7 @@ public class DeduccionDAO {
                 e.setNombre(rs.getString("nombre"));
                 e.setDescripcion(rs.getString("descripcion"));
                 e.setPorcentaje(rs.getFloat("porcentaje"));
+                e.setEstatus(rs.getString("estatus"));
                 lista.add(e);
             }
             rs.close();
@@ -133,6 +136,7 @@ public class DeduccionDAO {
                 e.setNombre(rs.getString("nombre"));
                 e.setDescripcion(rs.getString("descripcion"));
                 e.setPorcentaje(rs.getFloat("porcentaje"));
+                e.setEstatus(rs.getString("estatus"));
                 lista.add(e);
             }
             rs.close();
@@ -195,6 +199,7 @@ public class DeduccionDAO {
                 e.setNombre(rs.getString("nombre"));
                 e.setDescripcion(rs.getString("descripcion"));
                 e.setPorcentaje(rs.getFloat("porcentaje"));
+                e.setEstatus(rs.getString("estatus"));
                 lista.add(e);
             }
             rs.close();
@@ -220,6 +225,7 @@ public class DeduccionDAO {
                 e.setNombre(rs.getString("nombre"));
                 e.setDescripcion(rs.getString("descripcion"));
                 e.setPorcentaje(rs.getFloat("porcentaje"));
+                e.setEstatus(rs.getString("estatus"));
                 lista.add(e);
             }
             rs.close();
@@ -244,6 +250,7 @@ public class DeduccionDAO {
                 deduccion.setNombre(rs.getString("nombre"));
                 deduccion.setDescripcion(rs.getString("descripcion"));
                 deduccion.setPorcentaje(rs.getFloat("porcentaje"));
+                deduccion.setEstatus(rs.getString("estatus"));
                 deduccion.setEstatus(rs.getString("estatus"));
             }
             rs.close();
