@@ -6,8 +6,13 @@
 package conexion;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelo.RH_Deduccion;
+import modelo.RH_Nomina;
 import modelo.RH_NominaDeduccion;
 
 /**
@@ -38,4 +43,30 @@ public class NominaDeduccionDAO {
         }
         return ban;
     }
+        public ArrayList<RH_NominaDeduccion> consultaDeducciones(Integer idNomina) {
+        String sql = "select * "
+                + "from RH.NominasDeducciones "
+                + "where idNomina="+idNomina;
+        ArrayList<RH_NominaDeduccion> lista = new ArrayList<>();
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                RH_NominaDeduccion e = new RH_NominaDeduccion();
+                e.setNomina(new RH_Nomina());
+                e.getNomina().setIdNomina(rs.getInt("idNomina"));
+                e.getNomina().recuperaNomina(conexion);
+                e.setDeduccion(new RH_Deduccion(rs.getInt("idDeduccion"),this.conexion));
+                e.setImporte(rs.getFloat("importe"));
+                e.setEstatus(rs.getString("estatus"));
+                lista.add(e);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return lista;
+    }
 }
+
