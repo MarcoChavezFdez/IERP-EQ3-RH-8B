@@ -14,24 +14,25 @@ import java.sql.Date;
  * @author Marco Chavez
  */
 public class RH_Periodo {
+
     private Integer idPeriodo;
     private String nombre;
     private java.sql.Date fechaInicio;
     private java.sql.Date fechaFin;
     private String estatus;
-    
+
     public RH_Periodo() {
     }
-    
-    public RH_Periodo(Integer idPeriodo,ConexionBD conexion){
+
+    public RH_Periodo(Integer idPeriodo, ConexionBD conexion) {
         PeriodoDAO dao = new PeriodoDAO(conexion);
         RH_Periodo p = new RH_Periodo();
         p = dao.consultaPeriodoId(idPeriodo);
-        this.idPeriodo=p.getIdPeriodo();
-        this.nombre=p.getNombre();
-        this.fechaInicio=p.getFechaInicio();
-        this.fechaFin=p.getFechaFin();
-        this.estatus=p.getEstatus();  
+        this.idPeriodo = p.getIdPeriodo();
+        this.nombre = p.getNombre();
+        this.fechaInicio = p.getFechaInicio();
+        this.fechaFin = p.getFechaFin();
+        this.estatus = p.getEstatus();
     }
 
     public Integer getIdPeriodo() {
@@ -73,5 +74,5 @@ public class RH_Periodo {
     public void setEstatus(String estatus) {
         this.estatus = estatus;
     }
-    
+
 }
