@@ -222,7 +222,7 @@ public class NominaDAO {
     }
 
     public boolean actualizarNomina(RH_Nomina nomina) {
-        String sql = "update RH.Nominas set fechaPago=?, subtotal=? "
+        String sql = "update RH.Nominas set fechaPago=?, subtotal=?,"
                 + " retenciones=?, total=?, estatus=?, idFormaPago=? "
                 + " where idNomina=?";
         boolean ban = false;
@@ -243,6 +243,79 @@ public class NominaDAO {
             JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
         }
         return ban;
+    }
+
+    public boolean eliminaExternas(RH_Nomina nomina) {
+        String sql = "Delete from RH.NominasDeducciones "
+                + " where idNomina=?";
+        boolean ban = false;
+        try {
+            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
+            st.setInt(1, nomina.getIdNomina());
+            st.execute();
+            st.close();
+            ban = true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
+        }
+
+        sql = "Delete from RH.NominasPercepciones "
+                + " where idNomina=?";
+        try {
+            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
+            st.setInt(1, nomina.getIdNomina());
+            st.execute();
+            st.close();
+            ban = true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
+            ban = false;
+        }
+        return ban;
+    }
+
+    public boolean eliminacionLogica(RH_Nomina nomina) {
+        String sql = "update RH.Nominas set estatus='I' "
+                + " where idNomina=?";
+        boolean ban = false;
+        try {
+            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
+            st.setInt(1, nomina.getIdNomina());
+            st.execute();
+            st.close();
+            ban = true;
+            sql = "update RH.NominasDeducciones set estatus='I' "
+                    + " where idNomina=?";
+
+            try {
+                st = this.conexion.getConexion().prepareStatement(sql);
+                st.setInt(1, nomina.getIdNomina());
+                st.execute();
+                st.close();
+                ban = true;
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
+            }
+
+            sql = "update RH.NominasPercepciones set estatus='I' "
+                    + " where idNomina=?";
+            try {
+                st = this.conexion.getConexion().prepareStatement(sql);
+                st.setInt(1, nomina.getIdNomina());
+                st.execute();
+                st.close();
+                ban = true;
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
+                ban = false;
+            }
+            return ban;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
+        }
+        return ban;
+
     }
 
 }
