@@ -108,8 +108,6 @@ public class AddNominaFrame extends javax.swing.JFrame {
         cmb_Periodo = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         cmb_FormaPago = new javax.swing.JComboBox<>();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        tbl_Nomina = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -128,6 +126,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
         btn_Excel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Generar Nomina");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -164,8 +163,8 @@ public class AddNominaFrame extends javax.swing.JFrame {
         jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 240, 90));
 
         lbl_Titulo.setText("Generar Nomina");
-        lbl_Titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 50, -1, -1));
+        lbl_Titulo.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 40, -1, -1));
 
         tbl_Deducciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -186,6 +185,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tbl_Deducciones.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Deducciones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_DeduccionesMouseClicked(evt);
@@ -212,6 +212,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        tbl_Percepciones.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Percepciones.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_PercepcionesMouseClicked(evt);
@@ -222,62 +223,55 @@ public class AddNominaFrame extends javax.swing.JFrame {
         jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, 500, 120));
 
         cmb_Empleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR EMPLEADO" }));
+        cmb_Empleado.setBackground(new java.awt.Color(153, 255, 153));
         cmb_Empleado.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmb_EmpleadoItemStateChanged(evt);
             }
         });
-        jPanel1.add(cmb_Empleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 360, -1));
+        jPanel1.add(cmb_Empleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 360, -1));
 
         jLabel4.setText("Empleado");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, -1, -1));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, 20));
 
         jLabel5.setText("Periodo");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, -1));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, -1, 20));
 
         cmb_Periodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR PERIODO" }));
+        cmb_Periodo.setBackground(new java.awt.Color(153, 255, 153));
         cmb_Periodo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmb_PeriodoItemStateChanged(evt);
             }
         });
-        jPanel1.add(cmb_Periodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, -1));
+        jPanel1.add(cmb_Periodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, -1));
 
         jLabel6.setText("Forma Pago");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, -1, -1));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, -1, 20));
 
         cmb_FormaPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE FORMA DE PAGO" }));
+        cmb_FormaPago.setBackground(new java.awt.Color(153, 255, 153));
         cmb_FormaPago.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmb_FormaPagoItemStateChanged(evt);
             }
         });
-        jPanel1.add(cmb_FormaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
+        jPanel1.add(cmb_FormaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 210, -1, -1));
 
-        tbl_Nomina.setAutoCreateRowSorter(true);
-        tbl_Nomina.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"
-            }
-        ));
-        jScrollPane5.setViewportView(tbl_Nomina);
-
-        jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, 540, 50));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Deducciones Nomina");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 650, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 660, -1, 20));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Resumen Nomina");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, -1, 20));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 300, -1, 20));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Salario del Periodo");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, -1, 20));
 
         btn_Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
         btn_Realizar.setBorderPainted(false);
@@ -287,23 +281,27 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 btn_RealizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 610, 180, 90));
+        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 690, 180, 90));
 
-        btn_Autoriza.setText("Autorizar Pago");
+        btn_Autoriza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/APAG.png"))); // NOI18N
+        btn_Autoriza.setBorderPainted(false);
+        btn_Autoriza.setContentAreaFilled(false);
         btn_Autoriza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_AutorizaActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Autoriza, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, -1, -1));
+        jPanel1.add(btn_Autoriza, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 520, -1, -1));
 
-        btn_Cancela.setText("Cancelar Nomina");
+        btn_Cancela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/CNOM.png"))); // NOI18N
+        btn_Cancela.setBorderPainted(false);
+        btn_Cancela.setContentAreaFilled(false);
         btn_Cancela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_CancelaActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Cancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 150, -1, -1));
+        jPanel1.add(btn_Cancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 520, -1, -1));
 
         tbl_Nomina1.setAutoCreateRowSorter(true);
         tbl_Nomina1.setModel(new javax.swing.table.DefaultTableModel(
@@ -314,9 +312,10 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 "SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"
             }
         ));
+        tbl_Nomina1.setBackground(new java.awt.Color(153, 255, 153));
         jScrollPane6.setViewportView(tbl_Nomina1);
 
-        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, 540, 50));
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 340, 540, 50));
 
         tbl_Salario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -326,6 +325,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 "Dias a pagar", "Importe"
             }
         ));
+        tbl_Salario.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Salario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbl_SalarioMouseClicked(evt);
@@ -335,22 +335,30 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 190, 50));
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Percepciones Nomina");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, -1, -1));
-        jPanel1.add(dp_FechaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 270, 310, -1));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 470, -1, 20));
+
+        dp_FechaPago.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.add(dp_FechaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 250, 310, -1));
 
         jLabel8.setText("Fecha Pago");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 240, 80, 20));
-        jPanel1.add(txf_Estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 140, 130, -1));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 200, 80, 20));
+
+        txf_Estatus.setBackground(new java.awt.Color(153, 255, 153));
+        jPanel1.add(txf_Estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 140, 130, -1));
 
         jLabel9.setText("Estatus");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 110, -1, -1));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 110, -1, 20));
 
-        btn_Excel.setText("Generar Excel");
-        jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, -1, -1));
+        btn_Excel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GEX.png"))); // NOI18N
+        btn_Excel.setBorderPainted(false);
+        btn_Excel.setContentAreaFilled(false);
+        jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 680, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 1170, 840));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 1170, 830));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -772,12 +780,10 @@ public class AddNominaFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel lbl_Titulo;
     private javax.swing.JTable tbl_Deducciones;
-    private javax.swing.JTable tbl_Nomina;
     private javax.swing.JTable tbl_Nomina1;
     private javax.swing.JTable tbl_Percepciones;
     private javax.swing.JTable tbl_Salario;

@@ -100,7 +100,7 @@ public class NominasFrame extends javax.swing.JFrame {
                 btn_ModificarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 190, -1));
+        jPanel1.add(btn_Modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 190, -1));
 
         tbl_Datos.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
@@ -222,13 +222,15 @@ public class NominasFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 80, 210, 80));
 
-        btn_Excel.setText("Generar Excel");
+        btn_Excel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GE.png"))); // NOI18N
+        btn_Excel.setBorderPainted(false);
+        btn_Excel.setContentAreaFilled(false);
         btn_Excel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ExcelActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+        jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 210, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 600));
 
