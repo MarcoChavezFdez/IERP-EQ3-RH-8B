@@ -7,11 +7,25 @@ package GUI;
 
 import conexion.ConexionBD;
 import conexion.NominaDAO;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Nomina;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.*;
 
 /**
  *
@@ -26,10 +40,11 @@ public class NominasFrame extends javax.swing.JFrame {
     int paginaActual;
     int paginaMaxima;
     boolean banderaBusqueda = false;
+    String path;
 
     public NominasFrame(ConexionBD conexion) {
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         this.conexion = conexion;
 
         NominaDAO nomina = new NominaDAO(this.conexion);
@@ -66,6 +81,7 @@ public class NominasFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima = new javax.swing.JLabel();
         btn_AgregarMultiples = new javax.swing.JButton();
         btn_Agregar = new javax.swing.JButton();
+        btn_Excel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Estado");
@@ -206,6 +222,14 @@ public class NominasFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 80, 210, 80));
 
+        btn_Excel.setText("Generar Excel");
+        btn_Excel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ExcelActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 600));
 
         pack();
@@ -266,13 +290,13 @@ public class NominasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_DatosMouseClicked
 
     private void btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ModificarActionPerformed
-        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        NominaDAO nomina = new NominaDAO(this.conexion);
-        RH_Nomina estado = new RH_Nomina();
-//        estado = nomina.consultaEstadoId(idEstado);
-//        AddEstadoFrame modificarEstado = new AddEstadoFrame(this.conexion, estado);
-//        this.setVisible(false);
-//        modificarEstado.setVisible(true);
+        Integer idNomina = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        NominaDAO daoNomina = new NominaDAO(this.conexion);
+        RH_Nomina nomina = new RH_Nomina();
+        nomina = daoNomina.consultaNominaId(idNomina);
+        AddNominaFrame modificarNomina = new AddNominaFrame(this.conexion, nomina);
+        this.setVisible(false);
+        modificarNomina.setVisible(true);
     }//GEN-LAST:event_btn_ModificarActionPerformed
 
     private void tbl_DatosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DatosMousePressed
@@ -365,12 +389,45 @@ public class NominasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_AgregarActionPerformed
 
     private void btn_AgregarMultiplesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarMultiplesActionPerformed
-       AddNominasMultiplesFrame addNominas = new AddNominasMultiplesFrame(this.conexion);
-       this.dispose();
-       addNominas.setVisible(true);
-       this.pack();
-       
+        AddNominasMultiplesFrame addNominas = new AddNominasMultiplesFrame(this.conexion);
+        this.dispose();
+        addNominas.setVisible(true);
+        this.pack();
+
     }//GEN-LAST:event_btn_AgregarMultiplesActionPerformed
+
+    private void btn_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ExcelActionPerformed
+        Integer idNomina = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        try {
+            path = (new File(".").getCanonicalPath());
+            File template = new File(path + "\\resources\\templates\\nominaTemplate.xlsx");
+            File copTemplate = new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".xlsx");
+            FileUtils.copyFile(template, copTemplate);
+            FileInputStream file = new FileInputStream(copTemplate);
+            Workbook workbook = new XSSFWorkbook(file);
+            CreationHelper createHelper = workbook.getCreationHelper();
+            Sheet sheet = workbook.getSheetAt(0);
+            Row r = sheet.getRow(5); // 10-1
+            if (r == null) {
+                // First cell in the row, create
+                r = sheet.createRow(5);
+            }
+
+            Cell c = r.getCell(11); // 4-1
+            if (c == null) {
+                // New cell
+
+                c = r.createCell(11, CellType.STRING);
+            }
+            c.setCellValue("Marco Alberto Chávez Fernández");
+            OutputStream outputStream = new FileOutputStream(new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + "V2.xlsx"));
+            workbook.write(outputStream);
+
+            System.out.println("Copia exitosa");
+        } catch (IOException ex) {
+            Logger.getLogger(AddAusenciaJustificadaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_ExcelActionPerformed
 
     private void llenarTabla(ArrayList<RH_Nomina> lista) {
         String[] encabezado = {"IdNomina", "Fecha Elaboracion", "Fecha Pago", "Total", "Dias Trabajados", "Estatus", "Empleado", "Forma Pago", "Periodo"};
@@ -408,6 +465,7 @@ public class NominasFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Anterior;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
+    private javax.swing.JButton btn_Excel;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JButton btn_Siguiente;
     private javax.swing.JLabel jLabel1;

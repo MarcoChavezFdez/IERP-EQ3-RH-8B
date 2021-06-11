@@ -64,6 +64,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
         this.isNew = true;
         nomina = new RH_Nomina();
         this.nomina.setEstatus("PENDIENTE");
+        txf_Estatus.setText(this.nomina.getEstatus());
         btn_Autoriza.setVisible(false);
         btn_Cancela.setVisible(false);
     }
@@ -74,6 +75,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
         this.conexion = conexion;
         this.isNew = false;
         this.nomina = nomina;
+        txf_Estatus.setText(this.nomina.getEstatus());
         dp_FechaPago.setDate(this.nomina.getFechaPago().toLocalDate());
         this.empleado = this.nomina.getEmpleado();
         NominaDeduccionDAO daoNominaDeduccion = new NominaDeduccionDAO(this.conexion);
@@ -121,6 +123,9 @@ public class AddNominaFrame extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         dp_FechaPago = new com.github.lgooddatepicker.components.DatePicker();
         jLabel8 = new javax.swing.JLabel();
+        txf_Estatus = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        btn_Excel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -285,10 +290,20 @@ public class AddNominaFrame extends javax.swing.JFrame {
         jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 610, 180, 90));
 
         btn_Autoriza.setText("Autorizar Pago");
-        jPanel1.add(btn_Autoriza, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, -1, -1));
+        btn_Autoriza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AutorizaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Autoriza, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, -1, -1));
 
         btn_Cancela.setText("Cancelar Nomina");
-        jPanel1.add(btn_Cancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, -1, -1));
+        btn_Cancela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CancelaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Cancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 150, -1, -1));
 
         tbl_Nomina1.setAutoCreateRowSorter(true);
         tbl_Nomina1.setModel(new javax.swing.table.DefaultTableModel(
@@ -327,6 +342,13 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         jLabel8.setText("Fecha Pago");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 240, 80, 20));
+        jPanel1.add(txf_Estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 140, 130, -1));
+
+        jLabel9.setText("Estatus");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 110, -1, -1));
+
+        btn_Excel.setText("Generar Excel");
+        jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 200, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 1170, 840));
 
@@ -470,8 +492,8 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 this.nomina.setIdNomina(daoNomina.consultaIdGenerado());
                 RH_NominaPercepcion salario = new RH_NominaPercepcion();
                 salario.setNomina(nomina);
-                salario.setPercepcion(new RH_Percepcion(1,this.conexion));
-                salario.setImporte(this.nomina.getDiasTrabajados()*this.nomina.getEmpleado().getSalarioDiario());
+                salario.setPercepcion(new RH_Percepcion(1, this.conexion));
+                salario.setImporte(this.nomina.getDiasTrabajados() * this.nomina.getEmpleado().getSalarioDiario());
                 salario.setEstatus("A");
                 daoNominaPercepciones.insertarNominaPercepcion(salario);
                 percepcionesSeleccionadas.forEach((t) -> {
@@ -487,7 +509,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
                     RH_NominaDeduccion nominaDeduccion = new RH_NominaDeduccion();
                     nominaDeduccion.setNomina(nomina);
                     nominaDeduccion.setDeduccion(t);
-                    nominaDeduccion.setImporte(this.nomina.getSubtotal() * (t.getPorcentaje()/100));
+                    nominaDeduccion.setImporte(this.nomina.getSubtotal() * (t.getPorcentaje() / 100));
                     nominaDeduccion.setEstatus("A");
                     daoNominaDeducciones.insertarNominaDeduccion(nominaDeduccion);
                 });
@@ -503,6 +525,24 @@ public class AddNominaFrame extends javax.swing.JFrame {
 //            }
         }
     }//GEN-LAST:event_btn_RealizarActionPerformed
+
+    private void btn_AutorizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AutorizaActionPerformed
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea Autorizar el pago de la  Nomina ?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            this.nomina.setEstatus("PAGADA");
+            txf_Estatus.setText(this.nomina.getEstatus());
+            btn_Cancela.setEnabled(false);
+            btn_Autoriza.setEnabled(false);
+        }
+    }//GEN-LAST:event_btn_AutorizaActionPerformed
+
+    private void btn_CancelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CancelaActionPerformed
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea Cancelar la  Nomina ?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            this.nomina.setEstatus("CANCELADA");
+            txf_Estatus.setText(this.nomina.getEstatus());
+        }
+    }//GEN-LAST:event_btn_CancelaActionPerformed
 
     private void llenaListas() {
 
@@ -533,14 +573,13 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
     private void llenaTablaNomina() {
 
-        String[] encabezado = {"SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"};
-        Object[][] datos = new Object[1][5];
+        String[] encabezado = {"SubTotal", "Retenciones", "Total", "Dias Trabajados"};
+        Object[][] datos = new Object[1][4];
         int ren = 0;
         datos[ren][0] = nomina.getSubtotal();
         datos[ren][1] = nomina.getRetenciones();
         datos[ren][2] = nomina.getTotal();
         datos[ren][3] = nomina.getDiasTrabajados();
-        datos[ren][4] = nomina.getEstatus();
         ren++;
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
             @Override
@@ -714,6 +753,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Autoriza;
     private javax.swing.JButton btn_Cancela;
+    private javax.swing.JButton btn_Excel;
     private javax.swing.JButton btn_Realizar;
     private javax.swing.JButton btn_RealizarOperacion;
     private javax.swing.JComboBox<String> cmb_Empleado;
@@ -728,6 +768,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -740,6 +781,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
     private javax.swing.JTable tbl_Nomina1;
     private javax.swing.JTable tbl_Percepciones;
     private javax.swing.JTable tbl_Salario;
+    private javax.swing.JTextField txf_Estatus;
     // End of variables declaration//GEN-END:variables
 
 }
