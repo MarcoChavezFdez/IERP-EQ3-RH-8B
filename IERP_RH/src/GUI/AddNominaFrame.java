@@ -124,6 +124,8 @@ public class AddNominaFrame extends javax.swing.JFrame {
         txf_Estatus = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         btn_Excel = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_Nomina = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Generar Nomina");
@@ -315,7 +317,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
         tbl_Nomina1.setBackground(new java.awt.Color(153, 255, 153));
         jScrollPane6.setViewportView(tbl_Nomina1);
 
-        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 340, 540, 50));
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 370, 540, 50));
 
         tbl_Salario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -357,6 +359,22 @@ public class AddNominaFrame extends javax.swing.JFrame {
         btn_Excel.setBorderPainted(false);
         btn_Excel.setContentAreaFilled(false);
         jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 680, -1, -1));
+
+        tbl_Nomina.setBackground(new java.awt.Color(153, 255, 153));
+        tbl_Nomina.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"
+            }
+        ));
+        jScrollPane1.setViewportView(tbl_Nomina);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 440, 560, 80));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 1170, 830));
 
@@ -778,12 +796,14 @@ public class AddNominaFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel lbl_Titulo;
     private javax.swing.JTable tbl_Deducciones;
+    private javax.swing.JTable tbl_Nomina;
     private javax.swing.JTable tbl_Nomina1;
     private javax.swing.JTable tbl_Percepciones;
     private javax.swing.JTable tbl_Salario;

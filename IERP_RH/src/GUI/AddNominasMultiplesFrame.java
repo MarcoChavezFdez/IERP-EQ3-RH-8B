@@ -410,7 +410,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
                     importe = nomina.getSubtotal() * (nominaDeduccion.getDeduccion().getPorcentaje() / 100);
                     nominaDeduccion.setImporte(importe);
                     nominaDeduccion.setEstatus("A");
-                    nominaDeduccionDAO.insertarNominaDeducion(nominaDeduccion);
+                    nominaDeduccionDAO.insertarNominaDeduccion(nominaDeduccion);
                 });//Fin Deducciones
                 daoNomina.calculaNominaDeducciones(nomina.getIdNomina());
                 System.out.println("Es todo tigre");

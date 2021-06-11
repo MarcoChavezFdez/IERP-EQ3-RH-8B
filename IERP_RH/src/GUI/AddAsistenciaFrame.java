@@ -129,8 +129,8 @@ public class AddAsistenciaFrame extends javax.swing.JFrame {
         jPanel1.add(btn_Atras, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 10, 260, 110));
 
         lbl_Titulo.setText("Realizar Operación");
-        lbl_Titulo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, -1, -1));
+        lbl_Titulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 90, -1, -1));
         jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 370, 280, 40));
 
         jLabel3.setText("Fecha");
@@ -140,7 +140,8 @@ public class AddAsistenciaFrame extends javax.swing.JFrame {
         jPanel1.add(dp_Fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, -1, -1));
 
         jLabel4.setText("Asistencias");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, -1, -1));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 30, -1, -1));
         jPanel1.add(tp_HoraSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 300, 180, -1));
 
         jLabel1.setText("Hora Entrada");
