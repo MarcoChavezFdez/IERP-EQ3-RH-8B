@@ -27,7 +27,7 @@ public class NominaDeduccionDAO {
         this.conexion = conexion;
     }
 
-    public boolean insertarNominaDeducion(RH_NominaDeduccion nominaDeduccion) {
+    public boolean insertarNominaDeduccion(RH_NominaDeduccion nominaDeduccion) {
         String sql = "insert into RH.NominasDeducciones values(?,?,?,?)";
         boolean ban = false;
         try {
