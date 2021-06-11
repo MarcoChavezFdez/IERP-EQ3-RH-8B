@@ -75,6 +75,7 @@ public class RH_Empleado {
         this.diasPermiso=e.getDiasPermiso();
         this.fotografia=e.getFotografia();
         this.direccion=e.getDireccion();
+        this.colonia=e.getColonia();
         this.codigoPostal=e.getCodigoPostal();
         this.escolaridad=e.getEscolaridad();
         this.especialidad=e.getEspecialidad();
@@ -312,5 +313,7 @@ public class RH_Empleado {
     public void setTurno(RH_Turno turno) {
         this.turno = turno;
     }
-
+    public String getDireccionCompleta(){
+        return this.getDireccion()+", "+this.getColonia()+", "+this.getCiudad().getNombre();
+    }
 }
