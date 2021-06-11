@@ -106,7 +106,7 @@ public class NominaDAO {
             cstmt.setInt(2, idPeriodo);
             cstmt.registerOutParameter(3, java.sql.Types.INTEGER);
             cstmt.execute();
-            diasTrabajados=cstmt.getInt(3);
+            diasTrabajados = cstmt.getInt(3);
             cstmt.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en Executar calculaDiasTrabajados: " + ex.getMessage());
@@ -220,4 +220,29 @@ public class NominaDAO {
         }
         return idNomina;
     }
+
+    public boolean actualizarNomina(RH_Nomina nomina) {
+        String sql = "update RH.Nominas set fechaPago=?, subtotal=? "
+                + " retenciones=?, total=?, estatus=?, idFormaPago=? "
+                + " where idNomina=?";
+        boolean ban = false;
+        try {
+            PreparedStatement st = this.conexion.getConexion().prepareStatement(sql);
+            st.setDate(1, nomina.getFechaPago());
+            st.setFloat(2, nomina.getSubtotal());
+            st.setFloat(3, nomina.getRetenciones());
+            st.setFloat(4, nomina.getTotal());
+            st.setString(5, nomina.getEstatus());
+            st.setInt(6, nomina.getFormaPago().getIdFormaPago());
+            st.setInt(7, nomina.getIdNomina());
+            st.execute();
+            st.close();
+            ban = true;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error actualizando:" + e.getMessage());
+        }
+        return ban;
+    }
+
 }
