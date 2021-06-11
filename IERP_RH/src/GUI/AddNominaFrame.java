@@ -16,8 +16,15 @@ import conexion.NominaDeduccionDAO;
 import conexion.NominaPercepcionDAO;
 import conexion.PercepcionDAO;
 import conexion.PeriodoDAO;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Empleado;
@@ -28,6 +35,14 @@ import modelo.RH_NominaDeduccion;
 import modelo.RH_NominaPercepcion;
 import modelo.RH_Percepcion;
 import modelo.RH_Periodo;
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -56,6 +71,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
     EstadoDAO daoEstado;
     Boolean isNew;
+    String path;
 
     public AddNominaFrame(ConexionBD conexion) {
         initComponents();
@@ -63,10 +79,13 @@ public class AddNominaFrame extends javax.swing.JFrame {
         this.conexion = conexion;
         this.isNew = true;
         nomina = new RH_Nomina();
+        btn_Excel.setVisible(false);
         this.nomina.setEstatus("PENDIENTE");
         txf_Estatus.setText(this.nomina.getEstatus());
+        txf_Estatus.setEnabled(false);
         btn_Autoriza.setVisible(false);
         btn_Cancela.setVisible(false);
+        btn_Excel.setVisible(false);
     }
 
     public AddNominaFrame(ConexionBD conexion, RH_Nomina nomina) {
@@ -75,13 +94,30 @@ public class AddNominaFrame extends javax.swing.JFrame {
         this.conexion = conexion;
         this.isNew = false;
         this.nomina = nomina;
-        txf_Estatus.setText(this.nomina.getEstatus());
         dp_FechaPago.setDate(this.nomina.getFechaPago().toLocalDate());
         this.empleado = this.nomina.getEmpleado();
+        btn_Excel.setVisible(false);
         NominaDeduccionDAO daoNominaDeduccion = new NominaDeduccionDAO(this.conexion);
         NominaPercepcionDAO daoNominaPercepcion = new NominaPercepcionDAO(this.conexion);
         nominaDeducciones = daoNominaDeduccion.consultaDeducciones(this.nomina.getIdNomina());
         nominaPercepciones = daoNominaPercepcion.consultaPercepciones(this.nomina.getIdNomina());
+        txf_Estatus.setText(this.nomina.getEstatus());
+        txf_Estatus.setEnabled(false);
+        cmb_FormaPago.setEnabled(true);
+        dp_FechaPago.setEnabled(false);
+        if ("PAGADA".equals(this.nomina.getEstatus()) || "CANCELADA".equals(this.nomina.getEstatus())) {
+            btn_Autoriza.setEnabled(false);
+            btn_Cancela.setEnabled(false);
+            btn_Realizar.setEnabled(false);
+            tbl_Percepciones.setEnabled(false);
+            tbl_Deducciones.setEnabled(false);
+            if ("PAGADA".equals(this.nomina.getEstatus())) {
+                btn_Excel.setEnabled(true);
+                btn_Excel.setVisible(true);
+                cmb_FormaPago.setEnabled(false);
+
+            }
+        }
         seleccionaCasillas();
     }
 
@@ -114,8 +150,6 @@ public class AddNominaFrame extends javax.swing.JFrame {
         btn_Realizar = new javax.swing.JButton();
         btn_Autoriza = new javax.swing.JButton();
         btn_Cancela = new javax.swing.JButton();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        tbl_Nomina1 = new javax.swing.JTable();
         jScrollPane7 = new javax.swing.JScrollPane();
         tbl_Salario = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
@@ -269,7 +303,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         jLabel2.setText("Resumen Nomina");
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 300, -1, 20));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 370, -1, 20));
 
         jLabel3.setText("Salario del Periodo");
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -305,20 +339,6 @@ public class AddNominaFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Cancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 520, -1, -1));
 
-        tbl_Nomina1.setAutoCreateRowSorter(true);
-        tbl_Nomina1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"
-            }
-        ));
-        tbl_Nomina1.setBackground(new java.awt.Color(153, 255, 153));
-        jScrollPane6.setViewportView(tbl_Nomina1);
-
-        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 370, 540, 50));
-
         tbl_Salario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null}
@@ -346,35 +366,38 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         jLabel8.setText("Fecha Pago");
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 200, 80, 20));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 220, 80, 20));
 
         txf_Estatus.setBackground(new java.awt.Color(153, 255, 153));
+        txf_Estatus.setEnabled(false);
         jPanel1.add(txf_Estatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 140, 130, -1));
 
         jLabel9.setText("Estatus");
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 110, -1, 20));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 110, -1, 20));
 
         btn_Excel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GEX.png"))); // NOI18N
         btn_Excel.setBorderPainted(false);
         btn_Excel.setContentAreaFilled(false);
+        btn_Excel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ExcelActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 680, -1, -1));
 
-        tbl_Nomina.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Nomina.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
                 {null, null, null, null, null}
             },
             new String [] {
                 "SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"
             }
         ));
+        tbl_Nomina.setBackground(new java.awt.Color(153, 255, 153));
         jScrollPane1.setViewportView(tbl_Nomina);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 440, 560, 80));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 400, 560, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 1170, 830));
 
@@ -397,8 +420,9 @@ public class AddNominaFrame extends javax.swing.JFrame {
         periodos = daoPeriodo.consultaPeriodosVista();
 
         if (!isNew) {
+            cmb_Empleado.removeAllItems();
             cmb_Empleado.addItem(this.nomina.getEmpleado().getNombreCompleto());
-            cmb_Empleado.setSelectedIndex(1);
+            cmb_Empleado.setSelectedIndex(0);
             cmb_Empleado.setEnabled(false);
             cmb_Periodo.addItem(this.nomina.getPeriodo().getNombre());
             cmb_Periodo.setSelectedIndex(1);
@@ -446,9 +470,9 @@ public class AddNominaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_RealizarOperacionMouseMoved
 
     private void btn_AtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AtrasActionPerformed
-        NominasFrame nominas = new NominasFrame(this.conexion);
+        NominasFrame nominasFrame = new NominasFrame(this.conexion);
         this.dispose();
-        nominas.setVisible(true);
+        nominasFrame.setVisible(true);
         this.pack();
     }//GEN-LAST:event_btn_AtrasActionPerformed
 
@@ -480,7 +504,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cmb_EmpleadoItemStateChanged
 
     private void cmb_PeriodoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_PeriodoItemStateChanged
-        if (cmb_Periodo.getSelectedIndex() > 0) {
+        if (cmb_Periodo.getSelectedIndex() > 0 && isNew) {
             nomina.setPeriodo(periodos.get(cmb_Periodo.getSelectedIndex() - 1));
         } else {
             cmb_Empleado.setSelectedIndex(0);
@@ -544,12 +568,41 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar añadir la nomina");
             }
         } else {
-//            if (daoNomina.(nomina)) {
-//                JOptionPane.showMessageDialog(null, "Nomina Añadida con exito");
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar añadir la nomina");
-//            }
+            if (daoNomina.actualizarNomina(nomina)) {
+                daoNomina.eliminaExternas(nomina);
+                llenaListas();
+                RH_NominaPercepcion salario = new RH_NominaPercepcion();
+                salario.setNomina(nomina);
+                salario.setPercepcion(new RH_Percepcion(1, this.conexion));
+                salario.setImporte(this.nomina.getDiasTrabajados() * this.nomina.getEmpleado().getSalarioDiario());
+                salario.setEstatus("A");
+                daoNominaPercepciones.insertarNominaPercepcion(salario);
+                percepcionesSeleccionadas.forEach((t) -> {
+                    RH_NominaPercepcion nominaPercepcion = new RH_NominaPercepcion();
+                    nominaPercepcion.setNomina(nomina);
+                    nominaPercepcion.setPercepcion(t);
+                    nominaPercepcion.setImporte(this.nomina.getEmpleado().getSalarioDiario() * t.getDiasPagar());
+                    nominaPercepcion.setEstatus("A");
+                    daoNominaPercepciones.insertarNominaPercepcion(nominaPercepcion);
+                });
+
+                deduccionesSeleccionadas.forEach((t) -> {
+                    RH_NominaDeduccion nominaDeduccion = new RH_NominaDeduccion();
+                    nominaDeduccion.setNomina(nomina);
+                    nominaDeduccion.setDeduccion(t);
+                    nominaDeduccion.setImporte(this.nomina.getSubtotal() * (t.getPorcentaje() / 100));
+                    nominaDeduccion.setEstatus("A");
+                    daoNominaDeducciones.insertarNominaDeduccion(nominaDeduccion);
+                });
+                JOptionPane.showMessageDialog(null, "Nomina Actualizada con exito");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar añadir la nomina");
+            }
         }
+        NominasFrame nominaFrame = new NominasFrame(this.conexion);
+        this.dispose();
+        nominaFrame.setVisible(true);
+        this.pack();
     }//GEN-LAST:event_btn_RealizarActionPerformed
 
     private void btn_AutorizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AutorizaActionPerformed
@@ -559,6 +612,8 @@ public class AddNominaFrame extends javax.swing.JFrame {
             txf_Estatus.setText(this.nomina.getEstatus());
             btn_Cancela.setEnabled(false);
             btn_Autoriza.setEnabled(false);
+            tbl_Percepciones.setEnabled(false);
+            tbl_Deducciones.setEnabled(false);
         }
     }//GEN-LAST:event_btn_AutorizaActionPerformed
 
@@ -567,8 +622,278 @@ public class AddNominaFrame extends javax.swing.JFrame {
         if (reply == JOptionPane.YES_OPTION) {
             this.nomina.setEstatus("CANCELADA");
             txf_Estatus.setText(this.nomina.getEstatus());
+            txf_Estatus.setText(this.nomina.getEstatus());
+            btn_Cancela.setEnabled(false);
+            btn_Autoriza.setEnabled(false);
+            tbl_Percepciones.setEnabled(false);
+            tbl_Deducciones.setEnabled(false);
         }
     }//GEN-LAST:event_btn_CancelaActionPerformed
+
+    private void btn_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ExcelActionPerformed
+        Integer idNomina = this.nomina.getIdNomina();
+        ArrayList<RH_NominaPercepcion> percepciones = new ArrayList<>();
+        ArrayList<RH_NominaDeduccion> deducciones = new ArrayList<>();
+        NominaDeduccionDAO daoDeduccion = new NominaDeduccionDAO(this.conexion);
+        NominaPercepcionDAO daoPercepcion = new NominaPercepcionDAO(this.conexion);
+        percepciones = daoPercepcion.consultaPercepciones(idNomina);
+        deducciones = daoDeduccion.consultaDeducciones(idNomina);
+
+        try {
+            path = (new File(".").getCanonicalPath());
+            File template = new File(path + "\\resources\\templates\\nominaTemplate.xlsx");
+            File copTemplate = new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".xlsx");
+            FileUtils.copyFile(template, copTemplate);
+            FileInputStream file = new FileInputStream(copTemplate);
+            Workbook workbook = new XSSFWorkbook(file);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            //Nombre del Empleado
+            Row r = sheet.getRow(5); // 10-1
+            if (r == null) {
+                r = sheet.createRow(5);
+            }
+            Cell c = r.getCell(11); // 4-1
+            if (c == null) {
+                c = r.createCell(11, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getEmpleado().getNombreCompleto());
+
+            //Direccion del Empleado
+            r = sheet.getRow(7);
+            if (r == null) {
+                r = sheet.createRow(7);
+            }
+            c = r.getCell(2);
+            if (c == null) {
+                c = r.createCell(2, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getEmpleado().getDireccionCompleta());
+
+            //NSS del Empleado
+            r = sheet.getRow(7);
+            if (r == null) {
+                r = sheet.createRow(7);
+            }
+            c = r.getCell(16);
+            if (c == null) {
+                c = r.createCell(16, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getEmpleado().getNss());
+
+            //Departamento del Empleado
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(11);
+            if (c == null) {
+                c = r.createCell(11, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getEmpleado().getDepartamento().getNombre());
+
+            //Puesto del Empleado
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(18);
+            if (c == null) {
+                c = r.createCell(18, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getEmpleado().getPuesto().getNombre());
+
+            //Codigo Nomina
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(2);
+            if (c == null) {
+                c = r.createCell(2, CellType.NUMERIC);
+            }
+            c.setCellValue(this.nomina.getIdNomina());
+
+            //Sucursal Empleado
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(6);
+            if (c == null) {
+                c = r.createCell(6, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getEmpleado().getSucursal().getNombre());
+
+            //Forma Pago
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(8);
+            if (c == null) {
+                c = r.createCell(8, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getFormaPago().getNombre());
+
+            //Periodo Inicial
+            r = sheet.getRow(13);
+            if (r == null) {
+                r = sheet.createRow(13);
+            }
+            c = r.getCell(8);
+            if (c == null) {
+                c = r.createCell(8, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getPeriodo().getFechaInicio().toString());
+            System.out.println(this.nomina.getPeriodo().getFechaInicio().toString());
+
+            //Periodo Fin
+            r = sheet.getRow(13);
+            if (r == null) {
+                r = sheet.createRow(13);
+            }
+            c = r.getCell(10);
+            if (c == null) {
+                c = r.createCell(10, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getPeriodo().getFechaFin().toString());
+            System.out.println(this.nomina.getPeriodo().getFechaFin().toString());
+
+            //Fecha de liquidacion
+            r = sheet.getRow(13);
+            if (r == null) {
+                r = sheet.createRow(13);
+            }
+            c = r.getCell(15);
+            if (c == null) {
+                c = r.createCell(15, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getFechaPago().toString());
+
+            //Dias Trabajados
+            r = sheet.getRow(13);
+            if (r == null) {
+                r = sheet.createRow(13);
+            }
+            c = r.getCell(20);
+            if (c == null) {
+                c = r.createCell(20, CellType.NUMERIC);
+            }
+            c.setCellValue(this.nomina.getDiasTrabajados());
+
+            //SUBTOTAL
+            r = sheet.getRow(36);
+            if (r == null) {
+                r = sheet.createRow(36);
+            }
+            c = r.getCell(18);
+            if (c == null) {
+                c = r.createCell(18, CellType.NUMERIC);
+            }
+            c.setCellValue((double) this.nomina.getSubtotal());
+
+            //Retenciones
+            r = sheet.getRow(50);
+            if (r == null) {
+                r = sheet.createRow(50);
+            }
+            c = r.getCell(18);
+            if (c == null) {
+                c = r.createCell(18, CellType.NUMERIC);
+            }
+            c.setCellValue((double) this.nomina.getRetenciones());
+
+            //Total
+            r = sheet.getRow(52);
+            if (r == null) {
+                r = sheet.createRow(52);
+            }
+            c = r.getCell(18);
+            if (c == null) {
+                c = r.createCell(18, CellType.NUMERIC);
+            }
+            c.setCellValue((double) this.nomina.getTotal());
+
+            for (int i = 0; i < percepciones.size(); i++) {
+                r = sheet.getRow(i + 23);
+                if (r == null) {
+                    r = sheet.createRow(i + 23);
+                }
+                c = r.getCell(3);
+                if (c == null) {
+                    c = r.createCell(3, CellType.STRING);
+                }
+                c.setCellValue(percepciones.get(i).getPercepcion().getNombre());
+
+                r = sheet.getRow(i + 23);
+                if (r == null) {
+                    r = sheet.createRow(i + 23);
+                }
+                c = r.getCell(14);
+                if (c == null) {
+                    c = r.createCell(14, CellType.NUMERIC);
+                }
+                c.setCellValue((double) percepciones.get(i).getImporte());
+            }
+
+            for (int i = 0; i < deducciones.size(); i++) {
+                r = sheet.getRow(i + 42);
+                if (r == null) {
+                    r = sheet.createRow(i + 42);
+                }
+                c = r.getCell(3);
+                if (c == null) {
+                    c = r.createCell(3, CellType.STRING);
+                }
+                c.setCellValue(deducciones.get(i).getDeduccion().getNombre());
+
+                r = sheet.getRow(i + 42);
+                if (r == null) {
+                    r = sheet.createRow(i + 42);
+                }
+                c = r.getCell(10);
+                if (c == null) {
+                    c = r.createCell(10, CellType.NUMERIC);
+                }
+                c.setCellValue((double) deducciones.get(i).getDeduccion().getPorcentaje() / 100);
+
+                r = sheet.getRow(i + 42);
+                if (r == null) {
+                    r = sheet.createRow(i + 42);
+                }
+                c = r.getCell(14);
+                if (c == null) {
+                    c = r.createCell(14, CellType.NUMERIC);
+                }
+                c.setCellValue((double) deducciones.get(i).getImporte());
+
+            }
+            //Nombre del Empleado
+            r = sheet.getRow(72); // 10-1
+            if (r == null) {
+                r = sheet.createRow(72);
+            }
+            c = r.getCell(12); // 4-1
+            if (c == null) {
+                c = r.createCell(12, CellType.STRING);
+            }
+            c.setCellValue(this.nomina.getEmpleado().getNombreCompleto());
+
+            OutputStream outputStream = new FileOutputStream(new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + "V2.xlsx"));
+            workbook.write(outputStream);
+            try {
+                path = (new File(".").getCanonicalPath());
+                Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + "V2.xlsx");
+            } catch (Exception evvv) {
+                JOptionPane.showMessageDialog(null, "No se puede abrir el archivo de ayuda, probablemente fue borrado", "ERROR", JOptionPane.ERROR_MESSAGE);
+
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(AddAusenciaJustificadaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_ExcelActionPerformed
 
     private void llenaListas() {
 
@@ -587,9 +912,13 @@ public class AddNominaFrame extends javax.swing.JFrame {
         }
 
         for (int i = 0; i < tbl_Deducciones.getRowCount(); i++) {
-            if ((Boolean) tbl_Deducciones.getValueAt(i, 4)) {
-                RH_Deduccion d = new RH_Deduccion(Integer.parseInt(tbl_Deducciones.getValueAt(i, 0).toString()), this.conexion);
-                deduccionesSeleccionadas.add(d);
+            try {
+                if ((Boolean) tbl_Deducciones.getValueAt(i, 4)) {
+                    RH_Deduccion d = new RH_Deduccion(Integer.parseInt(tbl_Deducciones.getValueAt(i, 0).toString()), this.conexion);
+                    deduccionesSeleccionadas.add(d);
+                }
+            } catch (NullPointerException e) {
+                System.out.println("error " + e.getMessage());
             }
         }
 
@@ -799,12 +1128,10 @@ public class AddNominaFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel lbl_Titulo;
     private javax.swing.JTable tbl_Deducciones;
     private javax.swing.JTable tbl_Nomina;
-    private javax.swing.JTable tbl_Nomina1;
     private javax.swing.JTable tbl_Percepciones;
     private javax.swing.JTable tbl_Salario;
     private javax.swing.JTextField txf_Estatus;
