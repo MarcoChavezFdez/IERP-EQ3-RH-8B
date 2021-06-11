@@ -7,25 +7,14 @@ package GUI;
 
 import conexion.ConexionBD;
 import conexion.NominaDAO;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Nomina;
-import org.apache.commons.io.FileUtils;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.*;
+
 
 /**
  *
@@ -53,6 +42,7 @@ public class NominasFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
         ArrayList<RH_Nomina> lista = nomina.consultaNominasVistaPaginada(paginaActual);
         llenarTabla(lista);
+        
     }
 
     /**
@@ -81,7 +71,6 @@ public class NominasFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima = new javax.swing.JLabel();
         btn_AgregarMultiples = new javax.swing.JButton();
         btn_Agregar = new javax.swing.JButton();
-        btn_Excel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Nominas");
@@ -222,16 +211,6 @@ public class NominasFrame extends javax.swing.JFrame {
         });
         jPanel1.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 80, 210, 80));
 
-        btn_Excel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GE.png"))); // NOI18N
-        btn_Excel.setBorderPainted(false);
-        btn_Excel.setContentAreaFilled(false);
-        btn_Excel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ExcelActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 210, -1));
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 600));
 
         pack();
@@ -307,36 +286,34 @@ public class NominasFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tbl_DatosMousePressed
 
     private void btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EliminarActionPerformed
-//        Integer idEstado = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-//        String nombre = tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 1).toString();
-//        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el Estado '" + nombre + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
-//        if (reply == JOptionPane.YES_OPTION) {
-//            RH_Estado estado = new RH_Estado();
-//            EstadoDAO DAO = new EstadoDAO(this.conexion);
-//            estado = DAO.consultaEstadoId(idEstado);
-//            if (DAO.eliminacionLogica(estado)) {
-//                JOptionPane.showMessageDialog(null, "Estado Eliminado");
-//                EstadoDAO estados = new EstadoDAO(this.conexion);
-//                this.paginaActual = 1;
-//                this.paginaMaxima = estados.consultaPaginas();
-//                lbl_PaginaActual.setText(String.valueOf(this.paginaActual));
-//                lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
-//                ArrayList<RH_Estado> lista = estados.consultaEstadosVistaPaginada(paginaActual);
-//                llenarTabla(lista);
-//                txf_Busqueda.setText("");
-//                banderaBusqueda = false;
-//                btn_Anterior.setEnabled(false);
-//                if ((paginaActual + 1) <= paginaMaxima) {
-//                    btn_Siguiente.setEnabled(true);
-//                } else {
-//                    btn_Siguiente.setEnabled(false);
-//                }
-//
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
-//            }
-//
-//        }
+        Integer idNomina = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
+        NominaDAO daoNomina = new NominaDAO(this.conexion);
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar la Nomina '" + idNomina + "'?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            RH_Nomina nomina = new RH_Nomina();
+            nomina = daoNomina.consultaNominaId(idNomina);
+
+            if (daoNomina.eliminacionLogica(nomina)) {
+                JOptionPane.showMessageDialog(null, "Nomina Eliminada");
+                this.paginaActual = 1;
+                this.paginaMaxima = daoNomina.consultaPaginas();
+                lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
+                ArrayList<RH_Nomina> lista = daoNomina.consultaNominasVistaPaginada(paginaActual);
+                llenarTabla(lista);
+                txf_Busqueda.setText("");
+                banderaBusqueda = false;
+                btn_Anterior.setEnabled(false);
+                if ((paginaActual + 1) <= paginaMaxima) {
+                    btn_Siguiente.setEnabled(true);
+                } else {
+                    btn_Siguiente.setEnabled(false);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error");
+            }
+
+        }
     }//GEN-LAST:event_btn_EliminarActionPerformed
 
     private void btn_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SiguienteActionPerformed
@@ -398,39 +375,6 @@ public class NominasFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_AgregarMultiplesActionPerformed
 
-    private void btn_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ExcelActionPerformed
-        Integer idNomina = Integer.parseInt(tbl_Datos.getValueAt(tbl_Datos.getSelectedRow(), 0).toString());
-        try {
-            path = (new File(".").getCanonicalPath());
-            File template = new File(path + "\\resources\\templates\\nominaTemplate.xlsx");
-            File copTemplate = new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".xlsx");
-            FileUtils.copyFile(template, copTemplate);
-            FileInputStream file = new FileInputStream(copTemplate);
-            Workbook workbook = new XSSFWorkbook(file);
-            CreationHelper createHelper = workbook.getCreationHelper();
-            Sheet sheet = workbook.getSheetAt(0);
-            Row r = sheet.getRow(5); // 10-1
-            if (r == null) {
-                // First cell in the row, create
-                r = sheet.createRow(5);
-            }
-
-            Cell c = r.getCell(11); // 4-1
-            if (c == null) {
-                // New cell
-
-                c = r.createCell(11, CellType.STRING);
-            }
-            c.setCellValue("Marco Alberto Chávez Fernández");
-            OutputStream outputStream = new FileOutputStream(new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + "V2.xlsx"));
-            workbook.write(outputStream);
-
-            System.out.println("Copia exitosa");
-        } catch (IOException ex) {
-            Logger.getLogger(AddAusenciaJustificadaFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btn_ExcelActionPerformed
-
     private void llenarTabla(ArrayList<RH_Nomina> lista) {
         String[] encabezado = {"IdNomina", "Fecha Elaboracion", "Fecha Pago", "Total", "Dias Trabajados", "Estatus", "Empleado", "Forma Pago", "Periodo"};
         Object[][] datos = new Object[lista.size()][9];
@@ -467,7 +411,6 @@ public class NominasFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Anterior;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
-    private javax.swing.JButton btn_Excel;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JButton btn_Siguiente;
     private javax.swing.JLabel jLabel1;
