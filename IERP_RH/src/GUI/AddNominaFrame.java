@@ -5,18 +5,27 @@
  */
 package GUI;
 
+import com.privatejgoodies.common.base.Objects;
 import conexion.ConexionBD;
 import conexion.DeduccionDAO;
 import conexion.EmpleadoDAO;
 import conexion.EstadoDAO;
 import conexion.FormaPagoDAO;
+import conexion.NominaDAO;
+import conexion.NominaDeduccionDAO;
+import conexion.NominaPercepcionDAO;
 import conexion.PercepcionDAO;
 import conexion.PeriodoDAO;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Empleado;
 import modelo.RH_Deduccion;
 import modelo.RH_FormaPago;
+import modelo.RH_Nomina;
+import modelo.RH_NominaDeduccion;
+import modelo.RH_NominaPercepcion;
 import modelo.RH_Percepcion;
 import modelo.RH_Periodo;
 
@@ -31,26 +40,47 @@ public class AddNominaFrame extends javax.swing.JFrame {
      */
     ConexionBD conexion;
     RH_Empleado empleado;
+    RH_Nomina nomina;
+    Integer diasTrabajados;
 
     ArrayList<RH_FormaPago> formasPago;
     ArrayList<RH_Periodo> periodos;
     ArrayList<RH_Empleado> empleados = new ArrayList<>();
     ArrayList<RH_Percepcion> percepcionesTabla = new ArrayList<>();
     ArrayList<RH_Deduccion> deduccionesTabla = new ArrayList<>();
+    ArrayList<RH_NominaPercepcion> nominaPercepciones = new ArrayList<>();
+    ArrayList<RH_NominaDeduccion> nominaDeducciones = new ArrayList<>();
+
+    ArrayList<RH_Percepcion> percepcionesSeleccionadas = new ArrayList<>();
+    ArrayList<RH_Deduccion> deduccionesSeleccionadas = new ArrayList<>();
 
     EstadoDAO daoEstado;
     Boolean isNew;
 
     public AddNominaFrame(ConexionBD conexion) {
         initComponents();
-         this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.isNew = true;
-
+        nomina = new RH_Nomina();
+        this.nomina.setEstatus("PENDIENTE");
+        btn_Autoriza.setVisible(false);
+        btn_Cancela.setVisible(false);
     }
 
-    public AddNominaFrame(ConexionBD conexion, RH_Empleado empleado) {
-
+    public AddNominaFrame(ConexionBD conexion, RH_Nomina nomina) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.conexion = conexion;
+        this.isNew = false;
+        this.nomina = nomina;
+        dp_FechaPago.setDate(this.nomina.getFechaPago().toLocalDate());
+        this.empleado = this.nomina.getEmpleado();
+        NominaDeduccionDAO daoNominaDeduccion = new NominaDeduccionDAO(this.conexion);
+        NominaPercepcionDAO daoNominaPercepcion = new NominaPercepcionDAO(this.conexion);
+        nominaDeducciones = daoNominaDeduccion.consultaDeducciones(this.nomina.getIdNomina());
+        nominaPercepciones = daoNominaPercepcion.consultaPercepciones(this.nomina.getIdNomina());
+        seleccionaCasillas();
     }
 
     /**
@@ -77,11 +107,20 @@ public class AddNominaFrame extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         cmb_FormaPago = new javax.swing.JComboBox<>();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tbl_Nomina = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btn_Realizar = new javax.swing.JButton();
+        btn_Autoriza = new javax.swing.JButton();
+        btn_Cancela = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tbl_Nomina1 = new javax.swing.JTable();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        tbl_Salario = new javax.swing.JTable();
+        jLabel7 = new javax.swing.JLabel();
+        dp_FechaPago = new com.github.lgooddatepicker.components.DatePicker();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -125,35 +164,57 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         tbl_Deducciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "IdDeduccion", "Nombre", "Porcentaje", "Importe", "Seleccionado"
             }
-        ));
-        tbl_Deducciones.setEnabled(false);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Float.class, java.lang.Float.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbl_Deducciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_DeduccionesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbl_Deducciones);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 610, -1, 120));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 690, 490, 120));
 
         tbl_Percepciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "idPercepcion", "Nombre Percepcion", "Dias a pagar", "Importe", "Seleccionado"
             }
-        ));
-        tbl_Percepciones.setEnabled(false);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Float.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbl_Percepciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_PercepcionesMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tbl_Percepciones);
 
-        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 380, -1, 120));
+        jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, 500, 120));
 
         cmb_Empleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR EMPLEADO" }));
         cmb_Empleado.addItemListener(new java.awt.event.ItemListener() {
@@ -161,13 +222,13 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 cmb_EmpleadoItemStateChanged(evt);
             }
         });
-        jPanel1.add(cmb_Empleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 210, 210, -1));
+        jPanel1.add(cmb_Empleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 360, -1));
 
         jLabel4.setText("Empleado");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, -1, -1));
 
         jLabel5.setText("Periodo");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 190, -1, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, -1, -1));
 
         cmb_Periodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONAR PERIODO" }));
         cmb_Periodo.addItemListener(new java.awt.event.ItemListener() {
@@ -175,16 +236,21 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 cmb_PeriodoItemStateChanged(evt);
             }
         });
-        jPanel1.add(cmb_Periodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 190, -1, -1));
+        jPanel1.add(cmb_Periodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, -1, -1));
 
         jLabel6.setText("Forma Pago");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, -1, -1));
 
         cmb_FormaPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE FORMA DE PAGO" }));
-        jPanel1.add(cmb_FormaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 250, -1, -1));
+        cmb_FormaPago.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmb_FormaPagoItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(cmb_FormaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, -1, -1));
 
-        jTable3.setAutoCreateRowSorter(true);
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_Nomina.setAutoCreateRowSorter(true);
+        tbl_Nomina.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null}
             },
@@ -192,32 +258,83 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 "SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"
             }
         ));
-        jScrollPane5.setViewportView(jTable3);
+        jScrollPane5.setViewportView(tbl_Nomina);
 
         jPanel1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, 540, 50));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Deducciones Nomina");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 580, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 650, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Resumen Nomina");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, -1, 20));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel3.setText("Percepciones Nomina");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, -1, -1));
+        jLabel3.setText("Salario del Periodo");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, -1, -1));
 
         btn_Realizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ope.png"))); // NOI18N
         btn_Realizar.setBorderPainted(false);
         btn_Realizar.setContentAreaFilled(false);
+        btn_Realizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_RealizarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 610, 180, 90));
+
+        btn_Autoriza.setText("Autorizar Pago");
+        jPanel1.add(btn_Autoriza, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 120, -1, -1));
+
+        btn_Cancela.setText("Cancelar Nomina");
+        jPanel1.add(btn_Cancela, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 170, -1, -1));
+
+        tbl_Nomina1.setAutoCreateRowSorter(true);
+        tbl_Nomina1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"
+            }
+        ));
+        jScrollPane6.setViewportView(tbl_Nomina1);
+
+        jPanel1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, 540, 50));
+
+        tbl_Salario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null}
+            },
+            new String [] {
+                "Dias a pagar", "Importe"
+            }
+        ));
+        tbl_Salario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_SalarioMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(tbl_Salario);
+
+        jPanel1.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 190, 50));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel7.setText("Percepciones Nomina");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, -1, -1));
+        jPanel1.add(dp_FechaPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 270, 310, -1));
+
+        jLabel8.setText("Fecha Pago");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 240, 80, 20));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 1170, 840));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void seleccionaCasillas() {
 
+    }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         EmpleadoDAO daoEmpleado = new EmpleadoDAO(this.conexion);
         DeduccionDAO daoDeduccion = new DeduccionDAO(this.conexion);
@@ -231,20 +348,31 @@ public class AddNominaFrame extends javax.swing.JFrame {
         formasPago = daoFormaPago.consultaFormasPagoVista();
         periodos = daoPeriodo.consultaPeriodosVista();
 
-        empleados.forEach((e) -> {
-            cmb_Empleado.addItem(e.getNombreCompleto());
-        });
+        if (!isNew) {
+            cmb_Empleado.addItem(this.nomina.getEmpleado().getNombreCompleto());
+            cmb_Empleado.setSelectedIndex(1);
+            cmb_Empleado.setEnabled(false);
+            cmb_Periodo.addItem(this.nomina.getPeriodo().getNombre());
+            cmb_Periodo.setSelectedIndex(1);
+            cmb_Periodo.setEnabled(false);
+            for (int i = 0; i < formasPago.size(); i++) {
+                cmb_FormaPago.addItem(formasPago.get(i).getNombre());
+                if (this.nomina.getFormaPago().getNombre().equals(formasPago.get(i).getNombre())) {
+                    cmb_FormaPago.setSelectedIndex(i + 1);
+                }
+            }
+        } else {
+            empleados.forEach((e) -> {
+                cmb_Empleado.addItem(e.getNombreCompleto());
+            });
 
-        periodos.forEach((t) -> {
-            cmb_Periodo.addItem(t.getNombre());
-        });
-
-        formasPago.forEach((t) -> {
-            cmb_FormaPago.addItem(t.getNombre());
-        });
-
-        llenarTablaPercepciones(percepcionesTabla);
-        llenarTablaDeducciones(deduccionesTabla);
+            periodos.forEach((t) -> {
+                cmb_Periodo.addItem(t.getNombre());
+            });
+            formasPago.forEach((t) -> {
+                cmb_FormaPago.addItem(t.getNombre());
+            });
+        }
 
 
     }//GEN-LAST:event_formWindowOpened
@@ -277,36 +405,179 @@ public class AddNominaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_AtrasActionPerformed
 
     private void cmb_EmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_EmpleadoItemStateChanged
-        if (cmb_Empleado.getSelectedIndex() > 0) {
+        NominaDAO daoNomina = new NominaDAO(this.conexion);
+        if (cmb_Empleado.getSelectedIndex() > 0 && isNew) {
+            empleado = empleados.get(cmb_Empleado.getSelectedIndex() - 1);
+            nomina.setEmpleado(empleado);
+            nomina.setDiasTrabajados(daoNomina.calculaDiasTrabajados(this.nomina.getEmpleado().getIdEmpleado(), this.nomina.getPeriodo().getIdPeriodo()));
+            nomina.calculaNomina(percepcionesSeleccionadas, deduccionesSeleccionadas);
             tbl_Percepciones.setEnabled(true);
             tbl_Deducciones.setEnabled(true);
+
+            llenarTablaPercepciones(percepcionesTabla);
+            llenarTablaDeducciones(deduccionesTabla);
+            llenaTablaNomina();
+            llenaTablaSueldo();
         } else {
-            tbl_Percepciones.setEnabled(false);
-            tbl_Deducciones.setEnabled(false);
+            if (!isNew) {
+                llenarTablaPercepciones(percepcionesTabla);
+                llenarTablaDeducciones(deduccionesTabla);
+                llenaTablaNomina();
+                llenaTablaSueldo();
+            } else {
+
+            }
+
         }
     }//GEN-LAST:event_cmb_EmpleadoItemStateChanged
 
     private void cmb_PeriodoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_PeriodoItemStateChanged
-       if(cmb_Periodo.getSelectedIndex()>0){
-           
-       }
+        if (cmb_Periodo.getSelectedIndex() > 0) {
+            nomina.setPeriodo(periodos.get(cmb_Periodo.getSelectedIndex() - 1));
+        } else {
+            cmb_Empleado.setSelectedIndex(0);
+        }
+
     }//GEN-LAST:event_cmb_PeriodoItemStateChanged
 
+    private void cmb_FormaPagoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_FormaPagoItemStateChanged
+        if (cmb_FormaPago.getSelectedIndex() > 0) {
+            this.nomina.setFormaPago(formasPago.get(cmb_FormaPago.getSelectedIndex() - 1));
+        }
+    }//GEN-LAST:event_cmb_FormaPagoItemStateChanged
+
+    private void tbl_PercepcionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_PercepcionesMouseClicked
+        llenaListas();
+        llenarTablaDeducciones(deduccionesTabla);
+    }//GEN-LAST:event_tbl_PercepcionesMouseClicked
+
+    private void tbl_DeduccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DeduccionesMouseClicked
+        llenaListas();
+    }//GEN-LAST:event_tbl_DeduccionesMouseClicked
+
+    private void tbl_SalarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_SalarioMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbl_SalarioMouseClicked
+
+    private void btn_RealizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RealizarActionPerformed
+        NominaDAO daoNomina = new NominaDAO(this.conexion);
+        NominaDeduccionDAO daoNominaDeducciones = new NominaDeduccionDAO(this.conexion);
+        NominaPercepcionDAO daoNominaPercepciones = new NominaPercepcionDAO(this.conexion);
+        this.nomina.setFechaPago(java.sql.Date.valueOf(dp_FechaPago.getDate()));
+        if (isNew) {
+            this.nomina.setFechaElaboracion(java.sql.Date.valueOf(LocalDate.now()));
+            if (daoNomina.insertarNomina(nomina)) {
+                this.nomina.setIdNomina(daoNomina.consultaIdGenerado());
+                RH_NominaPercepcion salario = new RH_NominaPercepcion();
+                salario.setNomina(nomina);
+                salario.setPercepcion(new RH_Percepcion(1,this.conexion));
+                salario.setImporte(this.nomina.getDiasTrabajados()*this.nomina.getEmpleado().getSalarioDiario());
+                salario.setEstatus("A");
+                daoNominaPercepciones.insertarNominaPercepcion(salario);
+                percepcionesSeleccionadas.forEach((t) -> {
+                    RH_NominaPercepcion nominaPercepcion = new RH_NominaPercepcion();
+                    nominaPercepcion.setNomina(nomina);
+                    nominaPercepcion.setPercepcion(t);
+                    nominaPercepcion.setImporte(this.nomina.getEmpleado().getSalarioDiario() * t.getDiasPagar());
+                    nominaPercepcion.setEstatus("A");
+                    daoNominaPercepciones.insertarNominaPercepcion(nominaPercepcion);
+                });
+
+                deduccionesSeleccionadas.forEach((t) -> {
+                    RH_NominaDeduccion nominaDeduccion = new RH_NominaDeduccion();
+                    nominaDeduccion.setNomina(nomina);
+                    nominaDeduccion.setDeduccion(t);
+                    nominaDeduccion.setImporte(this.nomina.getSubtotal() * (t.getPorcentaje()/100));
+                    nominaDeduccion.setEstatus("A");
+                    daoNominaDeducciones.insertarNominaDeduccion(nominaDeduccion);
+                });
+                JOptionPane.showMessageDialog(null, "Nomina Añadida con exito");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar añadir la nomina");
+            }
+        } else {
+//            if (daoNomina.(nomina)) {
+//                JOptionPane.showMessageDialog(null, "Nomina Añadida con exito");
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Ocurrió un error al intentar añadir la nomina");
+//            }
+        }
+    }//GEN-LAST:event_btn_RealizarActionPerformed
+
+    private void llenaListas() {
+
+        percepcionesSeleccionadas = new ArrayList<>();
+        deduccionesSeleccionadas = new ArrayList<>();
+
+        for (int i = 0; i < tbl_Percepciones.getRowCount(); i++) {
+            try {
+                if ((Boolean) tbl_Percepciones.getValueAt(i, 4)) {
+                    RH_Percepcion p = new RH_Percepcion(Integer.parseInt(tbl_Percepciones.getValueAt(i, 0).toString()), this.conexion);
+                    percepcionesSeleccionadas.add(p);
+                }
+            } catch (NullPointerException e) {
+                System.out.println("error " + e.getMessage());
+            }
+        }
+
+        for (int i = 0; i < tbl_Deducciones.getRowCount(); i++) {
+            if ((Boolean) tbl_Deducciones.getValueAt(i, 4)) {
+                RH_Deduccion d = new RH_Deduccion(Integer.parseInt(tbl_Deducciones.getValueAt(i, 0).toString()), this.conexion);
+                deduccionesSeleccionadas.add(d);
+            }
+        }
+
+        this.nomina.calculaNomina(percepcionesSeleccionadas, deduccionesSeleccionadas);
+        llenaTablaNomina();
+    }
+
+    private void llenaTablaNomina() {
+
+        String[] encabezado = {"SubTotal", "Retenciones", "Total", "Dias Trabajados", "Estatus"};
+        Object[][] datos = new Object[1][5];
+        int ren = 0;
+        datos[ren][0] = nomina.getSubtotal();
+        datos[ren][1] = nomina.getRetenciones();
+        datos[ren][2] = nomina.getTotal();
+        datos[ren][3] = nomina.getDiasTrabajados();
+        datos[ren][4] = nomina.getEstatus();
+        ren++;
+        DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                return false;
+            }
+        };
+
+        tbl_Nomina.setModel(m);
+
+    }
+
     private void llenarTablaPercepciones(ArrayList<RH_Percepcion> lista) {
-        String[] encabezado = {"IdPercepcion", "Nombre", "Dias a Pagar", "Seleccionado"};
-        Object[][] datos = new Object[lista.size()][4];
+
+        String[] encabezado = {"IdPercepcion", "Nombre", "Dias a Pagar", "Importe", "Seleccionado"};
+        Object[][] datos = new Object[lista.size()][5];
         int ren = 0;
         for (RH_Percepcion s : lista) {
             datos[ren][0] = s.getIdPercepcion();
             datos[ren][1] = s.getNombre();
             datos[ren][2] = s.getDiasPagar();
-            datos[ren][3] = false;
+            datos[ren][3] = empleado.getSalarioDiario() * s.getDiasPagar();
+            if (!isNew) {
+                for (int in = 0; in < nominaPercepciones.size(); in++) {
+                    if (nominaPercepciones.get(in).getPercepcion().getNombre().equals(s.getNombre())) {
+                        datos[ren][4] = true;
+                    }
+                }
+            } else {
+                datos[ren][4] = false;
+            }
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
-                if (colIndex != 3) {
+                if (colIndex != 4) {
                     return false;
                 } else {
                     return true;
@@ -323,6 +594,8 @@ public class AddNominaFrame extends javax.swing.JFrame {
                     case 2:
                         return Integer.class;
                     case 3:
+                        return Float.class;
+                    case 4:
                         return Boolean.class;
                     default:
                         return Boolean.class;
@@ -334,63 +607,139 @@ public class AddNominaFrame extends javax.swing.JFrame {
     }
 
     private void llenarTablaDeducciones(ArrayList<RH_Deduccion> lista) {
-        String[] encabezado = {"Nombre", "Porcentanje", "Seleccionado"};
-        Object[][] datos = new Object[lista.size()][4];
+
+        String[] encabezado = {"IdDeduccion", "Nombre", "Porcentanje", "Importe", "Seleccionado"};
+        Object[][] datos = new Object[lista.size()][5];
         int ren = 0;
         for (RH_Deduccion s : lista) {
-            datos[ren][0] = s.getNombre();
-            datos[ren][1] = s.getPorcentaje();
-            datos[ren][2] = false;
+            datos[ren][0] = s.getIdDeduccion();
+            datos[ren][1] = s.getNombre();
+            datos[ren][2] = s.getPorcentaje();
+            datos[ren][3] = this.nomina.getSubtotal() * (s.getPorcentaje() / 100);
+            if (!isNew) {
+                for (int in = 0; in < nominaDeducciones.size(); in++) {
+                    if (nominaDeducciones.get(in).getDeduccion().getNombre().equals(s.getNombre())) {
+                        datos[ren][4] = true;
+                    }
+                }
+            } else {
+                datos[ren][4] = false;
+            }
             ren++;
         }
+        DefaultTableModel m;
+        if (cmb_Empleado.getSelectedIndex() > 0) {
+            m = new DefaultTableModel(datos, encabezado) {
+                @Override
+                public boolean isCellEditable(int rowIndex, int colIndex) {
+                    if (colIndex != 4) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+
+                @Override
+                public Class getColumnClass(int column) {
+                    switch (column) {
+                        case 0:
+                            return Integer.class;
+                        case 1:
+                            return String.class;
+                        case 2:
+                            return Float.class;
+                        case 3:
+                            return Float.class;
+                        case 4:
+                            return Boolean.class;
+                        default:
+                            return String.class;
+                    }
+                }
+
+            };
+
+        } else {
+            m = new DefaultTableModel(datos, encabezado) {
+                @Override
+                public boolean isCellEditable(int rowIndex, int colIndex) {
+                    if (colIndex != 4) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+
+                @Override
+                public Class getColumnClass(int column) {
+                    switch (column) {
+                        case 0:
+                            return Integer.class;
+                        case 1:
+                            return String.class;
+                        case 2:
+                            return Float.class;
+                        case 3:
+                            return Float.class;
+                        case 4:
+                            return Boolean.class;
+                        default:
+                            return String.class;
+                    }
+                }
+
+            };
+        }
+
+        tbl_Deducciones.setModel(m);
+    }
+
+    private void llenaTablaSueldo() {
+        String[] encabezado = {"Dias a Pago", "Importe"};
+        Object[][] datos = new Object[1][2];
+
+        datos[0][0] = this.nomina.getDiasTrabajados();
+        datos[0][1] = this.nomina.getDiasTrabajados() * this.nomina.getEmpleado().getSalarioDiario();
+
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
             @Override
             public boolean isCellEditable(int rowIndex, int colIndex) {
-                if (colIndex != 2) {
-                    return false;
-                } else {
-                    return true;
-                }
+                return false;
             }
-
-            @Override
-            public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return Boolean.class;
-                    default:
-                        return String.class;
-                }
-            }
-
         };
-        tbl_Deducciones.setModel(m);
+        tbl_Salario.setModel(m);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Atras;
+    private javax.swing.JButton btn_Autoriza;
+    private javax.swing.JButton btn_Cancela;
     private javax.swing.JButton btn_Realizar;
     private javax.swing.JButton btn_RealizarOperacion;
     private javax.swing.JComboBox<String> cmb_Empleado;
     private javax.swing.JComboBox<String> cmb_FormaPago;
     private javax.swing.JComboBox<String> cmb_Periodo;
+    private com.github.lgooddatepicker.components.DatePicker dp_FechaPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel lbl_Titulo;
     private javax.swing.JTable tbl_Deducciones;
+    private javax.swing.JTable tbl_Nomina;
+    private javax.swing.JTable tbl_Nomina1;
     private javax.swing.JTable tbl_Percepciones;
+    private javax.swing.JTable tbl_Salario;
     // End of variables declaration//GEN-END:variables
+
 }
