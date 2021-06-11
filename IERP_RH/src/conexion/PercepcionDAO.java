@@ -44,7 +44,7 @@ public class PercepcionDAO {
 
     public ArrayList<RH_Percepcion> consultaPercepcionesVista() {
         String sql = "select * from vPercepciones "
-                + "order by idPercepcion ";
+                + "where idPercepcion>1";
 
         ArrayList<RH_Percepcion> lista = new ArrayList<>();
         try {
