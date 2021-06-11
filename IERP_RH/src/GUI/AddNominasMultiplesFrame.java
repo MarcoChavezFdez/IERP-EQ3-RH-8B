@@ -94,6 +94,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         lbl_Titulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Generar Multiples Nominas");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -106,6 +107,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 547));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tp_DatosNominas.setBackground(new java.awt.Color(153, 255, 153));
         tp_DatosNominas.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tp_DatosNominasPropertyChange(evt);
@@ -123,6 +125,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Empleados.setBackground(new java.awt.Color(153, 255, 153));
         jScrollPane3.setViewportView(tbl_Empleados);
         tbl_Empleados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -142,7 +145,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
             .addGroup(lp_EmpleadosLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Empleados a Pagar", lp_Empleados);
@@ -158,6 +161,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Percepciones.setBackground(new java.awt.Color(153, 255, 153));
         jScrollPane2.setViewportView(tbl_Percepciones);
         tbl_Percepciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -177,7 +181,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
             .addGroup(lp_PercepcionesLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Percepciones de Nominas", lp_Percepciones);
@@ -193,6 +197,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbl_Deducciones.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Deducciones.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(tbl_Deducciones);
         tbl_Deducciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
@@ -213,7 +218,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
             .addGroup(lp_DeduccionesLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Deducciones de Nomina", lp_Deducciones);
@@ -223,6 +228,8 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         cmb_FormaPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Forma de Pago" }));
 
         jLabel2.setText("Fecha Pago");
+
+        dp_FechaPago.setBackground(new java.awt.Color(153, 255, 153));
 
         cmb_Periodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Periodo" }));
 
@@ -267,12 +274,12 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
                 .addGroup(lp_ResumenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_Periodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addContainerGap(334, Short.MAX_VALUE))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Pago", lp_Resumen);
 
-        jPanel1.add(tp_DatosNominas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+        jPanel1.add(tp_DatosNominas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 105, -1, 530));
 
         btn_Atras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnAtras.png"))); // NOI18N
         btn_Atras.setBorderPainted(false);
