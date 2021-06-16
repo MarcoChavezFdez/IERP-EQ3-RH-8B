@@ -384,7 +384,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 110, -1, 20));
 
-        btn_Excel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GEX.png"))); // NOI18N
+        btn_Excel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Nominas/GPDF.png"))); // NOI18N
         btn_Excel.setBorderPainted(false);
         btn_Excel.setContentAreaFilled(false);
         btn_Excel.addActionListener(new java.awt.event.ActionListener() {
