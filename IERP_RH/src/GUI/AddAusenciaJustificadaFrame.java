@@ -144,7 +144,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setText("Documento");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 450, -1, -1));
 
         ta_Motivo.setBackground(new java.awt.Color(153, 255, 153));
         jScrollPane1.setViewportView(ta_Motivo);
@@ -160,7 +160,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
                 btn_RealizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 500, 170, 80));
+        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 420, 170, 80));
 
         jLabel1.setText("Fecha Solicitud");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
@@ -210,7 +210,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
                 btn_AutorizaActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Autoriza, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 170, 60));
+        jPanel1.add(btn_Autoriza, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 330, 210, 80));
 
         cmb_Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE TIPO DE AUSENCIA", "INCAPACIDAD", "VACACIONES", "PERMISO" }));
         cmb_Tipo.setBackground(new java.awt.Color(153, 255, 153));
@@ -233,7 +233,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
                 btn_SeleccionarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 430, 180, 70));
+        jPanel1.add(btn_Seleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, 180, 70));
         jPanel1.add(lbl_Mensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 530, 240, 30));
 
         txf_Fecha.setText("dd/mm/yyyy");
@@ -253,14 +253,16 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         jPanel1.add(lbl_MensajeDias, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, 130, 30));
         jPanel1.add(lbl_DiasD, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 260, 130, 20));
 
-        btn_Ver.setText("Ver Documento");
+        btn_Ver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/VerDoc.png"))); // NOI18N
+        btn_Ver.setBorderPainted(false);
+        btn_Ver.setContentAreaFilled(false);
         btn_Ver.setEnabled(false);
         btn_Ver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_VerActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Ver, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, -1, -1));
+        jPanel1.add(btn_Ver, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 410, 210, -1));
 
         jLabel9.setText("Ausencias Justificadas");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, -1, -1));
@@ -268,18 +270,22 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         lbl_Titulo.setText("Añadir Ausencia Justificada");
         jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, -1, -1));
 
-        btn_Rechaza.setText("Rechazar");
+        btn_Rechaza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/Rech.png"))); // NOI18N
+        btn_Rechaza.setBorderPainted(false);
+        btn_Rechaza.setContentAreaFilled(false);
         btn_Rechaza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_RechazaActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Rechaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 350, -1, -1));
+        jPanel1.add(btn_Rechaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 320, -1, -1));
 
-        btn_Genera.setText("Genera Documento");
-        jPanel1.add(btn_Genera, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 420, -1, -1));
+        btn_Genera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/GenDoc.png"))); // NOI18N
+        btn_Genera.setContentAreaFilled(false);
+        btn_Genera.setDefaultCapable(false);
+        jPanel1.add(btn_Genera, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 410, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 610));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 620));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
