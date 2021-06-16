@@ -6,15 +6,28 @@
 package GUI;
 
 import conexion.ConexionBD;
+import conexion.EmpleadoDAO;
 import conexion.NominaDAO;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.RH_Nomina;
-
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -42,7 +55,7 @@ public class NominasFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText(String.valueOf(this.paginaMaxima));
         ArrayList<RH_Nomina> lista = nomina.consultaNominasVistaPaginada(paginaActual);
         llenarTabla(lista);
-        
+
     }
 
     /**
@@ -71,6 +84,7 @@ public class NominasFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima = new javax.swing.JLabel();
         btn_AgregarMultiples = new javax.swing.JButton();
         btn_Agregar = new javax.swing.JButton();
+        btn_Excel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Nominas");
@@ -210,6 +224,14 @@ public class NominasFrame extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_Agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 80, 210, 80));
+
+        btn_Excel.setText("Exportar a Excel");
+        btn_Excel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ExcelActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Excel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1140, 600));
 
@@ -375,6 +397,111 @@ public class NominasFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_AgregarMultiplesActionPerformed
 
+    private void btn_ExcelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ExcelActionPerformed
+        NominaDAO nominaDAO = new NominaDAO(this.conexion);
+        ArrayList<RH_Nomina> nominas = nominaDAO.consultaNominasVista();
+        generarExcel(nominas);
+        try {
+            path = (new File(".").getCanonicalPath());
+            Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\temp\\ResumenNominas.xlsx");
+        } catch (IOException ex) {
+            Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_ExcelActionPerformed
+    private void generarExcel(ArrayList<RH_Nomina> nomina) {
+        try {
+            path = (new File(".").getCanonicalPath());
+            File template = new File(path + "\\resources\\templates\\TemplateNominas.xlsx");
+            File copTemplate = new File(path + "\\resources\\temp\\ResumenNominas.xlsx");
+            copTemplate.deleteOnExit();
+            FileUtils.copyFile(template, copTemplate);
+            FileInputStream fis = new FileInputStream(copTemplate);
+            Workbook workbook = new XSSFWorkbook(fis);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            for (int i = 0; i < nomina.size(); i++) {
+                Row r = sheet.getRow(i + 2); // 10-1
+                if (r == null) {
+                    r = sheet.createRow(i + 2);
+                }
+                Cell c = r.getCell(1); // 4-1
+                if (c == null) {
+                    c = r.createCell(1, CellType.NUMERIC);
+                }
+                c.setCellValue(nomina.get(i).getIdNomina());
+
+                c = r.getCell(2); // 4-1
+                if (c == null) {
+                    c = r.createCell(2, CellType.STRING);
+                }
+                c.setCellValue(nomina.get(i).getFechaElaboracion().toString());
+
+                c = r.getCell(3); // 4-1
+                if (c == null) {
+                    c = r.createCell(3, CellType.STRING);
+                }
+                c.setCellValue(nomina.get(i).getFechaPago().toString());
+
+                c = r.getCell(4); // 4-1
+                if (c == null) {
+                    c = r.createCell(4, CellType.NUMERIC);
+                }
+                c.setCellValue(nomina.get(i).getSubtotal());
+
+                c = r.getCell(5); // 4-1
+                if (c == null) {
+                    c = r.createCell(5, CellType.NUMERIC);
+                }
+                c.setCellValue(nomina.get(i).getRetenciones());
+
+                c = r.getCell(6); // 4-1
+                if (c == null) {
+                    c = r.createCell(6, CellType.NUMERIC);
+                }
+                c.setCellValue(nomina.get(i).getTotal());
+
+                c = r.getCell(7); // 4-1
+                if (c == null) {
+                    c = r.createCell(7, CellType.NUMERIC);
+                }
+                c.setCellValue(nomina.get(i).getDiasTrabajados());
+
+                c = r.getCell(8); // 4-1
+                if (c == null) {
+                    c = r.createCell(8, CellType.STRING);
+                }
+                c.setCellValue(nomina.get(i).getEstatus());
+
+                c = r.getCell(9); // 4-1
+                if (c == null) {
+                    c = r.createCell(9, CellType.STRING);
+                }
+                c.setCellValue(nomina.get(i).getEmpleado().getNombreCompleto());
+
+                c = r.getCell(10); // 4-1
+                if (c == null) {
+                    c = r.createCell(10, CellType.STRING);
+                }
+                c.setCellValue(nomina.get(i).getFormaPago().getNombre());
+
+                c = r.getCell(11); // 4-1
+                if (c == null) {
+                    c = r.createCell(11, CellType.STRING);
+                }
+                c.setCellValue(nomina.get(i).getPeriodo().getNombre());
+            }
+
+            OutputStream outputStream = new FileOutputStream(new File(path + "\\resources\\temp\\ResumenNominas.xlsx"));
+            workbook.write(outputStream);
+            outputStream.close();
+            workbook.close();
+            fis.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error " + ex.getMessage());
+        }
+    }
+
     private void llenarTabla(ArrayList<RH_Nomina> lista) {
         String[] encabezado = {"IdNomina", "Fecha Elaboracion", "Fecha Pago", "Total", "Dias Trabajados", "Estatus", "Empleado", "Forma Pago", "Periodo"};
         Object[][] datos = new Object[lista.size()][9];
@@ -411,6 +538,7 @@ public class NominasFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Anterior;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Eliminar;
+    private javax.swing.JButton btn_Excel;
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JButton btn_Siguiente;
     private javax.swing.JLabel jLabel1;
