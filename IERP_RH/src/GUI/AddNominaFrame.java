@@ -5,7 +5,6 @@
  */
 package GUI;
 
-import com.privatejgoodies.common.base.Objects;
 import conexion.ConexionBD;
 import conexion.DeduccionDAO;
 import conexion.EmpleadoDAO;
@@ -23,6 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -38,11 +38,16 @@ import modelo.RH_Periodo;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import com.aspose.cells.SaveFormat;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 /**
  *
@@ -71,6 +76,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
     EstadoDAO daoEstado;
     Boolean isNew;
+    Boolean isClosed;
     String path;
 
     public AddNominaFrame(ConexionBD conexion) {
@@ -86,6 +92,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
         btn_Autoriza.setVisible(false);
         btn_Cancela.setVisible(false);
         btn_Excel.setVisible(false);
+        isClosed = false;
     }
 
     public AddNominaFrame(ConexionBD conexion, RH_Nomina nomina) {
@@ -115,6 +122,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 btn_Excel.setEnabled(true);
                 btn_Excel.setVisible(true);
                 cmb_FormaPago.setEnabled(false);
+                isClosed = true;
 
             }
         }
@@ -229,7 +237,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(tbl_Deducciones);
 
-        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 690, 490, 120));
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 670, 490, 120));
 
         tbl_Percepciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -299,7 +307,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Deducciones Nomina");
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 660, -1, 20));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 640, -1, 20));
 
         jLabel2.setText("Resumen Nomina");
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -519,12 +527,17 @@ public class AddNominaFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cmb_FormaPagoItemStateChanged
 
     private void tbl_PercepcionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_PercepcionesMouseClicked
-        llenaListas();
-        llenarTablaDeducciones(deduccionesTabla);
+        if (!isClosed) {
+            llenaListas();
+            llenarTablaDeducciones(deduccionesTabla);
+        }
+
     }//GEN-LAST:event_tbl_PercepcionesMouseClicked
 
     private void tbl_DeduccionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_DeduccionesMouseClicked
-        llenaListas();
+        if (!isClosed) {
+            llenaListas();
+        }
     }//GEN-LAST:event_tbl_DeduccionesMouseClicked
 
     private void tbl_SalarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_SalarioMouseClicked
@@ -638,14 +651,35 @@ public class AddNominaFrame extends javax.swing.JFrame {
         NominaPercepcionDAO daoPercepcion = new NominaPercepcionDAO(this.conexion);
         percepciones = daoPercepcion.consultaPercepciones(idNomina);
         deducciones = daoDeduccion.consultaDeducciones(idNomina);
-
+        generaPDF(percepciones,deducciones);
+        
+        Path origenPath = FileSystems.getDefault().getPath(path + "\\nomina" + String.valueOf(idNomina) + ".pdf");
+        Path destinoPath = FileSystems.getDefault().getPath(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".pdf");
+        try {
+            Files.move(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
+             origenPath = FileSystems.getDefault().getPath(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".xlsm");
+            Files.delete(origenPath);
+        } catch (IOException ex) {
+            Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
         try {
             path = (new File(".").getCanonicalPath());
-            File template = new File(path + "\\resources\\templates\\nominaTemplate.xlsx");
-            File copTemplate = new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".xlsx");
+//                Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + "V2.xlsm");
+        } catch (IOException ex) {
+            Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_btn_ExcelActionPerformed
+    private void generaPDF(ArrayList<RH_NominaPercepcion> percepciones,ArrayList<RH_NominaDeduccion> deducciones) {
+        try {
+            path = (new File(".").getCanonicalPath());
+            File template = new File(path + "\\resources\\templates\\nominaTemplate.xlsm");
+            File copTemplate = new File(path + "\\resources\\temp\\nomina" + String.valueOf(this.nomina.getIdNomina()) + ".xlsm");
             FileUtils.copyFile(template, copTemplate);
-            FileInputStream file = new FileInputStream(copTemplate);
-            Workbook workbook = new XSSFWorkbook(file);
+            FileInputStream fis = new FileInputStream(copTemplate);
+            Workbook workbook = new XSSFWorkbook(fis);
             Sheet sheet = workbook.getSheetAt(0);
 
             //Nombre del Empleado
@@ -880,20 +914,37 @@ public class AddNominaFrame extends javax.swing.JFrame {
             }
             c.setCellValue(this.nomina.getEmpleado().getNombreCompleto());
 
-            OutputStream outputStream = new FileOutputStream(new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + "V2.xlsx"));
+            OutputStream outputStream = new FileOutputStream(new File(path + "\\resources\\temp\\nomina" + String.valueOf(this.nomina.getIdNomina()) + ".xlsm"));
             workbook.write(outputStream);
-            try {
-                path = (new File(".").getCanonicalPath());
-                Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + "V2.xlsx");
-            } catch (Exception evvv) {
-                JOptionPane.showMessageDialog(null, "No se puede abrir el archivo de ayuda, probablemente fue borrado", "ERROR", JOptionPane.ERROR_MESSAGE);
+            outputStream.close();
+            workbook.close();
+            fis.close();
 
-            }
+            //PDF
+            com.aspose.cells.Workbook workbookToPDF = new com.aspose.cells.Workbook(new FileInputStream(copTemplate));
+            workbookToPDF.save("nomina" + String.valueOf(this.nomina.getIdNomina()) + ".pdf", SaveFormat.PDF);
+            workbookToPDF.dispose();
 
-        } catch (IOException ex) {
-            Logger.getLogger(AddAusenciaJustificadaFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btn_ExcelActionPerformed
+        catch(Exception ex){
+            
+        }
+    }
+    
+
+    private void Delete(Path path) {
+
+        if (Files.exists(path)) {
+            System.out.println("Simin");
+            try {
+                Files.deleteIfExists(path);
+            } catch (IOException ex) {
+                Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            System.out.println("No simon");
+        }
+    }
 
     private void llenaListas() {
 
