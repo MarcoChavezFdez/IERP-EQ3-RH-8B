@@ -100,6 +100,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.conexion = conexion;
         this.isNew = false;
+        isClosed = false;
         this.nomina = nomina;
         dp_FechaPago.setDate(this.nomina.getFechaPago().toLocalDate());
         this.empleado = this.nomina.getEmpleado();
@@ -123,7 +124,6 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 btn_Excel.setVisible(true);
                 cmb_FormaPago.setEnabled(false);
                 isClosed = true;
-
             }
         }
         seleccionaCasillas();
@@ -415,13 +415,12 @@ public class AddNominaFrame extends javax.swing.JFrame {
 
     }
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        EmpleadoDAO daoEmpleado = new EmpleadoDAO(this.conexion);
+
         DeduccionDAO daoDeduccion = new DeduccionDAO(this.conexion);
         PercepcionDAO daoPercepcion = new PercepcionDAO(this.conexion);
         FormaPagoDAO daoFormaPago = new FormaPagoDAO(this.conexion);
         PeriodoDAO daoPeriodo = new PeriodoDAO(this.conexion);
 
-        empleados = daoEmpleado.consultaEmpleadosVista();
         deduccionesTabla = daoDeduccion.consultaDeducionesVista();
         percepcionesTabla = daoPercepcion.consultaPercepcionesVista();
         formasPago = daoFormaPago.consultaFormasPagoVista();
@@ -442,9 +441,6 @@ public class AddNominaFrame extends javax.swing.JFrame {
                 }
             }
         } else {
-            empleados.forEach((e) -> {
-                cmb_Empleado.addItem(e.getNombreCompleto());
-            });
 
             periodos.forEach((t) -> {
                 cmb_Periodo.addItem(t.getNombre());
@@ -514,6 +510,14 @@ public class AddNominaFrame extends javax.swing.JFrame {
     private void cmb_PeriodoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_PeriodoItemStateChanged
         if (cmb_Periodo.getSelectedIndex() > 0 && isNew) {
             nomina.setPeriodo(periodos.get(cmb_Periodo.getSelectedIndex() - 1));
+            EmpleadoDAO daoEmpleado = new EmpleadoDAO(this.conexion);
+            empleados = daoEmpleado.consultaEmpleadosPeriodo(nomina.getPeriodo().getIdPeriodo());
+            cmb_Empleado.removeAllItems();
+            cmb_Empleado.addItem("SELECCIONE UN EMPLEADO");
+            empleados.forEach((e) -> {
+                cmb_Empleado.addItem(e.getNombreCompleto());
+            });
+            cmb_Empleado.setSelectedIndex(0);
         } else {
             cmb_Empleado.setSelectedIndex(0);
         }
@@ -651,32 +655,36 @@ public class AddNominaFrame extends javax.swing.JFrame {
         NominaPercepcionDAO daoPercepcion = new NominaPercepcionDAO(this.conexion);
         percepciones = daoPercepcion.consultaPercepciones(idNomina);
         deducciones = daoDeduccion.consultaDeducciones(idNomina);
-        generaPDF(percepciones,deducciones);
-        
+        generaPDF(percepciones, deducciones);
+
         Path origenPath = FileSystems.getDefault().getPath(path + "\\nomina" + String.valueOf(idNomina) + ".pdf");
         Path destinoPath = FileSystems.getDefault().getPath(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".pdf");
         try {
             Files.move(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
-             origenPath = FileSystems.getDefault().getPath(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".xlsm");
-            Files.delete(origenPath);
+           File orig = new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".pdf");
+           orig.deleteOnExit();
+
+           
+            
         } catch (IOException ex) {
             Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
+
         try {
             path = (new File(".").getCanonicalPath());
-//                Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + "V2.xlsm");
+                Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\temp\\nomina"+ String.valueOf(idNomina) + ".pdf");
         } catch (IOException ex) {
             Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
     }//GEN-LAST:event_btn_ExcelActionPerformed
-    private void generaPDF(ArrayList<RH_NominaPercepcion> percepciones,ArrayList<RH_NominaDeduccion> deducciones) {
+    private void generaPDF(ArrayList<RH_NominaPercepcion> percepciones, ArrayList<RH_NominaDeduccion> deducciones) {
         try {
             path = (new File(".").getCanonicalPath());
             File template = new File(path + "\\resources\\templates\\nominaTemplate.xlsm");
             File copTemplate = new File(path + "\\resources\\temp\\nomina" + String.valueOf(this.nomina.getIdNomina()) + ".xlsm");
+            copTemplate.deleteOnExit();
             FileUtils.copyFile(template, copTemplate);
             FileInputStream fis = new FileInputStream(copTemplate);
             Workbook workbook = new XSSFWorkbook(fis);
@@ -924,13 +932,11 @@ public class AddNominaFrame extends javax.swing.JFrame {
             com.aspose.cells.Workbook workbookToPDF = new com.aspose.cells.Workbook(new FileInputStream(copTemplate));
             workbookToPDF.save("nomina" + String.valueOf(this.nomina.getIdNomina()) + ".pdf", SaveFormat.PDF);
             workbookToPDF.dispose();
+            
+        } catch (Exception ex) {
 
         }
-        catch(Exception ex){
-            
-        }
     }
-    
 
     private void Delete(Path path) {
 
@@ -1140,7 +1146,8 @@ public class AddNominaFrame extends javax.swing.JFrame {
     }
 
     private void llenaTablaSueldo() {
-        String[] encabezado = {"Dias a Pago", "Importe"};
+
+        String[] encabezado = {"Dias a Pagar", "Importe"};
         Object[][] datos = new Object[1][2];
 
         datos[0][0] = this.nomina.getDiasTrabajados();
