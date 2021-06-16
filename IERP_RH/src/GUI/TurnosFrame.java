@@ -102,7 +102,7 @@ public class TurnosFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_Datos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 720, 440));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 920, 440));
 
         btnbuscar.setText("Buscar");
         jPanel1.add(btnbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 110, -1, -1));
@@ -143,7 +143,7 @@ public class TurnosFrame extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 50, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 1000, 670));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, -10, 1200, 670));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -227,6 +227,7 @@ public class TurnosFrame extends javax.swing.JFrame {
         };
 
         tbl_Datos.setModel(m);
+        tbl_Datos.getColumnModel().getColumn(4).setPreferredWidth(500);
     }
 
     /**
