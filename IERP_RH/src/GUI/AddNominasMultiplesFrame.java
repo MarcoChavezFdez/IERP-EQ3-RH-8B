@@ -76,30 +76,12 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         lp_Empleados = new javax.swing.JLayeredPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbl_Empleados = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         lp_Percepciones = new javax.swing.JLayeredPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_Percepciones = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
         lp_Deducciones = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Deducciones = new javax.swing.JTable();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
         lp_Resumen = new javax.swing.JLayeredPane();
         jLabel1 = new javax.swing.JLabel();
         cmb_FormaPago = new javax.swing.JComboBox<>();
@@ -147,29 +129,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tbl_Empleados);
         tbl_Empleados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        jLabel4.setText("de");
-
-        jLabel5.setText("Página");
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-
-        jLabel10.setText("1");
-
-        jLabel11.setText("1");
-
         lp_Empleados.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Empleados.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Empleados.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Empleados.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Empleados.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Empleados.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Empleados.setLayer(jLabel11, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lp_EmpleadosLayout = new javax.swing.GroupLayout(lp_Empleados);
         lp_Empleados.setLayout(lp_EmpleadosLayout);
@@ -177,39 +137,15 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
             lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lp_EmpleadosLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
-                .addGroup(lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(lp_EmpleadosLayout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(447, Short.MAX_VALUE))
         );
         lp_EmpleadosLayout.setVerticalGroup(
             lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lp_EmpleadosLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(lp_EmpleadosLayout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel11))
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Empleados a Pagar", lp_Empleados);
@@ -229,52 +165,15 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tbl_Percepciones);
         tbl_Percepciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
-        jButton3.setBorderPainted(false);
-        jButton3.setContentAreaFilled(false);
-
-        jLabel12.setText("1");
-
-        jLabel13.setText("de");
-
-        jLabel14.setText("1");
-
-        jLabel15.setText("Página");
-
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-
         lp_Percepciones.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Percepciones.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Percepciones.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Percepciones.setLayer(jLabel13, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Percepciones.setLayer(jLabel14, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Percepciones.setLayer(jLabel15, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Percepciones.setLayer(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lp_PercepcionesLayout = new javax.swing.GroupLayout(lp_Percepciones);
         lp_Percepciones.setLayout(lp_PercepcionesLayout);
         lp_PercepcionesLayout.setHorizontalGroup(
             lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lp_PercepcionesLayout.createSequentialGroup()
-                .addGroup(lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(lp_PercepcionesLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(lp_PercepcionesLayout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel15)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(484, Short.MAX_VALUE))
         );
         lp_PercepcionesLayout.setVerticalGroup(
@@ -282,16 +181,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
             .addGroup(lp_PercepcionesLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addGroup(lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel15)
-                        .addGroup(lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel12))
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Percepciones de Nominas", lp_Percepciones);
@@ -312,52 +202,15 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_Deducciones);
         tbl_Deducciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        jLabel16.setText("1");
-
-        jLabel17.setText("Página");
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
-        jButton5.setBorderPainted(false);
-        jButton5.setContentAreaFilled(false);
-
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
-        jButton6.setBorderPainted(false);
-        jButton6.setContentAreaFilled(false);
-
-        jLabel18.setText("1");
-
-        jLabel19.setText("de");
-
         lp_Deducciones.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Deducciones.setLayer(jLabel16, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Deducciones.setLayer(jLabel17, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Deducciones.setLayer(jButton5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Deducciones.setLayer(jButton6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Deducciones.setLayer(jLabel18, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        lp_Deducciones.setLayer(jLabel19, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lp_DeduccionesLayout = new javax.swing.GroupLayout(lp_Deducciones);
         lp_Deducciones.setLayout(lp_DeduccionesLayout);
         lp_DeduccionesLayout.setHorizontalGroup(
             lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lp_DeduccionesLayout.createSequentialGroup()
-                .addGroup(lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(lp_DeduccionesLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(lp_DeduccionesLayout.createSequentialGroup()
-                        .addGap(82, 82, 82)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel18)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel19)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(484, Short.MAX_VALUE))
         );
         lp_DeduccionesLayout.setVerticalGroup(
@@ -365,16 +218,7 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
             .addGroup(lp_DeduccionesLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addGroup(lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel17)
-                        .addGroup(lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel19)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel16))
-                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         tp_DatosNominas.addTab("Deducciones de Nomina", lp_Deducciones);
@@ -719,27 +563,9 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmb_FormaPago;
     private javax.swing.JComboBox<String> cmb_Periodo;
     private com.github.lgooddatepicker.components.DatePicker dp_FechaPago;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

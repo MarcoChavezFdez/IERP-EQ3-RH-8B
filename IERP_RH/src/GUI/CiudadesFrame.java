@@ -147,6 +147,7 @@ public class CiudadesFrame extends javax.swing.JFrame {
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
         jButton4.setBorderPainted(false);
         jButton4.setContentAreaFilled(false);
+        jButton4.setEnabled(false);
         jPanel1.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 520, -1, -1));
 
         jLabel15.setText("Página");
