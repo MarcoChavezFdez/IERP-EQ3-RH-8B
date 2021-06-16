@@ -76,12 +76,30 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         lp_Empleados = new javax.swing.JLayeredPane();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbl_Empleados = new javax.swing.JTable();
+        btn_Siguiente = new javax.swing.JButton();
+        lbl_PaginaMaxima = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lbl_PaginaActual = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btn_Anterior = new javax.swing.JButton();
         lp_Percepciones = new javax.swing.JLayeredPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbl_Percepciones = new javax.swing.JTable();
+        btn_Anterior1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        lbl_PaginaActual1 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lbl_PaginaMaxima1 = new javax.swing.JLabel();
+        btn_Siguiente1 = new javax.swing.JButton();
         lp_Deducciones = new javax.swing.JLayeredPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Deducciones = new javax.swing.JTable();
+        lbl_PaginaMaxima2 = new javax.swing.JLabel();
+        btn_Siguiente2 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        lbl_PaginaActual2 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        btn_Anterior2 = new javax.swing.JButton();
         lp_Resumen = new javax.swing.JLayeredPane();
         jLabel1 = new javax.swing.JLabel();
         cmb_FormaPago = new javax.swing.JComboBox<>();
@@ -129,15 +147,63 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         jScrollPane3.setViewportView(tbl_Empleados);
         tbl_Empleados.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+        btn_Siguiente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
+        btn_Siguiente.setBorderPainted(false);
+        btn_Siguiente.setContentAreaFilled(false);
+        btn_Siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SiguienteActionPerformed(evt);
+            }
+        });
+
+        lbl_PaginaMaxima.setText("1");
+
+        jLabel4.setText("de");
+
+        lbl_PaginaActual.setText("1");
+
+        jLabel5.setText("Página");
+
+        btn_Anterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
+        btn_Anterior.setBorderPainted(false);
+        btn_Anterior.setContentAreaFilled(false);
+        btn_Anterior.setEnabled(false);
+        btn_Anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AnteriorActionPerformed(evt);
+            }
+        });
+
         lp_Empleados.setLayer(jScrollPane3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Empleados.setLayer(btn_Siguiente, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Empleados.setLayer(lbl_PaginaMaxima, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Empleados.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Empleados.setLayer(lbl_PaginaActual, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Empleados.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Empleados.setLayer(btn_Anterior, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lp_EmpleadosLayout = new javax.swing.GroupLayout(lp_Empleados);
         lp_Empleados.setLayout(lp_EmpleadosLayout);
         lp_EmpleadosLayout.setHorizontalGroup(
             lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lp_EmpleadosLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(lp_EmpleadosLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(lp_EmpleadosLayout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(btn_Anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel5)
+                        .addGap(8, 8, 8)
+                        .addComponent(lbl_PaginaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_PaginaMaxima)
+                        .addGap(34, 34, 34)
+                        .addComponent(btn_Siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(226, Short.MAX_VALUE))
         );
         lp_EmpleadosLayout.setVerticalGroup(
@@ -145,7 +211,17 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
             .addGroup(lp_EmpleadosLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_Anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(lp_EmpleadosLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(lp_EmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(lbl_PaginaActual)
+                            .addComponent(jLabel4)
+                            .addComponent(lbl_PaginaMaxima)))))
         );
 
         tp_DatosNominas.addTab("Empleados a Pagar", lp_Empleados);
@@ -165,15 +241,63 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         jScrollPane2.setViewportView(tbl_Percepciones);
         tbl_Percepciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+        btn_Anterior1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
+        btn_Anterior1.setBorderPainted(false);
+        btn_Anterior1.setContentAreaFilled(false);
+        btn_Anterior1.setEnabled(false);
+        btn_Anterior1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Anterior1ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Página");
+
+        lbl_PaginaActual1.setText("1");
+
+        jLabel7.setText("de");
+
+        lbl_PaginaMaxima1.setText("1");
+
+        btn_Siguiente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
+        btn_Siguiente1.setBorderPainted(false);
+        btn_Siguiente1.setContentAreaFilled(false);
+        btn_Siguiente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Siguiente1ActionPerformed(evt);
+            }
+        });
+
         lp_Percepciones.setLayer(jScrollPane2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Percepciones.setLayer(btn_Anterior1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Percepciones.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Percepciones.setLayer(lbl_PaginaActual1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Percepciones.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Percepciones.setLayer(lbl_PaginaMaxima1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Percepciones.setLayer(btn_Siguiente1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lp_PercepcionesLayout = new javax.swing.GroupLayout(lp_Percepciones);
         lp_Percepciones.setLayout(lp_PercepcionesLayout);
         lp_PercepcionesLayout.setHorizontalGroup(
             lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lp_PercepcionesLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(lp_PercepcionesLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(lp_PercepcionesLayout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(btn_Anterior1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel6)
+                        .addGap(8, 8, 8)
+                        .addComponent(lbl_PaginaActual1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_PaginaMaxima1)
+                        .addGap(34, 34, 34)
+                        .addComponent(btn_Siguiente1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(263, Short.MAX_VALUE))
         );
         lp_PercepcionesLayout.setVerticalGroup(
@@ -181,7 +305,17 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
             .addGroup(lp_PercepcionesLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_Anterior1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Siguiente1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(lp_PercepcionesLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(lp_PercepcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(lbl_PaginaActual1)
+                            .addComponent(jLabel7)
+                            .addComponent(lbl_PaginaMaxima1)))))
         );
 
         tp_DatosNominas.addTab("Percepciones de Nominas", lp_Percepciones);
@@ -202,15 +336,63 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tbl_Deducciones);
         tbl_Deducciones.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+        lbl_PaginaMaxima2.setText("1");
+
+        btn_Siguiente2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Sig.png"))); // NOI18N
+        btn_Siguiente2.setBorderPainted(false);
+        btn_Siguiente2.setContentAreaFilled(false);
+        btn_Siguiente2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Siguiente2ActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setText("de");
+
+        lbl_PaginaActual2.setText("1");
+
+        jLabel9.setText("Página");
+
+        btn_Anterior2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/General/Ant.png"))); // NOI18N
+        btn_Anterior2.setBorderPainted(false);
+        btn_Anterior2.setContentAreaFilled(false);
+        btn_Anterior2.setEnabled(false);
+        btn_Anterior2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_Anterior2ActionPerformed(evt);
+            }
+        });
+
         lp_Deducciones.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Deducciones.setLayer(lbl_PaginaMaxima2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Deducciones.setLayer(btn_Siguiente2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Deducciones.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Deducciones.setLayer(lbl_PaginaActual2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Deducciones.setLayer(jLabel9, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        lp_Deducciones.setLayer(btn_Anterior2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout lp_DeduccionesLayout = new javax.swing.GroupLayout(lp_Deducciones);
         lp_Deducciones.setLayout(lp_DeduccionesLayout);
         lp_DeduccionesLayout.setHorizontalGroup(
             lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(lp_DeduccionesLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(lp_DeduccionesLayout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(lp_DeduccionesLayout.createSequentialGroup()
+                        .addGap(79, 79, 79)
+                        .addComponent(btn_Anterior2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel9)
+                        .addGap(8, 8, 8)
+                        .addComponent(lbl_PaginaActual2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(lbl_PaginaMaxima2)
+                        .addGap(34, 34, 34)
+                        .addComponent(btn_Siguiente2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(263, Short.MAX_VALUE))
         );
         lp_DeduccionesLayout.setVerticalGroup(
@@ -218,7 +400,17 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
             .addGroup(lp_DeduccionesLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_Anterior2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Siguiente2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(lp_DeduccionesLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(lp_DeduccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(lbl_PaginaActual2)
+                            .addComponent(jLabel8)
+                            .addComponent(lbl_PaginaMaxima2)))))
         );
 
         tp_DatosNominas.addTab("Deducciones de Nomina", lp_Deducciones);
@@ -435,6 +627,66 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tp_DatosNominasPropertyChange
 
+    private void btn_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SiguienteActionPerformed
+        if ((paginaActual + 1) <= paginaMaxima) {
+            btn_Anterior.setEnabled(true);
+            paginaActual++;
+            if (paginaActual == paginaMaxima) {
+                this.btn_Siguiente.setEnabled(false);
+            } else {
+                this.btn_Siguiente.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            DeduccionDAO DAO = new DeduccionDAO(this.conexion);
+            ArrayList<RH_Deduccion> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaDeduccionesNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+            } else {
+                lista = DAO.consultaDeduccionesVistaPaginada(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_SiguienteActionPerformed
+
+    private void btn_AnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AnteriorActionPerformed
+        if ((paginaActual - 1) >= 1) {
+            btn_Siguiente.setEnabled(true);
+            paginaActual--;
+            if (paginaActual == 1) {
+                this.btn_Anterior.setEnabled(false);
+            } else {
+                this.btn_Anterior.setEnabled(true);
+            }
+            this.lbl_PaginaActual.setText(String.valueOf(paginaActual));
+            DeduccionDAO DAO = new DeduccionDAO(this.conexion);
+            ArrayList<RH_Deduccion> lista = new ArrayList<>();
+            if (this.banderaBusqueda) {
+                lista = DAO.consultaDeduccionesNombreVistaPaginada(txf_Busqueda.getText(), paginaActual);
+            } else {
+                lista = DAO.consultaDeduccionesVistaPaginada(paginaActual);
+            }
+
+            llenarTabla(lista);
+        }
+    }//GEN-LAST:event_btn_AnteriorActionPerformed
+
+    private void btn_Anterior1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Anterior1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Anterior1ActionPerformed
+
+    private void btn_Siguiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Siguiente1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Siguiente1ActionPerformed
+
+    private void btn_Siguiente2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Siguiente2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Siguiente2ActionPerformed
+
+    private void btn_Anterior2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Anterior2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_Anterior2ActionPerformed
+
     private void llenarTablaEmpleados(ArrayList<RH_Empleado> lista) {
         String[] encabezado = {"IdEmpleado", "Nombre Completo", "Puesto", "Seleccionado"};
         Object[][] datos = new Object[lista.size()][4];
@@ -558,18 +810,36 @@ public class AddNominasMultiplesFrame extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Anterior;
+    private javax.swing.JButton btn_Anterior1;
+    private javax.swing.JButton btn_Anterior2;
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_RealizarOperacion;
+    private javax.swing.JButton btn_Siguiente;
+    private javax.swing.JButton btn_Siguiente1;
+    private javax.swing.JButton btn_Siguiente2;
     private javax.swing.JComboBox<String> cmb_FormaPago;
     private javax.swing.JComboBox<String> cmb_Periodo;
     private com.github.lgooddatepicker.components.DatePicker dp_FechaPago;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lbl_PaginaActual;
+    private javax.swing.JLabel lbl_PaginaActual1;
+    private javax.swing.JLabel lbl_PaginaActual2;
+    private javax.swing.JLabel lbl_PaginaMaxima;
+    private javax.swing.JLabel lbl_PaginaMaxima1;
+    private javax.swing.JLabel lbl_PaginaMaxima2;
     private javax.swing.JLabel lbl_Titulo;
     private javax.swing.JLayeredPane lp_Deducciones;
     private javax.swing.JLayeredPane lp_Empleados;
