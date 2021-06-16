@@ -32,12 +32,12 @@ public class EmpleadoDAO {
         this.conexion = conexion;
     }
 
-        public RH_Empleado consultaEmpleadoCorreo(String correo) throws IOException {
+    public RH_Empleado consultaEmpleadoCorreo(String correo) throws IOException {
         String sql = "select * from vEmpleados "
-                + "where email like '"+correo+"'";
+                + "where email like '" + correo + "'";
         try {
             Statement st = conexion.getConexion().createStatement();
-           
+
             ResultSet rs = st.executeQuery(sql);
             if (rs.next()) {
                 RH_Empleado empleado = new RH_Empleado();
@@ -218,6 +218,54 @@ public class EmpleadoDAO {
     public ArrayList<RH_Empleado> consultaEmpleadosVista() {
         String sql = "select * from vEmpleados "
                 + "order by idEmpleado ";
+
+        ArrayList<RH_Empleado> lista = new ArrayList<>();
+        try {
+            Statement st = conexion.getConexion().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                RH_Empleado e = new RH_Empleado();
+                e.setIdEmpleado(rs.getInt("idEmpleado"));
+                e.setNombre(rs.getString("nombre"));
+                e.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                e.setApellidoMaterno(rs.getString("apellidoMaterno"));
+                e.setSexo(rs.getString("sexo"));
+                e.setFechaNacimiento(rs.getDate("fechaNacimiento"));
+                e.setCurp(rs.getString("curp"));
+                e.setEstadoCivil(rs.getString("estadoCivil"));
+                e.setFechaContratacion(rs.getDate("fechaContratacion"));
+                e.setSalarioDiario(rs.getFloat("salarioDiario"));
+                e.setNss(rs.getString("nss"));
+                e.setDiasVacaciones(rs.getInt("diasVacaciones"));
+                e.setDiasPermiso(rs.getInt("diasPermiso"));
+                e.setFotografia(rs.getBytes("fotografia"));
+                e.setDireccion(rs.getString("direccion"));
+                e.setColonia(rs.getString("colonia"));
+                e.setCodigoPostal(rs.getString("codigoPostal"));
+                e.setEscolaridad(rs.getString("escolaridad"));
+                e.setEspecialidad(rs.getString("especialidad"));
+                e.setEmail(rs.getString("email"));
+                e.setPassword(rs.getString("password"));
+                e.setTipo(rs.getString("tipo"));
+                e.setEstatus(rs.getString("estatus"));
+                e.setDepartamento(new RH_Departamento(rs.getInt("idDepartamento"), this.conexion));
+                e.setPuesto(new RH_Puesto(rs.getInt("idPuesto"), this.conexion));
+                e.setCiudad(new RH_Ciudad(rs.getInt("idCiudad"), this.conexion));
+                e.setSucursal(new Compras_Sucursal(rs.getInt("idSucursal"), this.conexion));
+                e.setTurno(new RH_Turno(rs.getInt("idTurno"), this.conexion));
+                lista.add(e);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
+        }
+        return lista;
+    }
+
+    public ArrayList<RH_Empleado> consultaEmpleadosPeriodo(Integer idPeriodo) {
+        String sql = "SELECT * FROM RH.Empleados "
+                + " WHERE idEmpleado  not in (select idEmpleado from vNominas where idPeriodo="+idPeriodo+")";
 
         ArrayList<RH_Empleado> lista = new ArrayList<>();
         try {
