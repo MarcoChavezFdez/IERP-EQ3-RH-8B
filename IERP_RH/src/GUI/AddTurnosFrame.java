@@ -38,6 +38,7 @@ public final class AddTurnosFrame extends javax.swing.JFrame {
 
     AddTurnosFrame(ConexionBD conexion, RH_Turno turno) {
         initComponents();
+        this.setLocationRelativeTo(null);
         rbLunes.setSelected(false);
         this.turno = turno;
         this.conexion = conexion;
