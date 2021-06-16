@@ -45,11 +45,13 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         this.isNew = true;
         btn_Autoriza.setVisible(false);
         btn_Rechaza.setVisible(false);
+        btn_Genera.setVisible(false);
     }
 
     public AddAusenciaJustificadaFrame(ConexionBD conexion, RH_AusenciaJustificada ausencia) {
         initComponents();
         this.setLocationRelativeTo(null);
+        btn_Genera.setVisible(false);
         this.ausencia = ausencia;
         this.isNew = false;
         this.conexion = conexion;
@@ -78,7 +80,11 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         cmb_Empleado.setEnabled(false);
         dp_FechaInicio.setDate(this.ausencia.getFechaInicio().toLocalDate());
         dp_FechaFin.setDate(this.ausencia.getFechaFin().toLocalDate());
-        txf_Estatus.setText(this.ausencia.getEstatus());
+        if ("AUTORIZADA".equals(this.ausencia.getEstatus()) || "RECHAZADA".equals(this.ausencia.getEstatus())) {
+            deshabilitaControles();
+            btn_Genera.setVisible(true);
+        }
+
     }
 
     /**
@@ -118,6 +124,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         lbl_Titulo = new javax.swing.JLabel();
         btn_Rechaza = new javax.swing.JButton();
+        btn_Genera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -153,7 +160,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
                 btn_RealizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 450, 170, 80));
+        jPanel1.add(btn_Realizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 500, 170, 80));
 
         jLabel1.setText("Fecha Solicitud");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
@@ -198,7 +205,12 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         btn_Autoriza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/Aut.png"))); // NOI18N
         btn_Autoriza.setBorderPainted(false);
         btn_Autoriza.setContentAreaFilled(false);
-        jPanel1.add(btn_Autoriza, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 360, 170, 60));
+        btn_Autoriza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AutorizaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Autoriza, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 170, 60));
 
         cmb_Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SELECCIONE TIPO DE AUSENCIA", "INCAPACIDAD", "VACACIONES", "PERMISO" }));
         cmb_Tipo.setBackground(new java.awt.Color(153, 255, 153));
@@ -257,7 +269,15 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         jPanel1.add(lbl_Titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, -1, -1));
 
         btn_Rechaza.setText("Rechazar");
-        jPanel1.add(btn_Rechaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 440, -1, -1));
+        btn_Rechaza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_RechazaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_Rechaza, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 350, -1, -1));
+
+        btn_Genera.setText("Genera Documento");
+        jPanel1.add(btn_Genera, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 420, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 610));
 
@@ -307,7 +327,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         try {
             File file = null;
             file = fileChooser.getSelectedFile();
-            if (file!=null) {
+            if (file != null) {
                 documento = FileUtils.readFileToByteArray(fileChooser.getSelectedFile());
                 creaArchivo();
             }
@@ -395,7 +415,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         }
     }
     private void cmb_EmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmb_EmpleadoItemStateChanged
-        if (cmb_Empleado.getSelectedIndex() > 0) {
+        if (cmb_Empleado.getSelectedIndex() > 0 && cmb_Empleado.isEnabled()) {
             cmb_Tipo.setEnabled(true);
         } else {
             cmb_Tipo.setEnabled(false);
@@ -411,6 +431,33 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btn_VerActionPerformed
+
+    private void btn_AutorizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AutorizaActionPerformed
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea Autorizar la Ausencia ?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            this.ausencia.setEstatus("AUTORIZADA");
+            deshabilitaControles();
+        }
+    }//GEN-LAST:event_btn_AutorizaActionPerformed
+    private void deshabilitaControles() {
+        txf_Estatus.setText(this.ausencia.getEstatus());
+        btn_Autoriza.setEnabled(false);
+        btn_Rechaza.setEnabled(false);
+        btn_Autoriza.setVisible(false);
+        btn_Rechaza.setVisible(false);
+        dp_FechaInicio.setEnabled(false);
+        dp_FechaFin.setEnabled(false);
+        btn_Seleccionar.setEnabled(false);
+        ta_Motivo.setEnabled(false);
+        cmb_Tipo.setEnabled(false);
+    }
+    private void btn_RechazaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RechazaActionPerformed
+        int reply = JOptionPane.showConfirmDialog(null, "Está seguro que desea Rechazar la Ausencia ?", "Confirmar Cambio de estatus", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            this.ausencia.setEstatus("RECHAZADA");
+            deshabilitaControles();
+        }
+    }//GEN-LAST:event_btn_RechazaActionPerformed
     public Boolean validaDias() {
         AusenciaJustificadaDAO daoAusencia = new AusenciaJustificadaDAO(this.conexion);
         Integer diasUtilizados;
@@ -454,12 +501,17 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
 
     public void validaCampos() {
         try {
-            if ((dp_FechaInicio.getDate().isBefore(dp_FechaFin.getDate())) && cmb_Empleado.getSelectedIndex() > 0 && cmb_Tipo.getSelectedIndex() > 0 && !"".equals(ta_Motivo.getText()) && validaDias() && documento!=null) {
-                btn_Realizar.setEnabled(true);
-                lbl_Mensaje.setText("");
-            } else {
+            if ("AUTORIZADA".equals(this.ausencia.getEstatus()) || "RECHAZADA".equals(this.ausencia.getEstatus())) {
                 btn_Realizar.setEnabled(false);
-                lbl_Mensaje.setText("Debe completar todos los campos");
+            } else {
+
+                if ((dp_FechaInicio.getDate().isBefore(dp_FechaFin.getDate())) && cmb_Empleado.getSelectedIndex() > 0 && cmb_Tipo.getSelectedIndex() > 0 && !"".equals(ta_Motivo.getText()) && validaDias() && documento != null) {
+                    btn_Realizar.setEnabled(true);
+                    lbl_Mensaje.setText("");
+                } else {
+                    btn_Realizar.setEnabled(false);
+                    lbl_Mensaje.setText("Debe completar todos los campos");
+                }
             }
         } catch (NullPointerException ex) {
             btn_Realizar.setEnabled(false);
@@ -472,6 +524,7 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Atras;
     private javax.swing.JButton btn_Autoriza;
+    private javax.swing.JButton btn_Genera;
     private javax.swing.JButton btn_Realizar;
     private javax.swing.JButton btn_Rechaza;
     private javax.swing.JButton btn_Seleccionar;
