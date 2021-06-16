@@ -31,11 +31,12 @@ public class ConexionBD {
         this.pass = pass;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conexion = DriverManager.getConnection(connectionUrl, user, pass);
+            conexion = DriverManager.getConnection(connectionUrl, "Admin", "Hola.123");
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error:" + e.getMessage());
             System.out.println("Error al conectar con MS SQL Server:" + e.getMessage());
         } catch (ClassNotFoundException ex) {
-            System.out.println("Error al cargar el driver:" + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error:" + ex.getMessage());
         }
     }
 
