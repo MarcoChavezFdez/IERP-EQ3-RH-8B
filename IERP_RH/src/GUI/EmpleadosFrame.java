@@ -62,7 +62,6 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         lbl_PaginaActual = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         lbl_PaginaMaxima = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,13 +82,13 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         tbl_Datos.setBackground(new java.awt.Color(153, 255, 153));
         tbl_Datos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "IdEmpleado", "Nombre(s)", "Apellido Paterno", "Apellido Materno", "Sexo", "Fecha Nacimiento", "CURP", "Estado Civil", "Fecha Contratacion", "Salario Diario", "NSS", "Dias Vacaciones", "Dias Permisos", "Direccion", "Colonia", "Codigo Postal", "Escolaridad", "Especialidad", "Email", "Tipo", "Departamento", "Puesto", "Ciudad", "Sucursal", "Turno"
+                "IdEmpleado", "Nombre Completo", "Direccion", "Departamento", "Puesto", "Ciudad", "Sucursal"
             }
         ));
         tbl_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -99,7 +98,7 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_Datos);
 
-        btn_Anterior.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 1830, -1));
+        btn_Anterior.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 1180, -1));
 
         btn_AddEmpleado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/btnGuardar.png"))); // NOI18N
         btn_AddEmpleado.setBorderPainted(false);
@@ -155,14 +154,11 @@ public class EmpleadosFrame extends javax.swing.JFrame {
         lbl_PaginaMaxima.setText("1");
         btn_Anterior.add(lbl_PaginaMaxima, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 580, -1, -1));
 
-        jButton1.setText("Documentacion Empleado");
-        btn_Anterior.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1520, 60, -1, -1));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btn_Anterior, javax.swing.GroupLayout.DEFAULT_SIZE, 1874, Short.MAX_VALUE)
+            .addComponent(btn_Anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 1710, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,35 +223,17 @@ public class EmpleadosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_ModificarActionPerformed
 
     private void llenarTabla(ArrayList<RH_Empleado> lista) {
-        String[] encabezado = {"IdEmpleado", "Nombre", "Apellido Paterno", "Apellido Materno", "Sexo", "Fecha Nacimiento", "CURP", "estadoCivil", "Fecha Contratacion", "Salario Diario", "NSS", "Dias Vacaciones", "Dias Permiso", "Direccion", "Colonia", "Codigo Postal", "Escolaridad", "Especialidad", "Email", "Tipo", "Departamento", "Puesto", "Ciudad", "Sucursal", "Turno"};
-        Object[][] datos = new Object[lista.size()][26];
+        String[] encabezado = {"IdEmpleado", "Nombre Completo" , "Departamento", "Puesto", "Ciudad", "Sucursal", "Turno"};
+        Object[][] datos = new Object[lista.size()][7];
         int ren = 0;
         for (RH_Empleado s : lista) {
             datos[ren][0] = s.getIdEmpleado();
-            datos[ren][1] = s.getNombre();
-            datos[ren][2] = s.getApellidoPaterno();
-            datos[ren][3] = s.getApellidoMaterno();
-            datos[ren][4] = s.getSexo();
-            datos[ren][5] = s.getFechaNacimiento();
-            datos[ren][6] = s.getCurp();
-            datos[ren][7] = s.getEstadoCivil();
-            datos[ren][8] = s.getFechaContratacion();
-            datos[ren][9] = s.getSalarioDiario();
-            datos[ren][10] = s.getNss();
-            datos[ren][11] = s.getDiasVacaciones();
-            datos[ren][12] = s.getDiasPermiso();
-            datos[ren][13] = s.getDireccion();
-            datos[ren][14] = s.getColonia();
-            datos[ren][15] = s.getCodigoPostal();
-            datos[ren][16] = s.getEscolaridad();
-            datos[ren][17] = s.getEspecialidad();
-            datos[ren][18] = s.getEmail();
-            datos[ren][19] = s.getTipo();
-            datos[ren][20] = s.getDepartamento().getNombre();
-            datos[ren][21] = s.getPuesto().getNombre();
-            datos[ren][22] = s.getCiudad().getNombre();
-            datos[ren][23] = s.getSucursal().getNombre();
-            datos[ren][24] = s.getTurno().getNombre();
+            datos[ren][1] = s.getNombreCompleto();
+            datos[ren][2] = s.getDepartamento().getNombre();
+            datos[ren][3] = s.getPuesto().getNombre();
+            datos[ren][4] = s.getCiudad().getNombre();
+            datos[ren][5] = s.getSucursal().getNombre();
+            datos[ren][6] = s.getTurno().getNombre();
             ren++;
         }
         DefaultTableModel m = new DefaultTableModel(datos, encabezado) {
@@ -277,7 +255,6 @@ public class EmpleadosFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_Modificar;
     private javax.swing.JButton btn_Siguiente;
     private org.jdesktop.core.animation.timing.evaluators.EvaluatorByte evaluatorByte1;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
