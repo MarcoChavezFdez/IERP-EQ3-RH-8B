@@ -5,11 +5,19 @@
  */
 package GUI;
 
+import com.aspose.cells.SaveFormat;
 import conexion.AusenciaJustificadaDAO;
 import conexion.ConexionBD;
 import conexion.EmpleadoDAO;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import modelo.RH_AusenciaJustificada;
@@ -20,7 +28,15 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import modelo.RH_NominaDeduccion;
+import modelo.RH_NominaPercepcion;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -283,6 +299,11 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
         btn_Genera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/Ausencia/GenDoc.png"))); // NOI18N
         btn_Genera.setContentAreaFilled(false);
         btn_Genera.setDefaultCapable(false);
+        btn_Genera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_GeneraActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_Genera, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 410, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 620));
@@ -464,6 +485,221 @@ public class AddAusenciaJustificadaFrame extends javax.swing.JFrame {
             deshabilitaControles();
         }
     }//GEN-LAST:event_btn_RechazaActionPerformed
+
+    private void btn_GeneraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GeneraActionPerformed
+        generaPDF(this.ausencia);
+        Path origenPath = FileSystems.getDefault().getPath(path + "\\Ausencia" + String.valueOf(ausencia.getIdAusencia()) + ".pdf");
+        Path destinoPath = FileSystems.getDefault().getPath(path + "\\resources\\temp\\Ausencia" + String.valueOf(ausencia.getIdAusencia()) + ".pdf");
+        try {
+            Files.move(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
+            File orig = new File(path + "\\resources\\temp\\Ausencia" + String.valueOf(ausencia.getIdAusencia()) + ".pdf");
+            orig.deleteOnExit();
+
+        } catch (IOException ex) {
+            Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            path = (new File(".").getCanonicalPath());
+            Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\temp\\Ausencia" + String.valueOf(ausencia.getIdAusencia()) + ".pdf");
+        } catch (IOException ex) {
+            Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btn_GeneraActionPerformed
+    private void generaPDF(RH_AusenciaJustificada ausencia) {
+        try {
+            path = (new File(".").getCanonicalPath());
+            File template = new File(path + "\\resources\\templates\\AusenciaTemplate.xlsm");
+            File copTemplate = new File(path + "\\resources\\temp\\Ausencia" + String.valueOf(ausencia.getIdAusencia()) + ".xlsm");
+            copTemplate.deleteOnExit();
+            FileUtils.copyFile(template, copTemplate);
+            FileInputStream fis = new FileInputStream(copTemplate);
+            Workbook workbook = new XSSFWorkbook(fis);
+            Sheet sheet = workbook.getSheetAt(0);
+
+            //Nombre del Empleado
+            Row r = sheet.getRow(5); // 10-1
+            if (r == null) {
+                r = sheet.createRow(5);
+            }
+            Cell c = r.getCell(11); // 4-1
+            if (c == null) {
+                c = r.createCell(11, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getEmpleadoSolicitador().getNombreCompleto());
+
+            //Direccion del Empleado
+            r = sheet.getRow(7);
+            if (r == null) {
+                r = sheet.createRow(7);
+            }
+            c = r.getCell(2);
+            if (c == null) {
+                c = r.createCell(2, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getEmpleadoSolicitador().getDireccionCompleta());
+
+            //NSS del Empleado
+            r = sheet.getRow(7);
+            if (r == null) {
+                r = sheet.createRow(7);
+            }
+            c = r.getCell(16);
+            if (c == null) {
+                c = r.createCell(16, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getEmpleadoSolicitador().getNss());
+
+            //Departamento del Empleado
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(11);
+            if (c == null) {
+                c = r.createCell(11, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getEmpleadoSolicitador().getDepartamento().getNombre());
+
+            //Puesto del Empleado
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(18);
+            if (c == null) {
+                c = r.createCell(18, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getEmpleadoSolicitador().getPuesto().getNombre());
+
+            //Codigo Nomina
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(2);
+            if (c == null) {
+                c = r.createCell(2, CellType.NUMERIC);
+            }
+            c.setCellValue(ausencia.getIdAusencia());
+
+            //Sucursal Empleado
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(6);
+            if (c == null) {
+                c = r.createCell(6, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getEmpleadoSolicitador().getSucursal().getNombre());
+
+            //Tipo Ausencia
+            r = sheet.getRow(9);
+            if (r == null) {
+                r = sheet.createRow(9);
+            }
+            c = r.getCell(8);
+            if (c == null) {
+                c = r.createCell(8, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getTipo());
+
+            //Periodo Inicial
+            r = sheet.getRow(13);
+            if (r == null) {
+                r = sheet.createRow(13);
+            }
+            c = r.getCell(8);
+            if (c == null) {
+                c = r.createCell(8, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getFechaInicio().toString());
+
+            //Periodo Fin
+            r = sheet.getRow(13);
+            if (r == null) {
+                r = sheet.createRow(13);
+            }
+            c = r.getCell(10);
+            if (c == null) {
+                c = r.createCell(10, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getFechaFin().toString());
+
+            //Fecha de solicitud
+            r = sheet.getRow(13);
+            if (r == null) {
+                r = sheet.createRow(13);
+            }
+            c = r.getCell(15);
+            if (c == null) {
+                c = r.createCell(15, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getFechaSolicitud().toString());
+
+            //estatus
+            r = sheet.getRow(17);
+            if (r == null) {
+                r = sheet.createRow(17);
+            }
+            c = r.getCell(7);
+            if (c == null) {
+                c = r.createCell(7, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getEstatus());
+
+            //Motivo
+            r = sheet.getRow(19);
+            if (r == null) {
+                r = sheet.createRow(19);
+            }
+            c = r.getCell(2);
+            if (c == null) {
+                c = r.createCell(2, CellType.STRING);
+            }
+            String ausenciaMotivo="Motivo de la Ausencia: "+ausencia.getMotivo() ;
+            c.setCellValue(ausenciaMotivo);
+
+            //Nombre del Empleado
+            r = sheet.getRow(26); // 10-1
+            if (r == null) {
+                r = sheet.createRow(26);
+            }
+            c = r.getCell(12); // 4-1
+            if (c == null) {
+                c = r.createCell(12, CellType.STRING);
+            }
+            c.setCellValue(ausencia.getEmpleadoSolicitador().getNombreCompleto());
+
+            //Nombre del Director de RH
+            r = sheet.getRow(26); // 10-1
+            if (r == null) {
+                r = sheet.createRow(26);
+            }
+            c = r.getCell(3); // 4-1
+            if (c == null) {
+                c = r.createCell(3, CellType.STRING);
+            }
+            EmpleadoDAO daoEmpleado = new EmpleadoDAO(this.conexion);
+            c.setCellValue(ausencia.getEmpleadoAutorizador().getNombreCompleto());
+
+            OutputStream outputStream = new FileOutputStream(new File(path + "\\resources\\temp\\Ausencia" + String.valueOf(ausencia.getIdAusencia()) + ".xlsm"));
+            workbook.write(outputStream);
+            outputStream.close();
+            workbook.close();
+            fis.close();
+
+            //PDF
+            com.aspose.cells.Workbook workbookToPDF = new com.aspose.cells.Workbook(new FileInputStream(copTemplate));
+            workbookToPDF.save("Ausencia" + String.valueOf(ausencia.getIdAusencia()) + ".pdf", SaveFormat.PDF);
+            workbookToPDF.dispose();
+
+        } catch (Exception ex) {
+
+        }
+    }
+
     public Boolean validaDias() {
         AusenciaJustificadaDAO daoAusencia = new AusenciaJustificadaDAO(this.conexion);
         Integer diasUtilizados;
