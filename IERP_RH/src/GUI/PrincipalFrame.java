@@ -256,7 +256,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 btn_FormasActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_Formas, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 740, 170, 50));
+        jPanel1.add(btn_Formas, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 700, 170, 50));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 0));
