@@ -661,18 +661,16 @@ public class AddNominaFrame extends javax.swing.JFrame {
         Path destinoPath = FileSystems.getDefault().getPath(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".pdf");
         try {
             Files.move(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
-           File orig = new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".pdf");
-           orig.deleteOnExit();
+            File orig = new File(path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".pdf");
+            orig.deleteOnExit();
 
-           
-            
         } catch (IOException ex) {
             Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
             path = (new File(".").getCanonicalPath());
-                Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\temp\\nomina"+ String.valueOf(idNomina) + ".pdf");
+            Process p = Runtime.getRuntime().exec("rundll32 SHELL32.DLL,ShellExec_RunDLL " + path + "\\resources\\temp\\nomina" + String.valueOf(idNomina) + ".pdf");
         } catch (IOException ex) {
             Logger.getLogger(AddNominaFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -922,6 +920,18 @@ public class AddNominaFrame extends javax.swing.JFrame {
             }
             c.setCellValue(this.nomina.getEmpleado().getNombreCompleto());
 
+            //Nombre del Director de RH
+            r = sheet.getRow(72); // 10-1
+            if (r == null) {
+                r = sheet.createRow(72);
+            }
+            c = r.getCell(3); // 4-1
+            if (c == null) {
+                c = r.createCell(3, CellType.STRING);
+            }
+            EmpleadoDAO daoEmpleado = new EmpleadoDAO(this.conexion);
+            c.setCellValue(daoEmpleado.consultaEmpleadoDirectorRH().getNombreCompleto());
+
             OutputStream outputStream = new FileOutputStream(new File(path + "\\resources\\temp\\nomina" + String.valueOf(this.nomina.getIdNomina()) + ".xlsm"));
             workbook.write(outputStream);
             outputStream.close();
@@ -932,7 +942,7 @@ public class AddNominaFrame extends javax.swing.JFrame {
             com.aspose.cells.Workbook workbookToPDF = new com.aspose.cells.Workbook(new FileInputStream(copTemplate));
             workbookToPDF.save("nomina" + String.valueOf(this.nomina.getIdNomina()) + ".pdf", SaveFormat.PDF);
             workbookToPDF.dispose();
-            
+
         } catch (Exception ex) {
 
         }
